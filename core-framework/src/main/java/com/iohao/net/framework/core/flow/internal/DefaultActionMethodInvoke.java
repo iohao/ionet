@@ -1,0 +1,105 @@
+/*
+ * ionet
+ * Copyright (C) 2021 - present  渔民小镇 （262610965@qq.com、luoyizhu@gmail.com） . All Rights Reserved.
+ * # iohao.com . 渔民小镇
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.iohao.net.framework.core.flow.internal;
+
+import com.iohao.net.framework.core.ActionCommand;
+import com.iohao.net.framework.core.kit.ValidatorKit;
+import com.iohao.net.framework.core.codec.DataCodecManager;
+import com.iohao.net.framework.core.exception.ActionErrorEnum;
+import com.iohao.net.framework.core.flow.ActionMethodInvoke;
+import com.iohao.net.framework.core.flow.FlowContext;
+import com.iohao.net.framework.core.flow.parser.MethodParsers;
+
+import java.util.Objects;
+
+/**
+ * flow - default DefaultActionMethodInvoke
+ *
+ * @author 渔民小镇
+ * @date 2021-12-20
+ */
+public final class DefaultActionMethodInvoke implements ActionMethodInvoke {
+    @Override
+    public Object invoke(FlowContext flowContext) {
+        try {
+            var actionCommand = flowContext.getActionCommand();
+            extractedValidator(flowContext, actionCommand);
+            if (flowContext.hasError()) {
+                return null;
+            }
+
+            var actionParameterPosition = actionCommand.actionParameterPosition;
+            var methodHandle = actionCommand.methodHandle;
+            var instance = flowContext.getActionController();
+
+            return switch (actionParameterPosition) {
+                case dataAndFlowContext -> methodHandle.invoke(instance, flowContext.getDataParam(), flowContext);
+                case flowContext -> methodHandle.invoke(instance, flowContext);
+                case flowContextAndData -> methodHandle.invoke(instance, flowContext, flowContext.getDataParam());
+                case data -> methodHandle.invoke(instance, flowContext.getDataParam());
+                case none -> methodHandle.invoke(instance);
+            };
+        } catch (Throwable e) {
+            var barSkeleton = flowContext.getBarSkeleton();
+            var exceptionProcess = barSkeleton.actionMethodExceptionProcess;
+            var msgException = exceptionProcess.processException(e);
+            flowContext.setErrorCode(msgException.getErrorCode());
+            flowContext.setErrorMessage(msgException.getMessage());
+
+            return msgException;
+        }
+    }
+
+    private void extractedValidator(FlowContext flowContext, ActionCommand actionCommand) {
+        if (!actionCommand.hasDataParameter()) {
+            return;
+        }
+
+        var dataParam = actionCommand.dataParameter;
+        var paramClazz = dataParam.getActualTypeArgumentClass();
+        var methodParser = MethodParsers.getMethodParser(paramClazz);
+
+        var codec = DataCodecManager.getDataCodec(flowContext.getCommunicationType());
+        var dataBytes = flowContext.getRequest().getData();
+        var data = methodParser.parseParam(dataBytes, dataParam, codec);
+        flowContext.setDataParam(data);
+
+        if (dataParam.validator) {
+            // JSR380
+            Class<?>[] groups = dataParam.validatorGroup;
+            String validateMsg = ValidatorKit.validate(data, groups);
+            if (Objects.nonNull(validateMsg)) {
+                int errorCode = ActionErrorEnum.validateErrCode.getCode();
+                flowContext.setErrorCode(errorCode);
+                flowContext.setErrorMessage(validateMsg);
+            }
+        }
+    }
+
+    private DefaultActionMethodInvoke() {
+    }
+
+    public static DefaultActionMethodInvoke me() {
+        return Holder.ME;
+    }
+
+    private static class Holder {
+        static final DefaultActionMethodInvoke ME = new DefaultActionMethodInvoke();
+    }
+}

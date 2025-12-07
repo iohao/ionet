@@ -1,0 +1,154 @@
+/*
+ * ionet
+ * Copyright (C) 2021 - present  渔民小镇 （262610965@qq.com、luoyizhu@gmail.com） . All Rights Reserved.
+ * # iohao.com . 渔民小镇
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.iohao.net.framework.core.exception;
+
+import java.util.Objects;
+
+/**
+ * ErrorInformation
+ *
+ * @author 渔民小镇
+ * @date 2022-01-14
+ */
+public interface ErrorInformation {
+    String getMessage();
+
+    int getCode();
+
+    /**
+     * Asserts to be true, otherwise throws an exception
+     *
+     * @param v1 The assertion value
+     * @throws MessageException e
+     */
+    default void assertTrueThrows(boolean v1) throws MessageException {
+        if (v1) {
+            throw new MessageException(this);
+        }
+    }
+
+    /**
+     * Asserts to be true, otherwise throws an exception
+     *
+     * @param v1  The assertion value
+     * @param msg Custom message
+     * @throws MessageException e
+     */
+    default void assertTrueThrows(boolean v1, String msg) throws MessageException {
+        if (v1) {
+            int code = this.getCode();
+            throw new MessageException(code, msg);
+        }
+    }
+
+    /**
+     * Asserts that the assertion value cannot be null, otherwise throws an exception
+     *
+     * @param value The assertion value
+     * @param msg   Custom message
+     * @throws MessageException e
+     */
+    default void assertNonNull(Object value, String msg) throws MessageException {
+        assertTrue(Objects.nonNull(value), msg);
+    }
+
+    /**
+     * Asserts that the assertion value cannot be null, otherwise throws an exception
+     *
+     * @param value The assertion value
+     * @throws MessageException e
+     */
+    default void assertNonNull(Object value) throws MessageException {
+        assertTrue(Objects.nonNull(value));
+    }
+
+    /**
+     * Asserts that the assertion value is null, otherwise throws an exception
+     *
+     * @param value The assertion value
+     * @throws MessageException e
+     */
+    default void assertNullThrows(Object value) throws MessageException {
+        assertTrueThrows(Objects.isNull(value));
+    }
+
+    /**
+     * Asserts that the assertion value is null, otherwise throws an exception
+     *
+     * @param value The assertion value
+     * @param msg   Custom message
+     * @throws MessageException e
+     */
+    default void assertNullThrows(Object value, String msg) throws MessageException {
+        assertTrueThrows(Objects.isNull(value), msg);
+    }
+
+    /**
+     * Asserts that the value must be true, otherwise throws an exception
+     *
+     * @param v1 The assertion value
+     * @throws MessageException e
+     */
+    default void assertTrue(boolean v1) throws MessageException {
+        if (v1) {
+            return;
+        }
+
+        throw new MessageException(this);
+    }
+
+
+    /**
+     * Asserts that the value must be false, otherwise throws an exception
+     *
+     * @param v1 The assertion value
+     * @throws MessageException e
+     */
+    default void assertFalse(boolean v1) throws MessageException {
+        this.assertTrue(!v1);
+    }
+
+    /**
+     * Asserts that the value must be false, otherwise throws an exception
+     *
+     * @param v1  The assertion value
+     * @param msg Custom message
+     * @throws MessageException e
+     */
+    default void assertFalse(boolean v1, String msg) throws MessageException {
+        this.assertTrue(!v1, msg);
+    }
+
+
+    /**
+     * Asserts that the value must be true, otherwise throws an exception
+     *
+     * @param v1  The assertion value
+     * @param msg Custom message
+     * @throws MessageException e
+     */
+    default void assertTrue(boolean v1, String msg) throws MessageException {
+        if (v1) {
+            return;
+        }
+
+        var code = this.getCode();
+        throw new MessageException(code, msg);
+    }
+}

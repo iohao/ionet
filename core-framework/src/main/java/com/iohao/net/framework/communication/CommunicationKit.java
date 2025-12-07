@@ -1,0 +1,77 @@
+/*
+ * ionet
+ * Copyright (C) 2021 - present  渔民小镇 （262610965@qq.com、luoyizhu@gmail.com） . All Rights Reserved.
+ * # iohao.com . 渔民小镇
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.iohao.net.framework.communication;
+
+import com.iohao.net.framework.CoreGlobalConfig;
+import com.iohao.net.framework.protocol.ExternalRequestMessage;
+import com.iohao.net.framework.protocol.OnExternalTemplateId;
+import com.iohao.net.common.kit.trace.TraceKit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.UtilityClass;
+
+import java.util.function.Supplier;
+
+/**
+ * CommunicationKit
+ *
+ * @author 渔民小镇
+ * @date 2025-09-28
+ * @since 25.1
+ */
+@UtilityClass
+public final class CommunicationKit {
+    @Getter
+    CommunicationAggregation communicationAggregation;
+    @Getter
+    Communication communication;
+
+    @Setter
+    Supplier<Communication> communicationSupplier = DefaultCommunication::new;
+
+    public void setCommunicationAggregation(CommunicationAggregation communicationAggregation) {
+        CommunicationKit.communicationAggregation = communicationAggregation;
+        CommunicationKit.communication = communicationSupplier.get();
+    }
+
+    public void forcedOffline(long userId) {
+        var message = ofExternalRequestMessage(userId, OnExternalTemplateId.forcedOffline);
+        communicationAggregation.callCollectExternal(message);
+    }
+
+    public boolean existUser(long userId) {
+        var message = ofExternalRequestMessage(userId, OnExternalTemplateId.existUser);
+        var responseCollectExternal = communicationAggregation.callCollectExternal(message);
+        return responseCollectExternal.anySuccess();
+    }
+
+    private ExternalRequestMessage ofExternalRequestMessage(long userId, int templateId) {
+        var message = new ExternalRequestMessage();
+        message.setPayload(userId);
+        message.setTemplateId(templateId);
+        message.setNetId(CoreGlobalConfig.getNetId());
+
+        String traceId = TraceKit.getTraceId();
+        if (traceId != null) {
+            message.setTraceId(traceId);
+        }
+
+        return message;
+    }
+}

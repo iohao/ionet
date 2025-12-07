@@ -1,0 +1,64 @@
+### other dir ###
+classes/
+.temp/
+logs/
+log/
+lib/
+system/
+
+!**/src/main/**
+!**/src/test/**
+
+*.class
+
+### Package Files ###
+*.jar
+*.war
+*.ear
+*.zip
+
+### maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn
+mvnw
+mvnw.cmd
+### intellj file type ###
+bin/
+.idea
+*.iws
+*.iml
+*.ipr
+
+### STS ###
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+
+### eclipse file type ###
+.settings/
+.classpath
+.project
+
+### ---- Mac OS X ###
+.DS_Store
+Icon?
+
+### ---- Windows ###
+
+### Windows image file caches ###
+Thumbs.db
+
+### Folder integration file ###
+Desktop.ini
+
+### ---- Javadoc ###
+docs.tar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+/target/
+
+doc_temp.txt

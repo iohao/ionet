@@ -1,0 +1,48 @@
+package com.iohao.net.common.kit;
+
+import lombok.experimental.UtilityClass;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.List;
+
+/**
+ * NetworkKit
+ *
+ * @author 渔民小镇
+ * @date 2022-05-14
+ */
+@UtilityClass
+public class NetworkKit {
+    /** ip black list. 10.0.2.15 is default ip for virtual box vm */
+    final List<String> IP_BLACK_LIST = List.of("10.0.2.15");
+    public final String LOCAL_IP = getLocalIP();
+
+    private String getLocalIP() {
+        String ip = null;
+        try {
+            var e = NetworkInterface.getNetworkInterfaces();
+            while (e.hasMoreElements()) {
+                NetworkInterface n = e.nextElement();
+                Enumeration<?> ee = n.getInetAddresses();
+                while (ee.hasMoreElements()) {
+                    var inetAddress = (InetAddress) ee.nextElement();
+                    String hostAddress = inetAddress.getHostAddress();
+                    if (hostAddress.contains(".") && !IP_BLACK_LIST.contains(hostAddress) && !inetAddress.isLoopbackAddress()) {
+                        ip = hostAddress;
+                        break;
+                    }
+                }
+            }
+
+            if (ip == null) {
+                ip = InetAddress.getLocalHost().getHostAddress();
+            }
+        } catch (Exception ignore) {
+            return "127.0.0.1";
+        }
+
+        return ip;
+    }
+}

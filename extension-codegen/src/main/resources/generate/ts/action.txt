@@ -1,0 +1,18 @@
+${generateTime}
+${iohaoHome}
+${imports}
+import {toBinary} from "@bufbuild/protobuf";
+import {CmdKit, RequestCommand, ResponseResult} from "iohao-sdk";
+
+/**
+ * ${ActionComment}
+ * @author https://github.com/iohao/ionet
+ */
+export class ${ActionName} {
+<%for(o in actionMemberCmdDocumentList) {%>
+    ${publicActionCmdName} static readonly ${o.memberName}: number = CmdKit.mappingRequest(${o.cmdMerge}, "${o.comment}");
+<%}%>
+<%for(o in methodCodeList) {%>
+${o}
+<%}%>
+}
