@@ -28,7 +28,7 @@ public final class IonetVersion {
     public static final String VERSION;
 
     static {
-        VERSION = "<version>25.1</version>"
+        VERSION = "<version>25.2</version>"
                 .replace("<version>", "")
                 .replace("</version>", "")
         ;

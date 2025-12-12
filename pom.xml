@@ -7,7 +7,7 @@
 
     <groupId>com.iohao.net</groupId>
     <artifactId>ionet</artifactId>
-    <version>25.1</version>
+    <version>25.2</version>
     <name>ionet</name>
 
     <description>
@@ -92,7 +92,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>optional</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -296,8 +296,8 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
-                            <!--                            <autoPublish>true</autoPublish>-->
-                            <!--                            <waitUntil>published</waitUntil>-->
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
                         </configuration>
                     </plugin>
 
