@@ -148,59 +148,59 @@ public interface LogicCallCollectCommunicationDecorator extends CommonDecorator,
 
     //*********************** callCollect callback ***********************//
 
-    default void callbackCollect(RequestMessage message, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(RequestMessage message, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(RequestMessage message, Consumer<ResponseCollect> action, Executor executor) {
+    default void callCollectAsync(RequestMessage message, Consumer<ResponseCollect> action, Executor executor) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, byte[] data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, byte[] data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, int data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, int data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, long data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, long data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, boolean data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, boolean data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, String data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, String data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, Object data, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, Object data, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollect(CmdInfo cmdInfo, List<?> dataList, Consumer<ResponseCollect> action) {
+    default void callCollectAsync(CmdInfo cmdInfo, List<?> dataList, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollectListInt(CmdInfo cmdInfo, List<Integer> dataList, Consumer<ResponseCollect> action) {
+    default void callCollectAsyncListInt(CmdInfo cmdInfo, List<Integer> dataList, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollectListLong(CmdInfo cmdInfo, List<Long> dataList, Consumer<ResponseCollect> action) {
+    default void callCollectAsyncListLong(CmdInfo cmdInfo, List<Long> dataList, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollectListBool(CmdInfo cmdInfo, List<Boolean> dataList, Consumer<ResponseCollect> action) {
+    default void callCollectAsyncListBool(CmdInfo cmdInfo, List<Boolean> dataList, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 
-    default void callbackCollectListString(CmdInfo cmdInfo, List<String> dataList, Consumer<ResponseCollect> action) {
+    default void callCollectAsyncListString(CmdInfo cmdInfo, List<String> dataList, Consumer<ResponseCollect> action) {
         throw new EnterpriseSupportException();
     }
 }

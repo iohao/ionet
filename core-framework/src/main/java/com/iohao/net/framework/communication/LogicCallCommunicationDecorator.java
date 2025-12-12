@@ -166,71 +166,71 @@ public interface LogicCallCommunicationDecorator extends CommonDecorator, LogicC
 
     //*********************** callback ***********************//
 
-    default void callback(RequestMessage message, Consumer<Response> action) {
+    default void callAsync(RequestMessage message, Consumer<Response> action) {
         var executor = this.getCurrentExecutor();
-        callback(message, action, executor);
+        callAsync(message, action, executor);
     }
 
-    default void callback(RequestMessage message, Consumer<Response> action, Executor executor) {
+    default void callAsync(RequestMessage message, Consumer<Response> action, Executor executor) {
         callFuture(message).thenAcceptAsync(action, executor);
     }
 
-    default void callback(CmdInfo cmdInfo, byte[] data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, byte[] data, Consumer<Response> action) {
         var message = ofRequestMessage(cmdInfo, data);
-        callback(message, action);
+        callAsync(message, action);
     }
 
-    default void callback(CmdInfo cmdInfo, Consumer<Response> action) {
-        callback(cmdInfo, CommonConst.emptyBytes, action);
+    default void callAsync(CmdInfo cmdInfo, Consumer<Response> action) {
+        callAsync(cmdInfo, CommonConst.emptyBytes, action);
     }
 
-    default void callback(CmdInfo cmdInfo, int data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, int data, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encode(data), action);
+        callAsync(cmdInfo, codec.encode(data), action);
     }
 
-    default void callback(CmdInfo cmdInfo, long data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, long data, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encode(data), action);
+        callAsync(cmdInfo, codec.encode(data), action);
     }
 
-    default void callback(CmdInfo cmdInfo, boolean data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, boolean data, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encode(data), action);
+        callAsync(cmdInfo, codec.encode(data), action);
     }
 
-    default void callback(CmdInfo cmdInfo, String data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, String data, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encode(data), action);
+        callAsync(cmdInfo, codec.encode(data), action);
     }
 
-    default void callback(CmdInfo cmdInfo, Object data, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, Object data, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encode(data), action);
+        callAsync(cmdInfo, codec.encode(data), action);
     }
 
-    default void callback(CmdInfo cmdInfo, List<?> dataList, Consumer<Response> action) {
+    default void callAsync(CmdInfo cmdInfo, List<?> dataList, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encodeList(dataList), action);
+        callAsync(cmdInfo, codec.encodeList(dataList), action);
     }
 
-    default void callbackListInt(CmdInfo cmdInfo, List<Integer> dataList, Consumer<Response> action) {
+    default void callAsyncListInt(CmdInfo cmdInfo, List<Integer> dataList, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encodeListInt(dataList), action);
+        callAsync(cmdInfo, codec.encodeListInt(dataList), action);
     }
 
-    default void callbackListLong(CmdInfo cmdInfo, List<Long> dataList, Consumer<Response> action) {
+    default void callAsyncListLong(CmdInfo cmdInfo, List<Long> dataList, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encodeListLong(dataList), action);
+        callAsync(cmdInfo, codec.encodeListLong(dataList), action);
     }
 
-    default void callbackListBool(CmdInfo cmdInfo, List<Boolean> dataList, Consumer<Response> action) {
+    default void callAsyncListBool(CmdInfo cmdInfo, List<Boolean> dataList, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encodeListBool(dataList), action);
+        callAsync(cmdInfo, codec.encodeListBool(dataList), action);
     }
 
-    default void callbackListString(CmdInfo cmdInfo, List<String> dataList, Consumer<Response> action) {
+    default void callAsyncListString(CmdInfo cmdInfo, List<String> dataList, Consumer<Response> action) {
         var codec = this.getInternalDataCodec();
-        callback(cmdInfo, codec.encodeListString(dataList), action);
+        callAsync(cmdInfo, codec.encodeListString(dataList), action);
     }
 }

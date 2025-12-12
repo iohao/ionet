@@ -67,71 +67,71 @@ public interface ExternalCommunicationDecorator extends CommonDecorator {
     }
 
     //*********************** callExternal callback ***********************//
-    default void callbackExternal(ExternalRequestMessage message, Consumer<ExternalResponse> action) {
-        callbackExternal(message, action, this.getCurrentExecutor());
+    default void callExternalAsync(ExternalRequestMessage message, Consumer<ExternalResponse> action) {
+        callExternalAsync(message, action, this.getCurrentExecutor());
     }
 
-    default void callbackExternal(ExternalRequestMessage message, Consumer<ExternalResponse> action, Executor executor) {
+    default void callExternalAsync(ExternalRequestMessage message, Consumer<ExternalResponse> action, Executor executor) {
         callExternalFuture(message).thenAcceptAsync(action, executor);
     }
 
-    default void callbackExternal(int templateId, byte[] payload, Consumer<ExternalResponse> action) {
+    default void callExternalAsync(int templateId, byte[] payload, Consumer<ExternalResponse> action) {
         var message = ofExternalRequestMessage(templateId, payload);
-        callbackExternal(message, action);
+        callExternalAsync(message, action);
     }
 
-    default void callbackExternal(int templateId, Consumer<ExternalResponse> action) {
+    default void callExternalAsync(int templateId, Consumer<ExternalResponse> action) {
         var message = ofExternalRequestMessage(templateId);
-        callbackExternal(message, action);
+        callExternalAsync(message, action);
     }
 
     //*********************** CollectExternal call ***********************//
 
-    default ResponseCollectExternal callCollectExternal(ExternalRequestMessage message) {
+    default ResponseCollectExternal callExternalCollect(ExternalRequestMessage message) {
         return this.getCommunicationAggregation().callCollectExternal(message);
     }
 
-    default ResponseCollectExternal callCollectExternal(int templateId, byte[] payload) {
-        return callCollectExternal(ofExternalRequestMessage(templateId, payload));
+    default ResponseCollectExternal callExternalCollect(int templateId, byte[] payload) {
+        return callExternalCollect(ofExternalRequestMessage(templateId, payload));
     }
 
-    default ResponseCollectExternal callCollectExternal(int templateId) {
-        return callCollectExternal(ofExternalRequestMessage(templateId));
+    default ResponseCollectExternal callExternalCollect(int templateId) {
+        return callExternalCollect(ofExternalRequestMessage(templateId));
     }
 
     //*********************** CollectExternal future ***********************//
-    default CompletableFuture<ResponseCollectExternal> callCollectExternalFuture(ExternalRequestMessage message) {
+    default CompletableFuture<ResponseCollectExternal> callExternalCollectFuture(ExternalRequestMessage message) {
         return this.getCommunicationAggregation().callCollectExternalFuture(message);
     }
 
-    default CompletableFuture<ResponseCollectExternal> callCollectExternalFuture(int templateId, byte[] payload) {
+    default CompletableFuture<ResponseCollectExternal> callExternalCollectFuture(int templateId, byte[] payload) {
         var message = ofExternalRequestMessage(templateId, payload);
-        return callCollectExternalFuture(message);
+        return callExternalCollectFuture(message);
     }
 
-    default CompletableFuture<ResponseCollectExternal> callCollectExternalFuture(int templateId) {
+    default CompletableFuture<ResponseCollectExternal> callExternalCollectFuture(int templateId) {
         var message = ofExternalRequestMessage(templateId);
-        return callCollectExternalFuture(message);
+        return callExternalCollectFuture(message);
     }
 
     //*********************** CollectExternal callback ***********************//
-    default void callbackCollectExternal(ExternalRequestMessage message, Consumer<ResponseCollectExternal> action) {
+    default void callExternalCollectAsync(ExternalRequestMessage message, Consumer<ResponseCollectExternal> action) {
         Executor executor = this.getCurrentExecutor();
-        callbackCollectExternal(message, action, executor);
+        callExternalCollectAsync(message, action, executor);
     }
 
-    default void callbackCollectExternal(ExternalRequestMessage message, Consumer<ResponseCollectExternal> action, Executor executor) {
-        callCollectExternalFuture(message).thenAcceptAsync(action, executor);
+    default void callExternalCollectAsync(ExternalRequestMessage message, Consumer<ResponseCollectExternal> action, Executor executor) {
+        callExternalCollectFuture(message).thenAcceptAsync(action, executor);
     }
 
-    default void callbackCollectExternal(int templateId, byte[] payload, Consumer<ResponseCollectExternal> action) {
+    default void callExternalCollectAsync(int templateId, byte[] payload, Consumer<ResponseCollectExternal> action) {
         var message = ofExternalRequestMessage(templateId, payload);
-        callbackCollectExternal(message, action);
+        callExternalCollectAsync(message, action);
     }
 
-    default void callbackCollectExternal(int templateId, Consumer<ResponseCollectExternal> action) {
+    default void callExternalCollectAsync(int templateId, Consumer<ResponseCollectExternal> action) {
         var message = ofExternalRequestMessage(templateId);
-        callbackCollectExternal(message, action);
+        callExternalCollectAsync(message, action);
     }
 
     //*********************** bindingLogicServer ***********************//
