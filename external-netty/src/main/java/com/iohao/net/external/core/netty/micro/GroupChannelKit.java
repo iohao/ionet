@@ -21,14 +21,13 @@ package com.iohao.net.external.core.netty.micro;
 import com.iohao.net.common.kit.OsInfo;
 import com.iohao.net.common.kit.concurrent.DaemonThreadFactory;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.MultiThreadIoEventLoopGroup;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollIoHandler;
+import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.kqueue.KQueueIoHandler;
+import io.netty.channel.kqueue.KQueueEventLoopGroup;
 import io.netty.channel.kqueue.KQueueServerSocketChannel;
-import io.netty.channel.nio.NioIoHandler;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.experimental.UtilityClass;
 
@@ -78,17 +77,19 @@ public final class GroupChannelKit {
     private final class GroupChannelOptionForLinux implements GroupChannelOption {
         @Override
         public EventLoopGroup bossGroup() {
-            return new MultiThreadIoEventLoopGroup(
-                    1, EventLoopGroupThreadFactory.bossThreadFactory(), EpollIoHandler.newFactory()
+            return new EpollEventLoopGroup(
+                    1,
+                    EventLoopGroupThreadFactory.bossThreadFactory()
             );
         }
 
         @Override
         public EventLoopGroup workerGroup() {
-            var threads = Runtime.getRuntime().availableProcessors() << 1;
+            int availableProcessors = Runtime.getRuntime().availableProcessors() << 1;
 
-            return new MultiThreadIoEventLoopGroup(
-                    threads, EventLoopGroupThreadFactory.workerThreadFactory(), EpollIoHandler.newFactory()
+            return new EpollEventLoopGroup(
+                    availableProcessors,
+                    EventLoopGroupThreadFactory.workerThreadFactory()
             );
         }
 
@@ -107,16 +108,19 @@ public final class GroupChannelKit {
     private final class GroupChannelOptionForMac implements GroupChannelOption {
         @Override
         public EventLoopGroup bossGroup() {
-            return new MultiThreadIoEventLoopGroup(
-                    1, EventLoopGroupThreadFactory.bossThreadFactory(), KQueueIoHandler.newFactory()
+            return new KQueueEventLoopGroup(
+                    1,
+                    EventLoopGroupThreadFactory.bossThreadFactory()
             );
         }
 
         @Override
         public EventLoopGroup workerGroup() {
-            var threads = Runtime.getRuntime().availableProcessors() << 1;
-            return new MultiThreadIoEventLoopGroup(
-                    threads, EventLoopGroupThreadFactory.workerThreadFactory(), KQueueIoHandler.newFactory()
+            int availableProcessors = Runtime.getRuntime().availableProcessors() << 1;
+
+            return new KQueueEventLoopGroup(
+                    availableProcessors,
+                    EventLoopGroupThreadFactory.workerThreadFactory()
             );
         }
 
@@ -135,17 +139,19 @@ public final class GroupChannelKit {
     private final class GroupChannelOptionForOther implements GroupChannelOption {
         @Override
         public EventLoopGroup bossGroup() {
-            return new MultiThreadIoEventLoopGroup(
-                    1, EventLoopGroupThreadFactory.bossThreadFactory(), NioIoHandler.newFactory()
+            return new NioEventLoopGroup(
+                    1,
+                    EventLoopGroupThreadFactory.bossThreadFactory()
             );
         }
 
         @Override
         public EventLoopGroup workerGroup() {
-            var threads = Runtime.getRuntime().availableProcessors() << 1;
+            int availableProcessors = Runtime.getRuntime().availableProcessors() << 1;
 
-            return new MultiThreadIoEventLoopGroup(
-                    threads, EventLoopGroupThreadFactory.workerThreadFactory(), NioIoHandler.newFactory()
+            return new NioEventLoopGroup(
+                    availableProcessors,
+                    EventLoopGroupThreadFactory.workerThreadFactory()
             );
         }
 

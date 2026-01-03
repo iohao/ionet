@@ -48,7 +48,7 @@
         <!-- https://mvnrepository.com/artifact/io.aeron/aeron-all -->
         <aeron.version>1.49.2</aeron.version>
         <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <netty.version>4.2.7.Final</netty.version>
+        <netty.version>4.1.130.Final</netty.version>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <slf4j-api.version>2.0.17</slf4j-api.version>
 
