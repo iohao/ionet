@@ -18,6 +18,8 @@
  */
 package com.iohao.net.framework.core.exception;
 
+import org.jspecify.annotations.NonNull;
+
 import java.util.Objects;
 
 /**
@@ -32,7 +34,7 @@ public interface ErrorInformation {
     int getCode();
 
     /**
-     * Asserts to be true, otherwise throws an exception
+     * Throws an exception if the asserted value is true
      *
      * @param v1 The assertion value
      * @throws MessageException e
@@ -44,7 +46,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts to be true, otherwise throws an exception
+     * Throws an exception if the asserted value is true
      *
      * @param v1  The assertion value
      * @param msg Custom message
@@ -58,7 +60,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts that the assertion value cannot be null, otherwise throws an exception
+     * Asserted value cannot be null; throws an exception if it is null
      *
      * @param value The assertion value
      * @param msg   Custom message
@@ -69,7 +71,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts that the assertion value cannot be null, otherwise throws an exception
+     * Asserted value cannot be null; throws an exception if it is null
      *
      * @param value The assertion value
      * @throws MessageException e
@@ -79,7 +81,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts that the assertion value is null, otherwise throws an exception
+     * Throws an exception if the asserted value is null
      *
      * @param value The assertion value
      * @throws MessageException e
@@ -100,7 +102,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts that the value must be true, otherwise throws an exception
+     * Asserts that the value must be true, throws an exception if the assertion is false
      *
      * @param v1 The assertion value
      * @throws MessageException e
@@ -115,7 +117,7 @@ public interface ErrorInformation {
 
 
     /**
-     * Asserts that the value must be false, otherwise throws an exception
+     * Asserts that the value must be false, throws an exception if the assertion is true
      *
      * @param v1 The assertion value
      * @throws MessageException e
@@ -125,7 +127,7 @@ public interface ErrorInformation {
     }
 
     /**
-     * Asserts that the value must be false, otherwise throws an exception
+     * Asserts that the value must be false, throws an exception if the assertion is true
      *
      * @param v1  The assertion value
      * @param msg Custom message
@@ -137,7 +139,7 @@ public interface ErrorInformation {
 
 
     /**
-     * Asserts that the value must be true, otherwise throws an exception
+     * Asserts that the value must be true, throws an exception if the assertion is false
      *
      * @param v1  The assertion value
      * @param msg Custom message
@@ -150,5 +152,21 @@ public interface ErrorInformation {
 
         var code = this.getCode();
         throw new MessageException(code, msg);
+    }
+
+    /**
+     * Parameter cannot be null; throws an exception if the parameter is null
+     *
+     * @param value value
+     * @param <T>   T
+     * @return T
+     */
+    @NonNull
+    default <T> T require(T value) {
+        if (value != null) {
+            return value;
+        }
+
+        throw new MessageException(this);
     }
 }
