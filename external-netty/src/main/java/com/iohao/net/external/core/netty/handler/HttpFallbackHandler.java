@@ -22,6 +22,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
+import io.netty.util.ReferenceCountUtil;
 
 /**
  * @author 渔民小镇
@@ -30,14 +31,17 @@ import io.netty.handler.codec.http.*;
  */
 @ChannelHandler.Sharable
 public final class HttpFallbackHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) {
-        // 检查是否是 WebSocket 升级请求
-        if ("websocket".equalsIgnoreCase(req.headers().get(HttpHeaderNames.UPGRADE))) {
-            ctx.fireChannelRead(req.retain());
-        } else {
-            ctx.close();
+        try {
+            // 检查是否是 WebSocket 升级请求
+            if ("websocket".equalsIgnoreCase(req.headers().get(HttpHeaderNames.UPGRADE))) {
+                ctx.fireChannelRead(req.retain());
+            } else {
+                ctx.close();
+            }
+        } finally {
+            ReferenceCountUtil.release(req);
         }
     }
 
@@ -48,7 +52,6 @@ public final class HttpFallbackHandler extends SimpleChannelInboundHandler<FullH
         return Holder.ME;
     }
 
-    /** 通过 JVM 的类加载机制, 保证只加载一次 (singleton) */
     private static class Holder {
         static final HttpFallbackHandler ME = new HttpFallbackHandler();
     }
