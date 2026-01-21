@@ -83,4 +83,11 @@ public final class BooleanProperty extends AbstractPropertyValueObservable<Boole
             markInvalid();
         }
     }
+
+    /**
+     * Change the boolean value
+     */
+    public void change() {
+        this.set(!this.value);
+    }
 }

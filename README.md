@@ -1,7 +1,9 @@
 ## ionet
 **Language**: English | [中文](README_CN.md)
 
-Document: https://iohao.github.io/ionet
+Documentation
+- https://iohao.github.io/ionet
+- https://iohao.github.io/ionet/docs/intro
 
 <p>
 <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java25"><img src="https://img.shields.io/badge/JDK-25-success.svg" alt="JDK 25"/></a>
