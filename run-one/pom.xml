@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.iohao.net</groupId>
         <artifactId>ionet</artifactId>
-        <version>25.2</version>
+        <version>25.3</version>
     </parent>
 
     <artifactId>run-one</artifactId>

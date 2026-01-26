@@ -62,3 +62,5 @@ hs_err_pid*
 /target/
 
 doc_temp.txt
+.claude
+CLAUDE.md
