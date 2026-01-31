@@ -22,6 +22,7 @@ import com.iohao.net.framework.protocol.CommunicationMessage;
 import com.iohao.net.external.core.config.ExternalGlobalConfig;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Objects;
@@ -33,7 +34,7 @@ import java.util.Objects;
  * @date 2023-07-02
  */
 @ChannelHandler.Sharable
-public final class CmdCacheHandler extends SimpleChannelInboundHandler<CommunicationMessage> {
+public final class CmdCacheHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         if (Objects.isNull(ExternalGlobalConfig.externalCmdCache)) {
@@ -45,14 +46,19 @@ public final class CmdCacheHandler extends SimpleChannelInboundHandler<Communica
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommunicationMessage message) {
-        var cache = ExternalGlobalConfig.externalCmdCache.getCache(message);
-        if (cache != null) {
-            ctx.writeAndFlush(cache);
-            return;
-        }
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (msg instanceof CommunicationMessage message) {
+            var cache = ExternalGlobalConfig.externalCmdCache.getCache(message);
+            if (cache != null) {
+                ctx.writeAndFlush(cache);
+                return;
+            }
 
-        ctx.fireChannelRead(message);
+            ctx.fireChannelRead(message);
+        } else {
+            ctx.fireChannelRead(msg);
+
+        }
     }
 
     public CmdCacheHandler() {

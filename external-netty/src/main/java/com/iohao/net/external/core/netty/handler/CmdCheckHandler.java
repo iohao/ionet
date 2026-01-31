@@ -25,7 +25,7 @@ import com.iohao.net.server.NetServerSettingAware;
 import com.iohao.net.server.cmd.CmdRegions;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Check for route existence.
@@ -35,7 +35,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @date 2023-05-01
  */
 @ChannelHandler.Sharable
-public final class CmdCheckHandler extends SimpleChannelInboundHandler<CommunicationMessage> implements NetServerSettingAware {
+public final class CmdCheckHandler extends ChannelInboundHandlerAdapter implements NetServerSettingAware {
 
     CmdRegions cmdRegions;
 
@@ -49,16 +49,19 @@ public final class CmdCheckHandler extends SimpleChannelInboundHandler<Communica
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommunicationMessage message) {
-        int cmdMerge = message.getCmdMerge();
-        if (cmdRegions.existCmdMerge(cmdMerge)) {
-            ctx.fireChannelRead(message);
-            return;
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (msg instanceof CommunicationMessage message) {
+            int cmdMerge = message.getCmdMerge();
+            if (cmdRegions.existCmdMerge(cmdMerge)) {
+                ctx.fireChannelRead(message);
+            } else {
+                message.setError(ActionErrorEnum.cmdInfoErrorCode);
+                ctx.writeAndFlush(message);
+            }
+
+        } else {
+            ctx.fireChannelRead(msg);
         }
-
-        message.setError(ActionErrorEnum.cmdInfoErrorCode);
-
-        ctx.writeAndFlush(message);
     }
 
     private CmdCheckHandler() {

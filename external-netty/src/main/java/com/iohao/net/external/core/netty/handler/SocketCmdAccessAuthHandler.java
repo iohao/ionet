@@ -28,7 +28,7 @@ import com.iohao.net.external.core.netty.session.SocketUserSessions;
 import com.iohao.net.external.core.session.UserSessions;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Setter;
 
 /**
@@ -39,7 +39,7 @@ import lombok.Setter;
  */
 @Setter
 @ChannelHandler.Sharable
-public class SocketCmdAccessAuthHandler extends SimpleChannelInboundHandler<CommunicationMessage> implements ExternalSettingAware {
+public class SocketCmdAccessAuthHandler extends ChannelInboundHandlerAdapter implements ExternalSettingAware {
     protected UserSessions<?, ?> userSessions;
 
     @Override
@@ -52,19 +52,25 @@ public class SocketCmdAccessAuthHandler extends SimpleChannelInboundHandler<Comm
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommunicationMessage message) {
-        if (reject(ctx, message)) {
-            return;
-        }
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (msg instanceof CommunicationMessage message) {
 
-        var socketUserSessions = (SocketUserSessions) this.userSessions;
-        var userSession = socketUserSessions.getUserSession(ctx);
-        var loginSuccess = userSession.isVerifyIdentity();
-        if (notPass(ctx, message, loginSuccess)) {
-            return;
-        }
+            if (reject(ctx, message)) {
+                return;
+            }
 
-        ctx.fireChannelRead(message);
+            var socketUserSessions = (SocketUserSessions) this.userSessions;
+            var userSession = socketUserSessions.getUserSession(ctx);
+            var loginSuccess = userSession.isVerifyIdentity();
+            if (notPass(ctx, message, loginSuccess)) {
+                return;
+            }
+
+            ctx.fireChannelRead(message);
+        } else {
+            ctx.fireChannelRead(msg);
+
+        }
     }
 
     protected boolean reject(ChannelHandlerContext ctx, CommunicationMessage message) {
