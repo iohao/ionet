@@ -62,12 +62,9 @@ public final class HttpRealIpHandler extends ChannelInboundHandlerAdapter implem
             HttpHeaders headers = request.headers();
             String realIp = headers.get("X-Real-IP");
 
-            if (realIp != null) {
-                PresentKit.ifPresent(userSessions.getUserSession(ctx), userSession -> {
-                    // set realIp
-                    userSession.option(UserSessionOption.realIp, realIp);
-                });
-            }
+            PresentKit.ifPresent(userSessions.getUserSession(ctx), userSession -> {
+                userSession.option(UserSessionOption.realIp, realIp);
+            });
 
             ctx.pipeline().remove(this);
         }

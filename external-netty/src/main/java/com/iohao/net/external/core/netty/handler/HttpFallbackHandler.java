@@ -20,8 +20,9 @@ package com.iohao.net.external.core.netty.handler;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
+import io.netty.util.ReferenceCountUtil;
 
 /**
  * @author 渔民小镇
@@ -29,15 +30,22 @@ import io.netty.handler.codec.http.*;
  * @since 21.29
  */
 @ChannelHandler.Sharable
-public final class HttpFallbackHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+public final class HttpFallbackHandler extends ChannelInboundHandlerAdapter {
+
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) {
-        // 检查是否是 WebSocket 升级请求
-        if ("websocket".equalsIgnoreCase(req.headers().get(HttpHeaderNames.UPGRADE))) {
-            ctx.fireChannelRead(req.retain());
-        } else {
-            ctx.close();
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (!(msg instanceof FullHttpRequest req)) {
+            ctx.fireChannelRead(msg);
+            return;
         }
+
+        if ("websocket".equalsIgnoreCase(req.headers().get(HttpHeaderNames.UPGRADE))) {
+            ctx.fireChannelRead(msg);
+            return;
+        }
+
+        ReferenceCountUtil.release(msg);
+        ctx.close();
     }
 
     private HttpFallbackHandler() {
