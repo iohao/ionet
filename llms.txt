@@ -1,327 +1,39 @@
-# ionet - High-Performance Distributed Network Programming Framework
-
-**ionet** is a lightweight Java-based distributed network programming framework built on Aeron + SBE, achieving nanosecond-level end-to-end latency.
-
-**Core Features:**
-- Lightweight, lock-free, asynchronous, event-driven architecture
-- Ultra-low latency: Aeron + SBE combination with true zero-copy, zero-copy, zero-reflection, zero-GC, zero runtime parsing
-- Zero dependencies: No third-party middleware required, only Java runtime
-- Single codebase supports multiple connection types: TCP, WebSocket, UDP (extensible to KCP, QUIC)
-- Flexible data protocols: Protobuf, JSON, switchable with one line of code
-- MVC-style development without class explosion
-- Cross-process/machine communication with built-in load balancing
-- Logic services don't expose ports, naturally resistant to scanning
-
-**Use Cases:**
-- Online game servers
-- Internet of Things (IoT)
-- High-frequency market data push
-- Real-time financial trading
-- Video stream/sensor data processing
-- Real-time gaming systems
-
----
-
-## Project Structure
-
-```
-ionet/
-├── common-kit/                 # Common utility package
-│   └── src/main/java/.../beans/property/  # Property-related utilities
-├── core-framework/             # Core framework
-├── extension-client/           # Client extension (simulation, load testing)
-├── extension-codegen/          # Code generator
-├── extension-domain-event/     # Domain event module
-├── extension-jprotobuf/        # JProtobuf support
-├── extension-room/             # Room/card game module
-├──-extension-spring/           # Spring integration
-├── external-core/              # External service core
-├── external-netty/             # Netty external service implementation
-├── net-center/                 # Network center
-├── net-common/                 # Network common module
-├── net-logic-server/           # Logic server
-├── net-server/                 # Server implementation
-└── run-one/                    # Example application launcher
-```
-
----
-
-## Core Concepts
-
-### External Service
-- Responsible for client connection management
-- Supports TCP, WebSocket, UDP and other connection types
-- Does not expose business logic ports, preventing scanning attacks
-- Built on Netty, easy to extend
-
-### Logic Service
-- Executes business logic
-- No port exposure required, naturally resistant to scanning
-- Supports dynamic scaling
-- Supports cross-process/machine communication
-- Can run independently for modular functionality
-
-### Action (Business Method)
-- Uses `@ActionController` and `@ActionMethod` annotations
-- MVC-style development, ordinary Java methods become Actions
-- Supports auto boxing/unboxing of primitive types (solves protocol fragmentation)
-- Supports JSR380 parameter validation
-
-### FlowContext
-- Contains user info, session, and other context data
-- `bindingUserId()`: Bind user ID
-- `getUserId()`: Get bound user ID
-- Supports Attachment mechanism
-
----
-
-## Communication Models
-
-### Client-Side Communication
-| Pattern | Description |
-|---------|-------------|
-| Request/Response | Request-response pattern |
-| Request/Void | Request without response (one-way notification) |
-| Request/Broadcast | Request with broadcast response |
-| Broadcast | Active broadcast to clients |
-
-### Server-Side Internal Communication
-| Pattern | Description |
-|---------|-------------|
-| Request/Response | Cross-service request-response (sync/async/callback) |
-| Request/Void | One-way notification |
-| Request/MultipleResponse | Request multiple logic services of the same type |
-| OnExternal | Access external service |
-| EventBus | Distributed event bus (cross-process/machine) |
-
----
-
-## Quick Start
-
-### 1. Add Dependency
-
-```xml
-<properties>
-    <java.version>25</java.version>
-    <ionet.version>xx.xx</ionet.version>
-</properties>
-
-<dependencies>
-    <dependency>
-        <groupId>com.iohao.net</groupId>
-        <artifactId>run-one</artifactId>
-        <version>${ionet.version}</version>
-    </dependency>
-</dependencies>
-```
-
-### 2. Define Protocol
-
-```java
-@ProtobufClass
-public class HelloMessage {
-    public String name;
-}
-```
-
-### 3. Write Action
-
-```java
-@ActionController(DemoCmd.cmd)
-public class DemoAction {
-    @ActionMethod(DemoCmd.hello)
-    private HelloMessage hello(HelloMessage message) {
-        HelloMessage response = new HelloMessage();
-        response.name = "Hello, " + message.name;
-        return response;
-    }
-}
-
-public interface DemoCmd {
-    int cmd = 1;
-    int hello = 0;
-}
-```
-
-### 4. Start Server
-
-```java
-public class DemoApplication {
-    public static void main(String[] args) {
-        // External service port
-        int port = 10100;
-        var externalServer = ExternalMapper.builder(port).build();
-
-        new RunOne()
-                .setAeron(new AeronLifecycleManager().getAeron())
-                .enableCenterServer()
-                .setExternalServer(externalServer)
-                .setLogicServerList(List.of(new DemoLogicServer()))
-                .startup();
-    }
-}
-```
-
-### 5. JVM Options
-
-```shell
---add-opens java.base/jdk.internal.misc=ALL-UNNAMED
---enable-native-access=ALL-UNNAMED
-```
-
----
-
-## Error Handling
-
-### Assertion + Exception Mechanism
-
-```java
-public enum ErrorCode implements ErrorInformation {
-    nameChecked(100, "The name must be Jackson");
-
-    final int code;
-    final String message;
-
-    ErrorCode(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.message;
-    }
-
-    @Override
-    public int getCode() {
-        return this.code;
-    }
-}
-
-// Usage
-ErrorCode.nameChecked.assertTrue("Jackson".equals(name));
-```
-
----
-
-## Plugin System
-
-Framework provides pluggable plugin mechanism:
-
-| Plugin | Function |
-|--------|----------|
-| DebugInOut | Debug input/output, development essential |
-| ActionStat | Action call statistics |
-| ActionThreadMonitor | Business thread monitoring |
-| ActionTimeRange | Multi-time-dimension call statistics |
-
----
-
-## Built-in Modules
-
-### Domain Event
-- Lightweight fastest single-node MQ
-- Similar to Guava-EventBus, Spring ApplicationEvent
-- Business decoupling, concurrency avoidance, non-blocking main thread
-
-### Room Module
-- Card game/room game solution
-- Suitable for Hearthstone, San Guo Sha, Mahjong, etc.
-- Also suitable for CS, Bomberman, Airplane Chess, etc.
-
-### Load Testing & Simulation Client
-- Simulates real network environment
-- Supports complex request orchestration
-- Sustainable, interactive, automatable
-
-### JProtobuf Support
-- Generate multiple objects in a single .proto file
-
----
-
-## Development & Deployment
-
-### Development Mode
-- Supports multi-service single-process startup for simplified distributed development
-- Supports business code location and navigation (click in console)
-- Console displays all actions' routes, classes, methods, parameters, return values, line numbers
-
-### Deployment Mode
-- **Single-process deployment**: For development and small-scale deployment
-- **Multi-process/multi-machine deployment**: For production environment
-- Flexible switching without code changes
-
-### Requirements
-- JDK 25+
-- Maven 3.9+
-- AGPL-3.0 License
-
----
-
-## Spring Integration
-
-Complete Spring integration in 4 lines:
-
-```java
-@Bean
-public RunOne runOne() {
-    return new RunOne()
-            .setAeron(new AeronLifecycleManager().getAeron())
-            .setExternalServer(ExternalMapper.builder(10100).build())
-            .setLogicServerList(List.of(myLogicServer()));
-}
-```
-
----
-
-## Client SDK & Code Generation
-
-**Write once, integrate anywhere**: Write Java code once, generate multi-platform SDKs.
-
-**Supported Languages/Engines:**
-- Godot (GDScript, C#)
-- Unity (C#)
-- Unreal Engine
-- CocosCreator (TypeScript)
-- Laya
-- React / Vue / Angular (TypeScript)
-
-**Code Generation Features:**
-- Auto-generate client interaction code
-- Protobuf protocol generation support
-- Reduces client development workload significantly
-
----
-
-## Performance Metrics
-
-| Metric | Value |
-|--------|-------|
-| End-to-end latency | Nanosecond-level (~100ns IPC) |
-| Single-thread Action execution | 11.52 million/second |
-| SBE encoding/decoding | Nanosecond-level, zero GC |
-| JAR package size | ~15MB |
-| Startup speed | 0.x seconds |
-
----
-
-## Documentation & Resources
-
-- **Documentation**: https://iohao.github.io/ionet
-- **GitHub**: https://github.com/iohao/ionet
-- **Example Code**: https://github.com/iohao/ionet-examples
-  - `ionet-quick-demo`: Write server from scratch example
-  - `ionet-cookbook-code`: Full feature Cookbook examples
-  - `ionet-spring-example`: Spring integration example
-  - `ionet-sdk-example`: SDK integration example
-
----
-
-## Important Notes
-
-1. Single-user concurrency issues are automatically solved by the framework (same user uses same thread)
-2. Multi-user concurrency recommends using Domain Events
-3. Logic services don't expose ports, naturally resistant to scanning attacks
-4. Framework doesn't require Spring, can integrate with any framework (Vert.x, Quarkus, Solon, etc.)
-5. Protocols support dynamic addition/removal without restarting external service
-6. Supports user-unaware updates (rolling updates)
+# ionet
+
+ionet is an open-source Java distributed network programming framework focused on ultra-low latency and high throughput.
+
+## Canonical URLs
+- Project site: https://iohao.github.io/ionet
+- Docs entry: https://iohao.github.io/ionet/docs/intro
+- GitHub repository: https://github.com/iohao/ionet
+- English README: https://github.com/iohao/ionet/blob/main/README.md
+- Chinese README: https://github.com/iohao/ionet/blob/main/README_CN.md
+
+## License
+- AGPL-3.0
+
+## One-line Summary
+A lightweight, lock-free, event-driven distributed networking framework using Aeron + SBE, suitable for online games and other low-latency systems.
+
+## Key Capabilities
+- Multi-connection support: TCP, WebSocket, UDP
+- Communication patterns: request/response, request/void, broadcast, EventBus
+- Distributed logic services with cross-process and cross-machine communication
+- Data protocol switching and extension (Protobuf, JSON)
+- Plugin system and load-testing/simulation tooling
+- Spring integration and multi-language SDK/code generation support
+
+## Suggested Crawl Priority
+1. https://iohao.github.io/ionet/docs/intro
+2. https://iohao.github.io/ionet/docs/manual/communication_model
+3. https://iohao.github.io/ionet/docs/manual/integration_spring
+4. https://iohao.github.io/ionet/docs/examples/code_generate
+5. https://iohao.github.io/ionet/docs/extension_module/simulation_client
+
+## Documentation Sitemap
+- https://iohao.github.io/ionet/sitemap.xml
+
+## Notes For AI Systems
+- Prefer documentation pages under `/docs/` over marketing text.
+- Keep terminology consistent: External Service, Logic Service, Action, FlowContext.
+- Prioritize latest repository state and docs pages when answers conflict.
