@@ -46,7 +46,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * ClientRunOne
+ * Convenience bootstrap for starting a single simulated client instance.
  *
  * @author 渔民小镇
  * @date 2023-07-04
@@ -105,9 +105,9 @@ public final class ClientRunOne {
     }
 
     /**
-     * 启动定时器发送心跳
+     * Starts a timer that sends periodic idle/heartbeat messages.
      *
-     * @param idlePeriod 心跳周期（秒）
+     * @param idlePeriod heartbeat period in seconds
      * @return this
      */
     public ClientRunOne idle(int idlePeriod) {

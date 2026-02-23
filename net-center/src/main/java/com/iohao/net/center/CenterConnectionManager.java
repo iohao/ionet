@@ -24,7 +24,7 @@ import com.iohao.net.common.CommonConnectionManager;
 import java.util.stream.Stream;
 
 /**
- * CenterConnectionManager
+ * Center-server connection manager for registered net-server publications and polling.
  *
  * @author 渔民小镇
  * @date 2025-08-25

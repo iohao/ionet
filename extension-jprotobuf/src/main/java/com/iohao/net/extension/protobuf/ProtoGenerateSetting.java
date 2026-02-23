@@ -23,6 +23,8 @@ import lombok.experimental.UtilityClass;
 import java.util.function.Function;
 
 /**
+ * Global settings for proto file generation behavior and field-name formatting.
+ *
  * @author 渔民小镇
  * @date 2024-10-31
  * @since 21.20

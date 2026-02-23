@@ -23,6 +23,7 @@ import io.aeron.Aeron;
 import lombok.Builder;
 
 /**
+ * Immutable runtime settings for the center server.
  *
  * @author 渔民小镇
  * @date 2025-09-23

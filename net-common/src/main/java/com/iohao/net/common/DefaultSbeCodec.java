@@ -26,7 +26,7 @@ import com.iohao.net.sbe.UserIdentityMessageDecoder;
 import com.iohao.net.sbe.UserIdentityMessageEncoder;
 
 /**
- * DefaultSbeCodec
+ * Default {@link SbeCodec} that maps framework message fields to SBE generated codecs.
  *
  * @author 渔民小镇
  * @date 2025-10-10

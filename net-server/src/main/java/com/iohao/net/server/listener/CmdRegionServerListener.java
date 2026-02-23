@@ -24,6 +24,7 @@ import com.iohao.net.server.NetServerSetting;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Keeps command-region routing tables in sync with server online/offline events.
  *
  * @author 渔民小镇
  * @date 2025-09-20

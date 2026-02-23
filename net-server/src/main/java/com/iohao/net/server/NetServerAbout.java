@@ -54,7 +54,7 @@ final class DefaultNetServer implements NetServer {
         this.netServerAgent = new NetServerAgent(setting);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            // shutdownHook
+            // Execute configured hooks so peer servers can be notified during JVM shutdown.
             setting.serverShutdownHookList().forEach(hook -> hook.shutdownHook(setting));
         }));
     }
@@ -164,7 +164,7 @@ final class NetServerAgent implements Agent {
 
             ServerManager.addServer(server);
 
-            // Register to center
+            // Register to center after local state/listeners are prepared.
             this.connectionManager.publishMessageToCenter(message);
 
             CompletableFuture<Integer> future = futureManager.ofFuture(futureId);

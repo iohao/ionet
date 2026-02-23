@@ -21,6 +21,7 @@ package com.iohao.net.server.connection;
 import com.iohao.net.server.NetServerSetting;
 
 /**
+ * Hook executed during net-server JVM shutdown.
  *
  * @author 渔民小镇
  * @date 2025-09-26

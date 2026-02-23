@@ -29,11 +29,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 客户端的用户（用户）
+ * Default client-side user model.
  * <pre>
- *     开发者可以通过动态属性来扩展业务，比如可以在动态属性中保存货币、战力值、血条 ...等
+ *     Developers can extend business data through dynamic attributes,
+ *     such as currency, battle power, HP, and more.
  *
- *     也可以通过继承的方式来扩展 ClientUser。
+ *     {@link ClientUser} can also be extended via inheritance.
  * </pre>
  *
  * @author 渔民小镇
@@ -44,16 +45,16 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PROTECTED)
 public class DefaultClientUser implements ClientUser {
     final AttrOptions options = new AttrOptions();
-    /** 通信 channel 用于读写 */
+    /** Communication channel used for reading and writing. */
     final ClientUserChannel clientUserChannel = new ClientUserChannel(this);
     final ClientUserInputCommands clientUserInputCommands = new ClientUserInputCommands(clientUserChannel);
     List<InputCommandRegion> inputCommandRegions;
 
-    /** true 已经登录成功 */
+    /** True after login succeeds. */
     boolean loginSuccess;
 
     long userId;
-    /** 昵称 */
+    /** Nickname. */
     String nickname;
     String jwt;
 

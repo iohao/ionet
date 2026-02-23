@@ -25,7 +25,7 @@ import com.iohao.net.sbe.ServerMessageCommonEncoder;
 import lombok.experimental.UtilityClass;
 
 /**
- * ServerMessageCodecKit
+ * Encodes and decodes {@link ServerMessage} common fields with SBE generated codecs.
  *
  * @author 渔民小镇
  * @date 2025-09-05
@@ -33,6 +33,12 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class ServerMessageCodecKit {
+    /**
+     * Encodes framework server-message fields into an SBE encoder.
+     *
+     * @param message source model
+     * @param common target SBE encoder
+     */
     public void encoder(ServerMessage message, ServerMessageCommonEncoder common) {
         common.id(message.getId())
                 .serverType(message.getServerType().getValue())
@@ -43,6 +49,12 @@ public final class ServerMessageCodecKit {
         ;
     }
 
+    /**
+     * Decodes framework server-message fields from an SBE decoder.
+     *
+     * @param message target model
+     * @param common source SBE decoder
+     */
     public void decoder(ServerMessage message, ServerMessageCommonDecoder common) {
         var serverType = ServerTypeEnum.valueOf(common.serverType());
 

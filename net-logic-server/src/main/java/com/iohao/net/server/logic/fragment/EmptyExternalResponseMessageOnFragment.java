@@ -28,6 +28,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
+ * Handles empty external-response messages and completes pending futures.
  *
  * @author 渔民小镇
  * @date 2025-09-18

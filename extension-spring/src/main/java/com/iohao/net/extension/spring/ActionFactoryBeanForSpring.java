@@ -29,7 +29,8 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
- * ActionFactoryBeanForSpring
+ * Spring-backed {@link ActionFactoryBean} implementation that resolves action controllers from the
+ * {@link ApplicationContext} and enables the framework's component-based injection integration.
  *
  * @author 渔民小镇
  * @date 2022-03-22
@@ -54,6 +55,7 @@ public class ActionFactoryBeanForSpring<T> implements ActionFactoryBean<T>, Appl
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Objects.requireNonNull(applicationContext);
 
+        // Initialize framework-side injection hooks before actions are resolved from Spring.
         initDependencyInjectionPart();
 
         this.applicationContext = applicationContext;

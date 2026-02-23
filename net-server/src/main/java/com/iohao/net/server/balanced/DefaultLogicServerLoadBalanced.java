@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
 
 /**
- * DefaultLogicServerLoadBalanced
+ * Map-based logic-server load balancer indexed by tag, command merge, and server id.
  *
  * @author 渔民小镇
  * @date 2025-09-01

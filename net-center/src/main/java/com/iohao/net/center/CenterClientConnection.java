@@ -23,6 +23,7 @@ import io.aeron.Publication;
 import lombok.Getter;
 
 /**
+ * Connection metadata for a net-server registered with the center server.
  *
  * @author 渔民小镇
  * @date 2025-08-25

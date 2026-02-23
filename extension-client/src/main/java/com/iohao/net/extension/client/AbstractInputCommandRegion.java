@@ -29,7 +29,7 @@ import com.iohao.net.extension.client.user.ClientUserInputCommands;
 import lombok.Getter;
 
 /**
- * AbstractInputCommandRegion
+ * Base implementation for grouping simulated client input commands by command region.
  *
  * @author 渔民小镇
  * @date 2023-07-10

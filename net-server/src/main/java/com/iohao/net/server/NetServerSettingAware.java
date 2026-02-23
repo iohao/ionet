@@ -19,11 +19,17 @@
 package com.iohao.net.server;
 
 /**
+ * Contract for components that require injected {@link NetServerSetting}.
  *
  * @author 渔民小镇
  * @date 2025-09-08
  * @since 25.1
  */
 public interface NetServerSettingAware {
+    /**
+     * Injects the runtime setting.
+     *
+     * @param setting runtime setting
+     */
     void setNetServerSetting(NetServerSetting setting);
 }

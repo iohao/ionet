@@ -24,7 +24,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
- * 请求命令执行。用于请求服务器的命令，业务数据需要在调用 request 方法时传入。
+ * Executable client request command sent to the server.
  *
  * @author 渔民小镇
  * @date 2023-07-14
@@ -36,13 +36,13 @@ public class RequestCommand {
     ClientUserChannel clientUserChannel;
     int cmdMerge;
     String title = "... ...";
-    /** 请求参数 */
+    /** Request payload supplier. */
     RequestDataDelegate requestData;
-    /** 响应回调 */
+    /** Response callback. */
     CallbackDelegate callback;
 
     /**
-     * 执行请求命令
+     * Executes the request command.
      */
     public void execute() {
         clientUserChannel.execute(this);

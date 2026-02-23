@@ -24,6 +24,7 @@ import org.agrona.concurrent.IdleStrategy;
 import org.agrona.concurrent.SleepingMillisIdleStrategy;
 
 /**
+ * Default center-server runtime that starts the center polling agent.
  *
  * @author 渔民小镇
  * @date 2025-09-23

@@ -21,6 +21,7 @@ package com.iohao.net.server.balanced;
 import com.iohao.net.framework.protocol.Server;
 
 /**
+ * Base contract for registering and removing servers from a load-balancer.
  *
  * @author 渔民小镇
  * @date 2025-09-01

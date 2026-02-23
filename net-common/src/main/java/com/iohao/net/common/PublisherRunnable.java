@@ -19,6 +19,7 @@
 package com.iohao.net.common;
 
 /**
+ * Marker interface for publisher worker runnables.
  *
  * @author 渔民小镇
  * @date 2025-10-14

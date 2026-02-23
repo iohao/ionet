@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * ProtoJavaField
+ * Parsed Java field metadata used to render a proto field line.
  *
  * @author 渔民小镇
  * @date 2022-01-24

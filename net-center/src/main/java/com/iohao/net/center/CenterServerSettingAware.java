@@ -19,6 +19,7 @@
 package com.iohao.net.center;
 
 /**
+ * Contract for components that require injected {@link CenterServerSetting}.
  *
  * @author 渔民小镇
  * @date 2025-09-23

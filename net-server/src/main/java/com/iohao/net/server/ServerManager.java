@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
+ * Global registry for server metadata known to the current net-server process.
  *
  * @author 渔民小镇
  * @date 2025-09-25

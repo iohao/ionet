@@ -22,6 +22,7 @@ import com.iohao.net.center.CenterServer;
 import com.iohao.net.center.CenterServerSetting;
 
 /**
+ * Factory for creating center-server runtime instances.
  *
  * @author 渔民小镇
  * @date 2025-10-23

@@ -19,6 +19,8 @@
 package com.iohao.net.server.cmd;
 
 /**
+ * Command-region routing bucket that tracks logic-server ids for one command merge.
+ *
  * @author 渔民小镇
  * @date 2023-05-01
  */

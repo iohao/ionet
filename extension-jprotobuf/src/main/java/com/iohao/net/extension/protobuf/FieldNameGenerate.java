@@ -22,7 +22,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 /**
- * FieldNameGenerate
+ * Mutable context passed to the configurable proto field-name generator function.
  *
  * @author 渔民小镇
  * @date 2024-10-30

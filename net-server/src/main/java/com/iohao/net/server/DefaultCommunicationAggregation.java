@@ -44,7 +44,7 @@ import java.util.concurrent.TimeoutException;
 import static com.iohao.net.server.CommunicationAggregationErrorConst.*;
 
 /**
- * DefaultCommunicationAggregation
+ * Default communication aggregation implementation for routing, broadcasting, and RPC-like calls.
  *
  * @author 渔民小镇
  * @date 2025-09-07

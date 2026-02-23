@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetCenter
+ * Center-server runtime, connection management, and Aeron fragment handling components.
  *
  * @author 渔民小镇
  * @date 2025-08-24

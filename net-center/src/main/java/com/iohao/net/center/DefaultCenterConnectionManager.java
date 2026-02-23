@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
+ * Default center-server connection manager backed by Aeron publications and subscriptions.
  *
  * @author 渔民小镇
  * @date 2025-09-27
@@ -89,7 +90,7 @@ final class DefaultCenterConnectionManager implements CenterConnectionManager {
 //        this.subscription = this.aeron.addSubscription(channel, AeronConst.centerId, image -> {
 //
 //            log.info("""
-//                            新的发布者已连接
+//                            A new publisher has connected
 //                              channel: {}
 //                              streamId: {}
 //                              sessionId: {}
@@ -100,7 +101,7 @@ final class DefaultCenterConnectionManager implements CenterConnectionManager {
 //            );
 //        }, image -> {
 //            log.info("""
-//                            发布者已断开连接
+//                            Publisher disconnected
 //                              channel: {}
 //                              streamId: {}
 //                              sessionId: {}

@@ -26,6 +26,7 @@ import com.iohao.net.framework.protocol.ResponseCollectExternalMessage;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Shared fallback responses and error constants for communication aggregation flows.
  *
  * @author 渔民小镇
  * @date 2025-10-09

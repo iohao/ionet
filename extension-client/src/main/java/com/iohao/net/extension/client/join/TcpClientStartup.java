@@ -33,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 
 /**
+ * TCP client connector startup implementation.
+ *
  * @author 渔民小镇
  * @date 2023-07-05
  */
@@ -54,22 +56,21 @@ class TcpClientStartup implements ClientConnect {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        // 编排网关业务
+                        // Configure the client pipeline.
                         ChannelPipeline pipeline = ch.pipeline();
 
-                        // 数据包长度 = 长度域的值 + lengthFieldOffset + lengthFieldLength + lengthAdjustment。
+                        // Frame length = length field value + offset + field length + adjustment.
                         pipeline.addLast(new LengthFieldBasedFrameDecoder(PACKAGE_MAX_SIZE,
-                                // 长度字段的偏移量， 从 0 开始
+                                // Length field offset (starts at 0).
                                 0,
-                                // 字段的长度, 如果使用的是 short ，占用2位；（消息头用的 byteBuf.writeShort 来记录长度的）
-                                // 字段的长度, 如果使用的是 int   ，占用4位；（消息头用的 byteBuf.writeInt   来记录长度的）
+                                // Length field size (2 for short, 4 for int). This protocol uses 4.
                                 4,
-                                // 要添加到长度字段值的补偿值：长度调整值 = 内容字段偏移量 - 长度字段偏移量 - 长度字段的字节数
+                                // Length adjustment: contentOffset - lengthFieldOffset - lengthFieldSize.
                                 0,
-                                // 跳过的初始字节数： 跳过0位; (跳过消息头的 0 位长度)
+                                // Initial bytes to strip: 0 (keep the length field for downstream codec).
                                 0));
 
-                        // 编解码
+                        // Codec
                         pipeline.addLast("codec", new ClientTcpExternalCodec());
 
                         pipeline.addLast(clientMessageHandler);

@@ -27,6 +27,7 @@ import com.iohao.net.common.SbeKit;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for external request messages.
  *
  * @author 渔民小镇
  * @date 2025-09-11

@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * RunOne
+ * Convenience bootstrap API for starting ionet components (external server, logic servers, and
+ * optional center server) within a single application entry point.
  *
  * @author 渔民小镇
  * @date 2025-09-04

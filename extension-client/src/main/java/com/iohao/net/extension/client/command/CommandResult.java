@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 回调结果
+ * Callback result wrapper with lazy response payload decoding helpers.
  *
  * @author 渔民小镇
  * @date 2023-07-08
@@ -38,7 +38,7 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PACKAGE)
 public class CommandResult {
     final ExternalMessage message;
-    /** 业务对象 */
+    /** Lazily decoded business object. */
     Object value;
 
     public CommandResult(ExternalMessage message) {

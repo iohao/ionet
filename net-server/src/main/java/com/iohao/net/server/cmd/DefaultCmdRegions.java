@@ -30,6 +30,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Default command-region registry that maps command merges to candidate logic servers.
+ *
  * @author 渔民小镇
  * @date 2023-04-30
  */

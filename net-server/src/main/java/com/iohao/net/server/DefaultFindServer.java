@@ -27,7 +27,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 /**
- * DefaultFindServer
+ * Default request router that resolves logic servers from load-balancing state.
  *
  * @author 渔民小镇
  * @date 2025-10-11

@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * DomainEventContext
+ * Boots and manages the lifecycle of domain-event disruptor pipelines.
  *
  * @author 渔民小镇
  * @date 2021-12-26
@@ -37,6 +37,11 @@ import java.util.stream.Collectors;
 public class DomainEventApplication {
     boolean init;
 
+    /**
+     * Initializes disruptors for all registered handlers and starts them once.
+     *
+     * @param setting domain-event configuration
+     */
     public void startup(DomainEventSetting setting) {
         if (init) {
             return;
@@ -75,6 +80,9 @@ public class DomainEventApplication {
         domainEventHandlerSet.clear();
     }
 
+    /**
+     * Stops all running disruptors managed by the domain-event extension.
+     */
     public void stop() {
         DisruptorManager.listDisruptor().removeIf(disruptor -> {
             disruptor.shutdown();

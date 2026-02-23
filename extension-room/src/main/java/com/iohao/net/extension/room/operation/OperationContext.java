@@ -26,7 +26,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
- * OperationContext
+ * Room gameplay operation execution context and domain-event payload.
  *
  * @author 渔民小镇
  * @date 2022-03-31

@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for internal response messages.
  *
  * @author 渔民小镇
  * @date 2025-09-06

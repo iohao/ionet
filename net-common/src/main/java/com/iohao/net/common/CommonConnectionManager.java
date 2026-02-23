@@ -22,18 +22,42 @@ import io.aeron.Publication;
 import io.aeron.logbuffer.FragmentHandler;
 
 /**
- * CommonConnectionManager
+ * Manages Aeron publications and fragment polling for common network connections.
  *
  * @author 渔民小镇
  * @date 2025-10-25
  * @since 25.1
  */
 public interface CommonConnectionManager {
+    /**
+     * Tests whether a publication mapping exists for the given network id.
+     *
+     * @param netId network id
+     * @return true if the mapping exists
+     */
     boolean containsNetId(int netId);
 
+    /**
+     * Gets the Aeron publication bound to the given network id.
+     *
+     * @param netId network id
+     * @return publication, or null if absent
+     */
     Publication getPublicationByNetId(int netId);
 
+    /**
+     * Publishes a message through the named publication pipeline.
+     *
+     * @param pubName publication name
+     * @param message message to publish
+     */
     void publishMessage(String pubName, Object message);
 
+    /**
+     * Polls inbound fragments and dispatches them to the provided fragment handler.
+     *
+     * @param fragmentHandler fragment callback
+     * @return number of fragments processed
+     */
     int poll(FragmentHandler fragmentHandler);
 }

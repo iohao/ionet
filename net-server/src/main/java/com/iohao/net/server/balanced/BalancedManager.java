@@ -22,6 +22,7 @@ import com.iohao.net.framework.protocol.Server;
 import com.iohao.net.framework.protocol.ServerTypeEnum;
 
 /**
+ * Aggregates load-balancing strategies for logic servers and external servers.
  *
  * @author 渔民小镇
  * @date 2025-09-01

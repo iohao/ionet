@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Set;
 
 /**
+ * Shared online/offline processing helpers for peer state transitions.
  *
  * @author 渔民小镇
  * @date 2025-09-20

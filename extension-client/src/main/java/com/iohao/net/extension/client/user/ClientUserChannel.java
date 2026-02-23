@@ -41,9 +41,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 用户通信 channel
+ * Client communication channel facade for sending requests and receiving server responses.
  * <pre>
- *     发送请求，接收服务器响应
+ *     Sends requests and receives server responses.
  * </pre>
  *
  * @author 渔民小镇
@@ -78,7 +78,7 @@ public class ClientUserChannel {
 
     public Runnable closeChannel;
     ChannelAccept channelAccept;
-    /** 目标 ip （服务器 ip） */
+    /** Target server address. */
     public InetSocketAddress inetSocketAddress;
 
     public ClientUserChannel(DefaultClientUser clientUser) {
@@ -87,7 +87,7 @@ public class ClientUserChannel {
 
     public void request(InputCommand inputCommand) {
         CmdInfo cmdInfo = inputCommand.getCmdInfo();
-        // 生成请求参数
+        // Create the request payload lazily from the configured supplier.
         RequestDataDelegate requestData = inputCommand.getRequestData();
 
         CallbackDelegate callback = inputCommand.getCallback();
@@ -165,7 +165,7 @@ public class ClientUserChannel {
         public void read(ExternalMessage message) {
             int responseStatus = message.getErrorCode();
 
-            // 表示有异常消息，统一异常处理
+            // Non-zero error code indicates an error response; handle it uniformly.
             if (responseStatus != 0) {
                 log.error("[ErrorCode:{}] - [ErrorMsg:{}] - {}",
                         responseStatus, message.getErrorMessage(), CmdInfo.of(message.getCmdMerge()));
@@ -178,7 +178,7 @@ public class ClientUserChannel {
             }
 
             CommandResult commandResult = new CommandResult(message);
-            // 有回调的，交给回调处理
+            // If a request callback exists, route the response to that callback.
             int msgId = message.getMsgId();
             RequestCommand requestCommand = callbackMap.remove(msgId);
 
@@ -190,7 +190,7 @@ public class ClientUserChannel {
                 return;
             }
 
-            // 广播监听
+            // Otherwise, try broadcast listeners bound to cmdMerge.
             int cmdMerge = message.getCmdMerge();
             ListenCommand listenCommand = listenMap.get(cmdMerge);
 
@@ -217,7 +217,7 @@ public class ClientUserChannel {
 
         private void printLog(ExternalMessage message, RequestCommand requestCommand) {
             if (ClientUserConfigs.openLogRequestCallback) {
-                // 用户接收服务器的响应数据
+                // Log server response received by the client user.
                 long userId = clientUser.getUserId();
                 int cmdMerge = message.getCmdMerge();
 

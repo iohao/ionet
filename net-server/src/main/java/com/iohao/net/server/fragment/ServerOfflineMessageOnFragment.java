@@ -27,7 +27,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
- * ServerOfflineMessageOnFragment
+ * Handles server-offline notifications and triggers peer offline cleanup.
  *
  * @author 渔民小镇
  * @date 2025-09-26

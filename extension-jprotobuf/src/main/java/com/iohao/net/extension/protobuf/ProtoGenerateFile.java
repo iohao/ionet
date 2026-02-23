@@ -38,7 +38,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * Generate ProtoFile
+ * Generates grouped `.proto` files by scanning annotated Java classes.
  *
  * @author 渔民小镇
  * @date 2022-01-25
@@ -50,9 +50,9 @@ import java.util.function.Consumer;
 public class ProtoGenerateFile {
     /** proto package path */
     final Set<String> protoPackageSet = new HashSet<>();
-    /** pb 源码目录 */
+    /** Source code root path used by QDox scanning. */
     String protoSourcePath;
-    /** 生成 proto file 目录 */
+    /** Output directory for generated proto files. */
     String generateFolder;
 
     public ProtoGenerateFile addProtoPackage(Collection<String> protoPackageList) {

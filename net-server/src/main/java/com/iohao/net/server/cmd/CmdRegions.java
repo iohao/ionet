@@ -20,6 +20,8 @@ package com.iohao.net.server.cmd;
 
 
 /**
+ * Registry of command-region routing buckets used for logic-server dispatch.
+ *
  * @author 渔民小镇
  * @date 2023-05-01
  */

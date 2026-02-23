@@ -19,7 +19,7 @@
 package com.iohao.net.center;
 
 /**
- * CenterServer
+ * Center-server runtime entry point.
  *
  * @author 渔民小镇
  * @date 2025-08-24

@@ -21,17 +21,27 @@ package com.iohao.net.extension.domain;
 import lombok.experimental.UtilityClass;
 
 /**
- * DomainEventPublish
+ * Static facade for publishing domain events through the configured producer.
  *
  * @author 渔民小镇
  * @date 2021-12-26
  */
 @UtilityClass
 public class DomainEventPublish {
+    /**
+     * Publishes a typed {@link DomainEventSource}.
+     *
+     * @param domainSource domain event source
+     */
     public void send(DomainEventSource domainSource) {
         DisruptorManager.commonEventProducer.onData(domainSource, domainSource.getTopic(), true);
     }
 
+    /**
+     * Publishes an arbitrary object as a domain event.
+     *
+     * @param domainSource domain object or {@link Topic}
+     */
     public void send(Object domainSource) {
         if (domainSource instanceof DomainEventSource domainEventSource) {
             send(domainEventSource);

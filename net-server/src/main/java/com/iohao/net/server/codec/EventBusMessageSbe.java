@@ -26,6 +26,7 @@ import com.iohao.net.sbe.EventBusMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for cross-server event-bus messages.
  *
  * @author 渔民小镇
  * @date 2025-09-21

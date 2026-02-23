@@ -19,11 +19,17 @@
 package com.iohao.net.server;
 
 /**
+ * Hook invoked after {@link NetServerBuilder} finishes creating {@link NetServerSetting}.
  *
  * @author 渔民小镇
  * @date 2025-11-10
  * @since 25.1
  */
 public interface NetServerSettingHook {
+    /**
+     * Called when net-server setting creation is complete.
+     *
+     * @param setting built setting
+     */
     void buildComplete(NetServerSetting setting);
 }

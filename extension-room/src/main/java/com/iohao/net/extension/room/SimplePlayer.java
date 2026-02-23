@@ -24,7 +24,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * SimplePlayer
+ * Basic mutable {@link Player} implementation for room-based games.
  *
  * @author 渔民小镇
  * @date 2024-05-12

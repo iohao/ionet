@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
- * Room
+ * Core room abstraction for player lifecycle, seating, and room-level game operations.
  *
  * @author 渔民小镇
  * @date 2022-03-31

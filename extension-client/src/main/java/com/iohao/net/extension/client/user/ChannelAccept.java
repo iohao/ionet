@@ -21,6 +21,7 @@ package com.iohao.net.extension.client.user;
 import com.iohao.net.framework.protocol.CommunicationMessage;
 
 /**
+ * Transport callback used to send a communication message through the active client channel.
  *
  * @author 渔民小镇
  * @date 2025-10-08

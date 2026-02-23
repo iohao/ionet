@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Objects;
 
 /**
- * 模块输入命令域
+ * Helper for creating simulated input commands within a module command region.
  *
  * @author 渔民小镇
  * @date 2023-07-09
@@ -50,29 +50,29 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PUBLIC)
 public class InputCommandCreate {
     int cmd = -1;
-    /** true 相同路由的 InputCommand 只能存在一个 */
+    /** When true, only one {@link InputCommand} can exist for the same route. */
     boolean uniqueInputCommand = ClientUserConfigs.uniqueInputCommand;
-    /** 模块描述的前缀 */
+    /** Prefix used in the module command description. */
     String cmdName = "";
 
     ClientUserInputCommands clientUserInputCommands;
 
     public CmdInfo ofCmdInfo(int subCmd) {
-        AssertKit.assertTrueThrow(cmd < 0, "cmd 不能小于 0");
+        AssertKit.assertTrueThrow(cmd < 0, "cmd must be >= 0");
         return CmdInfo.of(cmd, subCmd);
     }
 
     public InputCommand getInputCommand(int subCmd) {
         CmdInfo cmdInfo = ofCmdInfo(subCmd);
         InputCommand inputCommand = clientUserInputCommands.getInputCommand(cmdInfo);
-        Objects.requireNonNull(inputCommand, "没有对应的请求配置");
+        Objects.requireNonNull(inputCommand, "No request configuration found for the route");
         return inputCommand;
     }
 
     /**
-     * 创建模拟命令
+     * Creates a simulated command.
      *
-     * @param subCmd 子路由
+     * @param subCmd sub-command route
      * @return InputCommand
      */
     public InputCommand ofInputCommand(int subCmd) {
@@ -83,7 +83,7 @@ public class InputCommandCreate {
 
         CmdInfo cmdInfo = ofCmdInfo(subCmd);
 
-        // 唯一性路由命令检测，先检查命令是否存在
+        // Uniqueness check: verify whether a command with the same route already exists.
         extractedChecked(cmdInfo);
 
         return clientUserInputCommands.ofCommand(cmdInfo)
@@ -96,37 +96,37 @@ public class InputCommandCreate {
             var inputName = CmdKit.toSimpleString(cmdInfo);
             InputCommand inputCommand = clientUserInputCommands.getInputCommand(inputName);
             if (Objects.nonNull(inputCommand)) {
-                // 存在重复的路由命令
+                // Duplicate route command exists.
                 ThrowKit.ofRuntimeException("There are duplicate routing commands : " + cmdInfo);
             }
         }
     }
 
     /**
-     * 创建模拟命令，在使用命令时需要在控制台输入 long 类型的请求参数
+     * Creates a simulated command that reads a {@code long} request parameter from the console.
      *
-     * @param subCmd 子路由
+     * @param subCmd sub-command route
      * @return InputCommand
      */
     public InputCommand ofInputCommandLong(int subCmd) {
-        RequestDataDelegate requestData = nextParamLong("参数");
+        RequestDataDelegate requestData = nextParamLong("parameter");
         return ofInputCommand(subCmd, requestData);
     }
 
     /**
-     * 创建模拟命令，在使用命令时需要在控制台输入 long 类型的 userId 请求参数
+     * Creates a simulated command that reads a target userId ({@code long}) from the console.
      *
-     * @param subCmd 子路由
+     * @param subCmd sub-command route
      * @return InputCommand
      */
     public InputCommand ofInputCommandUserId(int subCmd) {
-        RequestDataDelegate requestData = nextParamLong("对方的 userId");
+        RequestDataDelegate requestData = nextParamLong("target userId");
         return ofInputCommand(subCmd, requestData);
     }
 
     public RequestDataDelegate nextParamLong(String paramTips) {
         return () -> {
-            log.info("请输入{} | 参数类型 : long.class", paramTips);
+            log.info("Please input {} | parameter type : long.class", paramTips);
 
             long longValue = ScannerKit.nextLong();
             return LongValue.of(longValue);
@@ -134,13 +134,13 @@ public class InputCommandCreate {
     }
 
     public InputCommand ofInputCommandInt(int subCmd) {
-        RequestDataDelegate requestData = nextParamInt("参数");
+        RequestDataDelegate requestData = nextParamInt("parameter");
         return ofInputCommand(subCmd, requestData);
     }
 
     public RequestDataDelegate nextParamInt(String paramTips) {
         return () -> {
-            String info = "请输入{} | 参数类型 : int.class";
+            String info = "Please input {} | parameter type : int.class";
             log.info(info, paramTips);
 
             int intValue = ScannerKit.nextInt();
@@ -149,13 +149,13 @@ public class InputCommandCreate {
     }
 
     public InputCommand ofInputCommandString(int subCmd) {
-        RequestDataDelegate requestData = nextParamString("参数");
+        RequestDataDelegate requestData = nextParamString("parameter");
         return ofInputCommand(subCmd, requestData);
     }
 
     public RequestDataDelegate nextParamString(String paramTips) {
         return () -> {
-            String info = "请输入{} | 参数类型 : String.class";
+            String info = "Please input {} | parameter type : String.class";
             log.info(info, paramTips);
             String s = ScannerKit.nextLine();
             Objects.requireNonNull(s);

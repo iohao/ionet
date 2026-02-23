@@ -26,18 +26,42 @@ import com.iohao.net.sbe.UserIdentityMessageDecoder;
 import com.iohao.net.sbe.UserIdentityMessageEncoder;
 
 /**
- * SbeCodec
+ * Abstraction for encoding and decoding framework message models with SBE generated codecs.
  *
  * @author 渔民小镇
  * @date 2025-10-10
  * @since 25.1
  */
 public interface SbeCodec {
+    /**
+     * Encodes user identity fields into an SBE encoder.
+     *
+     * @param message source model
+     * @param userIdentity target SBE encoder
+     */
     void encoderUserIdentity(UserIdentity message, UserIdentityMessageEncoder userIdentity);
 
+    /**
+     * Decodes user identity fields from an SBE decoder into the framework model.
+     *
+     * @param message target model
+     * @param userIdentity source SBE decoder
+     */
     void decoderUserIdentity(UserIdentity message, UserIdentityMessageDecoder userIdentity);
 
+    /**
+     * Encodes common remote-message fields into an SBE encoder.
+     *
+     * @param message source model
+     * @param common target SBE encoder
+     */
     void encoderMessageCommon(RemoteMessage message, CommonMessageEncoder common);
 
+    /**
+     * Decodes common remote-message fields from an SBE decoder into the framework model.
+     *
+     * @param message target model
+     * @param common source SBE decoder
+     */
     void decoderMessageCommon(RemoteMessage message, CommonMessageDecoder common);
 }

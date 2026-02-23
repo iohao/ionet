@@ -22,6 +22,7 @@ import com.iohao.net.common.Publisher;
 import io.aeron.Aeron;
 
 /**
+ * Parameters required to create a center-server connection manager.
  *
  * @author 渔民小镇
  * @date 2025-10-23

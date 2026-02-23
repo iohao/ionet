@@ -29,6 +29,7 @@ import org.agrona.MutableDirectBuffer;
 import java.util.Map;
 
 /**
+ * SBE encoder for center-server connect-response messages.
  *
  * @author 渔民小镇
  * @date 2025-09-06

@@ -38,6 +38,7 @@ import org.agrona.DirectBuffer;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * Handles center connect-response fragments and registers newly discovered server connections.
  *
  * @author 渔民小镇
  * @date 2025-08-26

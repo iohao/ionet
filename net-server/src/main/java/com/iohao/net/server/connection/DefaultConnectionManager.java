@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.collections.Int2ObjectHashMap;
 
 /**
- * DefaultConnectionManager
+ * Default Aeron-based {@link ConnectionManager} implementation for net-server peers.
  *
  * @author 渔民小镇
  * @date 2025-09-06

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetServer - CmdRegion
+ * Command-region routing tables used by net-server logic dispatching.
  *
  * @author 渔民小镇
  * @date 2025-09-06

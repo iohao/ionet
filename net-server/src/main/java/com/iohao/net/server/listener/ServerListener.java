@@ -22,7 +22,7 @@ import com.iohao.net.framework.protocol.Server;
 import com.iohao.net.server.NetServerSetting;
 
 /**
- * ServerListener, listens for logic server connection and disconnection (online and offline)
+ * Listener for net-server peer lifecycle events (before connect, online, offline).
  *
  * @author 渔民小镇
  * @date 2025-09-20
@@ -33,19 +33,19 @@ public interface ServerListener {
     }
 
     /**
-     * Server online listener, this method is triggered for servers that are already online or newly connected servers
+     * Called for servers that are already online or become newly connected.
      *
-     * @param server  server
-     * @param setting setting
+     * @param server server metadata
+     * @param setting runtime setting
      */
     default void onlineServer(Server server, NetServerSetting setting) {
     }
 
     /**
-     * Other server offline listener
+     * Called when another server goes offline.
      *
-     * @param server  server
-     * @param setting setting
+     * @param server server metadata
+     * @param setting runtime setting
      */
     default void offlineServer(Server server, NetServerSetting setting) {
     }

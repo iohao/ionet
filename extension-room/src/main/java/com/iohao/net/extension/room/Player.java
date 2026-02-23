@@ -19,7 +19,7 @@
 package com.iohao.net.extension.room;
 
 /**
- * Player
+ * Player abstraction used by the room extension.
  *
  * @author 渔民小镇
  * @date 2022-03-31

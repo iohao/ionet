@@ -14,6 +14,9 @@ import com.iohao.net.server.fragment.ServerOfflineMessageOnFragment;
 import com.iohao.net.server.fragment.ConnectResponseMessageOnFragment;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Registers net-server specific SBE encoders and fragment handlers into shared registries.
+ */
 @Slf4j
 public class NetServerCoreConfigLoader implements CoreConfigLoader {
     @Override

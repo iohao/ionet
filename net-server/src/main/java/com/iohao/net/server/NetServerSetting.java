@@ -33,6 +33,7 @@ import lombok.Builder;
 import java.util.List;
 
 /**
+ * Immutable runtime setting assembled by {@link NetServerBuilder}.
  *
  * @author 渔民小镇
  * @date 2025-09-08

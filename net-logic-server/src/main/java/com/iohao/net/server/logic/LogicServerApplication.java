@@ -26,14 +26,19 @@ import com.iohao.net.server.LogicServer;
 import com.iohao.net.server.LogicServerManager;
 
 /**
- * LogicServerApplication
+ * Bootstraps a {@link LogicServer} into a {@link Server} definition for net-server startup.
  *
  * @author 渔民小镇
  * @date 2025-09-04
  * @since 25.1
  */
 public final class LogicServerApplication {
-
+    /**
+     * Builds the logic-server skeleton and server metadata, then registers startup callbacks.
+     *
+     * @param logicServer logic-server implementation
+     * @return built server metadata
+     */
     public static Server startup(LogicServer logicServer) {
         var barSkeletonBuilder = BarSkeleton.builder();
         logicServer.settingBarSkeletonBuilder(barSkeletonBuilder);

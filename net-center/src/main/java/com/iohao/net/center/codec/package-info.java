@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetCenter - Codec
+ * SBE encoders used by the center server.
  *
  * @author 渔民小镇
  * @date 2025-09-06

@@ -35,6 +35,8 @@ import java.nio.ByteBuffer;
 import java.util.Objects;
 
 /**
+ * WebSocket client connector startup implementation.
+ *
  * @author 渔民小镇
  * @date 2023-07-04
  */
@@ -96,7 +98,7 @@ class WebSocketClientStartup implements ClientConnect {
 
         clientUser.getClientUserInputCommands().start();
 
-        // 开始连接服务器
+        // Start connecting to the server.
         webSocketClient.connect();
     }
 }

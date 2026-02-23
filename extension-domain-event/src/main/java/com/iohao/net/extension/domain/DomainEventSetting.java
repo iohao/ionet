@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * DomainEventContextParam
+ * Configuration holder for domain-event disruptor creation and handler registration.
  *
  * @author 渔民小镇
  * @date 2021-12-26

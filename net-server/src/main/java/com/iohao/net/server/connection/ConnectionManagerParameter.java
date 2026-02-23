@@ -24,6 +24,7 @@ import io.aeron.Aeron;
 import lombok.Builder;
 
 /**
+ * Parameters required to construct a net-server {@link ConnectionManager}.
  *
  * @author 渔民小镇
  * @date 2025-10-18

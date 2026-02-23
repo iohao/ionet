@@ -42,6 +42,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
+ * Analyzes annotated Java classes and converts them into proto generation metadata.
+ *
  * @author 渔民小镇
  * @date 2022-01-25
  */
@@ -141,7 +143,7 @@ public class ProtoJavaAnalyse {
                 : clazz.getFields();
 
         JavaClass javaClass = protoJava.javaClass;
-        // 枚举 enum 的下标从 0 开始，message 的下标从 1 开始
+        // Enum numeric values start from 0, while message field indices start from 1.
         int order = clazz.isEnum() ? 0 : 1;
         var enumConstants = clazz.isEnum() ? clazz.getEnumConstants() : CommonConst.emptyObjects;
 
@@ -164,7 +166,7 @@ public class ProtoJavaAnalyse {
             protoJavaField.field = field;
             protoJavaField.protoJavaParent = protoJava;
 
-            // 自定义枚举值
+            // Custom enum numeric value
             if (clazz.isEnum() && EnumReadable.class.isAssignableFrom(clazz)) {
                 if (enumConstants[i] instanceof EnumReadable r) {
                     protoJavaField.order = r.value();
@@ -191,7 +193,7 @@ public class ProtoJavaAnalyse {
 
     private String fieldProtoTypeToString(ProtoJavaField protoJavaField, Class<?> fieldTypeClass) {
         String fieldName = protoJavaField.fieldName;
-        // 这个字段是一个 proto 对象类型
+        // This field references another proto object type.
         ProtoJava protoJavaFieldType = this.getFieldProtoJava(fieldTypeClass, fieldName, protoJavaField);
         ProtoJava protoJavaParent = protoJavaField.protoJavaParent;
 
@@ -201,13 +203,13 @@ public class ProtoJavaAnalyse {
         String fieldProtoType;
 
         if (protoJavaParent.inThisFile(protoJavaFieldType)) {
-            // 同一个文件的 proto 对象
+            // Proto object defined in the same file
             fieldProtoType = className;
         } else {
             ProtoJavaRegionKey regionKey = protoJavaParent.getProtoJavaRegionKey();
             ProtoJavaRegion protoJavaRegion = this.getProtoJavaRegion(regionKey);
             protoJavaRegion.addOtherProtoFile(protoJavaFieldType);
-            // 不在同一个文件中
+            // Proto object defined in another file
             fieldProtoType = String.format("%s.%s", filePackage, className);
         }
 
@@ -215,7 +217,7 @@ public class ProtoJavaAnalyse {
     }
 
     private void processFieldProtoJava(ProtoJavaField protoJavaField) {
-        // 这个字段是一个 proto 对象类型
+        // This field references another proto object type.
 
         Class<?> fieldTypeClass = protoJavaField.fieldTypeClass;
         String fieldName = protoJavaField.fieldName;
@@ -229,7 +231,7 @@ public class ProtoJavaAnalyse {
     }
 
     private void processListFieldProtoJava(ProtoJavaField protoJavaField) {
-        // 获取 map 的 <k,v> 类型
+        // Get the generic element type for List<T>.
         ParameterizedType genericType = (ParameterizedType) protoJavaField.field.getGenericType();
         Type[] actualTypeArguments = genericType.getActualTypeArguments();
 
@@ -248,10 +250,10 @@ public class ProtoJavaAnalyse {
 
         Map<String, String> map = new HashMap<>();
 
-        // map 类型
+        // map type
         Field field = protoJavaField.field;
 
-        // 获取 map 的 <k,v> 类型
+        // Get the generic types for Map<K, V>.
         ParameterizedType genericType = (ParameterizedType) field.getGenericType();
         Type[] actualTypeArguments = genericType.getActualTypeArguments();
 
@@ -260,7 +262,7 @@ public class ProtoJavaAnalyse {
         map.put("keyStr", keyFieldProtoType);
 
         if (Objects.isNull(keyFieldProtoType)) {
-            // key 是一个 proto 对象类型
+            // Key is a proto object type
             String keyStr = this.fieldProtoTypeToString(protoJavaField, keyClass);
             map.put("keyStr", keyStr);
         }
@@ -269,7 +271,7 @@ public class ProtoJavaAnalyse {
         String valueFieldProtoType = ProtoFieldTypeHolder.getProtoType(valueClass);
         map.put("valueStr", valueFieldProtoType);
         if (Objects.isNull(valueFieldProtoType)) {
-            // value 是一个 proto 对象类型
+            // Value is a proto object type
             String valueStr = this.fieldProtoTypeToString(protoJavaField, valueClass);
             map.put("valueStr", valueStr);
         }

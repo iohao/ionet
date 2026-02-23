@@ -19,12 +19,19 @@
 package com.iohao.net.extension.domain;
 
 /**
- * CommonEventProducer
+ * Publishes domain events into the configured disruptor pipeline.
  *
  * @author 渔民小镇
  * @date 2025-10-20
  * @since 25.1
  */
 public interface CommonEventProducer {
+    /**
+     * Publishes a domain object into the disruptor for the given topic.
+     *
+     * @param domainSource domain object or wrapped event source
+     * @param topic topic class
+     * @param eventSource true if {@code domainSource} implements {@link DomainEventSource}
+     */
     void onData(final Object domainSource, Class<?> topic, boolean eventSource);
 }

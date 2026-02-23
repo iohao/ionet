@@ -10,7 +10,7 @@ import com.iohao.net.server.logic.fragment.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * LogicServerCoreConfigLoader
+ * Registers logic-server SBE encoders and fragment handlers into shared registries.
  *
  * @author 渔民小镇
  * @date 2025-09-04

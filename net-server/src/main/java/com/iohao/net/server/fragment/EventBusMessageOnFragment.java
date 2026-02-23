@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.DirectBuffer;
 
 /**
+ * Handles cross-server event-bus fragments and dispatches them to local event buses.
  *
  * @author 渔民小镇
  * @date 2025-09-21

@@ -24,6 +24,7 @@ import io.aeron.UnavailableImageHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Optional Aeron image availability callback that currently keeps logging disabled.
  *
  * @author 渔民小镇
  * @date 2025-09-20

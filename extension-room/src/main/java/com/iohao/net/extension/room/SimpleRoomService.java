@@ -26,7 +26,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Map;
 
 /**
- * SimpleRoomService
+ * Default in-memory {@link RoomService} implementation.
  *
  * @author 渔民小镇
  * @date 2024-05-12

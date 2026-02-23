@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Type mapping table from Java field types to proto scalar types.
+ *
  * @author 渔民小镇
  * @date 2022-01-24
  */

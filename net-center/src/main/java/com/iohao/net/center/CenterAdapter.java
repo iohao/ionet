@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.DirectBuffer;
 
 /**
+ * Aeron fragment adapter for the center server that dispatches to registered fragment handlers.
  *
  * @author 渔民小镇
  * @date 2025-08-24
@@ -40,7 +41,7 @@ final class CenterAdapter implements FragmentHandler {
 
     CenterAdapter(CenterServerSetting setting) {
         this.setting = setting;
-        // internal register
+        // Inject center-server settings into shared fragment handlers that support it.
         for (var fragment : OnFragmentManager.onFragments) {
             if (fragment instanceof CenterServerSettingAware aware) {
                 aware.setCenterServerSetting(this.setting);

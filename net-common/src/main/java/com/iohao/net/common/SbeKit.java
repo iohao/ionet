@@ -28,7 +28,7 @@ import lombok.Setter;
 import lombok.experimental.UtilityClass;
 
 /**
- * SbeKit
+ * Static facade for the active {@link SbeCodec} implementation.
  *
  * @author 渔民小镇
  * @date 2025-09-06
@@ -39,18 +39,42 @@ public final class SbeKit {
     @Setter
     SbeCodec sbeCodec = new DefaultSbeCodec();
 
+    /**
+     * Encodes user identity fields with the active {@link #sbeCodec}.
+     *
+     * @param message source model
+     * @param userIdentity target SBE encoder
+     */
     public void encoderUserIdentity(UserIdentity message, UserIdentityMessageEncoder userIdentity) {
         sbeCodec.encoderUserIdentity(message, userIdentity);
     }
 
+    /**
+     * Decodes user identity fields with the active {@link #sbeCodec}.
+     *
+     * @param message target model
+     * @param userIdentity source SBE decoder
+     */
     public void decoderUserIdentity(UserIdentity message, UserIdentityMessageDecoder userIdentity) {
         sbeCodec.decoderUserIdentity(message, userIdentity);
     }
 
+    /**
+     * Encodes common remote-message fields with the active {@link #sbeCodec}.
+     *
+     * @param message source model
+     * @param common target SBE encoder
+     */
     public void encoderMessageCommon(RemoteMessage message, CommonMessageEncoder common) {
         sbeCodec.encoderMessageCommon(message, common);
     }
 
+    /**
+     * Decodes common remote-message fields with the active {@link #sbeCodec}.
+     *
+     * @param message target model
+     * @param common source SBE decoder
+     */
     public void decoderMessageCommon(RemoteMessage message, CommonMessageDecoder common) {
         sbeCodec.decoderMessageCommon(message, common);
     }

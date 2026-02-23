@@ -48,6 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 /**
+ * Builder for assembling {@link NetServer} runtime dependencies and defaults.
  *
  * @author 渔民小镇
  * @date 2025-09-08
@@ -80,6 +81,11 @@ public final class NetServerBuilder {
     NetServerSettingHook serverSettingHook = _ -> {
     };
 
+    /**
+     * Builds a net-server runtime using configured components and defaults.
+     *
+     * @return net-server instance
+     */
     public NetServer build() {
         defaultSetting();
 
@@ -119,11 +125,21 @@ public final class NetServerBuilder {
         return netServerCreator.of(setting);
     }
 
+    /**
+     * Adds a shutdown hook executed during JVM shutdown.
+     *
+     * @param hook shutdown hook
+     */
     public void addServerShutdownHook(ServerShutdownHook hook) {
         Objects.requireNonNull(hook);
         this.serverShutdownHookList.add(hook);
     }
 
+    /**
+     * Adds multiple shutdown hooks.
+     *
+     * @param hookList shutdown hooks
+     */
     public void addServerShutdownHook(List<ServerShutdownHook> hookList) {
         if (hookList == null) {
             return;
@@ -134,6 +150,11 @@ public final class NetServerBuilder {
         }
     }
 
+    /**
+     * Adds a server listener to the listener chain.
+     *
+     * @param serverListener server listener
+     */
     public void addServerListener(ServerListener serverListener) {
         Objects.requireNonNull(serverListener);
         this.listenerList.add(serverListener);

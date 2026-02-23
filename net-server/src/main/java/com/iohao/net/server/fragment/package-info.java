@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetServer - OnFragment
+ * Aeron fragment handlers used by net-server for peer registration and peer events.
  *
  * @author 渔民小镇
  * @date 2025-09-20

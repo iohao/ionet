@@ -22,7 +22,7 @@ import com.iohao.net.server.connection.ConnectionManager;
 import com.iohao.net.server.connection.ConnectionManagerParameter;
 
 /**
- * ConnectionManagerCreator
+ * Factory for creating net-server connection managers.
  *
  * @author 渔民小镇
  * @date 2025-10-18

@@ -28,7 +28,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 /**
- * 模拟命令
+ * Simulated client input command configuration.
  * example:
  * <pre>{@code
  *         ofCommand(DemoCmd.here).setTitle("here").setRequestData(() -> {
@@ -40,7 +40,7 @@ import lombok.experimental.FieldDefaults;
  *          });
  *
  *         ofCommand(DemoCmd.list).setTitle("list").callback(result -> {
- *             // 得到 list 数据
+ *             // get list data
  *             List<HelloReq> list = result.listValue(HelloReq.class);
  *             log.info("list : {}", list);
  *         });
@@ -60,14 +60,14 @@ public class InputCommand {
     @Getter
     final CmdInfo cmdInfo;
 
-    /** 模拟请求命令的描述 */
+    /** Display description for the simulated request command. */
     String title = "... ...";
-    /** 描述的前缀 */
+    /** Prefix label displayed before the command title. */
     String cmdName = "";
 
-    /** 请求参数 */
+    /** Request payload supplier. */
     RequestDataDelegate requestData;
-    /** 回调接口 */
+    /** Response callback. */
     @Setter(AccessLevel.PRIVATE)
     CallbackDelegate callback;
 

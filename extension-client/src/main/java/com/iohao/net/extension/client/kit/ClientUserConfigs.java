@@ -21,7 +21,7 @@ package com.iohao.net.extension.client.kit;
 import lombok.experimental.UtilityClass;
 
 /**
- * 模拟客户端相关的配置
+ * Configuration flags for simulated client behavior and logging.
  *
  * @author 渔民小镇
  * @date 2023-07-15
@@ -29,37 +29,37 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ClientUserConfigs {
     /**
-     * 关闭控制台输入配置
+     * Disables console input features.
      * <pre>
-     *     在压测时建议关闭，也就是将该属性设置为 true。
+     *     Recommended for pressure testing (set this property to {@code true}).
      *
-     *     当开启关闭控制台输入配置时，也就是将该属性设置为 true 时，控制台输入相关的将失效。
+     *     When enabled, all console-input-related features become unavailable.
      * </pre>
      */
     public boolean closeScanner;
 
-    /** true 开启广播监听触发日志 */
+    /** Enables logs for broadcast-listen callbacks when true. */
     public boolean openLogListenBroadcast = true;
 
-    /** true 开启客户端向服务器发送请求的日志 */
+    /** Enables logs when the client sends requests to the server. */
     public boolean openLogRequestCommand = true;
 
-    /** true 开启请求回调的日志 */
+    /** Enables logs for request callbacks. */
     public boolean openLogRequestCallback = true;
 
     /**
-     * true 表示不能存在相同的模拟命令
+     * When true, duplicate simulated commands are not allowed.
      * <pre>
-     *     默认为 false，不做任何检测
+     *     Default is {@code false}, which disables duplicate checking.
      * </pre>
      */
     public boolean uniqueInputCommand;
 
-    /** true 开启心跳回调的日志 */
+    /** Enables idle/heartbeat callback logs. */
     public boolean openLogIdle = false;
 
     /**
-     * 关闭模拟请求相关日志
+     * Disables simulated-request related logs.
      */
     public void closeLog() {
         openLogListenBroadcast = false;

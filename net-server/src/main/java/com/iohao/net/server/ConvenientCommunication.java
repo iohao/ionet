@@ -24,18 +24,30 @@ import com.iohao.net.common.Publisher;
 import java.util.Optional;
 
 /**
+ * Convenience wrapper that resolves a target server and publishes request messages.
  *
  * @author 渔民小镇
  * @date 2025-10-21
  * @since 25.1
  */
 public record ConvenientCommunication(FindServer findServer, Publisher publisher) {
+    /**
+     * Publishes the request if a matching server can be resolved.
+     *
+     * @param message request message
+     */
     public void request(Request message) {
         Optional.ofNullable(findServer.getServer(message)).ifPresent(server -> {
             publisher.publishMessage(server.pubName(), message);
         });
     }
 
+    /**
+     * Publishes the request if possible, otherwise runs the fallback action.
+     *
+     * @param message request message
+     * @param emptyAction fallback action when no server is found
+     */
     public void request(Request message, Runnable emptyAction) {
         Optional.ofNullable(findServer.getServer(message)).ifPresentOrElse(server -> {
             publisher.publishMessage(server.pubName(), message);

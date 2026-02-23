@@ -25,7 +25,7 @@ import com.iohao.net.sbe.ServerOfflineMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
- * ServerOfflineMessageSBEEncoder
+ * SBE encoder for server-offline notifications.
  *
  * @author 渔民小镇
  * @date 2025-09-26

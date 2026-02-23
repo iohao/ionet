@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.DirectBuffer;
 
 /**
- * UserRequestMessageOnFragment
+ * Handles user request fragments and dispatches them to the logic execution pipeline.
  *
  * @author 渔民小镇
  * @date 2025-08-28

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron - LogicServer - OnFragment
+ * Aeron fragment handlers used by logic servers for requests, responses, and external calls.
  *
  * @author 渔民小镇
  * @date 2025-09-04

@@ -21,16 +21,16 @@ package com.iohao.net.server.balanced;
 import java.util.function.Supplier;
 
 /**
- * ElementSelector
+ * Strategy interface for selecting the next element from a candidate set.
  *
  * @author 渔民小镇
  * @date 2022-05-15
  */
 public interface ElementSelector<T> extends Supplier<T> {
     /**
-     * Next Element
+     * Returns the next selected element.
      *
-     * @return t
+     * @return selected element, or null if none
      */
     T next();
 }

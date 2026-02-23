@@ -21,7 +21,7 @@ package com.iohao.net.server.balanced;
 import lombok.Getter;
 
 /**
- * DefaultBalancedManager
+ * Default holder for logic and external load-balancing implementations.
  *
  * @author 渔民小镇
  * @date 2025-09-08

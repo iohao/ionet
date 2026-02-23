@@ -22,14 +22,28 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
- * OnFragment
+ * Handles a decoded Aeron fragment for a specific SBE template id.
  *
  * @author 渔民小镇
  * @date 2025-08-25
  * @since 25.1
  */
 public interface OnFragment {
+    /**
+     * Processes a fragment payload that has already been routed by template id.
+     *
+     * @param buffer source buffer
+     * @param offset message offset
+     * @param actingBlockLength SBE acting block length
+     * @param actingVersion SBE acting version
+     * @param header Aeron fragment header
+     */
     void process(DirectBuffer buffer, int offset, int actingBlockLength, int actingVersion, Header header);
 
+    /**
+     * Returns the SBE template id handled by this processor.
+     *
+     * @return SBE template id
+     */
     int getTemplateId();
 }

@@ -22,7 +22,7 @@ import com.iohao.net.server.NetServer;
 import com.iohao.net.server.NetServerSetting;
 
 /**
- * NetServerCreator
+ * Factory for creating {@link NetServer} runtime instances from a built setting.
  *
  * @author 渔民小镇
  * @date 2025-10-18

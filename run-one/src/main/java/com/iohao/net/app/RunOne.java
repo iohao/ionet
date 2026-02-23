@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Coordinates startup for a combined deployment that can host the external server, multiple logic
+ * servers, and an optional center server in one process.
  *
  * @author 渔民小镇
  * @date 2025-09-04
@@ -146,7 +148,7 @@ public class RunOne {
     }
 
     static {
-        // preloading
+        // Trigger initialization early so command metadata is available before startup wiring.
         CmdInfo.of(0);
     }
 }

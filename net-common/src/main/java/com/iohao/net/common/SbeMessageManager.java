@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Map;
 
 /**
- * SbeMessageManager
+ * Registry for message-class to {@link MessageSbe} encoder mappings.
  *
  * @author 渔民小镇
  * @date 2025-08-27
@@ -36,11 +36,24 @@ import java.util.Map;
 public final class SbeMessageManager {
     final Map<Class<?>, MessageSbe<?>> encoderMap = CollKit.ofConcurrentHashMap();
 
+    /**
+     * Gets the registered SBE encoder for the given message class.
+     *
+     * @param messageClass message class
+     * @param <T> message type
+     * @return encoder, or null if not registered
+     */
     @SuppressWarnings("unchecked")
     public <T> MessageSbe<T> getMessageEncoder(Class<? extends T> messageClass) {
         return (MessageSbe<T>) encoderMap.get(messageClass);
     }
 
+    /**
+     * Registers or replaces the SBE encoder for a message class.
+     *
+     * @param clazz message class
+     * @param encoder SBE encoder
+     */
     public void register(Class<?> clazz, MessageSbe<?> encoder) {
         if (encoderMap.containsKey(clazz)) {
             log.warn("WARN: SBE - Class {} is already registered by {}.  The new instance [{}] will replace the existing instance."

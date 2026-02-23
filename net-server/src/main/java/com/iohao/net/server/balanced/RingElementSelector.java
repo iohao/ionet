@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * RingElementSelector
+ * Round-robin selector backed by an array snapshot.
  *
  * @author 渔民小镇
  * @date 2024-10-19

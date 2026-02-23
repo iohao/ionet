@@ -65,7 +65,7 @@ class DefaultRangeBroadcast implements RangeBroadcast {
     @Getter(AccessLevel.PROTECTED)
     final Set<Long> userIdSet = CollKit.ofConcurrentSet();
     boolean doBroadcast = true;
-    /** 检查 userIds ；当值为 true 时，userIds 必须有元素 */
+    /** When true, the user id set must contain at least one target user. */
     boolean checkEmptyUser = false;
     byte[] data;
     final CmdInfo cmdInfo;

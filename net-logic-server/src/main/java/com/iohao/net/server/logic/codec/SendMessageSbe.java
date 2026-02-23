@@ -27,6 +27,7 @@ import com.iohao.net.sbe.SendMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * Base SBE encoder for internal send messages.
  *
  * @author 渔民小镇
  * @date 2025-09-14

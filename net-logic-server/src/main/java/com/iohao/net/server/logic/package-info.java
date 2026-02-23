@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron - LogicServer
+ * Logic-server bootstrap helpers, codecs, and Aeron fragment handlers.
  *
  * @author 渔民小镇
  * @date 2025-09-04

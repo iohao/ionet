@@ -28,6 +28,8 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * Group of proto message/enum definitions that will be emitted into one `.proto` file.
+ *
  * @author 渔民小镇
  * @date 2022-01-25
  */

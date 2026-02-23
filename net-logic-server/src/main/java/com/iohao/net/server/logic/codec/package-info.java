@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron - LogicServer - Codec
+ * SBE encoders used by logic servers for internal, external, and broadcast traffic.
  *
  * @author 渔民小镇
  * @date 2025-09-04

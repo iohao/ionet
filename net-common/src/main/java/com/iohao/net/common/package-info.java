@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron - common
+ * Common Aeron/SBE support abstractions shared by networking modules.
  *
  * @author 渔民小镇
  * @date 2025-08-25

@@ -22,14 +22,25 @@ import com.iohao.net.framework.protocol.Request;
 import com.iohao.net.framework.protocol.Server;
 
 /**
- * FindServer
+ * Resolves the target logic server for a request.
  *
  * @author 渔民小镇
  * @date 2025-10-11
  * @since 25.1
  */
 public interface FindServer {
+    /**
+     * Injects the runtime net-server setting.
+     *
+     * @param setting net-server setting
+     */
     void setNetServerSetting(NetServerSetting setting);
 
+    /**
+     * Resolves a target server for the request.
+     *
+     * @param message request message
+     * @return target server, or null if no route is available
+     */
     Server getServer(Request message);
 }

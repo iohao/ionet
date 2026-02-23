@@ -22,14 +22,27 @@ import com.iohao.net.sbe.MessageHeaderEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
- * MessageSbe
+ * Encodes a specific message type into an SBE buffer.
  *
+ * @param <T> message type
  * @author 渔民小镇
  * @date 2025-09-06
  * @since 25.1
  */
 public interface MessageSbe<T> {
+    /**
+     * Encodes the given message into the supplied direct buffer.
+     *
+     * @param message message instance
+     * @param headerEncoder SBE message header encoder
+     * @param buffer target buffer
+     */
     void encoder(T message, MessageHeaderEncoder headerEncoder, MutableDirectBuffer buffer);
 
+    /**
+     * Returns the encoded buffer limit after the last encode call.
+     *
+     * @return encoded message limit
+     */
     int limit();
 }

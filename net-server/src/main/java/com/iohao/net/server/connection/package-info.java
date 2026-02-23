@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetServer - Connection
+ * Net-server Aeron connection management, connection metadata, and shutdown hooks.
  *
  * @author 渔民小镇
  * @date 2025-08-26

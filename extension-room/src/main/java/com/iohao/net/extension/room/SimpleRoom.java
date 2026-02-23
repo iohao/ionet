@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * SimpleRoom
+ * Default in-memory {@link Room} implementation.
  *
  * @author 渔民小镇
  * @date 2022-03-31

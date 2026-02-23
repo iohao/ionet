@@ -22,7 +22,7 @@ import com.iohao.net.common.kit.exception.CommonIllegalArgumentException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * OnFragmentManager
+ * Registry for {@link OnFragment} handlers keyed by SBE template id.
  *
  * @author 渔民小镇
  * @date 2025-09-05
@@ -30,8 +30,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public final class OnFragmentManager {
+    /** Template-id indexed handler table. */
     public static final OnFragment[] onFragments = new OnFragment[36];
 
+    /**
+     * Registers or replaces a fragment handler for its template id.
+     *
+     * @param onFragment fragment handler
+     */
     public static void register(OnFragment onFragment) {
         int templateId = onFragment.getTemplateId();
         if (templateId < 0 || templateId >= onFragments.length) {
@@ -42,7 +48,7 @@ public final class OnFragmentManager {
         if (onFragments[templateId] == null) {
             onFragments[templateId] = onFragment;
         } else {
-            // 新的实例将替换已经存在的实例
+            // The latest registration wins so later module bootstraps can override a previous handler.
             log.warn("WARN: onFragment - Template ID {} is already registered by {}. The new instance [{}] will replace the existing instance."
                     , templateId
                     , onFragments[templateId].getClass().getSimpleName()

@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * DefaultExternalServerLoadBalanced
+ * Simple external-server selector that tracks the currently available external server.
  *
  * @author 渔民小镇
  * @date 2025-09-01

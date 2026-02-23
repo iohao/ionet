@@ -39,7 +39,7 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * ServerRequestMessageOnFragment
+ * Handles center-side connect-request fragments and synchronizes peer server discovery.
  *
  * @author 渔民小镇
  * @date 2025-08-25

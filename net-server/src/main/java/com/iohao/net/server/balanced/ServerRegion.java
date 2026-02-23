@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ServerRegion
+ * Group of logic servers that share the same routing region/tag.
  *
  * @author 渔民小镇
  * @date 2025-09-01

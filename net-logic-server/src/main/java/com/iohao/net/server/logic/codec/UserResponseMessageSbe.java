@@ -27,6 +27,7 @@ import com.iohao.net.sbe.UserResponseMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for user response messages.
  *
  * @author 渔民小镇
  * @date 2025-09-06

@@ -24,7 +24,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Scanner;
 
 /**
- * 模拟客户端工具
+ * Console input helper utilities for simulated clients.
  *
  * @author 渔民小镇
  * @date 2023-07-04
@@ -35,7 +35,7 @@ public class ScannerKit {
     final Scanner scanner = new Scanner(System.in);
 
     /**
-     * 当开启关闭控制台输入配置时，将不执行 runnable
+     * Skips the runnable when console input is disabled.
      *
      * @param runnable runnable
      */
@@ -48,12 +48,12 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 String 值
+     * Reads a {@link String} from console input.
      * <pre>
-     *     如果开启了关闭了控制台输入的配置，将使用 value 做为默认值返回
+     *     If console input is disabled, returns the default value.
      * </pre>
      *
-     * @param defaultValue 当开启了关闭了控制台输入，value 将作为默认值返回
+     * @param defaultValue default value when console input is disabled
      * @return String value
      */
     public String nextLine(String defaultValue) {
@@ -65,13 +65,13 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 String 值
+     * Reads a {@link String} from console input.
      *
      * @return String value
      */
     public String nextLine() {
         if (ClientUserConfigs.closeScanner) {
-            // 不支持控制台输入
+            // Console input is disabled.
             ThrowKit.ofRuntimeException("No support for console input");
         }
 
@@ -79,12 +79,12 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 long 值
+     * Reads a {@code long} from console input.
      * <pre>
-     *     如果开启了关闭了控制台输入的配置，将使用 value 做为默认值返回
+     *     If console input is disabled, returns the default value.
      * </pre>
      *
-     * @param defaultValue 当开启了关闭了控制台输入，value 将作为默认值返回
+     * @param defaultValue default value when console input is disabled
      * @return long value
      */
     public long nextLong(long defaultValue) {
@@ -96,13 +96,13 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 long 值
+     * Reads a {@code long} from console input.
      *
      * @return long value
      */
     public long nextLong() {
         if (ClientUserConfigs.closeScanner) {
-            // 不支持控制台输入
+            // Console input is disabled.
             ThrowKit.ofRuntimeException("No support for console input");
         }
 
@@ -111,12 +111,12 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 int 值
+     * Reads an {@code int} from console input.
      * <pre>
-     *     如果开启了关闭了控制台输入的配置，将使用 value 做为默认值返回
+     *     If console input is disabled, returns the default value.
      * </pre>
      *
-     * @param defaultValue 当开启了关闭了控制台输入，value 将作为默认值返回
+     * @param defaultValue default value when console input is disabled
      * @return int value
      */
     public int nextInt(int defaultValue) {
@@ -128,13 +128,13 @@ public class ScannerKit {
     }
 
     /**
-     * 控制台输入 int 值
+     * Reads an {@code int} from console input.
      *
      * @return int value
      */
     public int nextInt() {
         if (ClientUserConfigs.closeScanner) {
-            // 不支持控制台输入
+            // Console input is disabled.
             ThrowKit.ofRuntimeException("No support for console input");
         }
 

@@ -21,7 +21,7 @@ package com.iohao.net.server.connection;
 import com.iohao.net.common.CommonConnectionManager;
 
 /**
- * ConnectionManager
+ * Net-server connection manager for peer publications and inbound fragment polling.
  *
  * @author 渔民小镇
  * @date 2025-08-26

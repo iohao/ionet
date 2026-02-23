@@ -26,6 +26,7 @@ import com.iohao.net.sbe.MessageHeaderEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for multicast broadcast messages emitted by logic servers.
  *
  * @author 渔民小镇
  * @date 2025-09-06

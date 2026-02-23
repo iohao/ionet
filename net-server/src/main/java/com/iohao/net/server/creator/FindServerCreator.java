@@ -21,6 +21,7 @@ package com.iohao.net.server.creator;
 import com.iohao.net.server.FindServer;
 
 /**
+ * Factory for creating request-routing {@link FindServer} instances.
  *
  * @author 渔民小镇
  * @date 2025-10-18

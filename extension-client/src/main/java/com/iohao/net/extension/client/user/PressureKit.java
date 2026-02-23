@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * PressureKit
+ * Pressure-test helper utilities for coordinating multiple client users.
  *
  * @author 渔民小镇
  * @date 2023-07-16
@@ -66,8 +66,7 @@ public class PressureKit {
     }
 
     /**
-     *
-     * Tasks to be executed after all users have completed login
+     * Adds a task to run after all tracked users complete login.
      *
      * @param task task
      */

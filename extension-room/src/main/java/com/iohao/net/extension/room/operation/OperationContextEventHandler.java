@@ -24,7 +24,7 @@ import com.iohao.net.extension.room.RoomKit;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * OperationContextEventHandler
+ * Domain-event handler that executes room operation contexts and reports user-facing exceptions.
  *
  * @author 渔民小镇
  * @date 2024-05-12

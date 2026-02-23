@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetServer - Listener
+ * Net-server peer lifecycle listener contracts and default listeners.
  *
  * @author 渔民小镇
  * @date 2025-09-20

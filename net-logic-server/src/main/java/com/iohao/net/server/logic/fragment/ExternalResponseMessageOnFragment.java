@@ -29,7 +29,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
- * ExternalResponseMessageOnFragment
+ * Handles external-response fragments and completes the corresponding future.
  *
  * @author 渔民小镇
  * @date 2025-09-11

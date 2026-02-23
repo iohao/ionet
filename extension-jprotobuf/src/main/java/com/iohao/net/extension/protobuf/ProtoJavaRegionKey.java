@@ -19,6 +19,8 @@
 package com.iohao.net.extension.protobuf;
 
 /**
+ * Composite key for grouping proto definitions by file name and package.
+ *
  * @author 渔民小镇
  * @date 2022-01-25
  */

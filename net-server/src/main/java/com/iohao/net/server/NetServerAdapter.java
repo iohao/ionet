@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.DirectBuffer;
 
 /**
- * NetServerAdapter
+ * Aeron fragment adapter that dispatches messages to registered {@link com.iohao.net.common.OnFragment} handlers.
  *
  * @author 渔民小镇
  * @date 2025-08-24

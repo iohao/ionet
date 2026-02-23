@@ -21,6 +21,7 @@ package com.iohao.net.center.creator;
 import com.iohao.net.center.CenterConnectionManager;
 
 /**
+ * Factory for creating center-server connection managers.
  *
  * @author 渔民小镇
  * @date 2025-10-23

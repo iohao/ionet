@@ -22,7 +22,9 @@ import lombok.Setter;
 import lombok.experimental.UtilityClass;
 
 /**
- * NetCommonGlobalConfig
+ * Global configuration entry for net-common components.
+ *
+ * <p>Provides the shared {@link Publisher} instance used by Aeron publishing flows.</p>
  *
  * @author 渔民小镇
  * @date 2025-10-14
@@ -33,8 +35,14 @@ public final class NetCommonGlobalConfig {
     @Setter
     Publisher publisher = new DefaultPublisher();
 
+    /**
+     * Returns the shared publisher instance used by net-common.
+     *
+     * @return shared publisher
+     */
     public static Publisher getPublisher() {
         if (publisher == null) {
+            // Lazily recreate the default publisher when a custom publisher was cleared.
             publisher = new DefaultPublisher();
         }
 

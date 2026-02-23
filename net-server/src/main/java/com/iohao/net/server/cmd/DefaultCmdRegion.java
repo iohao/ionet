@@ -26,6 +26,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.Arrays;
 
 /**
+ * Default {@link CmdRegion} implementation backed by a compact int array.
+ *
  * @author 渔民小镇
  * @date 2023-04-30
  */

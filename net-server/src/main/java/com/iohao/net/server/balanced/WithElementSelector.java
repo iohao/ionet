@@ -19,7 +19,7 @@
 package com.iohao.net.server.balanced;
 
 /**
- * WithElementSelector
+ * Exposes selection logic that can use a network id as routing input.
  *
  * @author 渔民小镇
  * @date 2023-06-18

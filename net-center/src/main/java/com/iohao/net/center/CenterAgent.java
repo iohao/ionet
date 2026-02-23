@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.concurrent.Agent;
 
 /**
+ * Agrona agent wrapper for the center server polling loop.
  *
  * @author 渔民小镇
  * @date 2025-08-24

@@ -29,6 +29,7 @@ import org.agrona.MutableDirectBuffer;
 import java.util.Map;
 
 /**
+ * SBE encoder for {@link ServerRequestMessage} registration messages.
  *
  * @author 渔民小镇
  * @date 2025-09-06

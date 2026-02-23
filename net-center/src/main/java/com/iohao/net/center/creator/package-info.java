@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetCenter - Creator
+ * Factory interfaces for center-server component creation.
  *
  * @author 渔民小镇
  * @date 2025-10-23

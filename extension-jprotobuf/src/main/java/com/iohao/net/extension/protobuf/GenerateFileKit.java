@@ -24,7 +24,7 @@ import lombok.experimental.UtilityClass;
 import java.io.File;
 
 /**
- * proto 文件生成工具
+ * Convenience utilities for generating `.proto` files from annotated Java classes.
  *
  * @author 渔民小镇
  * @date 2023-07-13
@@ -32,40 +32,40 @@ import java.io.File;
 @UtilityClass
 public class GenerateFileKit {
     /**
-     * 生成 proto 文件
+     * Generates proto files.
      *
-     * @param protoPackagePath proto 类所在包名
-     * @param generateFolder   生成 proto file 的目录
+     * @param protoPackagePath package containing proto-annotated Java classes
+     * @param generateFolder output directory for generated `.proto` files
      */
     public void generate(String protoPackagePath, String generateFolder) {
         /*
-         * .proto 文件生成
+         * .proto file generation
          *
-         * 运行该类，会在当前项目 target/proto 目录下生成 .proto 文件
+         * Running this method generates `.proto` files under the configured output directory.
          */
 
         String currentDir = System.getProperty("user.dir");
 
         new ProtoGenerateFile()
-                // 源码目录
+                // Source code directory
                 .setProtoSourcePath(currentDir)
-                // 生成 .proto 文件存放的目录
+                // Output directory for generated .proto files
                 .setGenerateFolder(generateFolder)
-                // 需要扫描的包名
+                // Package to scan
                 .addProtoPackage(protoPackagePath)
-                // 生成 .proto 文件
+                // Generate .proto files
                 .generate();
     }
 
     /**
-     * 生成 proto 文件
+     * Generates proto files.
      *
-     * @param protoPackagePath proto 类所在包名
+     * @param protoPackagePath package containing proto-annotated Java classes
      */
     public void generate(String protoPackagePath) {
         String currentDir = System.getProperty("user.dir");
 
-        // 生成 .proto 文件存放的目录
+        // Output directory for generated .proto files
         String generateFolder = ArrayKit.join(new String[]{
                 currentDir
                 , "target"

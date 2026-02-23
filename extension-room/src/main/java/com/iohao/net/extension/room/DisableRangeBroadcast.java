@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * DisableRangeBroadcast
+ * No-op {@link RangeBroadcast} implementation used to disable range broadcasting.
  *
  * @author 渔民小镇
  * @date 2025-09-28

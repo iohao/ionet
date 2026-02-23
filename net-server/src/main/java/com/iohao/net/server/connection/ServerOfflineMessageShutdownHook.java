@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Shutdown hook that broadcasts local server-offline messages to remote net-server groups.
  *
  * @author 渔民小镇
  * @date 2025-09-26

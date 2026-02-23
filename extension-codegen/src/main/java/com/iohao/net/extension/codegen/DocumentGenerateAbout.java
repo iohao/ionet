@@ -144,7 +144,7 @@ class DocumentGenerateKit {
 @FieldDefaults(level = AccessLevel.PRIVATE)
 final class GameCodeGenerate {
     Document document;
-    /** true : 生成框架内置的错误码，see {@link ActionErrorEnum} */
+    /** True to generate framework built-in error codes, see {@link ActionErrorEnum}. */
     boolean internalErrorCode;
 
     Template template;
@@ -206,10 +206,10 @@ final class BroadcastGenerate {
     Collection<BroadcastDocument> listBroadcastDocument() {
         return document.broadcastDocumentList.stream()
                 .peek(broadcastDocument -> {
-                    // 如果没有指定方法名，则方法名使用下述规则
+                    // If no method name is specified, derive it using the following rule.
                     broadcastDocument.methodName = StrKit.firstCharToUpperCase(broadcastDocument.methodName);
 
-                    // 生成广播使用代码示例
+                    // Generate broadcast usage examples.
                     extractedBroadcastExampleCode(broadcastDocument);
                 }).toList();
     }
@@ -272,7 +272,7 @@ final class ActionGenerate {
         template.binding("classComment", classComment);
         GenerateInternalKit.binding(template);
 
-        // 路由成员变量
+        // Route member variables
         List<ActionMemberCmdDocument> actionMemberCmdDocumentList = actionDocument.actionMemberCmdDocumentList;
         template.binding("actionMemberCmdDocumentList", actionMemberCmdDocumentList);
 

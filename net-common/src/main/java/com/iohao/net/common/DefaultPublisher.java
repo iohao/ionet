@@ -32,7 +32,10 @@ import java.util.Queue;
 import java.util.concurrent.*;
 
 /**
- * DefaultPublisher
+ * Default single-threaded {@link Publisher} implementation backed by per-publication queues.
+ *
+ * <p>Messages are queued by publication name and encoded on the publisher thread before
+ * being offered to Aeron.</p>
  *
  * @author 渔民小镇
  * @date 2025-09-27
@@ -112,11 +115,13 @@ public final class DefaultPublisher implements Publisher {
 
                     encoder.encoder(message, headerEncoder, buffer);
                     int limit = encoder.limit();
+                    // The encoder writes into the shared direct buffer and reports the message boundary via limit().
                     publication.offer(buffer, 0, limit);
                 }
             }
 
             if (!messagesPublished) {
+                // Back off briefly when all queues are empty to avoid a busy-spin loop.
                 TimeUnit.MILLISECONDS.sleep(1);
             }
         }

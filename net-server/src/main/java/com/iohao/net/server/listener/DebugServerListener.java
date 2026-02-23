@@ -23,6 +23,7 @@ import com.iohao.net.server.NetServerSetting;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Development listener that logs net-server peer lifecycle events.
  *
  * @author 渔民小镇
  * @date 2025-09-26

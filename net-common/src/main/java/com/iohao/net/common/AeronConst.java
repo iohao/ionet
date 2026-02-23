@@ -20,19 +20,25 @@ package com.iohao.net.common;
 
 
 /**
- * AeronConst
+ * Shared Aeron channel names, stream ids, and default ports used by net-common.
  *
  * @author 渔民小镇
  * @date 2025-08-28
  * @since 25.1
  */
 public interface AeronConst {
+    /** UDP channel pattern used when an endpoint host/port is required. */
     String udpChannel = "aeron:udp?endpoint=%s:%d";
+    /** In-process Aeron IPC channel. */
     String ipcChannel = "aeron:ipc";
 
+    /** Publication name for the center service channel. */
     String centerPublicationName = "centerPublicationName";
+    /** Default center service port. */
     int centerPort = 30050;
+    /** Stream id used by the center service publication. */
     int centerStreamId = 1;
 
+    /** Default port used by common Aeron components. */
     int port = 30055;
 }

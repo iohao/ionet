@@ -7,6 +7,9 @@ import com.iohao.net.framework.core.CoreConfigLoader;
 import com.iohao.net.common.OnFragmentManager;
 import com.iohao.net.common.SbeMessageManager;
 
+/**
+ * Registers center-server SBE encoders and fragment handlers into shared registries.
+ */
 public class CenterCoreConfigLoader implements CoreConfigLoader {
     @Override
     public void config() {

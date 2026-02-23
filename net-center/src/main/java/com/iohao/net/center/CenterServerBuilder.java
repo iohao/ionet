@@ -29,7 +29,7 @@ import lombok.experimental.Accessors;
 import java.util.Objects;
 
 /**
- * CenterServerBuilder
+ * Builder for assembling center-server runtime dependencies.
  *
  * @author 渔民小镇
  * @date 2025-10-23
@@ -44,6 +44,11 @@ public final class CenterServerBuilder {
     Aeron aeron;
     Publisher publisher;
 
+    /**
+     * Builds a center server with the configured Aeron instance and publisher.
+     *
+     * @return center server instance
+     */
     public CenterServer builder() {
         Objects.requireNonNull(aeron);
         Objects.requireNonNull(publisher);

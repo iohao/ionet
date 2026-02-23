@@ -21,16 +21,27 @@ package com.iohao.net.server;
 import com.iohao.net.framework.protocol.Server;
 
 /**
- * NetServer
+ * Net-server runtime entry point used to register servers and start the agent loop.
  *
  * @author 渔民小镇
  * @date 2025-08-24
  * @since 25.1
  */
 public interface NetServer {
+    /** Starts the net-server runtime. */
     void onStart();
 
+    /**
+     * Adds a server definition before startup.
+     *
+     * @param server server definition
+     */
     void addServer(Server server);
 
+    /**
+     * Returns the runtime setting used by this net server.
+     *
+     * @return runtime setting
+     */
     NetServerSetting getNetServerSetting();
 }

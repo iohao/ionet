@@ -24,7 +24,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Map;
 
 /**
- * LogicServerManager Kit
+ * Temporary registry for logic-server callbacks that are completed after server registration.
  *
  * @author 渔民小镇
  * @date 2025-10-31

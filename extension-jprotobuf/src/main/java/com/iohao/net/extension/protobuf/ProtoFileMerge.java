@@ -21,7 +21,7 @@ package com.iohao.net.extension.protobuf;
 import java.lang.annotation.*;
 
 /**
- * pb 文件合并归类
+ * Declares the target proto file and package used when grouping generated definitions.
  *
  * @author 渔民小镇
  * @date 2022-01-24
@@ -30,9 +30,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ProtoFileMerge {
-    /** 原生 .proto 的文件名 */
+    /** Target `.proto` file name. */
     String fileName();
 
-    /** 原生 .proto 的包名 package */
+    /** Target proto package name. */
     String filePackage();
 }

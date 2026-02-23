@@ -25,6 +25,7 @@ import com.iohao.net.framework.protocol.CmdCodeConst;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Factory helpers for client communication and idle messages.
  *
  * @author 渔民小镇
  * @date 2025-09-11

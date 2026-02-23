@@ -21,18 +21,32 @@ package com.iohao.net.common;
 import io.aeron.Publication;
 
 /**
- * Publisher
+ * Queues and publishes encoded messages to Aeron publications.
  *
  * @author 渔民小镇
  * @date 2025-09-27
  * @since 25.1
  */
 public interface Publisher {
+    /**
+     * Adds a named Aeron publication target.
+     *
+     * @param name publication name
+     * @param publication Aeron publication
+     */
     void addPublication(String name, Publication publication);
 
+    /**
+     * Enqueues a message for publication.
+     *
+     * @param name publication name
+     * @param message message to publish
+     */
     void publishMessage(String name, Object message);
 
+    /** Starts background publishing resources. */
     void startup();
 
+    /** Stops background publishing resources. */
     void shutdown();
 }

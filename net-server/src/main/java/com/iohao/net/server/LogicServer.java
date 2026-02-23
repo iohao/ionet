@@ -30,10 +30,25 @@ import com.iohao.net.framework.protocol.ServerBuilder;
  * @since 25.1
  */
 public interface LogicServer {
+    /**
+     * Configures the bar-skeleton builder for this logic server.
+     *
+     * @param builder skeleton builder
+     */
     void settingBarSkeletonBuilder(BarSkeletonBuilder builder);
 
+    /**
+     * Configures the server metadata builder used for registration.
+     *
+     * @param builder server builder
+     */
     void settingServerBuilder(ServerBuilder builder);
 
+    /**
+     * Callback invoked after startup finishes successfully.
+     *
+     * @param barSkeleton started skeleton
+     */
     default void startupSuccess(BarSkeleton barSkeleton) {
     }
 }

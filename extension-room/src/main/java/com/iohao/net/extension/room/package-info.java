@@ -19,7 +19,7 @@
 /**
  * Extension Module - <a href="https://iohao.github.io/ionet/docs/extension_module/room">Board Game/Room Game</a>, light-game-room + Domain Event + Built-in Kit = Easily Handle Board Games
  * <p>
- * Introduction
+ * Module Overview
  * <pre>
  * This module is a solution for board games and room-based games. It is well suited for the basic infrastructure of board games and room games. Based on this model, you can create games like Hearthstone, Sanguosha, Dou Dizhu, Mahjong, etc.
  * Or, this model is applicable to any room-based game, such as CS, Bomberman, Ludo, Tank Wars, and so on.

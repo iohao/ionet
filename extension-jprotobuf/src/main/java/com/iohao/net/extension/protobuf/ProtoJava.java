@@ -25,6 +25,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * Parsed Java class metadata used to render a proto message/enum block.
+ *
  * @author 渔民小镇
  * @date 2022-01-24
  */

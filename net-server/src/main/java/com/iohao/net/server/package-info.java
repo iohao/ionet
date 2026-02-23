@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Aeron NetServer
+ * Net-server bootstrap, routing, load-balancing, and connection coordination components.
+ *
  * @author 渔民小镇
  * @date 2025-08-24
  * @since 25.1

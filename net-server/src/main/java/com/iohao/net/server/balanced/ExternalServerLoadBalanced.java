@@ -23,6 +23,7 @@ import com.iohao.net.framework.protocol.Server;
 import java.util.List;
 
 /**
+ * Load-balancing view for external servers.
  *
  * @author 渔民小镇
  * @date 2025-09-10

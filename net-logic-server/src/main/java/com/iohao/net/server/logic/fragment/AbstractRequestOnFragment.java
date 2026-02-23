@@ -29,7 +29,7 @@ import com.iohao.net.server.NetServerSettingAware;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * AbstractRequestOnFragment
+ * Base fragment handler for request-like messages dispatched to logic action pipelines.
  *
  * @author 渔民小镇
  * @date 2025-09-14

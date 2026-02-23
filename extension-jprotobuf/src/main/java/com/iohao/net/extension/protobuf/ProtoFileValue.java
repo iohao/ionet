@@ -19,6 +19,8 @@
 package com.iohao.net.extension.protobuf;
 
 /**
+ * Provides proto file name/package metadata for grouped generated output.
+ *
  * @author 渔民小镇
  * @date 2022-01-25
  */

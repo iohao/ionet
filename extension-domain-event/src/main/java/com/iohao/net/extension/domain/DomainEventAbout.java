@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * CommonEventHandler
+ * Disruptor event handler adapter that delegates to {@link DomainEventHandler}.
  *
  * @author 渔民小镇
  * @date 2021-12-26
@@ -46,7 +46,7 @@ record CommonEventHandler(DomainEventHandler<?> eventHandler) implements EventHa
 }
 
 /**
- * DefaultCommonEventProducer
+ * Default disruptor-backed implementation of {@link CommonEventProducer}.
  *
  * @author 渔民小镇
  * @date 2025-10-20
@@ -79,7 +79,7 @@ final class DefaultCommonEventProducer implements CommonEventProducer {
 }
 
 /**
- * DefaultDisruptorCreator
+ * Default {@link DisruptorCreator} that creates daemon threads per topic pipeline.
  *
  * @author 渔民小镇
  * @date 2021-12-26
@@ -106,7 +106,7 @@ class DefaultDisruptorCreator implements DisruptorCreator {
 }
 
 /**
- * DefaultDomainEventExceptionHandler
+ * Default disruptor exception handler for domain-event pipelines.
  *
  * @author 渔民小镇
  * @date 2022-01-14
