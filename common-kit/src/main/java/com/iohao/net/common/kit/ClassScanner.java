@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.jar.JarEntry;
@@ -56,7 +55,7 @@ public class ClassScanner {
      * @param predicateFilter predicate that returns {@code true} for classes to include
      */
     public ClassScanner(String packagePath, Predicate<Class<?>> predicateFilter) {
-        this.predicateFilter = predicateFilter;
+        this.predicateFilter = predicateFilter != null ? predicateFilter : clazz -> true;
 
         var path = packagePath.replace('.', '/');
         path = path.endsWith("/") ? path : path + '/';
@@ -72,6 +71,7 @@ public class ClassScanner {
     public List<Class<?>> listScan() {
         try {
             this.initClassLoad();
+            this.clazzSet.clear();
 
             Enumeration<URL> urlEnumeration = classLoader.getResources(packagePath);
 
@@ -146,6 +146,10 @@ public class ClassScanner {
                 // jarEntryName
                 String jarEntryName = entry.getName();
 
+                if (jarEntryName.isEmpty()) {
+                    continue;
+                }
+
                 if (jarEntryName.charAt(0) == '/') {
                     jarEntryName = jarEntryName.substring(1);
                 }
@@ -155,7 +159,7 @@ public class ClassScanner {
                 }
 
                 // Scan classes under packagePath
-                if (jarEntryName.endsWith(".class") && jarEntryName.startsWith(packagePath)) {
+                if (jarEntryName.endsWith(".class")) {
                     jarEntryName = jarEntryName.substring(0, jarEntryName.length() - 6).replace('/', '.');
                     loadClass(jarEntryName);
                 }
@@ -164,8 +168,13 @@ public class ClassScanner {
     }
 
     private void scanFile(URL url) {
-        String name = URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8);
-        File file = new File(name);
+        File file;
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            log.error(e.getMessage(), e);
+            return;
+        }
 
         String classPath = getClassPath(file);
         scanFile(file, classPath);
@@ -222,7 +231,7 @@ public class ClassScanner {
 
         try {
             clazz = classLoader.loadClass(className);
-        } catch (Throwable e) {
+        } catch (ClassNotFoundException | LinkageError e) {
             log.error(e.getMessage(), e);
         }
 
