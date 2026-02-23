@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Banner
+ * Provides lightweight framework presentation helpers, including startup banner rendering and
+ * related console-display utilities.
  *
  * @author 渔民小镇
  * @date 2023-01-30

@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Global unified handling for system exceptions, <a href="https://iohao.github.io/ionet/docs/manual/assert_error_code">assertion + exception mechanism = clear and concise code</a>
+ * Provides framework-level exception handling, assertion integration, and unified error processing
+ * abstractions for business request execution.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/assert_error_code">assertion + exception
+ * mechanism</a> for usage guidance.
  *
  * @author 渔民小镇
  * @date 2022-01-14

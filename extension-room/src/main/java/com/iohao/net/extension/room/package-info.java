@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - <a href="https://iohao.github.io/ionet/docs/extension_module/room">Board Game/Room Game</a>, light-game-room + Domain Event + Built-in Kit = Easily Handle Board Games
+ * Provides room-based game infrastructure for board games and similar multiplayer room workflows,
+ * including room management, lifecycle processes, and extensible gameplay operations.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/extension_module/room">Board Game/Room Game</a>
+ * for the overall module design.
  * <p>
  * Module Overview
  * <pre>

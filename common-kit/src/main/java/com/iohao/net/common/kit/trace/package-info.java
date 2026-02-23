@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Utility tools - Trace
+ * Provides tracing utilities and trace-context helpers used for request correlation and runtime
+ * diagnostics.
  *
  * @author 渔民小镇
  * @date 2023-12-20

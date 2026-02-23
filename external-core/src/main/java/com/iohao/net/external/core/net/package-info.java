@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Internal Communication
+ * Provides internal network communication contracts used by external servers to exchange messages
+ * with other ionet components over Aeron-based channels.
  *
  * @author 渔民小镇
  * @date 2025-09-03

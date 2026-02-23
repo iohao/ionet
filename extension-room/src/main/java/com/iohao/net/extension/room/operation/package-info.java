@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - Board Games, Room-Based Games - Extension of Gameplay Operations within a Room.
+ * Provides gameplay-operation extension points and handlers for room-based games, including
+ * strategy/flyweight style operation dispatch.
  * <p>
  * Gameplay Operation Business - Design Patterns: Strategy Pattern + Flyweight Pattern
  * <pre>

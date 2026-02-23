@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - Simulating client requests - user
+ * Provides simulated client user abstractions, channel wrappers, and user-side pressure testing
+ * support used by the simulation client module.
  *
  * @author 渔民小镇
  * @date 2024-08-08

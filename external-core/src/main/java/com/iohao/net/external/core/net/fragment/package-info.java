@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Aeron - OnFragment
+ * Provides Aeron fragment handlers that decode and dispatch internal messages for the external
+ * server runtime.
  *
  * @author 渔民小镇
  * @date 2025-09-03

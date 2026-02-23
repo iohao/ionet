@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Netty - Handler
+ * Provides Netty channel handlers used by the external-server implementation to decode requests,
+ * manage pipelines, and dispatch messages.
  *
  * @author 渔民小镇
  * @date 2023-02-21

@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - <a href="https://iohao.github.io/ionet/docs/examples/code_generate">Code Generation</a>. You only need to write Java code once to generate interactive interfaces for frontend projects such as Unity, Godot, CocosCreator, Laya, Vue, etc.
+ * Provides documentation metadata and code-generation support used to produce client-facing API
+ * artifacts from ionet action definitions.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/examples/code_generate">Code Generation</a>
+ * for examples targeting Unity, Godot, CocosCreator, Laya, Vue, and other clients.
  *
  * @author 渔民小镇
  * @date 2024-08-05

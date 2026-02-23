@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Protocol - <a href="https://iohao.github.io/ionet/docs/manual_high/protocol_fragment">Box, unbox packaging; resolves protocol fragmentation</a>
+ * Provides protocol wrapper utilities for boxing/unboxing payloads and handling protocol
+ * fragmentation/reassembly.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual_high/protocol_fragment">protocol
+ * fragmentation</a> for background.
  *
  * @author 渔民小镇
  * @date 2023-06-09

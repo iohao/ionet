@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Utility tools - DateTime
+ * Provides date/time helper utilities used by ionet modules for time calculation, formatting, and
+ * scheduling-related support code.
  *
  * @author 渔民小镇
  * @date 2024-08-27

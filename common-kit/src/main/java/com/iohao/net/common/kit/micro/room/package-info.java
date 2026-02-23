@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Utility tools - (Experimental)
+ * Provides experimental utility components shared by lightweight room or micro-room style
+ * gameplay helpers in `common-kit`.
  *
  * @author 渔民小镇
  * @date 2024-08-22

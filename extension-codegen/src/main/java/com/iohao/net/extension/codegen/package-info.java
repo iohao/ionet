@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - <a href="https://iohao.github.io/ionet/docs/extension_module/generate_code">Generate-code</a>
+ * Provides extension utilities for generating client/server integration code and related
+ * documentation artifacts from ionet metadata.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/extension_module/generate_code">Generate-code</a>
+ * for examples.
  *
  * @author 渔民小镇
  * @date 2025-12-03

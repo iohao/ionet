@@ -17,7 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Communication - <a href="https://iohao.github.io/ionet/docs/communication/event_bus">Distributed EventBus</a>, the distributed event bus is similar to products such as Guava EventBus, Redis Publish/Subscribe, and MQ.
+ * Provides distributed EventBus contracts for publishing and subscribing cross-service events
+ * within ionet applications.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/communication/event_bus">Distributed
+ * EventBus</a>; it is conceptually similar to Guava EventBus, Redis Publish/Subscribe, or MQ-style
+ * messaging.
  *
  * @author 渔民小镇
  * @date 2024-06-06

@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - <a href="https://iohao.github.io/ionet/docs/manual/runner">Runner extension mechanism</a>. This mechanism is similar to Spring's CommandLineRunner startup item, allowing developers to extend their system by implementing the Runner interface, which is called once after the logic server starts.
+ * Provides startup-runner extension contracts that execute once after logic-server startup, similar
+ * to Spring's `CommandLineRunner`.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/runner">Runner extension mechanism</a>
+ * for usage patterns.
  *
  * @author 渔民小镇
  * @date 2024-06-05

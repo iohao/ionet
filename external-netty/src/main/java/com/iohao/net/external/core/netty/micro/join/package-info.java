@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Netty - Micro - Join
+ * Provides Netty-based cluster join and registration components used when external servers connect
+ * into a distributed deployment.
  *
  * @author 渔民小镇
  * @date 2023-04-28

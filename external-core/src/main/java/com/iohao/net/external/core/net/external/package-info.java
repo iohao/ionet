@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Aeron - OnExternal
+ * Provides handlers and callbacks for processing external-server specific internal network events
+ * received from Aeron channels.
  *
  * @author 渔民小镇
  * @date 2025-09-10

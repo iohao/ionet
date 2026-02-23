@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Aeron - Codec
+ * Provides Aeron message encoding and decoding support used by the external-server internal
+ * communication layer.
  *
  * @author 渔民小镇
  * @date 2025-09-06

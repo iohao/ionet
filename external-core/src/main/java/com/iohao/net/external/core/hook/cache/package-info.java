@@ -17,7 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - <a href="https://iohao.github.io/ionet/docs/manual/cache">Cache</a>
+ * Provides route-level external-server caching support for serving hot data directly from the
+ * external layer and reducing logic-server round trips.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/cache">Cache</a> for setup and usage.
  * <p>
  * When caching business data, the general practice is to use professional caching libraries such as Caffeine, cache2k, ehcache, JetCache, etc., to cache business data in the logic server.
  * <p>

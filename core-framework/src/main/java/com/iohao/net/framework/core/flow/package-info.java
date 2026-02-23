@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Flow
+ * Provides the action invocation flow model, context propagation, and execution pipeline contracts
+ * used to process business requests end to end.
  *
  * @author 渔民小镇
  * @date 2021-12-12

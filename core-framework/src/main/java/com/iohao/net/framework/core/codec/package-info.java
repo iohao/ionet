@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Codec for business data, <a href="https://iohao.github.io/ionet/docs/manual_high/data_protocol">extended protocol</a>.
+ * Provides business-data codec abstractions and implementations used by the framework's extended
+ * protocol support.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual_high/data_protocol">extended
+ * protocol</a> for protocol details.
  *
  * @author 渔民小镇
  * @date 2024-08-05

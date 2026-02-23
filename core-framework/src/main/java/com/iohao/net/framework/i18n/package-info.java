@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - i18n
+ * Provides internationalization contracts and message-resolution support used by framework-level
+ * error messages and user-facing text outputs.
  *
  * @author 渔民小镇
  * @date 2024-10-02

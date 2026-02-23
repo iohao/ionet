@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Enhance
+ * Provides enhancement utilities that extend core action execution behavior, such as wrapper and
+ * interception-style integrations around framework processing steps.
  *
  * @author 渔民小镇
  * @date 2023-06-16

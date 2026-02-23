@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - <a href="https://iohao.github.io/ionet/docs/manual/external_intro">Netty-based implementation</a>
+ * Provides the Netty-based transport implementation of the external server, including channel
+ * handlers, session integration, and micro-deployment support.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/external_intro">external server
+ * introduction</a> for architecture context.
  *
  * @author 渔民小镇
  * @date 2023-06-04

@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - UserSession
+ * Provides user-session abstractions and implementations used by external servers to track
+ * connected users and session-scoped metadata.
  *
  * @author 渔民小镇
  * @date 2023-02-18

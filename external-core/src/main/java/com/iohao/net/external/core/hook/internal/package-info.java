@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - InternalHook
+ * Provides internal hook implementations and supporting contracts used by the external-server
+ * runtime to compose built-in hook behavior.
  *
  * @author 渔民小镇
  * @date 2023-02-19

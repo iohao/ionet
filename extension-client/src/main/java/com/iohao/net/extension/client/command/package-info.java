@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - Simulating client requests - common
+ * Provides client command abstractions and request command models used by the simulation client
+ * module to build and execute test requests.
  *
  * @author 渔民小镇
  * @date 2024-08-08

@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - <a href="https://iohao.github.io/ionet/docs/extension_module/simulation_client">Simulating client requests</a>
+ * Provides client-side testing and simulation utilities for sending requests, joining external
+ * servers, and scripting client behavior during local development or pressure testing.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/extension_module/simulation_client">Simulating
+ * client requests</a> for examples.
  *
  * @author 渔民小镇
  * @date 2024-08-08

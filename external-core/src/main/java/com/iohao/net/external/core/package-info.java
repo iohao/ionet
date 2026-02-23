@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * <a href="https://iohao.github.io/ionet/docs/manual/external_intro">External Server</a> - core
+ * Provides the core abstractions and runtime infrastructure for external servers, including
+ * protocol handling, session management, hooks, and internal communication integration.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/external_intro">External Server</a> for
+ * the architecture overview.
  * <p>
  * Responsibilities of the External Server
  * <pre>

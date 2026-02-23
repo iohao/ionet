@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Kit
+ * Provides framework-specific utility helpers used by action parsing, metadata access, and runtime
+ * support operations.
  *
  * @author 渔民小镇
  * @date 2021-12-20

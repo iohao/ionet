@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - Simulating client requests - kit
+ * Provides utility helpers for simulation-client workflows, including message helpers, config
+ * helpers, and command scanning support.
  *
  * @author 渔民小镇
  * @date 2024-08-08

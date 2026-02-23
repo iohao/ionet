@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Netty - UserSession
+ * Provides Netty transport-aware user-session management support for the external-server
+ * implementation.
  *
  * @author 渔民小镇
  * @date 2023-02-18

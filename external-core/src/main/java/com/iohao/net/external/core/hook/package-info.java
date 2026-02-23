@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Hook(UserHoot, IdleHook)
+ * Provides external-server hook extension points for request lifecycle interception, session state,
+ * and connection-idle related processing.
  *
  * @author 渔民小镇
  * @date 2023-04-28

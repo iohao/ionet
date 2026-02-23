@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Core - <a href="https://iohao.github.io/ionet/docs/manual/external_message">External Server Protocol Description</a>, External Server Protocol Encoding and Decoding, Custom Unified Interaction Protocol
+ * Provides the external-server unified interaction protocol, related codecs, and customization
+ * points for client-facing message encoding/decoding.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/external_message">External Server
+ * Protocol Description</a> for protocol details.
  * <p>
  * ExternalMessage
  * <pre>

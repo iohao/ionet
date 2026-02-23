@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - <a href="https://iohao.github.io/ionet/docs/manual/plugin_intro">Business Framework Plugin</a>.
+ * Provides internal flow-plugin implementations that participate in the framework execution
+ * pipeline and support extensible request-processing behavior.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/plugin_intro">Business Framework
+ * Plugin</a> for the plugin model overview.
  *
  * @author 渔民小镇
  * @date 2024-08-05

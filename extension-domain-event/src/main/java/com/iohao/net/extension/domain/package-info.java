@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension module - <a href="https://iohao.github.io/ionet/docs/extension_module/domain_event">domain-event</a> - which can implement various advanced operations for your system, such as Guava-EventBus, Spring event-driven model ApplicationEvent.
+ * Provides domain-event infrastructure based on Disruptor for implementing asynchronous event-driven
+ * workflows, similar in spirit to Guava EventBus or Spring `ApplicationEvent`.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/extension_module/domain_event">domain-event</a>
+ * for module usage and integration guidance.
  * Disruptor is an open-source concurrent framework. It is a high-performance queue developed by the British foreign exchange trading company LMAX, which greatly simplifies the difficulty of concurrent program development and won the 2011 Duke’s Program Framework Innovation Award. Disruptor can be understood as a single-machine version of MQ (the lightest and fastest single-machine MQ -- disruptor).
  * <p>
  * Advantages of Event Source Domain Events

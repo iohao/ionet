@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - <a href="https://iohao.github.io/ionet/docs/manual/integration_spring">Spring Integration</a>
+ * Provides Spring integration support for registering and resolving ionet action controllers from
+ * the Spring application context.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/integration_spring">Spring
+ * Integration</a> for setup guidance.
  *
  * @author 渔民小镇
  * @date 2025-12-03

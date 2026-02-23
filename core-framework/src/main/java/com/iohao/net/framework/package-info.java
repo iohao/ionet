@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * <a href="https://iohao.github.io/ionet/docs/manual/framework">CoreFramework</a>。
+ * Provides the core business framework abstractions for action routing, protocol handling,
+ * communication contracts, and runtime extension points.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual/framework">CoreFramework</a> for the
+ * conceptual model and usage guide.
  *
  * @author 渔民小镇
  * @date 2022-09-23

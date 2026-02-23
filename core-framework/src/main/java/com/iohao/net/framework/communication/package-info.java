@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Communication
+ * Provides communication contracts and adapters used for request/response delivery, broadcasts, and
+ * cross-service messaging within the framework runtime.
  *
  * @author 渔民小镇
  * @date 2024-08-05

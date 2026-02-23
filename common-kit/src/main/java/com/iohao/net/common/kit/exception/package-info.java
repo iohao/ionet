@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Utility tools - (Experimental)
+ * Provides experimental exception-handling helpers and utility abstractions used by `common-kit`
+ * extensions.
  *
  * @author 渔民小镇
  * @date 2024-08-22

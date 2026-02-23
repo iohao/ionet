@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * kit
+ * Provides general-purpose utility kits shared across ionet modules, including concurrency,
+ * collections, attributes, time helpers, and tracing support.
  *
  * @author 渔民小镇
  * @date 2022-01-02

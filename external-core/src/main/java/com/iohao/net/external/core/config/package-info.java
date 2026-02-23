@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Config
+ * Provides configuration objects and options for building and customizing external-server runtime
+ * behavior.
  *
  * @author 渔民小镇
  * @date 2023-04-28

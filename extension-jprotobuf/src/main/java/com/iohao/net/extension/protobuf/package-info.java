@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * Extension Module - <a href="https://iohao.github.io/ionet/docs/extension_module/jprotobuf">jprotobuf</a>
+ * Provides jprotobuf-based schema analysis and code-generation support for integrating protobuf
+ * message definitions with ionet workflows.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/extension_module/jprotobuf">jprotobuf</a> for
+ * integration details.
  *
  * @author 渔民小镇
  * @date 2025-12-03

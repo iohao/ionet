@@ -17,7 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Netty - <a href="https://iohao.github.io/ionet/docs/manual_high/external_design">Micro</a>
+ * Provides Netty-based micro-deployment support for external servers, including distributed join
+ * workflows and cluster-facing bootstrap helpers.
+ *
+ * <p>See <a href="https://iohao.github.io/ionet/docs/manual_high/external_design">Micro</a> for the
+ * external-server distributed design.
  *
  * @author 渔民小镇
  * @date 2023-04-28

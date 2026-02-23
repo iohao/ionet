@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * External Server - Netty - Hook
+ * Provides Netty-specific hook integrations for the external-server implementation, including
+ * channel lifecycle and transport-layer extension points.
  *
  * @author 渔民小镇
  * @date 2023-02-18

@@ -17,7 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * CoreFramework - Core
+ * Provides the core action execution model, metadata, lifecycle hooks, and shared runtime building
+ * blocks used by ionet business logic.
  *
  * @author 渔民小镇
  * @date 2024-08-05
