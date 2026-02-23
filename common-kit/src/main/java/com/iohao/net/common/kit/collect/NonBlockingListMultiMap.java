@@ -25,7 +25,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * ListMultiMapImpl
+ * Non-blocking {@link ListMultiMap} implementation backed by
+ * {@link java.util.concurrent.ConcurrentHashMap} and {@link java.util.concurrent.CopyOnWriteArrayList}.
  *
  * @author 渔民小镇
  * @date 2023-12-07
@@ -43,6 +44,9 @@ final class NonBlockingListMultiMap<K, V> implements ListMultiMap<K, V> {
         var list = this.map.get(key);
 
         if (Objects.isNull(list)) {
+            // Double-check pattern: putIfAbsent is atomic, so if another thread
+            // inserted first, it returns the existing list and we fall through.
+            // A null return means our newValueList was successfully stored.
             List<V> newValueList = new CopyOnWriteArrayList<>();
             list = this.map.putIfAbsent(key, newValueList);
 

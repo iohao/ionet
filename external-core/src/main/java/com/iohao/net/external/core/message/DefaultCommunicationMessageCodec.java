@@ -22,13 +22,18 @@ import com.iohao.net.framework.protocol.CmdCodeConst;
 import com.iohao.net.framework.protocol.CommunicationMessage;
 
 /**
- * DefaultCommunicationMessageCodec
+ * Default codec implementation that creates {@link ExternalMessage} instances.
  *
  * @author 渔民小镇
  * @date 2023-12-15
  * @see ExternalMessage
  */
 public final class DefaultCommunicationMessageCodec implements CommunicationMessageCodec {
+    /**
+     * Create a business-message template with the default command code.
+     *
+     * @return initialized external message
+     */
     @Override
     public CommunicationMessage createCommunicationMessage() {
         var externalMessage = new ExternalMessage();

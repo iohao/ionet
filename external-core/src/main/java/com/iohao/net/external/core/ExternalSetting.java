@@ -30,13 +30,13 @@ import com.iohao.net.server.NetServerSettingAware;
 import lombok.Builder;
 
 /**
- * ExternalSetting
+ * Immutable runtime settings for one external server instance.
  *
- * @param port               The port for real players to connect
- * @param server             ExternalServerMessage
- * @param userSessions       User session manager
- * @param idleProcessSetting Heartbeat-related settings
- * @param options            options
+ * @param port port exposed to real players
+ * @param server server metadata descriptor
+ * @param userSessions user session manager
+ * @param idleProcessSetting heartbeat/idle processing settings
+ * @param options extensible attribute options
  * @author 渔民小镇
  * @date 2025-10-15
  * @since 25.1
@@ -50,12 +50,23 @@ public record ExternalSetting(
         , AttrOptions options
 ) implements AttrOptionDynamic {
 
+    /** Attribute key storing the resolved {@link NetServerSetting}. */
     public static final AttrOption<NetServerSetting> netServerSetting = AttrOption.valueOf("NetServerSetting");
 
+    /**
+     * Get the net server setting attached to this external setting.
+     *
+     * @return net server setting, or {@code null} if not attached
+     */
     public NetServerSetting netServerSetting() {
         return this.option(netServerSetting);
     }
 
+    /**
+     * Get the convenient communication facade from the attached net server setting.
+     *
+     * @return convenient communication facade
+     */
     public ConvenientCommunication convenientCommunication() {
         return netServerSetting().convenientCommunication();
     }
@@ -65,6 +76,11 @@ public record ExternalSetting(
         return options;
     }
 
+    /**
+     * Inject this setting into supported aware components.
+     *
+     * @param o target component
+     */
     public void inject(Object o) {
         if (o == null) {
             return;

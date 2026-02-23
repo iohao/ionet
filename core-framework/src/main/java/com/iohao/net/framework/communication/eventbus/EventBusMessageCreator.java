@@ -19,13 +19,19 @@
 package com.iohao.net.framework.communication.eventbus;
 
 /**
- * EventBusMessage creator
+ * Factory interface for creating {@link EventBusMessage} instances from event source objects.
  *
  * @author 渔民小镇
  * @date 2023-12-24
  * @since 21
  */
 public interface EventBusMessageCreator {
+    /**
+     * Create an EventBusMessage from the given event source.
+     *
+     * @param eventSource the event source object
+     * @return a new EventBusMessage wrapping the event source
+     */
     EventBusMessage create(Object eventSource);
 }
 

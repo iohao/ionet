@@ -21,7 +21,8 @@ package com.iohao.net.framework.communication.eventbus;
 import java.lang.annotation.*;
 
 /**
- *
+ * Marker annotation for event subscriber classes.
+ * <p>
  * This annotation is not mandatory, but just for marking.
  * The purpose is to quickly find all subscriber configurations in conjunction with tools.
  *

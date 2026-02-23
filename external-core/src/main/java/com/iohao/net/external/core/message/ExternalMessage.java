@@ -30,7 +30,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.Arrays;
 
 /**
- * ExternalMessage <a href="https://iohao.github.io/ionet/docs/manual/external_message">Document</a>
+ * Default external transport message used between clients and the external server.
+ * <a href="https://iohao.github.io/ionet/docs/manual/external_message">Document</a>
  *
  * @author 渔民小镇
  * @date 2023-02-21
@@ -40,25 +41,25 @@ import java.util.Arrays;
 @ProtobufClass
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class ExternalMessage extends AbstractCommunicationMessage {
-    /** 请求命令类型: 0 心跳，1 业务 */
+    /** Command type: {@code 0} heartbeat, {@code 1} business request. */
     @Protobuf(fieldType = FieldType.INT32, order = 1)
     int cmdCode;
-    /** 协议开关，用于一些协议级别的开关控制，比如 安全加密校验等。 */
+    /** Protocol-level feature switches, such as encryption or signature validation. */
     @Protobuf(fieldType = FieldType.INT32, order = 2)
     int protocolSwitch;
-    /** 业务路由（高16为主, 低16为子） */
+    /** Merged route command (high 16 bits main cmd, low 16 bits sub cmd). */
     @Protobuf(fieldType = FieldType.INT32, order = 3)
     int cmdMerge;
-    /** 响应码、错误码。0 表示成功。 */
+    /** Response or error code, where {@code 0} means success. */
     @Protobuf(fieldType = FieldType.SINT32, order = 4)
     int errorCode;
-    /** 验证信息（错误消息、异常消息） */
+    /** Validation or failure details, usually an error/exception message. */
     @Protobuf(fieldType = FieldType.STRING, order = 5)
     String errorMessage;
-    /** 业务数据 */
+    /** Encoded business payload. */
     @Protobuf(fieldType = FieldType.BYTES, order = 6)
     byte[] data;
-    /** 消息标记号；由前端请求时设置，服务器响应时会携带上 */
+    /** Client message identifier echoed back by the server response. */
     @Protobuf(fieldType = FieldType.INT32, order = 7)
     int msgId;
 

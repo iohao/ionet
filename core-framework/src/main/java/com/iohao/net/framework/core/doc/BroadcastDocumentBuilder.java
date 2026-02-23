@@ -35,7 +35,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * BroadcastDocumentBuilder
+ * Builder for constructing {@link BroadcastDocument} instances that describe
+ * server-push routes, their data types, and method metadata.
  *
  * @author 渔民小镇
  * @date 2024-07-05
@@ -45,22 +46,22 @@ import java.util.Optional;
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PACKAGE)
 public class BroadcastDocumentBuilder {
-    /** 路由 */
+    /** The route (command info) for this broadcast. */
     final CmdInfo cmdInfo;
 
-    /** 业务数据类型 */
+    /** Business data type class. */
     Class<?> dataClass;
     @Setter(AccessLevel.PRIVATE)
     String dataClassName;
-    /** 广播业务参数的描述 */
+    /** Description of the broadcast data parameter. */
     String dataDescription;
 
     @Setter(AccessLevel.PACKAGE)
     boolean list;
 
-    /** 广播方法名，仅在生成客户端代码时使用 */
+    /** Broadcast method name, used only during client code generation. */
     String methodName;
-    /** 广播（推送）描述 */
+    /** Broadcast (push) description. */
     String methodDescription;
 
     BroadcastDocumentBuilder(CmdInfo cmdInfo) {
@@ -68,15 +69,22 @@ public class BroadcastDocumentBuilder {
     }
 
     /**
-     * set 推送的数据类型 List dataClass，ByteValueList dataClass。
+     * Set the broadcast data type as a List of the given class.
      *
-     * @param dataClass 数据类型
-     * @return this
+     * @param dataClass the element type of the list
+     * @return this builder
      */
     public BroadcastDocumentBuilder setDataClassList(Class<?> dataClass) {
         return this.setDataClassList(dataClass, null);
     }
 
+    /**
+     * Set the broadcast data type as a List with an optional description.
+     *
+     * @param dataClass       the element type of the list
+     * @param dataDescription optional description of the data
+     * @return this builder
+     */
     public BroadcastDocumentBuilder setDataClassList(Class<?> dataClass, String dataDescription) {
         this.list = true;
         this.dataClass = dataClass;
@@ -98,21 +106,21 @@ public class BroadcastDocumentBuilder {
     }
 
     /**
-     * set 推送的数据类型
+     * Set the broadcast data type.
      *
-     * @param dataClass 推送的数据类型
-     * @return this
+     * @param dataClass the data type class
+     * @return this builder
      */
     public BroadcastDocumentBuilder setDataClass(Class<?> dataClass) {
         return setDataClass(dataClass, null);
     }
 
     /**
-     * set 推送的数据类型
+     * Set the broadcast data type with an optional description.
      *
-     * @param dataClass       推送的数据类型
-     * @param dataDescription 业务数据描述
-     * @return this
+     * @param dataClass       the data type class
+     * @param dataDescription optional description of the data
+     * @return this builder
      */
     public BroadcastDocumentBuilder setDataClass(Class<?> dataClass, String dataDescription) {
 
@@ -131,16 +139,16 @@ public class BroadcastDocumentBuilder {
     }
 
     private String getMethodName() {
-        // 如果没有指定广播的方法名，则方法名使用下述规则
+        // If no broadcast method name is specified, use a default naming convention
         return Objects.isNull(methodName)
                 ? "Method_%d_%d".formatted(cmdInfo.cmd(), cmdInfo.subCmd())
                 : methodName;
     }
 
     /**
-     * 构建广播文档对象
+     * Build the broadcast document.
      *
-     * @return BroadcastDocument 广播文档
+     * @return the constructed {@link BroadcastDocument}
      */
     public BroadcastDocument build() {
         String theMethodName = getMethodName();
@@ -168,7 +176,7 @@ public class BroadcastDocumentBuilder {
     }
 
     /**
-     * 构建广播文档对象，并添加到 {@link DocumentHelper}
+     * Build the broadcast document and register it with {@link DocumentHelper}.
      */
     public void buildToDocument() {
         DocumentHelper.addBroadcastDocument(this.build());

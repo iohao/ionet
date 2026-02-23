@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.concurrent.locks.StampedLock;
 
 /**
+ * Lightweight long-key map wrapper with {@link StampedLock}-based concurrency control.
  *
  * @author 渔民小镇
  * @date 2025-09-13

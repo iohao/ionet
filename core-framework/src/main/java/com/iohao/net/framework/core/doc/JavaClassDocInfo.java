@@ -31,6 +31,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Wrapper around a QDox {@link JavaClass} that indexes its methods by signature
+ * and provides factory methods for creating {@link ActionCommandDoc} from reflection
+ * {@link Method} objects.
+ *
  * @author 渔民小镇
  * @date 2022-01-28
  */

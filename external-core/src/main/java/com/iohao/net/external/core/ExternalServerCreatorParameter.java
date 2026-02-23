@@ -25,7 +25,7 @@ import lombok.Builder;
 import java.util.Set;
 
 /**
- * ExternalServerCreatorParameter
+ * Parameter bundle passed to {@link ExternalServerCreator}.
  *
  * @author 渔民小镇
  * @date 2025-10-16
@@ -38,5 +38,5 @@ public record ExternalServerCreatorParameter(
         , MicroBootstrapFlow<?> microBootstrapFlow
         , Set<Object> injectSet
 ) {
-
+    // Marker record used as a transport-independent factory input.
 }

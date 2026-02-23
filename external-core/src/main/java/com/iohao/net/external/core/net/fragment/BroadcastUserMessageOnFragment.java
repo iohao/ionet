@@ -30,6 +30,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
+ * Aeron fragment consumer that routes a decoded message to one target user session.
  *
  * @author 渔民小镇
  * @date 2025-09-03
@@ -57,6 +58,11 @@ public class BroadcastUserMessageOnFragment implements OnFragment {
         writeAndFlush(message);
     }
 
+    /**
+     * Resolve and write the decoded message to its target user session.
+     *
+     * @param message decoded outbound message
+     */
     protected void writeAndFlush(CommunicationMessage message) {
         var userSessions = ExternalServerSingle.userSessions;
         ExternalWriteKit.writeAndFlush(message, userSessions);

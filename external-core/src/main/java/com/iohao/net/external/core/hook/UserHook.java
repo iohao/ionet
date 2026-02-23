@@ -21,7 +21,7 @@ package com.iohao.net.external.core.hook;
 import com.iohao.net.external.core.session.UserSession;
 
 /**
- * UserHook
+ * User session lifecycle callbacks for online/offline events.
  *
  * @author 渔民小镇
  * @date 2023-02-20
@@ -30,14 +30,14 @@ public interface UserHook {
     /**
      * User is online.
      *
-     * @param userSession userSession
+     * @param userSession user session entering the external server
      */
     void into(UserSession userSession);
 
     /**
      * User is offline.
      *
-     * @param userSession userSession
+     * @param userSession user session leaving the external server
      */
     void quit(UserSession userSession);
 }

@@ -24,7 +24,10 @@ import com.iohao.net.common.kit.RuntimeKit;
 import java.util.concurrent.ExecutorService;
 
 /**
- * UserVirtualThreadExecutorRegion
+ * A {@link ThreadExecutorRegion} backed by virtual threads, distributing tasks by user ID.
+ * <p>
+ * Behaves like {@link UserThreadExecutorRegion} but each executor uses a virtual-thread-based
+ * {@link java.util.concurrent.ExecutorService} instead of a platform-thread pool.
  *
  * @author 渔民小镇
  * @date 2023-12-19
@@ -32,16 +35,31 @@ import java.util.concurrent.ExecutorService;
 final class UserVirtualThreadExecutorRegion extends AbstractThreadExecutorRegion {
     final int executorLength;
 
+    /** Create a region with a pool size equal to the nearest power-of-two of available processors. */
     UserVirtualThreadExecutorRegion() {
         super("UserVirtual", RuntimeKit.availableProcessors2n);
         this.executorLength = RuntimeKit.availableProcessors2n - 1;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param userId the user identifier; tasks with the same user ID always run on the same executor
+     * @return the {@link ThreadExecutor} assigned to the given user ID
+     */
     @Override
     public ThreadExecutor getThreadExecutor(long userId) {
         return this.threadExecutors[(int) (userId & this.executorLength)];
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Overrides the default to return a virtual-thread-based executor.
+     *
+     * @param name the thread name prefix for the executor
+     * @return a virtual-thread executor service
+     */
     @Override
     protected ExecutorService createExecutorService(String name) {
         return ExecutorKit.newVirtualExecutor(name);

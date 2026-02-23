@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Handler for WebSocket token authentication before connection
+ * Optional WebSocket handshake verification handler executed before protocol upgrade completion.
  *
  * @author 渔民小镇
  * @date 2023-08-03
@@ -73,16 +73,22 @@ public class WebSocketVerifyHandler extends ChannelInboundHandlerAdapter impleme
     }
 
     /**
-     * verify
+     * Verify the WebSocket handshake request.
      *
-     * @param userSession ctx
-     * @param params      params
-     * @return Returning false indicates a validation failure, and the framework will close the connection.
+     * @param userSession user session associated with the Netty channel
+     * @param params handshake query parameters
+     * @return false to reject the handshake and close the connection
      */
     protected boolean verify(SocketUserSession userSession, Map<String, String> params) {
         return true;
     }
 
+    /**
+     * Parse query parameters from the WebSocket request URI.
+     *
+     * @param uri request URI
+     * @return parameter map
+     */
     protected Map<String, String> getParams(String uri) {
         return new QueryStringDecoder(uri)
                 .parameters()

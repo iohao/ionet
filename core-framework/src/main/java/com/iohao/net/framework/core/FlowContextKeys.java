@@ -21,16 +21,24 @@ package com.iohao.net.framework.core;
 import com.iohao.net.framework.core.flow.FlowContext;
 
 /**
- * FlowContextKeys
+ * Holder for the {@link ScopedValue} key used to propagate {@link FlowContext}
+ * through the execution thread. Provides convenient access to the current
+ * flow context within action method processing.
  *
  * @author 渔民小镇
  * @date 2025-10-05
  * @since 25.1
  */
 public class FlowContextKeys {
+    /** Scoped value key carrying the current request's FlowContext. */
     public static final ScopedValue<FlowContext> FLOW_CONTEXT = ScopedValue.newInstance();
     private static final FlowContext emptyFlowContext = new EmptyFlowContext();
 
+    /**
+     * Get the current FlowContext from the scoped value, or an empty no-op instance if none is bound.
+     *
+     * @return the current FlowContext, never null
+     */
     public static FlowContext getFlowContext() {
         return FLOW_CONTEXT.orElse(emptyFlowContext);
     }

@@ -33,21 +33,31 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Utility for analysing action documents, error code enums, and Java source files
+ * to produce structured documentation models.
+ *
  * @author 渔民小镇
  * @date 2024-06-26
  */
 @Slf4j
 @UtilityClass
 public class DocumentAnalyseKit {
+    /**
+     * Analyse all action documents and produce a list of {@link ActionDocument} models.
+     *
+     * @param document             the raw document containing action doc list
+     * @param typeMappingDocument  the type mapping configuration
+     * @return list of analysed action documents (only those with methods)
+     */
     public List<ActionDocument> analyseActionDocument(Document document, TypeMappingDocument typeMappingDocument) {
-        // 数据类型对应的映射值
+        // map data types to their corresponding values
         return document.actionDocList.stream().map(actionDoc -> {
-            // 生成 action 文件
+            // generate action file
             ActionDocument actionDocument = new ActionDocument(actionDoc, typeMappingDocument);
             actionDocument.analyse();
             return actionDocument;
         }).filter(actionDocument -> {
-            // action 方法列表不为空
+            // keep only actions with non-empty method lists
             List<ActionMethodDocument> actionMethodDocumentList = actionDocument.actionMethodDocumentList;
             return !actionMethodDocumentList.isEmpty();
         }).toList();
@@ -57,7 +67,7 @@ public class DocumentAnalyseKit {
 
         var analyseJavaClassRecord = analyseJavaClass(clazz);
         if (!analyseJavaClassRecord.exists) {
-            // 框架内置错误码的特殊处理。因为编译后已经没有源码了，所以无法获取框架的 ActionErrorEnum 相关源码。
+            // Special handling for built-in error codes -- source is unavailable after compilation
             return analyseActionErrorEnumDocument(clazz);
         }
 
@@ -93,14 +103,14 @@ public class DocumentAnalyseKit {
         JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder();
 
         File file = new File(srcPath);
-        // 源码在此包才做处理
+        // only process if source file exists in this package
         boolean exists = file.exists();
         if (exists) {
             javaProjectBuilder.addSourceTree(file);
         }
 
         if (!exists && !ActionErrorEnum.class.equals(clazz)) {
-            log.warn("无法获取 {} 相关源码", clazz);
+            log.warn("Unable to obtain source code for {}", clazz);
         }
 
         JavaClass javaClass = javaProjectBuilder.getClassByName(clazz.getName());

@@ -19,12 +19,17 @@
 package com.iohao.net.framework.core;
 
 /**
- * CodeSuggest
+ * Strategy interface for inspecting action commands and emitting code-improvement suggestions.
  *
  * @author 渔民小镇
  * @date 2025-10-13
  * @since 25.1
  */
 public interface CodeSuggest {
+    /**
+     * Inspect the given suggestion context and emit any applicable recommendations.
+     *
+     * @param suggest the suggestion context containing the action command to inspect
+     */
     void inspect(SuggestInformation suggest);
 }

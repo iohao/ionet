@@ -19,6 +19,8 @@
 package com.iohao.net.common.kit.beans.property;
 
 /**
+ * Abstract base class for numeric {@link PropertyValueObservable} implementations.
+ *
  * @author 渔民小镇
  * @date 2024-04-17
  */

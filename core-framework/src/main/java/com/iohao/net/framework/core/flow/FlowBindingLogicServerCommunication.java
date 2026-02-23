@@ -24,7 +24,8 @@ import com.iohao.net.framework.protocol.CommonResponse;
 import com.iohao.net.common.kit.exception.EnterpriseSupportException;
 
 /**
- * FlowBindingLogicServerCommunication
+ * Flow-level communication for binding or unbinding a user session to specific logic servers.
+ * This is an enterprise feature; default implementations throw {@link EnterpriseSupportException}.
  *
  * @author 渔民小镇
  * @date 2025-10-09
@@ -33,10 +34,22 @@ import com.iohao.net.common.kit.exception.EnterpriseSupportException;
 @Enterprise
 public interface FlowBindingLogicServerCommunication extends FlowExternalCommunication {
 
+    /**
+     * Bind or unbind the current user session to the specified logic servers.
+     *
+     * @param operation      the binding operation (bind or unbind)
+     * @param logicServerIds the IDs of the logic servers to bind or unbind
+     * @return the response indicating success or failure
+     */
     default CommonResponse bindingLogicServer(BindingEnum operation, int[] logicServerIds) {
         throw new EnterpriseSupportException();
     }
 
+    /**
+     * Clear all logic server bindings for the current user session.
+     *
+     * @return the response indicating success or failure
+     */
     default CommonResponse clearBindingLogicServer() {
         throw new EnterpriseSupportException();
     }

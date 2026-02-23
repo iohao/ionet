@@ -24,6 +24,10 @@ import com.iohao.net.common.kit.exception.EnterpriseSupportException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Default (free-tier) implementation of {@link EventBusSetting} that throws
+ * {@link EnterpriseSupportException} for most operations, indicating enterprise support is required.
+ */
 final class FreeEventBusSetting implements EventBusSetting {
     @Override
     public void defaultSetting(EventBus eventBus) {
@@ -46,6 +50,10 @@ final class FreeEventBusSetting implements EventBusSetting {
     }
 }
 
+/**
+ * Default (free-tier) implementation of {@link EventBusRegion} that throws
+ * {@link EnterpriseSupportException} for most operations and returns empty collections otherwise.
+ */
 class FreeEventBusRegion implements EventBusRegion {
 
     @Override

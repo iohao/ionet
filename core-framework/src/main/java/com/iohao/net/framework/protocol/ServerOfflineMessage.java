@@ -19,7 +19,13 @@
 package com.iohao.net.framework.protocol;
 
 /**
- * ServerOfflineMessage
+ * Notification record indicating that a server has gone offline.
+ * <p>
+ * Published by the center server when a registered server disconnects or is detected
+ * as unavailable. Consumers use the {@code serverId} to clean up routing tables and
+ * release associated resources.
+ *
+ * @param serverId the ID of the server that went offline
  *
  * @author 渔民小镇
  * @date 2025-09-25

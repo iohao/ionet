@@ -30,8 +30,8 @@ public interface ActionMethodExceptionProcess {
     /**
      * Exception handling
      *
-     * @param e e
-     * @return BarException
+     * @param e the exception thrown during action method execution
+     * @return a MessageException wrapping the original exception
      */
     MessageException processException(Throwable e);
 }

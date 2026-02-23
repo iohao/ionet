@@ -19,12 +19,18 @@
 package com.iohao.net.external.core;
 
 /**
- * ExternalServerCreator
+ * Factory for creating transport-specific external server instances.
  *
  * @author 渔民小镇
  * @date 2025-10-16
  * @since 25.1
  */
 public interface ExternalServerCreator {
+    /**
+     * Create an external server using prepared bootstrap parameters.
+     *
+     * @param parameter bootstrap parameter bundle
+     * @return external server instance
+     */
     ExternalServer of(ExternalServerCreatorParameter parameter);
 }

@@ -23,7 +23,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * BroadcastUserMessage
+ * Broadcast message targeting a single user (unicast).
+ * <p>
+ * Extends {@link BroadcastMessage} with {@link UserIdentity} for user binding and
+ * {@link CommonResponse} for error propagation. Used to push data to one specific
+ * connected user identified by {@code userId}, routed through the external server
+ * identified by {@code externalServerId}.
  *
  * @author 渔民小镇
  * @date 2025-09-03

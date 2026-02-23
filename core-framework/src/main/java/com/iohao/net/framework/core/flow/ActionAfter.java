@@ -19,11 +19,17 @@
 package com.iohao.net.framework.core.flow;
 
 /**
- * ActionAfter
+ * Post-action processor responsible for handling the action method result,
+ * typically encoding and sending the response.
  *
  * @author 渔民小镇
  * @date 2021-12-12
  */
 public interface ActionAfter {
+    /**
+     * Process the action method result and send the response.
+     *
+     * @param flowContext the current request flow context
+     */
     void execute(FlowContext flowContext);
 }

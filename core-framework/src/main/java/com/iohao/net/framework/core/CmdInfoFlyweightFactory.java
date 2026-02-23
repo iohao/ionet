@@ -21,7 +21,12 @@ package com.iohao.net.framework.core;
 import com.iohao.net.framework.CoreGlobalConfig;
 
 /**
- * CmdInfoFlyweightFactory
+ * Factory that produces cached {@link CmdInfo} instances using the flyweight pattern.
+ * <p>
+ * The underlying caching strategy is selected at class-load time based on
+ * {@link CmdInfoFlyweightStrategy} configured in {@link CoreGlobalConfig#setting}.
+ * When the command space exceeds 128 in either dimension the factory automatically
+ * falls back to a {@code Map}-based implementation.
  *
  * @author 渔民小镇
  * @date 2021-12-20
@@ -44,10 +49,23 @@ public final class CmdInfoFlyweightFactory {
         };
     }
 
+    /**
+     * Obtain a cached {@link CmdInfo} for the given command and sub-command pair.
+     *
+     * @param cmd    the primary command ID
+     * @param subCmd the sub-command ID
+     * @return the flyweight {@link CmdInfo} instance
+     */
     public static CmdInfo of(int cmd, int subCmd) {
         return flyweight.of(cmd, subCmd);
     }
 
+    /**
+     * Obtain a cached {@link CmdInfo} for the given merged command value.
+     *
+     * @param cmdMerge the merged command value (cmd and subCmd packed into one int)
+     * @return the flyweight {@link CmdInfo} instance
+     */
     public static CmdInfo of(int cmdMerge) {
         return flyweight.of(cmdMerge);
     }

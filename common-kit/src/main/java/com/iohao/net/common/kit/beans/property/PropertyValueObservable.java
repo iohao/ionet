@@ -19,37 +19,38 @@
 package com.iohao.net.common.kit.beans.property;
 
 /**
- * Property value object
+ * Observable property value that notifies registered listeners on value changes.
  *
+ * @param <T> the type of the property value
  * @author 渔民小镇
  * @date 2024-04-17
  */
 public interface PropertyValueObservable<T> {
     /**
-     * add ChangeListener
+     * Register a change listener to be notified when the value changes.
      *
-     * @param listener ChangeListener
+     * @param listener the listener to register
      */
     void addListener(PropertyChangeListener<? super T> listener);
 
     /**
-     * remove ChangeListener
+     * Remove a previously registered change listener.
      *
-     * @param listener ChangeListener
+     * @param listener the listener to remove
      */
     void removeListener(PropertyChangeListener<? super T> listener);
 
     /**
-     * get PropertyValue
+     * Get the current property value.
      *
-     * @return current value
+     * @return the current value
      */
     T getValue();
 
     /**
-     * set value
+     * Set the property value, triggering listeners if the value changed.
      *
-     * @param value value
+     * @param value the new value to set
      */
     void setValue(T value);
 }

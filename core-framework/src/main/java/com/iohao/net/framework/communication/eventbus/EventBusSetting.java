@@ -22,7 +22,8 @@ import com.iohao.net.framework.annotations.Enterprise;
 import com.iohao.net.framework.core.runner.Runner;
 
 /**
- * EventBusSetting
+ * Configuration interface for the EventBus subsystem, providing factory methods
+ * for creating EventBus instances and accessing the EventBus region.
  *
  * @author 渔民小镇
  * @date 2025-10-10
@@ -30,11 +31,32 @@ import com.iohao.net.framework.core.runner.Runner;
  */
 @Enterprise
 public interface EventBusSetting {
+    /**
+     * Apply default settings to the given EventBus instance.
+     *
+     * @param eventBus the EventBus instance to configure
+     */
     void defaultSetting(EventBus eventBus);
 
+    /**
+     * Create a new EventBus instance with the given ID.
+     *
+     * @param id the unique ID for the new EventBus
+     * @return a new EventBus instance
+     */
     EventBus ofEventBus(int id);
 
+    /**
+     * Get the EventBus region that manages all EventBus instances.
+     *
+     * @return the EventBus region
+     */
     EventBusRegion getEventBusRegion();
 
+    /**
+     * Get the runner that validates EventBus configuration during startup.
+     *
+     * @return the checked EventBus runner, or null if not applicable
+     */
     Runner getCheckedEventBusRunner();
 }

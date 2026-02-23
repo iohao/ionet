@@ -23,7 +23,7 @@ import org.jspecify.annotations.NonNull;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * DaemonThreadFactory
+ * A {@link ThreadFactory} that creates daemon threads with auto-incrementing names.
  *
  * @author 渔民小镇
  * @date 2023-04-02

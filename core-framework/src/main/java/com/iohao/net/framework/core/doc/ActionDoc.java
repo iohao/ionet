@@ -30,7 +30,8 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * ActionDoc
+ * Documentation model for a single {@code @ActionController}, grouping all
+ * {@link ActionCommandDoc} entries that share the same primary command ID.
  *
  * @author 渔民小镇
  * @date 2023-07-13
@@ -39,23 +40,37 @@ import java.util.stream.Stream;
 public final class ActionDoc {
     final int cmd;
     final Class<?> controllerClazz;
-    /**
-     * action method, key: subCmd
-     */
+    /** Action method docs keyed by subCmd. */
     final Map<Integer, ActionCommandDoc> actionCommandDocMap = CollKit.ofConcurrentHashMap();
 
     JavaClassDocInfo javaClassDocInfo;
 
+    /**
+     * Create a new action doc for the given command ID and controller class.
+     *
+     * @param cmd             the primary command ID
+     * @param controllerClazz the controller class
+     */
     public ActionDoc(int cmd, Class<?> controllerClazz) {
         this.cmd = cmd;
         this.controllerClazz = controllerClazz;
     }
 
+    /**
+     * Register an {@link ActionCommandDoc} under its sub-command ID.
+     *
+     * @param actionCommandDoc the command doc to add
+     */
     public void addActionCommandDoc(ActionCommandDoc actionCommandDoc) {
         int subCmd = actionCommandDoc.subCmd;
         this.actionCommandDocMap.put(subCmd, actionCommandDoc);
     }
 
+    /**
+     * Associate a parsed {@link ActionCommand} with its existing doc entry.
+     *
+     * @param actionCommand the action command to link
+     */
     public void addActionCommand(ActionCommand actionCommand) {
         CmdInfo cmdInfo = actionCommand.cmdInfo;
         int subCmd = cmdInfo.subCmd();
@@ -65,6 +80,11 @@ public final class ActionDoc {
         }
     }
 
+    /**
+     * Return a stream of command docs sorted by sub-command ID.
+     *
+     * @return sorted stream of {@link ActionCommandDoc}
+     */
     public Stream<ActionCommandDoc> stream() {
         return actionCommandDocMap
                 .values()

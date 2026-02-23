@@ -8,15 +8,16 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * NetworkKit
+ * Network utilities for local IP address detection.
  *
  * @author 渔民小镇
  * @date 2022-05-14
  */
 @UtilityClass
 public class NetworkKit {
-    /** ip black list. 10.0.2.15 is default ip for virtual box vm */
+    /** IP black list. 10.0.2.15 is the default IP for VirtualBox VMs. */
     final List<String> IP_BLACK_LIST = List.of("10.0.2.15");
+    /** The detected local (non-loopback, non-blacklisted) IPv4 address. */
     public final String LOCAL_IP = getLocalIP();
 
     private String getLocalIP() {

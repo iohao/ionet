@@ -23,22 +23,40 @@ import com.iohao.net.framework.protocol.OnExternalTemplateId;
 import com.iohao.net.common.kit.exception.ThrowKit;
 
 /**
+ * Flow-level attachment communication for reading and writing request-scoped attachment data.
  *
  * @author 渔民小镇
  * @date 2025-10-09
  * @since 25.1
  */
 public interface FlowAttachmentCommunication extends FlowExternalCommunication {
+    /**
+     * Update the request attachment on the external server with the given raw bytes,
+     * and synchronize the local request's attachment.
+     *
+     * @param attachment the encoded attachment bytes
+     */
     default void updateAttachment(byte[] attachment) {
         var message = this.ofExternalRequestMessage(OnExternalTemplateId.attachmentUpdate, attachment);
         this.callExternal(message);
         this.getRequest().setAttachment(attachment);
     }
 
+    /**
+     * Asynchronously update the request attachment on the external server.
+     *
+     * @param attachment the encoded attachment bytes
+     * @see #updateAttachment(byte[])
+     */
     default void updateAttachmentAsync(byte[] attachment) {
         this.executeVirtual(() -> this.updateAttachment(attachment));
     }
 
+    /**
+     * Encode the current typed attachment and update it on the external server.
+     *
+     * @see #updateAttachment(byte[])
+     */
     default void updateAttachment() {
         var attachment = this.getAttachment();
         var codec = DataCodecManager.getDataCodec();
@@ -46,10 +64,22 @@ public interface FlowAttachmentCommunication extends FlowExternalCommunication {
         this.updateAttachment(payload);
     }
 
+    /**
+     * Asynchronously encode the current typed attachment and update it on the external server.
+     *
+     * @see #updateAttachment()
+     */
     default void updateAttachmentAsync() {
         this.executeVirtual(this::updateAttachment);
     }
 
+    /**
+     * Decode the request attachment bytes into the specified type.
+     *
+     * @param clazz the target class to decode into
+     * @param <T>   the attachment type
+     * @return the decoded attachment object
+     */
     default <T> T getAttachment(final Class<T> clazz) {
         byte[] attachment = this.getRequest().getAttachment();
         var codec = DataCodecManager.getDataCodec();
@@ -57,7 +87,7 @@ public interface FlowAttachmentCommunication extends FlowExternalCommunication {
     }
 
     /**
-     * getAttachment
+     * Get the typed attachment object. Must be implemented by subclasses.
      * <p>
      * examples
      * <pre>{@code
@@ -81,8 +111,8 @@ public interface FlowAttachmentCommunication extends FlowExternalCommunication {
      * }
      * </pre>
      *
-     * @param <T> t
-     * @return attachment
+     * @param <T> the attachment type
+     * @return the attachment object
      */
     default <T> T getAttachment() {
         ThrowKit.ofRuntimeException("Must be implemented by subclasses.");

@@ -33,7 +33,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * DefaultFlowContext
+ * Default implementation of {@link FlowContext} with Lombok-generated getters and setters.
  *
  * @author 渔民小镇
  * @date 2025-10-09
@@ -70,6 +70,14 @@ public class DefaultFlowContext implements FlowContext {
         return this.nanoTime;
     }
 
+    /**
+     * Create a new {@link RequestMessage} for cross-logic-server calls,
+     * copying routing fields from the current request.
+     *
+     * @param cmdInfo   the target command routing info
+     * @param dataBytes the serialized request payload
+     * @return a new request message with source server and net ID populated
+     */
     @Override
     public RequestMessage ofRequestMessage(final CmdInfo cmdInfo, final byte[] dataBytes) {
         var message = RequestMessage.of(cmdInfo, dataBytes);

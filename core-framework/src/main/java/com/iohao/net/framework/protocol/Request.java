@@ -19,16 +19,36 @@
 package com.iohao.net.framework.protocol;
 
 /**
+ * Represent an inbound request message carrying routing, identity, and attachment metadata.
+ * <p>
+ * Extends {@link RemoteMessage} for inter-server communication fields and {@link UserIdentity}
+ * for user identification. Implementations carry hop-count tracking, logic-server binding,
+ * per-request attachment data, and an optional sticky-routing hint.
  *
  * @author 渔民小镇
  * @date 2025-09-15
  * @since 25.1
  */
 public interface Request extends RemoteMessage, UserIdentity {
+    /**
+     * Get the number of hops this request has traversed across logic servers.
+     *
+     * @return the current hop count
+     */
     int getHopCount();
 
+    /**
+     * Set the number of hops this request has traversed.
+     *
+     * @param hopCount the hop count to set
+     */
     void setHopCount(int hopCount);
 
+    /**
+     * Set the IDs of logic servers that this player is bound to.
+     *
+     * @param bindingLogicServerIds array of bound logic server IDs
+     */
     void setBindingLogicServerIds(int[] bindingLogicServerIds);
 
     /**
@@ -42,6 +62,11 @@ public interface Request extends RemoteMessage, UserIdentity {
      */
     int[] getBindingLogicServerIds();
 
+    /**
+     * Set the per-request attachment data.
+     *
+     * @param attachment the attachment byte array
+     */
     void setAttachment(byte[] attachment);
 
     /**
@@ -52,9 +77,19 @@ public interface Request extends RemoteMessage, UserIdentity {
      */
     byte[] getAttachment();
 
+    /**
+     * Set the sticky-routing hint used to pin this request to a specific server instance.
+     *
+     * @param stick the sticky-routing value
+     */
     default void setStick(int stick) {
     }
 
+    /**
+     * Get the sticky-routing hint for this request.
+     *
+     * @return the sticky-routing value, or 0 if not set
+     */
     default int getStick() {
         return 0;
     }

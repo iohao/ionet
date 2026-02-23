@@ -29,17 +29,22 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * StringValueMethodParser
+ * Method parser for {@link String} parameters and return types.
+ * <p>
+ * Converts between Java {@link String} values and the protocol wrapper types
+ * {@link StringValue} and {@link StringValueList}.
  *
  * @author 渔民小镇
  * @date 2023-02-05
  */
 final class StringValueMethodParser implements MethodParser {
+    /** {@inheritDoc} */
     @Override
     public Class<?> getActualClazz(ActualParameter parameterReturn) {
         return parameterReturn.isList() ? StringValueList.class : StringValue.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
 
@@ -58,6 +63,7 @@ final class StringValueMethodParser implements MethodParser {
         return codec.decode(data, StringValue.class).value;
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public Object parseDataList(Object data, DataCodec codec) {
@@ -66,6 +72,7 @@ final class StringValueMethodParser implements MethodParser {
         return valueList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseData(Object data) {
         StringValue stringValue = new StringValue();
@@ -76,11 +83,16 @@ final class StringValueMethodParser implements MethodParser {
     private StringValueMethodParser() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code StringValueMethodParser}
+     */
     public static StringValueMethodParser me() {
         return Holder.ME;
     }
 
-    /** 通过 JVM 的类加载机制, 保证只加载一次 (singleton) */
+    /** Singleton via JVM class-loading mechanism (lazy initialization) */
     private static class Holder {
         static final StringValueMethodParser ME = new StringValueMethodParser();
     }

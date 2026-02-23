@@ -19,7 +19,10 @@
 package com.iohao.net.common.kit.concurrent.executor;
 
 /**
- * ThreadExecutorRegion
+ * Interface for a region of thread executors that distributes tasks by index.
+ * <p>
+ * Implementations map an arbitrary {@code long} index to one of a fixed set of
+ * {@link ThreadExecutor} instances, allowing deterministic task-to-thread assignment.
  *
  * @author 渔民小镇
  * @date 2023-12-01
@@ -28,16 +31,16 @@ public interface ThreadExecutorRegion {
     /**
      * Get the Executor based on the index.
      *
-     * @param index index index
-     * @return Executor Executor
+     * @param index the index used to select an executor from the region
+     * @return the {@link ThreadExecutor} mapped to the given index
      */
     ThreadExecutor getThreadExecutor(long index);
 
     /**
      * Get the Executor by index to run the task.
      *
-     * @param runnable runnable
-     * @param index    index
+     * @param runnable the task to execute
+     * @param index    the index used to select an executor
      */
     default void execute(Runnable runnable, long index) {
         this.getThreadExecutor(index).execute(runnable);

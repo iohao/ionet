@@ -29,7 +29,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Set;
 
 /**
- * AccessAuthentication
+ * Default in-memory access control implementation for external route checks.
  *
  * @author 渔民小镇
  * @date 2023-02-19

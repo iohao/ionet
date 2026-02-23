@@ -24,7 +24,7 @@ import com.iohao.net.external.core.micro.ExternalJoinSelector;
 import com.iohao.net.external.core.netty.micro.WebSocketMicroBootstrapFlow;
 
 /**
- * WebSocketExternalJoinSelector
+ * Transport selector that configures WebSocket defaults for Netty external servers.
  *
  * @author 渔民小镇
  * @date 2023-05-29

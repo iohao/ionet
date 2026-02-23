@@ -88,10 +88,20 @@ public final class StatActionInOut implements ActionMethodInOut {
     @Setter
     StatActionChangeListener listener;
 
+    /**
+     * Record the start time before action method execution (no-op; timing uses {@code FlowContext.getNanoTime()}).
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckIn(FlowContext flowContext) {
     }
 
+    /**
+     * Collect statistics after action method execution, updating the corresponding {@link StatAction}.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckOut(FlowContext flowContext) {
         long time = TimeKit.elapsedMillis(flowContext.getNanoTime());
@@ -100,9 +110,18 @@ public final class StatActionInOut implements ActionMethodInOut {
         this.region.update(time, flowContext);
     }
 
+    /**
+     * Region that manages {@link StatAction} instances, one per {@link CmdInfo}.
+     */
     public final class StatActionRegion {
         final Map<CmdInfo, StatAction> map = CollKit.ofConcurrentHashMap();
 
+        /**
+         * Update statistics for the given command after an action invocation.
+         *
+         * @param time        elapsed time in milliseconds
+         * @param flowContext the current request flow context
+         */
         void update(long time, FlowContext flowContext) {
             CmdInfo cmdInfo = flowContext.getCmdInfo();
             StatAction statAction = getStatAction(cmdInfo);
@@ -114,6 +133,12 @@ public final class StatActionInOut implements ActionMethodInOut {
             }
         }
 
+        /**
+         * Get or create the {@link StatAction} for the given command.
+         *
+         * @param cmdInfo the command identifier
+         * @return the statistics object for the command
+         */
         public StatAction getStatAction(CmdInfo cmdInfo) {
             StatAction statAction = this.map.get(cmdInfo);
 
@@ -125,10 +150,20 @@ public final class StatActionInOut implements ActionMethodInOut {
             return statAction;
         }
 
+        /**
+         * Iterate over all collected statistics.
+         *
+         * @param action the action to perform for each entry
+         */
         public void forEach(BiConsumer<CmdInfo, StatAction> action) {
             this.map.forEach(action);
         }
 
+        /**
+         * Return a stream of all {@link StatAction} values.
+         *
+         * @return stream of statistics
+         */
         public Stream<StatAction> stream() {
             return this.map.values().stream();
         }
@@ -141,6 +176,10 @@ public final class StatActionInOut implements ActionMethodInOut {
         }
     }
 
+    /**
+     * Per-action statistics record holding execution count, total/average/max time cost,
+     * error count, and time range distribution.
+     */
     @Getter
     public final class StatAction {
         static final List<TimeRange> emptyRangeList = List.of(TimeRange.create(Long.MAX_VALUE - 1, Long.MAX_VALUE, ""));
@@ -173,6 +212,12 @@ public final class StatActionInOut implements ActionMethodInOut {
             this.lastTimeRange = this.timeRangeList.getLast();
         }
 
+        /**
+         * Update statistics with the latest invocation result.
+         *
+         * @param flowContext the current request flow context
+         * @param time        elapsed time in milliseconds
+         */
         private void update(FlowContext flowContext, long time) {
             // Execution count +1
             this.executeCount.increment();
@@ -365,10 +410,19 @@ public final class StatActionInOut implements ActionMethodInOut {
             return new TimeRange(start, end, new LongAdder(), name);
         }
 
+        /**
+         * Check whether the given time falls within this range.
+         *
+         * @param time the time value to check
+         * @return {@code true} if the time is within [{@code start}, {@code end}]
+         */
         boolean inRange(long time) {
             return time >= this.start && time <= this.end;
         }
 
+        /**
+         * Increment the execution count for this time range.
+         */
         void increment() {
             this.count.increment();
         }

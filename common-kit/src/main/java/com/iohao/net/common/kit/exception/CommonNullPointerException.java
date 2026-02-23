@@ -19,16 +19,24 @@
 package com.iohao.net.common.kit.exception;
 
 /**
- * NullPointerException
+ * Common null pointer exception used throughout the ionet framework.
  *
  * @author 渔民小镇
  * @date 2024-08-16
  * @since 21.15
  */
 public class CommonNullPointerException extends NullPointerException {
+    /**
+     * Create a new instance with no detail message.
+     */
     public CommonNullPointerException() {
     }
 
+    /**
+     * Create a new instance with the given detail message.
+     *
+     * @param s the detail message
+     */
     public CommonNullPointerException(String s) {
         super(s);
     }

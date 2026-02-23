@@ -26,6 +26,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.LongAdder;
 
 /**
+ * Development and performance monitoring utilities for measuring IPC latency and request
+ * processing times. Internal use only.
  *
  * @author 渔民小镇
  * @date 2025-11-06
@@ -51,34 +53,70 @@ public final class DevKit {
     public int userResponseMessageOnFragmentInc;
     public int externalId;
 
+    /**
+     * Record SBE request encoding time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void requestSbeTimes(long nanoTime) {
         requestSbeTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record SBE response encoding time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void responseSbeTimes(long nanoTime) {
         responseSbeTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record future creation time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void ofFutureTimes(long nanoTime) {
         ofFutureTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record future get time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void ofFutureGetTimes(long nanoTime) {
         ofFutureGetTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record Aeron fragment receive time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void requestOnFragmentTimes(long nanoTime) {
         requestOnFragmentTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record request handling time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void handleTimes(long nanoTime) {
         handleTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /**
+     * Record cross-logic-server call time elapsed since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     */
     public void callTimes(long nanoTime) {
         callTimes.offer(System.nanoTime() - nanoTime);
     }
 
+    /** Reset all collected timing data. */
     public void reset() {
         ofFutureTimes.clear();
         requestSbeTimes.clear();
@@ -94,6 +132,13 @@ public final class DevKit {
         monitor.reset();
     }
 
+    /**
+     * Format timing data as a human-readable statistics panel.
+     *
+     * @param title the panel title
+     * @param times the collected timing values in nanoseconds
+     * @return formatted statistics string
+     */
     public String toString(String title, BlockingQueue<Long> times) {
         return new DataPanel(title, times).toString();
     }

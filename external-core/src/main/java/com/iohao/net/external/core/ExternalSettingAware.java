@@ -19,11 +19,17 @@
 package com.iohao.net.external.core;
 
 /**
+ * Callback contract for components that need the resolved {@link ExternalSetting}.
  *
  * @author 渔民小镇
  * @date 2025-10-15
  * @since 25.1
  */
 public interface ExternalSettingAware {
+    /**
+     * Inject the external setting after it has been assembled.
+     *
+     * @param setting external setting for the current server
+     */
     void setExternalSetting(ExternalSetting setting);
 }

@@ -19,13 +19,23 @@
 package com.iohao.net.common.kit.micro.room;
 
 /**
- * MicroRoom
+ * Interface for a lightweight room entity identified by a long ID.
  *
  * @author 渔民小镇
  * @date 2023-07-12
  */
 public interface MicroRoom {
+    /**
+     * Set the room ID.
+     *
+     * @param id the room ID
+     */
     void setId(long id);
 
+    /**
+     * Get the room ID.
+     *
+     * @return the room ID
+     */
     long getId();
 }

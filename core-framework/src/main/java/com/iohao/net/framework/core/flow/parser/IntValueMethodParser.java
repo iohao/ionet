@@ -29,18 +29,23 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * IntValueMethodParser
+ * Method parser for {@code int}/{@link Integer} parameters and return types.
+ * <p>
+ * Converts between Java {@code int}/{@link Integer} values and the protocol wrapper types
+ * {@link IntValue} and {@link IntValueList}.
  *
  * @author 渔民小镇
  * @date 2023-02-10
  */
 final class IntValueMethodParser implements MethodParser {
 
+    /** {@inheritDoc} */
     @Override
     public Class<?> getActualClazz(ActualParameter parameterReturn) {
         return parameterReturn.isList() ? IntValueList.class : IntValue.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
 
@@ -59,6 +64,7 @@ final class IntValueMethodParser implements MethodParser {
         return codec.decode(data, IntValue.class).value;
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public Object parseDataList(Object data, DataCodec codec) {
@@ -67,6 +73,7 @@ final class IntValueMethodParser implements MethodParser {
         return valueList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseData(Object data) {
         var intValue = new IntValue();
@@ -77,6 +84,11 @@ final class IntValueMethodParser implements MethodParser {
     private IntValueMethodParser() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code IntValueMethodParser}
+     */
     public static IntValueMethodParser me() {
         return Holder.ME;
     }

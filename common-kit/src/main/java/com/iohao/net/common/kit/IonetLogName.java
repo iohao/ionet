@@ -19,13 +19,18 @@
 package com.iohao.net.common.kit;
 
 /**
+ * Log topic name constants used with {@code @Slf4j(topic = ...)}.
+ *
  * @author 渔民小镇
  * @date 2023-08-05
  */
 public interface IonetLogName {
-    /** CommonStdout */
+    /** Topic for common/general stdout logging. */
     String CommonStdout = "CommonStdout";
+    /** Topic for external server (Netty) layer logging. */
     String ExternalTopic = "ExternalTopic";
+    /** Topic for message transfer and routing logging. */
     String MsgTransferTopic = "MsgTransferTopic";
+    /** Topic for connection lifecycle logging. */
     String ConnectionTopic = "ConnectionTopic";
 }

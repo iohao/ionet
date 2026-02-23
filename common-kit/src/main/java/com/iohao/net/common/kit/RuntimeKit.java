@@ -21,7 +21,7 @@ package com.iohao.net.common.kit;
 import lombok.experimental.UtilityClass;
 
 /**
- * RuntimeKit
+ * Runtime environment utilities.
  *
  * @author 渔民小镇
  * @date 2024-05-01
@@ -29,21 +29,34 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class RuntimeKit {
+    /** Number of available processors reported by the runtime. */
     public int availableProcessors = Runtime.getRuntime().availableProcessors();
 
     /**
-     * The number is a power of 2 that is not greater than Runtime.getRuntime().availableProcessors().
-     * When the value of availableProcessors is 4, 8, 12, 16, or 32, the corresponding number is 4, 8, 8, 16, or 32.
+     * The largest power of 2 that does not exceed {@link #availableProcessors}.
+     * <p>
+     * For example, when {@code availableProcessors} is 4, 8, 12, 16, or 32,
+     * the corresponding value is 4, 8, 8, 16, or 32.
      */
     public int availableProcessors2n = availableProcessors2n();
 
+    /**
+     * Round down {@link #availableProcessors} to the nearest power of 2.
+     * <p>
+     * Uses bit-smearing to fill all bits below the highest set bit,
+     * then shifts right by 1 to obtain the largest power of 2 &le; n.
+     *
+     * @return the largest power of 2 not exceeding the available processor count
+     */
     static int availableProcessors2n() {
         int n = RuntimeKit.availableProcessors;
+        // Smear the highest set bit into all lower bits
         n |= (n >> 1);
         n |= (n >> 2);
         n |= (n >> 4);
         n |= (n >> 8);
         n |= (n >> 16);
+        // n is now (next power of 2) - 1; shift right to get the floor power of 2
         return (n + 1) >> 1;
     }
 }

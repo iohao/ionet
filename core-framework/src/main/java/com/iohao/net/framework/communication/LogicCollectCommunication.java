@@ -25,7 +25,12 @@ import com.iohao.net.framework.protocol.ResponseCollect;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * LogicServer Communication
+ * Communication interface for collecting aggregated responses from multiple logic servers.
+ * <p>
+ * Extends {@link PublisherCommunication} and provides both synchronous and asynchronous
+ * (future-based) methods for broadcasting a request to all logic servers that handle
+ * the target command and gathering their individual responses into a single
+ * {@link ResponseCollect}.
  *
  * @author 渔民小镇
  * @date 2025-09-04
@@ -33,6 +38,19 @@ import java.util.concurrent.CompletableFuture;
  */
 @Enterprise
 public interface LogicCollectCommunication extends PublisherCommunication {
+    /**
+     * Asynchronously call all matching logic servers and collect their responses.
+     *
+     * @param message the request message to broadcast
+     * @return a future that completes with the aggregated response from all logic servers
+     */
     CompletableFuture<ResponseCollect> callCollectFuture(RequestMessage message);
+
+    /**
+     * Synchronously call all matching logic servers and collect their responses.
+     *
+     * @param message the request message to broadcast
+     * @return the aggregated response from all logic servers
+     */
     ResponseCollect callCollect(RequestMessage message);
 }

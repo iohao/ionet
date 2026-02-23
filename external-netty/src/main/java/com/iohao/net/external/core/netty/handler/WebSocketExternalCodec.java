@@ -28,7 +28,7 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import java.util.List;
 
 /**
- * WebSocket Codec
+ * Netty codec that converts between {@link BinaryWebSocketFrame} and {@link CommunicationMessage}.
  *
  * @author 渔民小镇
  * @date 2023-02-21
@@ -36,7 +36,7 @@ import java.util.List;
 public final class WebSocketExternalCodec extends MessageToMessageCodec<BinaryWebSocketFrame, CommunicationMessage> {
     @Override
     protected void encode(ChannelHandlerContext ctx, CommunicationMessage message, List<Object> out) {
-        // Sending messages to the client
+        // Encode outbound business messages as binary WebSocket frames.
         byte[] bytes = CommunicationMessageKit.encode(message);
 
         ByteBuf byteBuf = ctx.alloc().buffer(bytes.length);
@@ -48,7 +48,7 @@ public final class WebSocketExternalCodec extends MessageToMessageCodec<BinaryWe
 
     @Override
     protected void decode(ChannelHandlerContext ctx, BinaryWebSocketFrame binary, List<Object> out) {
-        // Receiving messages from the client
+        // Decode inbound binary WebSocket frames into communication messages.
         ByteBuf contentBuf = binary.content();
         byte[] bytes = new byte[contentBuf.readableBytes()];
         contentBuf.readBytes(bytes);

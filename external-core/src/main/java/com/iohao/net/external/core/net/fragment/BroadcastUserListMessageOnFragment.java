@@ -28,7 +28,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
- * BroadcastUserListMessageOnFragment
+ * Aeron fragment consumer that broadcasts a decoded message to a specified user list.
  *
  * @author 渔民小镇
  * @date 2025-09-03
@@ -63,6 +63,12 @@ public class BroadcastUserListMessageOnFragment implements OnFragment {
         this.writeAndFlush(message, userIds);
     }
 
+    /**
+     * Write the decoded message to each resolved user session in the provided list.
+     *
+     * @param message decoded outbound message
+     * @param userIds target user ids
+     */
     protected void writeAndFlush(CommunicationMessage message, long[] userIds) {
         var userSessions = ExternalServerSingle.userSessions;
         for (long userId : userIds) {

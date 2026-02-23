@@ -23,7 +23,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * UserRequestMessage
+ * User-facing request message received from the external Netty pipeline.
+ * <p>
+ * Extends {@link BarMessage} and implements {@link Request} to carry the full set of
+ * request fields: sticky-routing hint, hop count, logic-server bindings, and per-request
+ * attachment data. This is the concrete message type created by the external server
+ * handlers and forwarded to logic servers via Aeron for action dispatch.
  *
  * @author 渔民小镇
  * @date 2021-12-20

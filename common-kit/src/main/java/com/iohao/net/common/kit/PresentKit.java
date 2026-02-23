@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * PresentKit
+ * Null-presence conditional execution utilities.
  *
  * @author 渔民小镇
  * @date 2023-06-01

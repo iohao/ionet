@@ -28,6 +28,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
+ * Metadata about an action method's return type, including generic type resolution
+ * for {@link java.util.List} return types.
  *
  * @author 渔民小镇
  * @date 2025-09-09
@@ -59,6 +61,11 @@ public final class ActionMethodReturn implements ActualParameter {
         this.actualClazz = methodParser.getActualClazz(this);
     }
 
+    /**
+     * Check if the return type is void.
+     *
+     * @return {@code true} if the method returns void
+     */
     public boolean isVoid() {
         return Void.TYPE == this.returnTypeClass;
     }
@@ -68,6 +75,12 @@ public final class ActionMethodReturn implements ActualParameter {
         return toString(false);
     }
 
+    /**
+     * Format the return type as a string, optionally using fully qualified class names.
+     *
+     * @param fullName {@code true} to use fully qualified names, {@code false} for simple names
+     * @return formatted return type string
+     */
     public String toString(boolean fullName) {
         if (this.list) {
             String simpleNameReturnTypeClazz = this.returnTypeClass.getSimpleName();

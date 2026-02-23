@@ -41,6 +41,12 @@ public class ActionCommandRegionGlobalCheckKit {
 
     Map<String, ActionCommandRegions> map = CollKit.ofConcurrentHashMap();
 
+    /**
+     * Register an ActionCommandRegions instance for global duplicate route detection.
+     *
+     * @param key                    the unique identifier for this command regions instance
+     * @param actionCommandRegions   the command regions to register
+     */
     public void putActionCommandRegions(String key, ActionCommandRegions actionCommandRegions) {
 
         if (map.containsKey(key)) {
@@ -50,6 +56,11 @@ public class ActionCommandRegionGlobalCheckKit {
         map.put(key, actionCommandRegions);
     }
 
+    /**
+     * Scan all registered command regions and throw if duplicate routes are found.
+     *
+     * @throws CommonRuntimeException if any duplicate routes are detected
+     */
     public void detectGlobalDuplicateRoutes() {
 
         Map<Integer, ActionCommand> cmdMap = new HashMap<>(100);

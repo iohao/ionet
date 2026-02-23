@@ -24,13 +24,27 @@ import com.iohao.net.framework.core.flow.ActionMethodExceptionProcess;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Exception handling for ActionMethod
+ * Default exception processor that wraps exceptions into
+ * {@link com.iohao.net.framework.core.exception.MessageException}.
+ * <p>
+ * If the thrown exception is already a {@link com.iohao.net.framework.core.exception.MessageException},
+ * it is returned as-is. Otherwise, the exception is logged and wrapped with a generic system error code.
  *
  * @author 渔民小镇
  * @date 2021-12-20
  */
 @Slf4j
 public final class DefaultActionMethodExceptionProcess implements ActionMethodExceptionProcess {
+    /**
+     * Process the given exception and convert it to a {@link MessageException}.
+     * <p>
+     * If the exception is already a {@link MessageException}, it is returned directly.
+     * Otherwise, the exception is logged and a new {@link MessageException} with a generic
+     * system error code is returned.
+     *
+     * @param e the exception thrown during action method execution
+     * @return a {@link MessageException} representing the error
+     */
     @Override
     public MessageException processException(final Throwable e) {
 
@@ -38,7 +52,7 @@ public final class DefaultActionMethodExceptionProcess implements ActionMethodEx
             return messageException;
         }
 
-        // 到这里，一般不是用户自定义的错误，很可能是开发者引入的第三方包或自身未捕获的错误等情况
+        // Not a user-defined error; likely from a third-party library or an uncaught developer error
         log.error(e.getMessage(), e);
 
         return new MessageException(ActionErrorEnum.systemOtherErrCode);
@@ -48,6 +62,11 @@ public final class DefaultActionMethodExceptionProcess implements ActionMethodEx
     private DefaultActionMethodExceptionProcess() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code DefaultActionMethodExceptionProcess}
+     */
     public static DefaultActionMethodExceptionProcess me() {
         return Holder.ME;
     }

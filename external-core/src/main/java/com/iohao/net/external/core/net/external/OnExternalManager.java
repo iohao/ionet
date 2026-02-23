@@ -19,6 +19,7 @@
 package com.iohao.net.external.core.net.external;
 
 /**
+ * Registry of {@link OnExternal} handlers indexed by template id sign and value.
  *
  * @author 渔民小镇
  * @date 2025-09-10
@@ -28,10 +29,21 @@ public final class OnExternalManager {
     static final OnExternal[] onExternals = new OnExternal[16];
     static final OnExternal[] internalOnExternals = new OnExternal[8];
 
+    /**
+     * Select the handler table based on whether the template id is public or internal.
+     *
+     * @param templateId template id
+     * @return handler array to read from
+     */
     public static OnExternal[] getOnExternals(int templateId) {
         return templateId >= 0 ? OnExternalManager.onExternals : OnExternalManager.internalOnExternals;
     }
 
+    /**
+     * Register a handler into the appropriate template-id table.
+     *
+     * @param onExternal handler implementation
+     */
     public static void register(OnExternal onExternal) {
         int templateId = onExternal.getTemplateId();
         if (templateId >= 0) {

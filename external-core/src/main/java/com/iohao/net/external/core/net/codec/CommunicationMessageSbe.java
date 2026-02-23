@@ -27,6 +27,7 @@ import com.iohao.net.sbe.UserRequestMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for outbound {@link CommunicationMessage} instances sent to the net server.
  *
  * @author 渔民小镇
  * @date 2025-09-06
@@ -57,6 +58,11 @@ public class CommunicationMessageSbe implements MessageSbe<CommunicationMessage>
         encoder.putAttachment(attachment, 0, attachment.length);
     }
 
+    /**
+     * Hook for subclasses to encode transport-specific extensions before payload/attachment bytes.
+     *
+     * @param message communication message being encoded
+     */
     protected void extracted(CommunicationMessage message) {
         encoder.bindingLogicServerIdsCount(0);
     }

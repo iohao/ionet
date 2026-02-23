@@ -28,7 +28,10 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 /**
- * long list
+ * Protocol wrapper for a list of long values.
+ * <p>
+ * Wraps a {@link List} of {@link Long} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-10
@@ -37,10 +40,16 @@ import java.util.List;
 @ProtobufClass
 @FieldDefaults(level = AccessLevel.PUBLIC)
 public final class LongValueList {
-    /** longList */
+    /** the wrapped list of long values */
     @Protobuf(fieldType = FieldType.SINT64, order = 1)
     public List<Long> values;
 
+    /**
+     * Create a LongValueList wrapping the given list of longs.
+     *
+     * @param values the list of long values to wrap
+     * @return a new LongValueList instance
+     */
     public static LongValueList of(List<Long> values) {
         var theValue = new LongValueList();
         theValue.values = values;

@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * LogicSendCommunicationDecorator
+ * Decorator providing fire-and-forget message sending to other logic servers.
  *
  * @author 渔民小镇
  * @date 2025-09-28
@@ -42,6 +42,15 @@ public interface LogicSendCommunicationDecorator extends CommonDecorator {
         return DataCodecManager.getInternalDataCodec();
     }
 
+    /**
+     * Create a SendMessage for the given command with raw byte data.
+     * <p>Populates the message with trace context, net ID, and source server ID
+     * from the current flow context.
+     *
+     * @param cmdInfo the target command route
+     * @param data    the raw byte payload
+     * @return a fully initialized {@link SendMessage}
+     */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, byte[] data) {
         var flowContext = FlowContextKeys.getFlowContext();
         var request = flowContext.getRequest();
@@ -56,104 +65,132 @@ public interface LogicSendCommunicationDecorator extends CommonDecorator {
         return message;
     }
 
+    /** Create a SendMessage with int payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, int data) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encode(data));
     }
 
+    /** Create a SendMessage with long payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, long data) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encode(data));
     }
 
+    /** Create a SendMessage with boolean payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, boolean data) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encode(data));
     }
 
+    /** Create a SendMessage with String payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, String data) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encode(data));
     }
 
+    /** Create a SendMessage with Object payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, Object data) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encode(data));
     }
 
+    /** Create a SendMessage with List payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessage(CmdInfo cmdInfo, List<?> dataList) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encodeList(dataList));
     }
 
+    /** Create a SendMessage with List&lt;Integer&gt; payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessageListInt(CmdInfo cmdInfo, List<Integer> dataList) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encodeListInt(dataList));
     }
 
+    /** Create a SendMessage with List&lt;Long&gt; payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessageListLong(CmdInfo cmdInfo, List<Long> dataList) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encodeListLong(dataList));
     }
 
+    /** Create a SendMessage with List&lt;Boolean&gt; payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessageListBool(CmdInfo cmdInfo, List<Boolean> dataList) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encodeListBool(dataList));
     }
 
+    /** Create a SendMessage with List&lt;String&gt; payload. @see #ofSendMessage(CmdInfo, byte[]) */
     default SendMessage ofSendMessageListString(CmdInfo cmdInfo, List<String> dataList) {
         var codec = this.getInternalDataCodec();
         return ofSendMessage(cmdInfo, codec.encodeListString(dataList));
     }
 
+    /**
+     * Send a message to another logic server.
+     * <p>This is a fire-and-forget operation; no response is returned.
+     *
+     * @param message the message to send
+     */
     default void send(SendMessage message) {
         this.getCommunicationAggregation().send(message);
     }
 
+    /** Send raw bytes to another logic server. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, byte[] data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with no payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo) {
         send(cmdInfo, CommonConst.emptyBytes);
     }
 
+    /** Send with int payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, int data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with long payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, long data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with boolean payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, boolean data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with String payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, String data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with Object payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, Object data) {
         send(ofSendMessage(cmdInfo, data));
     }
 
+    /** Send with List payload. @see #send(SendMessage) */
     default void send(CmdInfo cmdInfo, List<?> dataList) {
         send(ofSendMessage(cmdInfo, dataList));
     }
 
+    /** Send with List&lt;Integer&gt; payload. @see #send(SendMessage) */
     default void sendListInt(CmdInfo cmdInfo, List<Integer> dataList) {
         send(ofSendMessageListInt(cmdInfo, dataList));
     }
 
+    /** Send with List&lt;Long&gt; payload. @see #send(SendMessage) */
     default void sendListLong(CmdInfo cmdInfo, List<Long> dataList) {
         send(ofSendMessageListLong(cmdInfo, dataList));
     }
 
+    /** Send with List&lt;Boolean&gt; payload. @see #send(SendMessage) */
     default void sendListBool(CmdInfo cmdInfo, List<Boolean> dataList) {
         send(ofSendMessageListBool(cmdInfo, dataList));
     }
 
+    /** Send with List&lt;String&gt; payload. @see #send(SendMessage) */
     default void sendListString(CmdInfo cmdInfo, List<String> dataList) {
         send(ofSendMessageListString(cmdInfo, dataList));
     }

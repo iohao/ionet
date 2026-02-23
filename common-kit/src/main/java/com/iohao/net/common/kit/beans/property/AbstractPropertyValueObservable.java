@@ -21,8 +21,9 @@ package com.iohao.net.common.kit.beans.property;
 import java.util.Objects;
 
 /**
- * PropertyValueObservable adapter
+ * Abstract base implementation of {@link PropertyValueObservable} with listener management.
  *
+ * @param <T> the type of the property value
  * @author 渔民小镇
  * @date 2024-04-17
  * @see IntegerProperty
@@ -51,6 +52,9 @@ abstract class AbstractPropertyValueObservable<T> implements PropertyValueObserv
         }
     }
 
+    /**
+     * Mark the property as invalid and fire change events to all registered listeners.
+     */
     protected void markInvalid() {
         if (this.valid) {
             this.valid = false;

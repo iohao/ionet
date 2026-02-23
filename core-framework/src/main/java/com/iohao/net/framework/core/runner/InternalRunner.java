@@ -21,7 +21,8 @@ package com.iohao.net.framework.core.runner;
 import com.iohao.net.framework.communication.eventbus.EventBusSettingKit;
 
 /**
- * InternalRunner
+ * Framework-internal runner that registers the EventBus validation runner (if configured)
+ * into the {@link Runners#runnerBeforeList} so it executes before user-defined runners.
  *
  * @author 渔民小镇
  * @date 2023-04-23

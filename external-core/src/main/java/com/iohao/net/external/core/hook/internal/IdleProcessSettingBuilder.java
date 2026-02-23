@@ -29,6 +29,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Builder for {@link IdleProcessSetting} heartbeat/idle configuration.
+ *
  * @author 渔民小镇
  * @date 2023-02-18
  */
@@ -67,6 +69,11 @@ public final class IdleProcessSettingBuilder {
         return this;
     }
 
+    /**
+     * Build an immutable idle-processing setting snapshot.
+     *
+     * @return idle process setting
+     */
     public IdleProcessSetting ofIdleProcessSetting() {
         return new IdleProcessSetting(pong
                 , readerIdleTime

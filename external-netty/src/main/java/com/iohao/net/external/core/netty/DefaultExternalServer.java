@@ -28,7 +28,7 @@ import com.iohao.net.server.NetServer;
 import java.util.Set;
 
 /**
- * DefaultExternalServer
+ * Default {@link ExternalServer} implementation backed by a Netty {@link MicroBootstrap}.
  *
  * @author 渔民小镇
  * @date 2023-02-19
@@ -39,6 +39,11 @@ public class DefaultExternalServer implements ExternalServer {
     MicroBootstrapFlow<?> microBootstrapFlow;
     Set<Object> injectSet;
 
+    /**
+     * Create the external server from a transport-independent parameter bundle.
+     *
+     * @param parameter assembled external server bootstrap parameters
+     */
     public DefaultExternalServer(ExternalServerCreatorParameter parameter) {
         this.setting = parameter.setting();
         this.microBootstrap = parameter.microBootstrap();
@@ -58,6 +63,7 @@ public class DefaultExternalServer implements ExternalServer {
         this.injectSet.forEach(setting::inject);
         this.injectSet = null;
 
+        // Start the external transport asynchronously so net-server startup can continue.
         TaskKit.executeVirtual(() -> microBootstrap.startup(setting.port(), microBootstrapFlow));
     }
 }

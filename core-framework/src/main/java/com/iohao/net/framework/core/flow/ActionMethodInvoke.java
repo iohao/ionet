@@ -19,11 +19,17 @@
 package com.iohao.net.framework.core.flow;
 
 /**
- * ActionMethod Invoke
+ * Strategy interface for invoking action methods via {@link java.lang.invoke.MethodHandle}.
  *
  * @author 渔民小镇
  * @date 2021-12-20
  */
 public interface ActionMethodInvoke {
+    /**
+     * Invoke the action method and return its result.
+     *
+     * @param flowContext the current request flow context
+     * @return the action method return value, or {@code null} for void methods
+     */
     Object invoke(FlowContext flowContext);
 }

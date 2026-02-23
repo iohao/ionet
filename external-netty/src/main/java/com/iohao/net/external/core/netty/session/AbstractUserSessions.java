@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * AbstractUserSessions
+ * Base implementation of Netty-backed user session registries.
  *
  * @author 渔民小镇
  * @date 2023-05-28
@@ -87,7 +87,7 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
         this.ifPresent(userId, userSession -> {
             ChannelFuture channelFuture = userSession.writeAndFlush(msg);
             channelFuture.addListener((ChannelFutureListener) future -> {
-                // 回调 UserSessions 中移除对应的用户
+                // Remove the session only after the forced-offline message has been flushed.
                 this.removeUserSession(userSession);
             });
         });
@@ -101,7 +101,7 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
     /**
      * Online notification.
      *
-     * @param userSession userSession
+     * @param userSession user session
      */
     void userHookInto(UserSession userSession) {
         if (Objects.isNull(this.userHook)) {
@@ -114,7 +114,7 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
     /**
      * Offline notification.
      *
-     * @param userSession userSession
+     * @param userSession user session
      */
     void userHookQuit(UserSession userSession) {
         if (Objects.isNull(userHook)) {
@@ -124,6 +124,11 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
         this.userHook.quit(userSession);
     }
 
+    /**
+     * Apply transport defaults (for example, join type) to the new session.
+     *
+     * @param userSession user session
+     */
     void settingDefault(UserSession userSession) {
         userSession.setExternalJoin(this.joinEnum);
     }

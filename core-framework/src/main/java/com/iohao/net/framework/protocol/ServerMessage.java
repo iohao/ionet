@@ -28,6 +28,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Sealed base class for server registration and connection messages exchanged with the center server.
+ * <p>
+ * Carries the server's identity (id, name, tag), network coordinates (ip, netId, pubName),
+ * server type, the set of command routes it handles ({@code cmdMerges}), and an extensible
+ * payload map. Permitted subclasses: {@link ServerRequestMessage} for registration requests
+ * and {@link ConnectResponseMessage} for connection responses.
  *
  * @author 渔民小镇
  * @date 2025-09-05
@@ -49,10 +55,22 @@ public sealed class ServerMessage permits ServerRequestMessage, ConnectResponseM
     int[] cmdMerges;
     String pubName;
 
+    /**
+     * Store a payload entry by name.
+     *
+     * @param name the payload key
+     * @param data the payload byte array
+     */
     public void addPayload(String name, byte[] data) {
         payloadMap.put(name, data);
     }
 
+    /**
+     * Retrieve a payload entry by name.
+     *
+     * @param name the payload key
+     * @return the payload byte array, or {@code null} if not present
+     */
     public byte[] getPayload(String name) {
         return payloadMap.get(name);
     }

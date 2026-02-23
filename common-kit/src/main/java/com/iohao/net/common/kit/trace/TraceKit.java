@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 /**
- * Trace 相关工具
+ * Distributed tracing utilities using SLF4J MDC for trace ID propagation.
  *
  * @author 渔民小镇
  * @date 2023-12-20
@@ -43,20 +43,46 @@ public class TraceKit {
         }
     };
 
+    /** MDC key used for trace ID propagation. */
     public final String traceName = "ionetTraceId";
 
+    /**
+     * Generate a new trace ID using the configured {@link TraceIdSupplier}.
+     *
+     * @return a new trace ID string
+     */
     public String newTraceId() {
         return traceIdSupplier.get();
     }
 
+    /**
+     * Get the current trace ID from the SLF4J MDC context.
+     *
+     * @return the current trace ID, or {@code null} if none is set
+     */
     public String getTraceId() {
         return MDC.get(traceName);
     }
 
+    /**
+     * Put the given trace ID into the MDC context, returning a closeable handle
+     * that removes it when closed.
+     *
+     * @param traceId the trace ID to set
+     * @return a closeable that removes the trace ID from MDC on close
+     */
     public MDC.MDCCloseable putCloseable(String traceId) {
         return MDC.putCloseable(TraceKit.traceName, traceId);
     }
 
+    /**
+     * Decorate a {@link Runnable} so that the given trace ID is set in MDC
+     * during its execution.
+     *
+     * @param traceId the trace ID to propagate
+     * @param command the runnable to decorate
+     * @return a new runnable that sets and clears the trace ID around execution
+     */
     public Runnable decorator(String traceId, Runnable command) {
         return () -> {
             try (var _ = TraceKit.putCloseable(traceId)) {
@@ -65,6 +91,15 @@ public class TraceKit {
         };
     }
 
+    /**
+     * Decorate a {@link Consumer} so that the given trace ID is set in MDC
+     * during its execution.
+     *
+     * @param traceId the trace ID to propagate
+     * @param action  the consumer to decorate
+     * @param <T>     the type of the consumer input
+     * @return a new consumer that sets and clears the trace ID around execution
+     */
     public <T> Consumer<T> decorator(String traceId, Consumer<T> action) {
         return t -> {
             try (var _ = TraceKit.putCloseable(traceId)) {

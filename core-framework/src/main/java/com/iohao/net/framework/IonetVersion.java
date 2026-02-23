@@ -19,7 +19,10 @@
 package com.iohao.net.framework;
 
 /**
- * IonetVersion
+ * Provides the current version string of the ionet framework.
+ * <p>
+ * The version is extracted at class-load time from an XML-style tag embedded in the source,
+ * making it easy to keep in sync with the Maven POM version.
  *
  * @author 渔民小镇
  * @date 2022-12-23

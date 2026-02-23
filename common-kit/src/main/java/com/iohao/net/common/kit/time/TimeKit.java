@@ -25,6 +25,7 @@ import lombok.experimental.UtilityClass;
 import java.time.*;
 
 /**
+ * Time utilities providing cached or real-time date/time access.
  *
  * @author 渔民小镇
  * @date 2025-09-09
@@ -36,6 +37,9 @@ public final class TimeKit {
     @Setter
     ZoneId defaultZoneId = ZoneId.systemDefault();
 
+    /**
+     * Enable time caching to reduce object creation at the cost of precision.
+     */
     public void enableCache() {
         TimeCacheKit.enableCache();
     }
@@ -49,6 +53,11 @@ public final class TimeKit {
         return TimeCacheKit.currentTimeMillis();
     }
 
+    /**
+     * Get the current nano time, cached if caching is enabled.
+     *
+     * @return the current nano time
+     */
     public long currentNanoTime() {
         return TimeCacheKit.currentNanoTime();
     }
@@ -80,31 +89,55 @@ public final class TimeKit {
         return TimeCacheKit.nowLocalTime();
     }
 
+    /**
+     * Convert a LocalDateTime to epoch milliseconds using the default zone.
+     *
+     * @param localDateTime the local date/time to convert
+     * @return the epoch milliseconds
+     */
     public long toEpochMilli(LocalDateTime localDateTime) {
         return localDateTime.atZone(TimeKit.defaultZoneId)
                 .toInstant()
                 .toEpochMilli();
     }
 
+    /**
+     * Convert epoch milliseconds to a LocalDateTime using the default zone.
+     *
+     * @param millis the epoch milliseconds
+     * @return the corresponding LocalDateTime
+     */
     public LocalDateTime toLocalDateTime(long millis) {
         var instant = Instant.ofEpochMilli(millis);
         var zonedDateTime = instant.atZone(TimeKit.defaultZoneId);
         return zonedDateTime.toLocalDateTime();
     }
 
+    /**
+     * Calculate elapsed milliseconds since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     * @return the elapsed time in milliseconds
+     */
     public long elapsedMillis(long nanoTime) {
         return (System.nanoTime() - nanoTime) / 1_000_000;
     }
 
+    /**
+     * Calculate elapsed microseconds since the given nano time.
+     *
+     * @param nanoTime the starting nano time
+     * @return the elapsed time in microseconds
+     */
     public long elapsedMicros(long nanoTime) {
         return (System.nanoTime() - nanoTime) / 1_000;
     }
 
     /**
-     * LocalDate EpochDay 过期检测，与当前时间做比较
+     * Check if the given epoch day has expired compared to the current date.
      *
-     * @param epochDay LocalDate epochDay
-     * @return true 表示日期已经过期
+     * @param epochDay the epoch day to check
+     * @return {@code true} if the date has expired
      */
     public boolean expireLocalDate(long epochDay) {
         var localDate = TimeCacheKit.nowLocalDate();
@@ -112,23 +145,23 @@ public final class TimeKit {
     }
 
     /**
-     * LocalDate 过期检测，与当前时间做比较
+     * Check if the given LocalDate has expired compared to the current date.
      *
-     * @param localDate localDate
-     * @return true 表示日期已经过期
+     * @param localDate the date to check
+     * @return {@code true} if the date has expired
      */
     public boolean expireLocalDate(LocalDate localDate) {
         return expireLocalDate(localDate.toEpochDay());
     }
 
     /**
-     * 过期检测，与当前时间做比较，查看是否过期
+     * Check if the given timestamp in milliseconds has expired.
      *
-     * @param milli 需要检测的时间
-     * @return true milliseconds 已经过期
+     * @param milli the timestamp in milliseconds to check
+     * @return {@code true} if the timestamp has expired
      */
     public boolean expireMillis(long milli) {
-        // 时间 - 当前时间
+        // time - current time
         return (milli - TimeKit.currentTimeMillis()) <= 0;
     }
 }

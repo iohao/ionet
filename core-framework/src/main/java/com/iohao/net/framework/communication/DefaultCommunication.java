@@ -29,7 +29,10 @@ import com.iohao.net.framework.protocol.Request;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * DefaultCommunication
+ * Default implementation of {@link Communication} that delegates to the global {@link CommunicationAggregation}.
+ * <p>
+ * Creates protocol messages ({@link ExternalRequestMessage} and {@link RequestMessage}) by populating
+ * them with trace IDs, network IDs, and source server metadata from the current {@link FlowContext}.
  *
  * @author 渔民小镇
  * @date 2025-09-28
@@ -37,6 +40,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DefaultCommunication implements Communication {
+    /**
+     * Create an {@link ExternalRequestMessage} for communicating with external servers.
+     * <p>
+     * Populates the message with the given template ID, payload, current trace ID,
+     * and the global network ID from {@link CoreGlobalConfig}.
+     *
+     * @param templateId the external request template identifier
+     * @param payload    the serialized request payload (may be {@code null})
+     * @return a fully populated external request message
+     */
     @Override
     public ExternalRequestMessage ofExternalRequestMessage(int templateId, byte[] payload) {
         var message = new ExternalRequestMessage();
@@ -49,6 +62,16 @@ public class DefaultCommunication implements Communication {
         return message;
     }
 
+    /**
+     * Create a {@link RequestMessage} for inter-logic-server communication.
+     * <p>
+     * Derives the current {@link FlowContext} via {@link FlowContextKeys}, copies routing
+     * metadata from the original request, and sets the network ID and source server ID.
+     *
+     * @param cmdInfo   the command routing information (cmd + subCmd)
+     * @param dataBytes the serialized request data
+     * @return a fully populated request message ready for dispatch
+     */
     @Override
     public RequestMessage ofRequestMessage(CmdInfo cmdInfo, byte[] dataBytes) {
         FlowContext flowContext = FlowContextKeys.getFlowContext();

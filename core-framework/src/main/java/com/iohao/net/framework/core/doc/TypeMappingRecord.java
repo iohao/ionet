@@ -25,7 +25,8 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 /**
- * TypeMappingRecord 类型映射记录
+ * Record describing how a Java/protobuf type maps to client-side type names,
+ * SDK method names, and result accessor names used during code generation.
  *
  * @author 渔民小镇
  * @date 2024-06-26
@@ -36,28 +37,40 @@ import lombok.experimental.FieldDefaults;
 public final class TypeMappingRecord {
     @Getter
     String paramTypeName;
-    /** list 参数类型名 */
+    /** List parameter type name. */
     String listParamTypeName;
-    /** sdk 方法名 */
+    /** SDK factory method name. */
     String ofMethodTypeName;
-    /** sdk list 参数的方法名 */
+    /** SDK factory method name for list parameters. */
     String ofMethodListTypeName;
 
-    /** sdk result get 方法名 */
+    /** SDK result getter method name. */
     @Getter
     String resultMethodTypeName;
-    /** sdk result get list 方法名 */
+    /** SDK result list getter method name. */
     @Getter
     String resultMethodListTypeName;
 
-    /** 内置扩展类型 */
+    /** true if this is a built-in (internal) extension type. */
     @Getter
     boolean internalType = true;
 
+    /**
+     * Return the parameter type name, choosing the list variant when applicable.
+     *
+     * @param isList true to return the list type name
+     * @return the parameter type name
+     */
     public String getParamTypeName(boolean isList) {
         return isList ? listParamTypeName : paramTypeName;
     }
 
+    /**
+     * Return the SDK factory method name, choosing the list variant when applicable.
+     *
+     * @param isList true to return the list method name
+     * @return the factory method name
+     */
     public String getOfMethodTypeName(boolean isList) {
         return isList ? ofMethodListTypeName : ofMethodTypeName;
     }

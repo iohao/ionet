@@ -23,7 +23,8 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * Attribute option for dynamic attributes
+ * Type-safe attribute key for use with {@link AttrOptionDynamic}. Supports default values
+ * and lazy initialization via {@link java.util.function.Supplier}.
  *
  * @param <T> The type of the attribute value
  * @author 渔民小镇
@@ -35,35 +36,35 @@ public record AttrOption<T>(String name, T defaultValue, Supplier<T> supplier) i
     }
 
     /**
-     * Initializes an AttrOption
+     * Create an attribute option with no default value.
      *
-     * @param name name
-     * @param <T>  The type of the attribute value
-     * @return AttrOption
+     * @param name the unique name identifying this attribute option
+     * @param <T>  the type of the attribute value
+     * @return a new {@link AttrOption} instance with no default
      */
     public static <T> AttrOption<T> valueOf(String name) {
         return new AttrOption<>(name, null, null);
     }
 
     /**
-     * Initializes an AttrOption
+     * Create an attribute option with a static default value.
      *
-     * @param name         name
-     * @param defaultValue Default value (singleton)
-     * @param <T>          The type of the attribute value
-     * @return AttrOption
+     * @param name         the unique name identifying this attribute option
+     * @param defaultValue the default value returned when no explicit value is set
+     * @param <T>          the type of the attribute value
+     * @return a new {@link AttrOption} instance with the given default
      */
     public static <T> AttrOption<T> valueOf(String name, T defaultValue) {
         return new AttrOption<>(name, defaultValue, null);
     }
 
     /**
-     * Initializes an AttrOption
+     * Create an attribute option with a lazy default value supplier.
      *
-     * @param name     name
-     * @param supplier Supplier to get the value from if the value does not exist
-     * @param <T>      The type of the attribute value
-     * @return AttrOption
+     * @param name     the unique name identifying this attribute option
+     * @param supplier supplier invoked to produce the default value when none is set
+     * @param <T>      the type of the attribute value
+     * @return a new {@link AttrOption} instance with the given supplier
      */
     public static <T> AttrOption<T> valueOf(String name, Supplier<T> supplier) {
         return new AttrOption<>(name, null, supplier);

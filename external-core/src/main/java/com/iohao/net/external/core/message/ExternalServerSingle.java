@@ -22,6 +22,7 @@ import com.iohao.net.external.core.session.UserSessions;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Shared holder for the active external server user session container.
  *
  * @author 渔民小镇
  * @date 2025-11-12
@@ -29,5 +30,6 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class ExternalServerSingle {
+    /** Global user session registry exposed for convenience APIs. */
     public UserSessions<?, ?> userSessions;
 }

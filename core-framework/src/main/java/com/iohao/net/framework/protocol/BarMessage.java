@@ -25,7 +25,12 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 /**
- * 消息基类
+ * Base message class for user-facing request and response messages in the Netty pipeline.
+ * <p>
+ * Extends {@link CommonMessage} with user identity fields, a client-assigned message ID,
+ * cache condition, error information, and transient protocol-level metadata (command code,
+ * socket address, external message reference). Serves as the common superclass for
+ * {@link UserRequestMessage} and {@link UserResponseMessage}.
  *
  * @author 渔民小镇
  * @date 2021-12-20

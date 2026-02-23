@@ -24,7 +24,11 @@ import com.iohao.net.framework.protocol.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * ExternalCommunication
+ * Communication interface for collecting aggregated responses from multiple external (client-facing) servers.
+ * <p>
+ * Provides both synchronous and asynchronous (future-based) methods for broadcasting requests
+ * to all external servers and gathering their responses, as well as logic-server binding
+ * and direct message writing to user sessions.
  *
  * @author 渔民小镇
  * @date 2025-09-07
@@ -32,13 +36,42 @@ import java.util.concurrent.CompletableFuture;
  */
 @Enterprise
 public interface ExternalCollectCommunication {
+    /**
+     * Asynchronously call all external servers and collect their responses.
+     *
+     * @param message the external request message to broadcast
+     * @return a future that completes with the aggregated response from all external servers
+     */
     CompletableFuture<ResponseCollectExternal> callCollectExternalFuture(ExternalRequestMessage message);
 
+    /**
+     * Synchronously call all external servers and collect their responses.
+     *
+     * @param message the external request message to broadcast
+     * @return the aggregated response from all external servers
+     */
     ResponseCollectExternal callCollectExternal(ExternalRequestMessage message);
 
+    /**
+     * Asynchronously bind a user session to a specific logic server.
+     *
+     * @param message the binding request message
+     * @return a future that completes with the common response
+     */
     CompletableFuture<CommonResponse> bindingLogicServerFuture(BindingLogicServerMessage message);
 
+    /**
+     * Synchronously bind a user session to a specific logic server.
+     *
+     * @param message the binding request message
+     * @return the common response indicating success or failure
+     */
     CommonResponse bindingLogicServer(BindingLogicServerMessage message);
 
+    /**
+     * Write a response message directly to a user session on the external server.
+     *
+     * @param message the user response message to deliver
+     */
     void writeMessage(UserResponseMessage message);
 }

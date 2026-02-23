@@ -24,7 +24,7 @@ import com.iohao.net.external.core.hook.internal.DefaultAccessAuthenticationHook
 import lombok.experimental.UtilityClass;
 
 /**
- * ExternalGlobalConfig
+ * Global defaults shared by external server implementations.
  *
  * @author 渔民小镇
  * @date 2023-02-19
@@ -49,6 +49,7 @@ public class ExternalGlobalConfig {
     /** External server route cache */
     public ExternalCmdCache externalCmdCache;
 
+    /** Optional hook used to enrich incoming user requests before dispatch. */
     public UserRequestEnhance userRequestEnhance = _ -> {
     };
 }

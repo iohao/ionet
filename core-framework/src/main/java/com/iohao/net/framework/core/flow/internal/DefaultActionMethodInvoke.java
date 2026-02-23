@@ -29,12 +29,24 @@ import com.iohao.net.framework.core.flow.parser.MethodParsers;
 import java.util.Objects;
 
 /**
- * flow - default DefaultActionMethodInvoke
+ * Default action method invoker using {@link java.lang.invoke.MethodHandle} for high-performance
+ * method dispatch.
  *
  * @author 渔民小镇
  * @date 2021-12-20
  */
 public final class DefaultActionMethodInvoke implements ActionMethodInvoke {
+    /**
+     * Invoke the action method via MethodHandle, handling parameter parsing and validation.
+     * <p>
+     * Parses request data into the expected parameter type, runs JSR-380 validation if configured,
+     * and dispatches the call through the appropriate {@link java.lang.invoke.MethodHandle} based
+     * on the action's parameter position layout. Any exception thrown during invocation is caught
+     * and converted into a {@link com.iohao.net.framework.core.exception.MessageException}.
+     *
+     * @param flowContext the current request flow context
+     * @return the action method return value, or {@code null} if an error occurred
+     */
     @Override
     public Object invoke(FlowContext flowContext) {
         try {
@@ -66,6 +78,12 @@ public final class DefaultActionMethodInvoke implements ActionMethodInvoke {
         }
     }
 
+    /**
+     * Extract, parse, and validate the request data parameter.
+     *
+     * @param flowContext   the current request flow context
+     * @param actionCommand the action command metadata
+     */
     private void extractedValidator(FlowContext flowContext, ActionCommand actionCommand) {
         if (!actionCommand.hasDataParameter()) {
             return;
@@ -95,6 +113,11 @@ public final class DefaultActionMethodInvoke implements ActionMethodInvoke {
     private DefaultActionMethodInvoke() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code DefaultActionMethodInvoke}
+     */
     public static DefaultActionMethodInvoke me() {
         return Holder.ME;
     }

@@ -25,7 +25,7 @@ import lombok.experimental.UtilityClass;
 import java.util.EnumMap;
 
 /**
- * ExternalJoinSelectors
+ * Registry of {@link ExternalJoinSelector} implementations keyed by transport type.
  *
  * @author 渔民小镇
  * @date 2023-05-29
@@ -34,10 +34,21 @@ import java.util.EnumMap;
 public final class ExternalJoinSelectors {
     final EnumMap<ExternalJoinEnum, ExternalJoinSelector> map = new EnumMap<>(ExternalJoinEnum.class);
 
+    /**
+     * Register a selector if no selector exists for its transport type.
+     *
+     * @param joinSelector selector implementation
+     */
     public void putIfAbsent(ExternalJoinSelector joinSelector) {
         putIfAbsent(joinSelector.getExternalJoinEnum(), joinSelector);
     }
 
+    /**
+     * Register a selector for the given transport type if absent.
+     *
+     * @param joinEnum transport type
+     * @param joinSelector selector implementation
+     */
     public void putIfAbsent(ExternalJoinEnum joinEnum, ExternalJoinSelector joinSelector) {
         map.putIfAbsent(joinEnum, joinSelector);
     }
@@ -45,8 +56,8 @@ public final class ExternalJoinSelectors {
     /**
      * Get ExternalJoinSelector By ExternalJoinEnum
      *
-     * @param joinEnum joinEnum
-     * @return ExternalJoinSelector
+     * @param joinEnum transport type
+     * @return registered selector
      */
     public ExternalJoinSelector getExternalJoinSelector(ExternalJoinEnum joinEnum) {
         if (!map.containsKey(joinEnum)) {

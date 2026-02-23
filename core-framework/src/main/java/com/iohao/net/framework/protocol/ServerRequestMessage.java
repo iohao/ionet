@@ -23,7 +23,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * ServerRequestMessage
+ * Request message sent from one server to another within the cluster.
+ * <p>
+ * Extends {@link ServerMessage} with a future correlation id so that the
+ * caller can match the asynchronous response back to this request.
  *
  * @author 渔民小镇
  * @date 2025-09-05
@@ -33,5 +36,6 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public final class ServerRequestMessage extends ServerMessage {
+    /** Correlation id used to match the asynchronous response to this request. */
     long futureId;
 }

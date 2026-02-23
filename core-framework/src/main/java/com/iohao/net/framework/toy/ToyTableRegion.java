@@ -23,6 +23,9 @@ import org.fusesource.jansi.Ansi;
 import java.util.*;
 
 /**
+ * A single named column region within a {@link ToyTable}, holding key-value lines
+ * and rendering them with aligned padding.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */
@@ -61,10 +64,10 @@ final class ToyTableRegion {
 
     void render() {
         var tableRender = table.tableRender;
-        // 线条
+        // line separator
         tableRender.line(keyMaxLen, valueMaxLen);
 
-        // 表头
+        // table head
         String renderHead = this.renderHead();
         tableRender.headContent.append(renderHead);
 

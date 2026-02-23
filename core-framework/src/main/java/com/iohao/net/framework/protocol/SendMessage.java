@@ -22,13 +22,24 @@ package com.iohao.net.framework.protocol;
 import com.iohao.net.framework.core.CmdInfo;
 
 /**
- * Internal Send Message
+ * Fire-and-forget request message for one-way logic-to-logic server communication.
+ * <p>
+ * Extends {@link RequestMessage} without expecting a response. Used when a logic server
+ * needs to notify another logic server of an event or trigger an action without waiting
+ * for a result.
  *
  * @author 渔民小镇
  * @date 2025-09-02
  * @since 25.1
  */
 public final class SendMessage extends RequestMessage {
+    /**
+     * Create a new {@link SendMessage} with the given command route and payload.
+     *
+     * @param cmdInfo the command route descriptor
+     * @param data    the serialized payload
+     * @return a new send message
+     */
     public static SendMessage of(CmdInfo cmdInfo, byte[] data) {
         SendMessage message = new SendMessage();
         message.setCmdInfo(cmdInfo);

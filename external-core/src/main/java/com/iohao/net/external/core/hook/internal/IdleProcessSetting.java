@@ -23,14 +23,14 @@ import com.iohao.net.external.core.hook.IdleHook;
 import java.util.concurrent.TimeUnit;
 
 /**
- * IdleProcessSetting
+ * Immutable heartbeat/idle processing configuration for an external server.
  *
- * @param pong           true : respond to the client with a heartbeat (pong)
- * @param readerIdleTime Read - heartbeat time
- * @param writerIdleTime Write - heartbeat time
- * @param allIdleTime    All - heartbeat time
- * @param timeUnit       Heartbeat time unit - defaults to seconds
- * @param idleHook       Heartbeat hook
+ * @param pong whether to respond to heartbeat requests with a pong message
+ * @param readerIdleTime reader-idle timeout
+ * @param writerIdleTime writer-idle timeout
+ * @param allIdleTime all-idle timeout
+ * @param timeUnit time unit used by idle timeout values
+ * @param idleHook heartbeat callback hook
  * @author 渔民小镇
  * @date 2025-10-16
  * @since 25.1
@@ -43,6 +43,11 @@ public record IdleProcessSetting(
         , TimeUnit timeUnit
         , IdleHook<?> idleHook
 ) {
+    /**
+     * Create a mutable builder with framework defaults.
+     *
+     * @return idle process setting builder
+     */
     public static IdleProcessSettingBuilder builder() {
         return new IdleProcessSettingBuilder();
     }

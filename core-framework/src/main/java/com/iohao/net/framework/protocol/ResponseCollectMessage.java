@@ -27,7 +27,11 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 /**
- * ResponseCollectMessage
+ * Default implementation of {@link ResponseCollect} that stores aggregated
+ * responses from multiple logic servers.
+ * <p>
+ * Holds the list of individual {@link Response} objects along with a
+ * top-level error code and message representing the overall collect outcome.
  *
  * @author 渔民小镇
  * @date 2022-05-22
@@ -37,7 +41,10 @@ import java.util.List;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ResponseCollectMessage implements ResponseCollect {
+    /** Individual responses collected from logic servers. */
     List<Response> responseList;
+    /** Overall error code; 0 indicates success. */
     int errorCode;
+    /** Human-readable error message; {@code null} on success. */
     String errorMessage;
 }

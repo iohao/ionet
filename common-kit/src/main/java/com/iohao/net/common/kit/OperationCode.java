@@ -19,15 +19,27 @@
 package com.iohao.net.common.kit;
 
 /**
- * OperationCode
+ * Interface for types that carry a unique operation code identifier.
+ * <p>
+ * Each implementation holds an integer code that is auto-assigned via a global atomic counter.
  *
  * @author 渔民小镇
  * @date 2025-01-08
  * @since 21.23
  */
 public interface OperationCode {
+    /**
+     * Return the operation code assigned to this instance.
+     *
+     * @return the unique operation code
+     */
     int getOperationCode();
 
+    /**
+     * Atomically get the current global code value and increment it for the next caller.
+     *
+     * @return the next available operation code
+     */
     static int getAndIncrementCode() {
         return OperationCodeKit.codeAtomic.getAndIncrement();
     }

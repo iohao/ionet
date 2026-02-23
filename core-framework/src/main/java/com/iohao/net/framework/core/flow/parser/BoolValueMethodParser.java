@@ -29,17 +29,22 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * BoolValueMethodParser
+ * Method parser for {@code boolean}/{@link Boolean} parameters and return types.
+ * <p>
+ * Converts between Java {@code boolean}/{@link Boolean} values and the protocol wrapper types
+ * {@link BoolValue} and {@link BoolValueList}.
  *
  * @author 渔民小镇
  * @date 2023-02-07
  */
 final class BoolValueMethodParser implements MethodParser {
+    /** {@inheritDoc} */
     @Override
     public Class<?> getActualClazz(ActualParameter parameterReturn) {
         return parameterReturn.isList() ? BoolValueList.class : BoolValue.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
 
@@ -58,6 +63,7 @@ final class BoolValueMethodParser implements MethodParser {
         return codec.decode(data, BoolValue.class).value;
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public Object parseDataList(Object data, DataCodec codec) {
@@ -66,6 +72,7 @@ final class BoolValueMethodParser implements MethodParser {
         return valueList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseData(Object data) {
         return BoolValue.of((boolean) data);
@@ -74,6 +81,11 @@ final class BoolValueMethodParser implements MethodParser {
     private BoolValueMethodParser() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code BoolValueMethodParser}
+     */
     public static BoolValueMethodParser me() {
         return Holder.ME;
     }

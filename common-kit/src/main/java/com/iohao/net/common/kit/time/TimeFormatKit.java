@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * TimeFormatKit
+ * Date/time formatting utilities with cached {@link java.time.format.DateTimeFormatter} instances.
  *
  * @author 渔民小镇
  * @date 2024-08-27
@@ -55,19 +55,19 @@ public final class TimeFormatKit {
     }
 
     /**
-     * 将当前时间格式化为 yyyy-MM-dd HH:mm:ss
+     * Format the current date/time as {@code yyyy-MM-dd HH:mm:ss}.
      *
-     * @return yyyy-MM-dd HH:mm:ss
+     * @return the formatted current date/time string
      */
     public String format() {
         return format(TimeKit.nowLocalDateTime());
     }
 
     /**
-     * 将指定的 Millis 格式化为 yyyy-MM-dd HH:mm:ss
+     * Format the given epoch milliseconds as {@code yyyy-MM-dd HH:mm:ss}.
      *
-     * @param timeMillis Millis
-     * @return yyyy-MM-dd HH:mm:ss
+     * @param timeMillis the epoch milliseconds to format
+     * @return the formatted date/time string
      */
     public String format(long timeMillis) {
         var localDateTime = TimeKit.toLocalDateTime(timeMillis);
@@ -75,21 +75,21 @@ public final class TimeFormatKit {
     }
 
     /**
-     * 将 TemporalAccessor 格式化为 yyyy-MM-dd HH:mm:ss
+     * Format the given temporal as {@code yyyy-MM-dd HH:mm:ss}.
      *
-     * @param temporal TemporalAccessor
-     * @return yyyy-MM-dd HH:mm:ss
+     * @param temporal the temporal to format
+     * @return the formatted date/time string
      */
     public String format(TemporalAccessor temporal) {
         return defaultFormatter.format(temporal);
     }
 
     /**
-     * 将 TemporalAccessor 格式化为指定的格式
+     * Format the given temporal using the specified pattern.
      *
-     * @param temporal TemporalAccessor
-     * @param pattern  指定的格式
-     * @return 指定的格式
+     * @param temporal the temporal to format
+     * @param pattern  the date/time pattern to use
+     * @return the formatted date/time string
      */
     public String format(TemporalAccessor temporal, String pattern) {
         return ofPattern(pattern).format(temporal);

@@ -24,7 +24,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * ListMultiMap
+ * A thread-safe multimap that associates each key with a {@link java.util.List} of values, allowing duplicates.
+ * <p>
  * for example
  * <pre>{@code
  * ListMultiMap<Integer, String> map = ListMultiMap.of();
@@ -79,6 +80,11 @@ public interface ListMultiMap<K, V> extends MultiMap<K, V> {
         return asMap().get(key);
     }
 
+    /**
+     * Return a set view of the key-list mappings contained in this multimap.
+     *
+     * @return a set of map entries where each value is a {@link List} of elements
+     */
     default Set<Map.Entry<K, List<V>>> entrySet() {
         return this.asMap().entrySet();
     }

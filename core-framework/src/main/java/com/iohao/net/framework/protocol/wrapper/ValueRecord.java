@@ -21,7 +21,10 @@ package com.iohao.net.framework.protocol.wrapper;
 import lombok.Getter;
 
 /**
- * Wrapper values contain single and list classes
+ * Record that pairs a single-value wrapper class with its corresponding list wrapper class.
+ * <p>
+ * For example, {@link IntValue} is paired with {@link IntValueList}. Used by {@link WrapperKit}
+ * to resolve the correct wrapper types for primitive and boxed Java types.
  *
  * @author 渔民小镇
  * @date 2024-11-01
@@ -29,9 +32,17 @@ import lombok.Getter;
  */
 @Getter
 public final class ValueRecord {
+    /** the single-value wrapper class (e.g., IntValue.class) */
     final Class<?> valueClazz;
+    /** the list wrapper class (e.g., IntValueList.class) */
     final Class<?> valueListClazz;
 
+    /**
+     * Create a ValueRecord pairing a single-value class with a list class.
+     *
+     * @param valueClazz     the single-value wrapper class
+     * @param valueListClazz the list wrapper class
+     */
     ValueRecord(Class<?> valueClazz, Class<?> valueListClazz) {
         this.valueClazz = valueClazz;
         this.valueListClazz = valueListClazz;

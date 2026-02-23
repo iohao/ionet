@@ -21,6 +21,7 @@ package com.iohao.net.external.core.config;
 import com.iohao.net.framework.protocol.CommunicationMessage;
 
 /**
+ * Hook for enriching inbound user requests before business routing.
  *
  * @author 渔民小镇
  * @date 2025-10-15
@@ -28,5 +29,10 @@ import com.iohao.net.framework.protocol.CommunicationMessage;
  */
 @FunctionalInterface
 public interface UserRequestEnhance {
+    /**
+     * Mutate or augment the decoded request message before it is processed.
+     *
+     * @param message inbound communication message
+     */
     void enhance(CommunicationMessage message);
 }

@@ -24,6 +24,10 @@ import lombok.experimental.UtilityClass;
 import java.util.Map;
 
 /**
+ * Global registry that maps logic-server IDs to their {@link BarSkeleton} instances.
+ * <p>
+ * Each logic server registers its skeleton during startup so that other components
+ * (e.g. routing, inter-server calls) can look it up by server ID at runtime.
  *
  * @author 渔民小镇
  * @date 2025-09-02
@@ -33,10 +37,22 @@ import java.util.Map;
 public final class BarSkeletonManager {
     static final Map<Integer, BarSkeleton> barSkeletonMap = CollKit.ofConcurrentHashMap();
 
+    /**
+     * Register a {@link BarSkeleton} for the given server ID.
+     *
+     * @param serverId    unique identifier of the logic server
+     * @param barSkeleton the skeleton instance to register
+     */
     public void putBarSkeleton(int serverId, BarSkeleton barSkeleton) {
         barSkeletonMap.put(serverId, barSkeleton);
     }
 
+    /**
+     * Retrieve the {@link BarSkeleton} associated with the given server ID.
+     *
+     * @param serverId unique identifier of the logic server
+     * @return the registered skeleton, or {@code null} if none is registered
+     */
     public BarSkeleton getBarSkeleton(int serverId) {
         return barSkeletonMap.get(serverId);
     }

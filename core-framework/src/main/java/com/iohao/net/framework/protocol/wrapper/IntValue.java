@@ -24,7 +24,10 @@ import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import lombok.ToString;
 
 /**
- * int value
+ * Protocol wrapper for a single int value.
+ * <p>
+ * Wraps a primitive {@code int} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-10
@@ -32,10 +35,16 @@ import lombok.ToString;
 @ToString
 @ProtobufClass
 public final class IntValue {
-    /** int 值 */
+    /** the wrapped int value */
     @Protobuf(fieldType = FieldType.SINT32, order = 1)
     public int value;
 
+    /**
+     * Create an IntValue wrapping the given int.
+     *
+     * @param value the int value to wrap
+     * @return a new IntValue instance
+     */
     public static IntValue of(int value) {
         var theValue = new IntValue();
         theValue.value = value;

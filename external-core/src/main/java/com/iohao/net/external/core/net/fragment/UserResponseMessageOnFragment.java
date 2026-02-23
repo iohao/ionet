@@ -30,6 +30,7 @@ import io.aeron.logbuffer.Header;
 import org.agrona.DirectBuffer;
 
 /**
+ * Aeron fragment consumer that sends user response messages back to external clients.
  *
  * @author 渔民小镇
  * @date 2025-09-02
@@ -61,6 +62,11 @@ public class UserResponseMessageOnFragment implements OnFragment {
         writeAndFlush(message);
     }
 
+    /**
+     * Resolve the target user session and flush the decoded response.
+     *
+     * @param message decoded user response message
+     */
     protected void writeAndFlush(CommunicationMessage message) {
         ExternalWriteKit.writeAndFlush(message, ExternalServerSingle.userSessions);
     }

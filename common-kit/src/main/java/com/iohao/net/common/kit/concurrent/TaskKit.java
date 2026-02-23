@@ -175,10 +175,20 @@ public class TaskKit {
         oldTimer.stop();
     }
 
+    /**
+     * Submit a task to the fixed thread pool for execution.
+     *
+     * @param command the task to execute
+     */
     public void execute(Runnable command) {
         cacheExecutor.execute(command);
     }
 
+    /**
+     * Submit a task to the virtual thread executor for execution.
+     *
+     * @param command the task to execute
+     */
     public void executeVirtual(Runnable command) {
         virtualExecutor.execute(command);
     }
@@ -309,6 +319,9 @@ public class TaskKit {
         }
     }
 
+    /**
+     * Shut down all managed executors and the timer.
+     */
     public void stop() {
         wheelTimer.stop();
         cacheExecutor.shutdown();

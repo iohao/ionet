@@ -41,7 +41,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.lang.System.out;
 
 /**
- * Banner, 不提供关闭 Banner 的方法，让开发者含泪看完.
+ * Startup banner renderer for the ionet framework.
+ * <p>
+ * Displays a randomly-colored ASCII art logo, server node summary, JVM information,
+ * and optional breaking-news tips on the console. The banner cannot be disabled --
+ * developers are expected to read it.
  *
  * @author 渔民小镇
  * @date 2023-01-30
@@ -242,11 +246,11 @@ public final class IonetBanner {
     }
 
     private void extractedLogo() {
-        // 为了在控制台上显示得不那么的枯燥，这里使用随机的 banner 和随机上色策略
+        // Use random banner and random coloring strategy for a less monotonous console output
         List<String> bannerList = new BannerData().listData();
         String banner = RandomKit.randomEle(bannerList);
 
-        // 上色策略
+        // coloring strategy
         var anyFunction = new BannerColorStrategy().anyColorFun();
         String anyBanner = anyFunction.apply(banner);
 

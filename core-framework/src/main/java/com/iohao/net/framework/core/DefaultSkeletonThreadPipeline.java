@@ -22,7 +22,15 @@ import com.iohao.net.framework.core.flow.FlowContext;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * DefaultSkeletonThreadPipeline
+ * Default {@link SkeletonThreadPipeline} that dispatches a {@link FlowContext} to the
+ * appropriate thread executor based on the request's hop count.
+ * <p>
+ * Hop-count routing:
+ * <ul>
+ *   <li>0 -- user thread executor (direct client request)</li>
+ *   <li>1 -- simple thread executor (single-hop forwarded request)</li>
+ *   <li>2+ -- virtual thread executor (multi-hop request)</li>
+ * </ul>
  *
  * @author 渔民小镇
  * @date 2025-09-02

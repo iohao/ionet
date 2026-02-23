@@ -19,17 +19,28 @@
 package com.iohao.net.common.kit.exception;
 
 /**
- * RuntimeException
+ * Common runtime exception used throughout the ionet framework.
  *
  * @author 渔民小镇
  * @date 2024-08-02
  * @since 21.14
  */
 public class CommonRuntimeException extends RuntimeException {
+    /**
+     * Create a new instance with the given detail message.
+     *
+     * @param message the detail message
+     */
     public CommonRuntimeException(String message) {
         super(message);
     }
 
+    /**
+     * Create a new instance with the given detail message and cause.
+     *
+     * @param message the detail message
+     * @param cause   the cause
+     */
     public CommonRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }

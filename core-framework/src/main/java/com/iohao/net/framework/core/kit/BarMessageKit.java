@@ -22,12 +22,19 @@ import com.iohao.net.framework.protocol.*;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Message field copying utilities for transferring common fields between request and response messages.
  *
  * @author 渔民小镇
  * @date 2022-06-07
  */
 @UtilityClass
 public class BarMessageKit {
+    /**
+     * Copy common fields (futureId, userId, cmdMerge, traceId, serverIds, netId) from request to response.
+     *
+     * @param request the source request
+     * @param message the target response
+     */
     private void employCommon(Request request, Response message) {
         message.setFutureId(request.getFutureId());
         message.setUserId(request.getUserId());
@@ -43,10 +50,22 @@ public class BarMessageKit {
         message.setNetId(request.getNetId());
     }
 
+    /**
+     * Copy common fields from a request to a ResponseMessage.
+     *
+     * @param request the source request
+     * @param message the target response message
+     */
     public void employ(Request request, ResponseMessage message) {
         employCommon(request, message);
     }
 
+    /**
+     * Copy routing fields from a request to a forwarded RequestMessage, incrementing the hop count.
+     *
+     * @param request the source request
+     * @param message the target request message
+     */
     public void employ(Request request, RequestMessage message) {
         message.setUserId(request.getUserId());
         message.setVerifyIdentity(request.isVerifyIdentity());
@@ -59,6 +78,12 @@ public class BarMessageKit {
         message.setBindingLogicServerIds(request.getBindingLogicServerIds());
     }
 
+    /**
+     * Copy common fields from a request to a UserResponseMessage, including msgId and cache condition.
+     *
+     * @param request the source request
+     * @param message the target user response message
+     */
     public void employ(Request request, UserResponseMessage message) {
         employCommon(request, message);
 

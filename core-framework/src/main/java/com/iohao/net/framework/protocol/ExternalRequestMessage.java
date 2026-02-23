@@ -22,6 +22,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * Request message sent from an external (Netty) server to a logic server.
+ * <p>
+ * Carries user identity information, a trace id for distributed tracing,
+ * and the external server / template context. Extends {@link ExternalCommonMessage}
+ * with request-specific fields.
  *
  * @author 渔民小镇
  * @date 2025-09-10
@@ -30,14 +35,25 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class ExternalRequestMessage extends ExternalCommonMessage implements UserIdentity, ExternalPayloadSetting {
+    /** User id associated with this request. */
     long userId;
+    /** Whether the user's identity has been verified (authenticated). */
     boolean verifyIdentity;
 
+    /** Template id of the external server that received the client connection. */
     int templateId;
+    /** Distributed trace id for request tracking. */
     String traceId;
+    /** Network id identifying the Aeron connection. */
     int netId;
+    /** Identifier of the originating external server. */
     int externalServerId;
 
+    /**
+     * Create a shallow clone of this request message.
+     *
+     * @return a new {@link ExternalRequestMessage} with the same field values
+     */
     public ExternalRequestMessage ofClone() {
         var message = new ExternalRequestMessage();
         message.futureId = this.futureId;

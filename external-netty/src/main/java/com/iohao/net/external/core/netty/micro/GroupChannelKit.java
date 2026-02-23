@@ -34,7 +34,7 @@ import lombok.experimental.UtilityClass;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * GroupChannelKit
+ * Selects Netty event-loop/channel implementations based on the current operating system.
  *
  * @author 渔民小镇
  * @date 2025-09-24
@@ -42,6 +42,7 @@ import java.util.concurrent.ThreadFactory;
  */
 @UtilityClass
 public final class GroupChannelKit {
+    /** Current OS-specific Netty group/channel configuration. */
     public GroupChannelOption groupChannelOption = createGroupChannelOption();
 
     private GroupChannelOption createGroupChannelOption() {
@@ -161,4 +162,3 @@ public final class GroupChannelKit {
         }
     }
 }
-

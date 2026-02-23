@@ -34,6 +34,12 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
+ * Utility for scanning Java source files and building a map of {@link JavaClassDocInfo}
+ * from the Javadoc comments found in {@code @ActionController} classes.
+ * <p>
+ * Supports both Maven ({@code target/classes}) and Gradle ({@code build/classes}) layouts,
+ * as well as classes packaged inside JAR files.
+ *
  * @author 渔民小镇
  * @date 2022-01-28
  */
@@ -47,15 +53,15 @@ public class ActionCommandDocKit {
 
         // #459
         if (!isMaven && path.contains(".jar!")) {
-            // jar 包内的路径，目前只处理了 gradle
+            // jar-internal path; currently only Gradle is handled
             int indexOf = path.indexOf(":");
             if (indexOf != -1) {
                 path = path.substring(indexOf + 1);
             }
 
-            // 定义正则表达式模式
+            // regex pattern to replace build output path with source path
             String regex = "/build/*/.*?\\.jar!/";
-            // 使用正则表达式替换
+            // replace using regex
             return path.replaceAll(regex, "/src/main/java/");
         }
 

@@ -21,29 +21,68 @@ package com.iohao.net.framework.protocol;
 import com.iohao.net.framework.core.exception.ErrorInformation;
 
 /**
+ * Common response contract providing error code and message accessors.
+ * <p>
+ * Implemented by all response types in the protocol layer. An error code of 0
+ * indicates success; any non-zero value signals an error condition.
  *
  * @author 渔民小镇
  * @date 2025-09-16
  * @since 25.1
  */
 public interface CommonResponse {
+    /**
+     * Get the error code. 0 indicates success; any other value indicates an error.
+     *
+     * @return the error code
+     */
     int getErrorCode();
 
+    /**
+     * Set the error code. 0 indicates success; any other value indicates an error.
+     *
+     * @param errorCode the error code
+     */
     void setErrorCode(int errorCode);
 
+    /**
+     * Get the human-readable error message.
+     *
+     * @return the error message, or {@code null} on success
+     */
     String getErrorMessage();
 
+    /**
+     * Set the human-readable error message.
+     *
+     * @param errorMessage the error message
+     */
     void setErrorMessage(String errorMessage);
 
+    /**
+     * Populate the error code and message from the given {@link ErrorInformation}.
+     *
+     * @param error the error information source
+     */
     default void setError(ErrorInformation error) {
         this.setErrorCode(error.getCode());
         this.setErrorMessage(error.getMessage());
     }
 
+    /**
+     * Check whether this response represents an error.
+     *
+     * @return {@code true} if the error code is non-zero
+     */
     default boolean hasError() {
         return getErrorCode() != 0;
     }
 
+    /**
+     * Check whether this response represents a successful outcome.
+     *
+     * @return {@code true} if the error code is 0
+     */
     default boolean isSuccess() {
         return getErrorCode() == 0;
     }

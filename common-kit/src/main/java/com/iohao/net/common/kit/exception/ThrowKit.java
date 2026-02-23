@@ -22,7 +22,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 实验性工具，仅限内部使用
+ * Exception throwing utilities for internal use.
  *
  * @author 渔民小镇
  * @date 2024-08-01
@@ -31,22 +31,53 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @UtilityClass
 public class ThrowKit {
+    /**
+     * Throw a {@link CommonIllegalArgumentException} with the given message.
+     *
+     * @param message the detail message
+     * @throws CommonIllegalArgumentException always
+     */
     public void ofIllegalArgumentException(String message) throws CommonIllegalArgumentException {
         throw new CommonIllegalArgumentException(message);
     }
 
+    /**
+     * Throw a {@link CommonIllegalArgumentException} with the given message and cause.
+     *
+     * @param message the detail message
+     * @param e       the cause
+     * @throws CommonIllegalArgumentException always
+     */
     public void ofIllegalArgumentException(String message, Exception e) throws CommonIllegalArgumentException {
         throw new CommonIllegalArgumentException(message, e);
     }
 
+    /**
+     * Throw a {@link CommonRuntimeException} with the given message.
+     *
+     * @param message the detail message
+     * @throws CommonRuntimeException always
+     */
     public void ofRuntimeException(String message) throws CommonRuntimeException {
         throw new CommonRuntimeException(message);
     }
 
+    /**
+     * Throw a {@link CommonRuntimeException} wrapping the given throwable.
+     *
+     * @param e the throwable to wrap
+     * @throws CommonRuntimeException always
+     */
     public void ofRuntimeException(Throwable e) throws CommonRuntimeException {
         throw new CommonRuntimeException(e.getMessage(), e);
     }
 
+    /**
+     * Throw a {@link NullPointerException} with the given message.
+     *
+     * @param message the detail message
+     * @throws NullPointerException always
+     */
     public void ofNullPointerException(String message) throws NullPointerException {
         throw new NullPointerException(message);
     }

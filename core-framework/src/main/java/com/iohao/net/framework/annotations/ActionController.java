@@ -21,7 +21,8 @@ package com.iohao.net.framework.annotations;
 import java.lang.annotation.*;
 
 /**
- * ActionController - cmd
+ * Marks a class as an action controller that handles requests for a specific command module.
+ * Each controller is identified by a unique cmd value.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -31,7 +32,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface ActionController {
     /**
-     * @return cmd
+     * The command module ID for this controller.
+     *
+     * @return the cmd value
      */
     int value();
 }

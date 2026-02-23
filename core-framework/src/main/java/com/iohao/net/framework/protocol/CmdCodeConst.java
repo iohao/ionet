@@ -19,6 +19,10 @@
 package com.iohao.net.framework.protocol;
 
 /**
+ * Constants for command code types used in the external protocol layer.
+ * <p>
+ * Distinguishes heartbeat (idle) frames from business request frames.
+ *
  * @author 渔民小镇
  * @date 2023-02-21
  */

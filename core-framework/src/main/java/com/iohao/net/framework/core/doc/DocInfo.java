@@ -31,6 +31,10 @@ import lombok.experimental.FieldDefaults;
 import java.util.*;
 
 /**
+ * Internal helper that collects and renders a text-based documentation block for a
+ * single {@code @ActionController}, including its action methods, parameters, return
+ * types, and associated broadcast documents.
+ *
  * @author 渔民小镇
  * @date 2022-01-29
  */
@@ -92,8 +96,8 @@ final class DocInfo {
     private String paramResultInfoToString(Class<?> actualClazz, boolean isCustomList) {
         if (isCustomList) {
             /*
-             * 因为是生成对接文档，所以不能使用 List<xxx> 来表示，而是使用 ByteValueList<xxx> 来表示。
-             * 因为 ByteValueList 是一个类似 IntValueList、LongValueList 这样的包装类
+             * For integration documents we use ByteValueList<xxx> instead of List<xxx>,
+             * because ByteValueList is a wrapper type similar to IntValueList, LongValueList, etc.
              */
             String simpleName = ByteValueList.class.getSimpleName();
             String simpleNameActualClazz = actualClazz.getSimpleName();
@@ -123,13 +127,13 @@ final class DocInfo {
             String format = StrKit.format(subActionCommandTemplate, paramMap);
             lineList.add(format);
 
-            // 方法参数
+            // method parameter
             if (StrKit.isNotEmpty(paramMap.get("methodParam"))) {
                 format = StrKit.format("    methodParam: {methodParam} {methodParamComment}", paramMap);
                 lineList.add(format);
             }
 
-            // 方法返回值
+            // method return value
             if (StrKit.isNotEmpty(paramMap.get("returnTypeClazz"))) {
                 format = StrKit.format("    returnType: {returnTypeClazz} {methodReturnComment}", paramMap);
                 lineList.add(format);

@@ -19,14 +19,17 @@
 package com.iohao.net.framework.communication;
 
 /**
- * CommunicationType
+ * Enum representing the type of communication for a request flow.
  *
  * @author 渔民小镇
  * @date 2025-09-07
  * @since 25.1
  */
 public enum CommunicationType {
+    /** Communication originated from an external user request. */
     USER_REQUEST,
+    /** Communication originated from an internal logic-to-logic call (request/response). */
     INTERNAL_CALL,
+    /** Communication originated from an internal logic-to-logic send (fire-and-forget). */
     INTERNAL_SEND
 }

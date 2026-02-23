@@ -113,10 +113,20 @@ public final class TimeRangeInOut implements ActionMethodInOut {
         this.listener = Objects.requireNonNull(listener);
     }
 
+    /**
+     * No-op before action method execution.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckIn(FlowContext flowContext) {
     }
 
+    /**
+     * Record the current time-of-day statistics after action method execution.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckOut(FlowContext flowContext) {
         LocalDate localDate = listener.nowLocalDate();
@@ -126,30 +136,48 @@ public final class TimeRangeInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - TimeRangeInOut - Call statistics plugin for each time period - call statistics object domain
+     * Region that manages {@link TimeRangeDay} instances, one per calendar date.
      */
     @Getter
     public final class TimeRangeDayRegion {
         final Map<LocalDate, TimeRangeDay> map = CollKit.ofConcurrentHashMap();
 
+        /**
+         * Iterate over all collected daily statistics.
+         *
+         * @param action the action to perform for each date entry
+         */
         public void forEach(BiConsumer<LocalDate, TimeRangeDay> action) {
             this.map.forEach(action);
         }
 
+        /**
+         * Update the statistics for the given date and time.
+         *
+         * @param localDate   the current date
+         * @param localTime   the current time
+         * @param flowContext the current request flow context
+         */
         void update(LocalDate localDate, LocalTime localTime, FlowContext flowContext) {
 
             TimeRangeDay timeRangeDay = this.getTimeRangeDay(localDate);
             timeRangeDay.increment(localTime);
 
-            // 变更回调
+            // Change callback
             listener.changed(timeRangeDay, localTime, flowContext);
         }
 
+        /**
+         * Get or create the {@link TimeRangeDay} for the given date.
+         *
+         * @param localDate the date
+         * @return the daily statistics object
+         */
         public TimeRangeDay getTimeRangeDay(LocalDate localDate) {
 
             TimeRangeDay timeRangeDay = this.map.get(localDate);
 
-            // 无锁化
+            // Lock-free lazy initialization
             if (Objects.isNull(timeRangeDay)) {
 
                 TimeRangeDay rangeDay = TimeRangeInOut.this.listener.createTimeRangeDay(localDate);
@@ -159,9 +187,10 @@ public final class TimeRangeInOut implements ActionMethodInOut {
                     timeRangeDay = this.map.get(localDate);
 
                     /*
-                     * 回调昨天的数据
-                     * 原计划是想保留 map 中的数据让开发者自行处理，
-                     * 考虑到开发者可能会忘记移除 map 中的数据，为防止造成隐患，这里就直接移除昨天的数据了。
+                     * Callback with yesterday's data.
+                     * Originally planned to keep the data in the map for developers to handle,
+                     * but to prevent potential memory leaks if developers forget to remove it,
+                     * yesterday's data is removed automatically here.
                      */
                     TaskKit.execute(() -> {
                         LocalDate yesterdayLocalDate = localDate.minusDays(1);
@@ -176,13 +205,20 @@ public final class TimeRangeInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - TimeRangeInOut - Call statistics plugin for each time period - call statistics object for one day
+     * Daily call statistics record holding the date, total count, and per-hour breakdowns.
      *
      * @param localDate      Date
      * @param count          Total number of action calls for one day
      * @param timeRangeHours Time periods
      */
     public record TimeRangeDay(LocalDate localDate, LongAdder count, TimeRangeHour[] timeRangeHours) {
+        /**
+         * Create a daily statistics record for the given date with the specified hour ranges.
+         *
+         * @param localDate      the date
+         * @param timeRangeHours the hour-level statistics objects
+         * @return a new {@code TimeRangeDay} instance
+         */
         public static TimeRangeDay create(LocalDate localDate, List<TimeRangeHour> timeRangeHours) {
 
             TimeRangeDay timeRangeDay = new TimeRangeDay(localDate, new LongAdder(), new TimeRangeHour[24]);
@@ -195,16 +231,32 @@ public final class TimeRangeInOut implements ActionMethodInOut {
             return timeRangeDay;
         }
 
+        /**
+         * Return a stream of non-null hour-level statistics.
+         *
+         * @return stream of {@link TimeRangeHour}
+         */
         public Stream<TimeRangeHour> stream() {
             return Arrays.stream(this.timeRangeHours)
                     .filter(Objects::nonNull);
         }
 
+        /**
+         * Get the hour-level statistics for the given time.
+         *
+         * @param localTime the time of day
+         * @return the {@link TimeRangeHour} for the corresponding hour, or {@code null}
+         */
         public TimeRangeHour getTimeRangeHour(LocalTime localTime) {
             var hour = localTime.getHour();
             return this.timeRangeHours[hour];
         }
 
+        /**
+         * Increment the daily count and delegate to the corresponding hour-level statistics.
+         *
+         * @param localTime the current time of day
+         */
         public void increment(LocalTime localTime) {
 
             this.count.increment();
@@ -216,7 +268,7 @@ public final class TimeRangeInOut implements ActionMethodInOut {
             }
         }
 
-        /** action 调用次数 共 [%d] 次 */
+        /** Total action calls: [%d] times */
         private static final String dayTitle = Bundle.getMessage(MessageKey.timeRangeInOutDayTitle);
 
         @NonNull
@@ -230,7 +282,7 @@ public final class TimeRangeInOut implements ActionMethodInOut {
                     .toList();
 
             if (CollKit.isEmpty(timeRangeHoursList)) {
-                // TimeRange，action 暂无数据
+                // TimeRange, no action data yet
                 return localDateFormat + " action no data";
             }
 
@@ -246,7 +298,7 @@ public final class TimeRangeInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - TimeRangeInOut - Call statistics plugin for each time period - call statistics object for one hour
+     * Hourly call statistics record holding the hour, total count, and per-minute breakdowns.
      *
      * @param hourTime   Hour
      * @param count      The number of action calls in one hour
@@ -254,11 +306,23 @@ public final class TimeRangeInOut implements ActionMethodInOut {
      */
     public record TimeRangeHour(LocalTime hourTime, LongAdder count, List<TimeRangeMinute> minuteList) {
 
+        /**
+         * Create an hourly statistics record for the given hour.
+         *
+         * @param hour       the hour of day (0-23)
+         * @param minuteList the minute-level statistics objects
+         * @return a new {@code TimeRangeHour} instance
+         */
         public static TimeRangeHour create(int hour, List<TimeRangeMinute> minuteList) {
             var hourTime = LocalTime.of(hour, 0);
             return new TimeRangeHour(hourTime, new LongAdder(), minuteList);
         }
 
+        /**
+         * Increment the hourly count and delegate to the matching minute range.
+         *
+         * @param localTime the current time of day
+         */
         void increment(LocalTime localTime) {
             this.count.increment();
 
@@ -274,11 +338,16 @@ public final class TimeRangeInOut implements ActionMethodInOut {
                     .ifPresent(TimeRangeMinute::increment);
         }
 
+        /**
+         * Get the hour of day.
+         *
+         * @return the hour (0-23)
+         */
         public int getHour() {
             return this.hourTime.getHour();
         }
 
-        /** %d:00 共 %s 次; */
+        /** %d:00 total %s times; */
         private static final String hourTitle = Bundle.getMessage(MessageKey.timeRangeInOutHourTitle);
 
         @NonNull
@@ -302,7 +371,7 @@ public final class TimeRangeInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - TimeRangeInOut - Call statistics plugin for each time period - recording in minute range
+     * Minute-range statistics record within an hour.
      *
      * @param start Start time (minute), inclusive
      * @param end   End time (minute), inclusive
@@ -320,15 +389,23 @@ public final class TimeRangeInOut implements ActionMethodInOut {
             return new TimeRangeMinute(start, end, new LongAdder());
         }
 
+        /**
+         * Check whether the given minute falls within this range.
+         *
+         * @param minute the minute value to check
+         * @return {@code true} if the minute is within [{@code start}, {@code end}]
+         */
         boolean inRange(int minute) {
             return minute >= this.start && minute <= this.end;
         }
 
+        /**
+         * Increment the execution count for this minute range.
+         */
         void increment() {
             this.count.increment();
         }
 
-        /** [%d~%d分钟，%d 次] */
         private static final String minuteTitle = Bundle.getMessage(MessageKey.timeRangeInOutMinuteTitle);
 
         @NonNull
@@ -339,10 +416,17 @@ public final class TimeRangeInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - TimeRangeInOut - Call statistics plugin for each time period - Listener
+     * Listener interface for {@link TimeRangeInOut} change notifications and customization.
      */
     public interface ChangeListener {
 
+        /**
+         * Called after the daily statistics are updated.
+         *
+         * @param timeRangeDay the updated daily statistics
+         * @param localTime    the current time of day
+         * @param flowContext  the current request flow context
+         */
         default void changed(TimeRangeDay timeRangeDay, LocalTime localTime, FlowContext flowContext) {
         }
 

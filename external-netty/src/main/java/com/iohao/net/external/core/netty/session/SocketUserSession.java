@@ -26,7 +26,7 @@ import java.net.InetSocketAddress;
 import java.util.Objects;
 
 /**
- * Socket UserSession
+ * Netty channel-backed implementation of an external user session.
  *
  * @author 渔民小镇
  * @date 2023-02-18

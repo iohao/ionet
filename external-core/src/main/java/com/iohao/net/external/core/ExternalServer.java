@@ -21,11 +21,16 @@ package com.iohao.net.external.core;
 import com.iohao.net.server.NetServer;
 
 /**
- * ExternalServer
+ * External-facing transport server (WebSocket/TCP/UDP/custom) bootstrap contract.
  *
  * @author 渔民小镇
  * @date 2023-02-18
  */
 public interface ExternalServer {
+    /**
+     * Start the external transport and bind it to the shared net server runtime.
+     *
+     * @param netServer core net server runtime
+     */
     void startup(NetServer netServer);
 }

@@ -19,7 +19,8 @@
 package com.iohao.net.framework.core;
 
 /**
- * ActualParameter
+ * Common interface for types that expose the actual (possibly generic) class of an
+ * action method parameter or return value.
  *
  * @author 渔民小镇
  * @date 2025-09-09

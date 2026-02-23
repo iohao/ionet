@@ -22,7 +22,7 @@ import com.iohao.net.external.core.ExternalServerBuilderSetting;
 import com.iohao.net.external.core.config.ExternalJoinEnum;
 
 /**
- * External Server Connection Type Selector
+ * Transport-type strategy used to apply connection-specific bootstrap defaults.
  * <pre>
  * Connection types: tcp, websocket, udp, kcp
  *
@@ -36,16 +36,16 @@ import com.iohao.net.external.core.config.ExternalJoinEnum;
  */
 public interface ExternalJoinSelector {
     /**
-     * Connection type
+     * Get the transport type handled by this selector.
      *
-     * @return Connection type
+     * @return transport type
      */
     ExternalJoinEnum getExternalJoinEnum();
 
     /**
-     * Some default settings for the corresponding connection type
+     * Apply transport-specific default settings to the builder state.
      *
-     * @param builderSetting builderSetting
+     * @param builderSetting mutable external server builder state
      */
     void defaultSetting(ExternalServerBuilderSetting builderSetting);
 }

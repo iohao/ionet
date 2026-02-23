@@ -49,7 +49,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * source doc 解析类
+ * Utility for parsing Java source-level documentation (Javadoc) from {@code @ActionController}
+ * classes and attaching it to the corresponding {@link ActionCommandDoc} metadata.
  *
  * @author 渔民小镇
  * @date 2022-12-09
@@ -104,11 +105,16 @@ class ActionCommandDocParserKit {
     }
 }
 
+/** Intermediate holder for parsed action method parameters during command building. */
 class ActionCommandBuilderData {
     ActionMethodParameter[] actionMethodParameters;
     ActionMethodParameter dataParameter;
 }
 
+/**
+ * Internal utilities for scanning {@code @ActionController} / {@code @ActionMethod} annotated
+ * classes, building {@link ActionCommand} metadata, and validating command IDs.
+ */
 final class ActionCommandParserKit {
     static Stream<Class<?>> streamActionController(Set<Class<?>> classSet) {
         return classSet
@@ -280,6 +286,8 @@ final class ActionCommandParserKit {
 }
 
 /**
+ * Console printer that renders a human-readable summary of the {@link BarSkeleton} configuration
+ * including registered actions, in/out plugins, data codecs, and runners.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -458,7 +466,8 @@ class PrintActionKit {
 
     private static void checkReturnType(final Class<?> returnTypeClazz) {
         if (Set.class.isAssignableFrom(returnTypeClazz) || Map.class.isAssignableFrom(returnTypeClazz)) {
-            // 参数的不支持不写逻辑了，这里告诉一下就行了。看之后的需要在考虑是否支持吧
+            // No logic for unsupported parameter types for now; just report it.
+            // Consider supporting them in the future if needed.
             // Action return values and parameters do not support set, map and basic types!
             var printActionKitCheckReturnType = Bundle.getMessage(MessageKey.printActionKitCheckReturnType);
             ThrowKit.ofRuntimeException(printActionKitCheckReturnType);

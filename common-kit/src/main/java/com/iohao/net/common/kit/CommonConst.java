@@ -19,16 +19,21 @@
 package com.iohao.net.common.kit;
 
 /**
- * CommonConst
+ * Common shared constants.
  *
  * @author 渔民小镇
  * @date 2023-05-01
  */
 public interface CommonConst {
+    /** Reusable empty byte array. */
     byte[] emptyBytes = new byte[0];
+    /** Reusable empty int array. */
     int[] emptyInts = new int[0];
+    /** Reusable empty long array. */
     long[] emptyLongs = new long[0];
+    /** Reusable empty Object array. */
     Object[] emptyObjects = new Object[0];
+    /** Reusable empty Class array. */
     Class<?>[] emptyClasses = new Class<?>[0];
 
 }

@@ -19,7 +19,10 @@
 package com.iohao.net.framework.communication;
 
 /**
- * Communication
+ * Aggregate communication interface combining broadcast, logic call, external, and send capabilities.
+ * <p>
+ * Composes all decorator interfaces: external communication, logic call/send,
+ * broadcast (user, user-list, multicast), and enterprise logic call collect.
  *
  * @author 渔民小镇
  * @date 2025-09-28

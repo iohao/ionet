@@ -30,6 +30,16 @@ import com.iohao.net.framework.core.codec.DataCodec;
  */
 public interface MethodParser {
 
+    /**
+     * Get the actual class for the parameter or return type.
+     * <p>
+     * For primitive-wrapper parsers this returns the corresponding protocol wrapper class
+     * (e.g. {@code IntValue}, {@code IntValueList}). For the default parser it delegates
+     * to {@link ActualParameter#getActualTypeArgumentClass()}.
+     *
+     * @param parameterReturn the parameter or return type metadata
+     * @return the actual class to use for codec operations
+     */
     Class<?> getActualClazz(ActualParameter parameterReturn);
 
     /**
@@ -42,7 +52,24 @@ public interface MethodParser {
      */
     Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec);
 
+    /**
+     * Parse a list of data values into the protocol-compatible format.
+     * <p>
+     * Wraps the given list into the appropriate value-list wrapper type for serialization.
+     *
+     * @param data  the list of values returned by the action method
+     * @param codec the data codec for encoding individual elements
+     * @return the protocol-compatible list wrapper object
+     */
     Object parseDataList(Object data, DataCodec codec);
 
+    /**
+     * Parse a single data value into the protocol-compatible format.
+     * <p>
+     * Wraps the given value into the appropriate value wrapper type for serialization.
+     *
+     * @param data the value returned by the action method
+     * @return the protocol-compatible wrapper object
+     */
     Object parseData(Object data);
 }

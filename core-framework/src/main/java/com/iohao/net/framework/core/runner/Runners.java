@@ -33,7 +33,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
- * Runners
+ * Manages the lifecycle of {@link Runner} instances registered with a {@link BarSkeleton}.
+ * <p>
+ * Runners are invoked in two phases:
+ * <ol>
+ *   <li>{@link #onStart()} -- before the network connection is established.</li>
+ *   <li>{@link #onStartAfter()} -- after the network connection is established (delayed by one second).</li>
+ * </ol>
+ * Adding runners after {@link #onStart()} has been called will throw an exception.
  *
  * @author 渔民小镇
  * @date 2023-04-23
@@ -50,10 +57,17 @@ public final class Runners {
     @Setter
     BarSkeleton barSkeleton;
 
+    /** Create a new instance and register internal runners. */
     public Runners() {
         new InternalRunner(this);
     }
 
+    /**
+     * Register a runner to be executed during the startup lifecycle.
+     *
+     * @param runner the runner to add (must not be null)
+     * @throws RuntimeException if runners have already been started
+     */
     public void addRunner(Runner runner) {
 
         if (this.onStart.get()) {
@@ -63,6 +77,7 @@ public final class Runners {
         this.runnerList.add(Objects.requireNonNull(runner));
     }
 
+    /** Execute all runners' {@link Runner#onStart(BarSkeleton)} callbacks (idempotent). */
     public void onStart() {
         if (this.onStart.get()) {
             return;
@@ -75,6 +90,7 @@ public final class Runners {
         }
     }
 
+    /** Execute all runners' {@link Runner#onStartAfter(BarSkeleton)} callbacks (idempotent, delayed). */
     public void onStartAfter() {
         if (this.onStartAfter.get()) {
             return;
@@ -89,6 +105,11 @@ public final class Runners {
         }
     }
 
+    /**
+     * Return the display names of all registered runners.
+     *
+     * @return list of runner names
+     */
     public List<String> listRunnerName() {
         return this.runnerList.stream()
                 .map(Runner::name)

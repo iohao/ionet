@@ -19,15 +19,22 @@
 package com.iohao.net.framework.protocol;
 
 /**
- * OnExternalTemplateId
+ * Reserved template id constants used by the external server for internal operations.
+ * <p>
+ * Negative values are reserved so they do not collide with user-defined template ids.
+ * Each constant identifies a specific built-in operation type.
  *
  * @author 渔民小镇
  * @date 2025-09-11
  * @since 25.1
  */
 public interface OnExternalTemplateId {
+    /** Template id for checking whether a user already exists on the external server. */
     int existUser = -1;
+    /** Template id for forcibly disconnecting (kicking) a user. */
     int forcedOffline = -2;
+    /** Template id for updating user session attachment data. */
     int attachmentUpdate = -3;
+    /** Template id for setting (binding) a user id to a session. */
     int settingUserId = -4;
 }

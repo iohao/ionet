@@ -27,7 +27,11 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Broadcast within a range
+ * Broadcast message delivery scoped to a specific set of users.
+ * <p>
+ * Provides a fluent API for selecting target user IDs, setting the broadcast payload
+ * (with automatic codec encoding for various data types), and executing the broadcast.
+ * Users can be added or excluded individually or in bulk before calling {@link #execute()}.
  *
  * @author 渔民小镇
  * @date 2024-06-02
@@ -35,14 +39,25 @@ import java.util.Set;
  */
 public interface RangeBroadcast {
     /**
-     * Users receiving the broadcast
+     * Return the mutable set of user IDs that will receive this broadcast.
      *
-     * @return Users receiving the broadcast
+     * @return mutable set of target user IDs
      */
     Set<Long> listUserId();
 
+    /**
+     * Set the raw byte-array payload for this broadcast.
+     *
+     * @param data encoded payload bytes
+     * @return this instance for chaining
+     */
     RangeBroadcast setData(byte[] data);
 
+    /**
+     * Store the original (pre-encoding) data object for inspection or debugging.
+     *
+     * @param originalData the original business data before encoding
+     */
     void setOriginal(Object originalData);
 
     /**
@@ -102,10 +117,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set data
+     * Set the broadcast payload from an {@code int} value, encoding it via the configured codec.
      *
-     * @param data data
-     * @return this
+     * @param data the integer value to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(int data) {
         this.setOriginal(data);
@@ -113,10 +128,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set data
+     * Set the broadcast payload from a {@code boolean} value, encoding it via the configured codec.
      *
-     * @param data data
-     * @return this
+     * @param data the boolean value to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(boolean data) {
         this.setOriginal(data);
@@ -124,10 +139,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set data
+     * Set the broadcast payload from a {@code long} value, encoding it via the configured codec.
      *
-     * @param data data
-     * @return this
+     * @param data the long value to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(long data) {
         this.setOriginal(data);
@@ -135,10 +150,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set data
+     * Set the broadcast payload from a {@link String} value, encoding it via the configured codec.
      *
-     * @param data data
-     * @return this
+     * @param data the string value to broadcast (must not be null)
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(String data) {
         Objects.requireNonNull(data);
@@ -147,10 +162,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * Set the response broadcast data
+     * Set the broadcast payload from a business object, encoding it via the configured codec.
      *
-     * @param data Business data
-     * @return this
+     * @param data the business data object to broadcast (must not be null)
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(Object data) {
         Objects.requireNonNull(data);
@@ -159,10 +174,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set dataList
+     * Set the broadcast payload from a collection of business objects, encoding it via the configured codec.
      *
-     * @param dataList dataList
-     * @return this
+     * @param dataList the collection of objects to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setData(Collection<?> dataList) {
         this.setOriginal(dataList);
@@ -170,10 +185,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set dataList
+     * Set the broadcast payload from a list of {@link Integer} values, encoding it via the configured codec.
      *
-     * @param dataList dataList
-     * @return this
+     * @param dataList the list of integer values to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setDataListInt(List<Integer> dataList) {
         this.setOriginal(dataList);
@@ -181,10 +196,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set dataList
+     * Set the broadcast payload from a list of {@link Boolean} values, encoding it via the configured codec.
      *
-     * @param dataList dataList
-     * @return this
+     * @param dataList the list of boolean values to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setDataListBool(List<Boolean> dataList) {
         this.setOriginal(dataList);
@@ -192,10 +207,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set dataList
+     * Set the broadcast payload from a list of {@link Long} values, encoding it via the configured codec.
      *
-     * @param dataList dataList
-     * @return this
+     * @param dataList the list of long values to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setDataListLong(List<Long> dataList) {
         this.setOriginal(dataList);
@@ -203,10 +218,10 @@ public interface RangeBroadcast {
     }
 
     /**
-     * set dataList
+     * Set the broadcast payload from a list of {@link String} values, encoding it via the configured codec.
      *
-     * @param dataList dataList
-     * @return this
+     * @param dataList the list of string values to broadcast
+     * @return this instance for chaining
      */
     default RangeBroadcast setDataListString(List<String> dataList) {
         this.setOriginal(dataList);

@@ -25,7 +25,7 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 /**
- * CoreGlobalConfig
+ * Global configuration constants for the ionet core framework.
  *
  * @author 渔民小镇
  * @date 2025-08-24
@@ -33,20 +33,34 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class CoreGlobalConfig {
+    /** Global business framework settings. */
     public final BarSkeletonSetting setting = new BarSkeletonSetting();
+    /** Unique network identifier for this node, randomly generated at startup. */
     @Getter
     int netId = RandomKit.randomInt(1000, Integer.MAX_VALUE);
+    /** Human-readable publication name derived from {@link #netId}. */
     public String netPubName = String.valueOf(netId);
 
+    /** Default timeout in milliseconds for request-response operations. */
     public int timeoutMillis = 3000;
+    /** Frequency in milliseconds for cleaning up expired futures. */
     public int cleanFrequency = 10_000;
 
+    /** Whether to enable Aeron fragment assembler for large messages. */
     public boolean enableFragmentAssembler;
+    /** Maximum number of fragments to assemble per poll operation. */
     public int fragmentLimit = 100;
+    /** Buffer size in bytes for the Aeron publisher. */
     public int publisherBufferSize = 1024 * 64;
 
+    /** Whether development mode is enabled, providing extra diagnostics. */
     public boolean devMode;
 
+    /**
+     * Set the network ID. Must be greater than 1000.
+     *
+     * @param netId the network ID to set
+     */
     public void setNetId(int netId) {
         if (netId < 1000) {
             ThrowKit.ofRuntimeException("netId must > 1000");
@@ -56,6 +70,11 @@ public final class CoreGlobalConfig {
         CoreGlobalConfig.netPubName = String.valueOf(netId);
     }
 
+    /**
+     * Get the future timeout in milliseconds, with a 200ms buffer added to the base timeout.
+     *
+     * @return the timeout value in milliseconds
+     */
     public int getFutureTimeoutMillis() {
         return timeoutMillis + 200;
     }

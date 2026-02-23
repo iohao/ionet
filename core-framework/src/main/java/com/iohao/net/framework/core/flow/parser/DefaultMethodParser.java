@@ -30,17 +30,23 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * DefaultMethodParser
+ * Default method parser for complex (non-primitive) action method parameters and return types.
+ * <p>
+ * Handles single objects and lists by delegating to the configured {@link DataCodec} for
+ * serialization and deserialization. Uses {@link com.iohao.net.framework.protocol.wrapper.ByteValueList}
+ * as the wire format for list parameters.
  *
  * @author 渔民小镇
  * @date 2022-06-26
  */
 class DefaultMethodParser implements MethodParser {
+    /** {@inheritDoc} */
     @Override
     public Class<?> getActualClazz(ActualParameter parameterReturn) {
         return parameterReturn.getActualTypeArgumentClass();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
         Class<?> actualTypeArgumentClazz = actionMethodParameter.getActualTypeArgumentClass();
@@ -72,6 +78,7 @@ class DefaultMethodParser implements MethodParser {
         return codec.decode(data, actualTypeArgumentClazz);
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public Object parseDataList(Object data, DataCodec codec) {
@@ -85,6 +92,7 @@ class DefaultMethodParser implements MethodParser {
         return byteValueList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseData(Object data) {
         return data;
@@ -93,6 +101,11 @@ class DefaultMethodParser implements MethodParser {
     private DefaultMethodParser() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code DefaultMethodParser}
+     */
     public static DefaultMethodParser me() {
         return Holder.ME;
     }

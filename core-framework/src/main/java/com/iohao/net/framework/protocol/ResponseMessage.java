@@ -27,6 +27,11 @@ import lombok.ToString;
 import java.util.List;
 
 /**
+ * Internal response message used for logic-to-logic server communication via Aeron.
+ * <p>
+ * Extends {@link CommonMessage} and implements {@link Response} to provide typed data
+ * extraction from the serialized payload. Carries user identity and error information
+ * alongside the decoded response data.
  *
  * @author 渔民小镇
  * @date 2025-09-03
@@ -42,6 +47,7 @@ public final class ResponseMessage extends CommonMessage implements Response {
     int errorCode;
     String errorMessage;
 
+    /** {@inheritDoc} */
     @Override
     public <T> T getValue(Class<T> clazz) {
         var codec = DataCodecManager.getInternalDataCodec();
@@ -49,6 +55,7 @@ public final class ResponseMessage extends CommonMessage implements Response {
         return codec.decode(data, clazz);
     }
 
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public <T> List<T> listValue(Class<? extends T> clazz) {
         var codec = DataCodecManager.getInternalDataCodec();

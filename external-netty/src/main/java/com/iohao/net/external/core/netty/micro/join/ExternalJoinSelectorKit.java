@@ -30,7 +30,7 @@ import com.iohao.net.external.core.netty.session.SocketUserSessions;
 import lombok.experimental.UtilityClass;
 
 /**
- * ExternalJoinSelectorKit
+ * Applies Netty transport defaults to the external server builder state.
  *
  * @author 渔民小镇
  * @date 2025-10-16
@@ -38,6 +38,11 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 final class ExternalJoinSelectorKit {
+    /**
+     * Populate default Netty transport components when the builder did not provide them.
+     *
+     * @param setting external server builder state
+     */
     public void defaultSetting(ExternalServerBuilderSetting setting) {
         if (setting.getMicroBootstrap() == null) {
             setting.setMicroBootstrap(new SocketMicroBootstrap());

@@ -25,7 +25,11 @@ import com.iohao.net.common.kit.ProtoKit;
 import java.util.Objects;
 
 /**
- * ProtoDataCodec
+ * Protobuf-based implementation of {@link DataCodec}.
+ * <p>
+ * Delegates serialization and deserialization to {@link ProtoKit} (jprotobuf).
+ * Pre-encodes and caches the byte representations of {@code true} and {@code false}
+ * {@link BoolValue} instances to avoid repeated encoding of common boolean values.
  *
  * @author 渔民小镇
  * @date 2022-05-18
@@ -45,7 +49,9 @@ public final class ProtoDataCodec implements DataCodec {
         return ProtoKit.decode(data, dataClass);
     }
 
+    /** cached encoded bytes for BoolValue(true) */
     static final byte[] cacheBoolTrue;
+    /** cached encoded bytes for BoolValue(false) */
     static final byte[] cacheBoolFalse;
 
     static {
@@ -53,6 +59,12 @@ public final class ProtoDataCodec implements DataCodec {
         cacheBoolFalse = ProtoKit.encode(BoolValue.of(false));
     }
 
+    /**
+     * Encode a boolean value using cached byte arrays for efficiency.
+     *
+     * @param data the boolean value
+     * @return the pre-cached encoded byte array
+     */
     @Override
     public byte[] encode(boolean data) {
         return data ? cacheBoolTrue : cacheBoolFalse;

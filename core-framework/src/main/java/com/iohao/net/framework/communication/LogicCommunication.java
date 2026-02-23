@@ -25,16 +25,36 @@ import com.iohao.net.framework.protocol.Response;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * LogicServer Communication
+ * Interface for inter-logic-server communication.
+ * <p>
+ * Extends {@link PublisherCommunication} and provides fire-and-forget sending,
+ * asynchronous call, and blocking call methods for logic-to-logic messaging.
  *
  * @author 渔民小镇
  * @date 2025-09-04
  * @since 25.1
  */
 public interface LogicCommunication extends PublisherCommunication {
+    /**
+     * Send a message to another logic server without expecting a response (fire-and-forget).
+     *
+     * @param message the send message
+     */
     void send(SendMessage message);
 
+    /**
+     * Call another logic server asynchronously and return a future for the response.
+     *
+     * @param message the request message
+     * @return a {@link CompletableFuture} that completes with the response
+     */
     CompletableFuture<Response> callFuture(RequestMessage message);
 
+    /**
+     * Call another logic server and block until a response is received.
+     *
+     * @param message the request message
+     * @return the response from the target logic server
+     */
     Response call(RequestMessage message);
 }

@@ -25,6 +25,11 @@ import lombok.experimental.UtilityClass;
 import java.util.ServiceLoader;
 
 /**
+ * Eagerly initializes framework-wide configuration and network utilities at class-load time.
+ * <p>
+ * On first access the static initializer discovers all {@link CoreConfigLoader} implementations
+ * via {@link ServiceLoader} and applies their configuration, then forces early resolution of
+ * the local IP address so that later lookups are instantaneous.
  *
  * @author 渔民小镇
  * @date 2025-10-18
@@ -37,9 +42,11 @@ final class Preloading {
         empty(NetworkKit.LOCAL_IP);
     }
 
+    /** No-op consumer used solely to trigger evaluation of a lazily-computed value. */
     private void empty(Object x) {
     }
 
+    /** Trigger class loading (and therefore the static initializer) from external code. */
     void loading() {
     }
 }

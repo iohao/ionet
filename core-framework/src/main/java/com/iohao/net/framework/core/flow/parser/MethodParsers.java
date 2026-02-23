@@ -29,7 +29,11 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 /**
- * Wrapper class related to action parameters in the business framework
+ * Registry of {@link MethodParser} implementations, mapping parameter types to their parsers.
+ * <p>
+ * Provides lookup, registration, and default-fallback for action method parameter/return type parsers.
+ * Built-in parsers handle primitive types ({@code int}, {@code long}, {@code boolean}, {@code String})
+ * and their protocol wrapper counterparts.
  *
  * @author 渔民小镇
  * @date 2022-06-26
@@ -54,15 +58,30 @@ public final class MethodParsers {
         init();
     }
 
+    /**
+     * Clear all registered parsers and parameter suppliers.
+     */
     public void clear() {
         methodParserMap.clear();
         paramSupplierMap.clear();
     }
 
+    /**
+     * Register a parameter supplier for the given class, used to create default instances when data is null.
+     *
+     * @param paramClass the parameter class
+     * @param supplier   the supplier to create default instances
+     */
     public void mappingParamSupplier(Class<?> paramClass, Supplier<?> supplier) {
         paramSupplierMap.put(paramClass, supplier);
     }
 
+    /**
+     * Get the method parser for the given action method return or parameter metadata.
+     *
+     * @param actionMethodReturn the return or parameter type metadata
+     * @return the matching parser, or the default parser if no specific one is registered
+     */
     public MethodParser getMethodParser(ActualParameter actionMethodReturn) {
         Class<?> methodResultClass = actionMethodReturn.getActualTypeArgumentClass();
         return getMethodParser(methodResultClass);
@@ -72,37 +91,56 @@ public final class MethodParsers {
         return methodParserMap.keySet();
     }
 
+    /**
+     * Get the method parser for the given parameter class.
+     *
+     * @param paramClazz the parameter class
+     * @return the matching parser, or the default parser if no specific one is registered
+     */
     public MethodParser getMethodParser(Class<?> paramClazz) {
         return methodParserMap.getOrDefault(paramClazz, methodParser);
     }
 
+    /**
+     * Check whether a parser is registered for the given class.
+     *
+     * @param clazz the class to check
+     * @return {@code true} if a parser is registered for this class
+     */
     public boolean containsKey(Class<?> clazz) {
         return methodParserMap.containsKey(clazz);
     }
 
+    /**
+     * Register a method parser for the given parameter class.
+     *
+     * @param paramClass       the parameter class
+     * @param methodParamParser the parser to handle this class
+     */
     public void mapping(Class<?> paramClass, MethodParser methodParamParser) {
         methodParserMap.put(paramClass, methodParamParser);
     }
 
     private void init() {
-        // 表示在 action 参数中，遇见 int 类型的参数，用 IntValueMethodParser 来解析
+        // In action parameters, when encountering int type, use IntValueMethodParser to parse
         mapping(int.class, IntValueMethodParser.me());
         mapping(Integer.class, IntValueMethodParser.me());
 
-        // 表示在 action 参数中，遇见 long 类型的参数，用 LongValueMethodParser 来解析
+        // In action parameters, when encountering long type, use LongValueMethodParser to parse
         mapping(long.class, LongValueMethodParser.me());
         mapping(Long.class, LongValueMethodParser.me());
 
-        // 表示在 action 参数中，遇见 String 类型的参数，用 StringValueMethodParser 来解析
+        // In action parameters, when encountering String type, use StringValueMethodParser to parse
         mapping(String.class, StringValueMethodParser.me());
 
-        // 表示在 action 参数中，遇见 boolean 类型的参数，用 BoolValueMethodParser 来解析
+        // In action parameters, when encountering boolean type, use BoolValueMethodParser to parse
         mapping(boolean.class, BoolValueMethodParser.me());
         mapping(Boolean.class, BoolValueMethodParser.me());
 
         /*
-         * 这里注册是为了顺便使用 containsKey 方法，因为生成文档的时候要用到短名字
-         * 当然也可以使用 instanceof 来做这些，但似乎没有这种方式优雅
+         * These registrations also enable the containsKey method for short-name lookups
+         * during documentation generation. Could use instanceof instead, but this approach
+         * is more elegant.
          */
         mapping(IntValue.class, DefaultMethodParser.me(), IntValue::new);
         mapping(IntValueList.class, DefaultMethodParser.me(), IntValueList::new);
@@ -129,8 +167,9 @@ public final class MethodParsers {
         mapping(paramClass, methodParamParser);
 
         /*
-         * 原生 pb 如果值为 0，在 jprotobuf 中会出现 null 的情况，为了避免这个问题
-         * 如果业务参数为 null，当解析到对应的类型时，则使用 Supplier 来创建对象
+         * Native protobuf may produce null for zero-valued fields in jprotobuf.
+         * To avoid this, when a business parameter is null and matches a registered type,
+         * the Supplier is used to create a default object.
          */
         mappingParamSupplier(paramClass, supplier);
     }

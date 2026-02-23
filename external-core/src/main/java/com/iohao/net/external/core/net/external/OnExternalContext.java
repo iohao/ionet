@@ -24,10 +24,14 @@ import com.iohao.net.external.core.session.UserSession;
 import com.iohao.net.external.core.session.UserSessions;
 
 /**
- * OnExternalContext
+ * Execution context for an {@link OnExternal} template handler.
  *
- * @param userId         When verifyIdentity is False, this value represents the userChannelId.
- * @param verifyIdentity If verifyIdentity is false, it means the user is not logged in.
+ * @param userSessions user session manager for lookups and mutations
+ * @param response mutable response to send back to the internal caller
+ * @param userId business userId, or userChannelId when {@code verifyIdentity == false}
+ * @param verifyIdentity whether the current user identity has been verified
+ * @param payload raw payload bytes
+ * @param payloadLength valid payload length
  * @author 渔民小镇
  * @date 2025-09-11
  * @since 25.1
@@ -41,24 +45,49 @@ public record OnExternalContext(
         int payloadLength
 ) {
 
+    /**
+     * Resolve the target user session using verified userId or channelId semantics.
+     *
+     * @return matched user session, or {@code null}
+     */
     public UserSession getUserSession() {
         return verifyIdentity
                 ? userSessions.getUserSession(userId)
                 : userSessions.getUserSessionByUserChannelId(userId);
     }
 
+    /**
+     * Decode the payload as an {@code int}.
+     *
+     * @return decoded int value
+     */
     public int getPayloadAsInt() {
         return ByteKit.getInt(this.payload());
     }
 
+    /**
+     * Decode the payload as a {@code long}.
+     *
+     * @return decoded long value
+     */
     public long getPayloadAsLong() {
         return ByteKit.getLong(this.payload());
     }
 
+    /**
+     * Decode the payload as a {@code boolean}.
+     *
+     * @return decoded boolean value
+     */
     public boolean getPayloadAsBool() {
         return ByteKit.getBoolean(this.payload());
     }
 
+    /**
+     * Decode the payload as a string.
+     *
+     * @return decoded string value
+     */
     public String getPayloadAsString() {
         return ByteKit.getString(this.payload());
     }

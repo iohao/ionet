@@ -19,7 +19,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * PluginInOut - <a href="https://iohao.github.io/ionet/docs/core_plugin/action_debug">DebugInOut</a>。
+ * Debug plugin that logs detailed request/response information for each action method invocation.
+ * <p>
+ * Prints a structured diagnostic message including the action command, parameters, return value,
+ * execution time, user ID, and error details (if any). An optional time threshold can be set
+ * to only log invocations that exceed a given duration in milliseconds.
+ * <p>
+ * PluginInOut - <a href="https://iohao.github.io/ionet/docs/core_plugin/action_debug">DebugInOut</a>.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -29,19 +35,41 @@ public final class DebugInOut implements ActionMethodInOut {
     @Setter
     BiConsumer<String, FlowContext> printConsumer = (message, _) -> IonetBanner.printlnMsg(message);
 
+    /**
+     * Create a DebugInOut with no time threshold (logs every invocation).
+     */
     public DebugInOut() {
         this(0);
     }
 
+    /**
+     * Create a DebugInOut that only logs invocations exceeding the given time threshold.
+     *
+     * @param time minimum elapsed time in milliseconds to trigger logging
+     */
     public DebugInOut(long time) {
         this.time = time;
     }
 
+    /**
+     * Record the start time before action method execution.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckIn(final FlowContext flowContext) {
         flowContext.getNanoTime();
     }
 
+    /**
+     * Log the debug information after action method execution.
+     * <p>
+     * Skips logging if the elapsed time is below the configured threshold.
+     * Delegates to either {@code printError} or {@code printNormal} based on
+     * whether the flow context contains an error.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckOut(final FlowContext flowContext) {
         long ms = TimeKit.elapsedMillis(flowContext.getNanoTime());
@@ -92,6 +120,12 @@ public final class DebugInOut implements ActionMethodInOut {
         }
     }
 
+    /**
+     * Extract the hop count from the request and add it to the parameter map.
+     *
+     * @param request  the request message
+     * @param paramMap the template parameter map
+     */
     private void extractedHopCount(Request request, Map<String, Object> paramMap) {
         if (request.getHopCount() > 0) {
             paramMap.put("hopCount", " [%s:%s] ".formatted(
@@ -101,6 +135,11 @@ public final class DebugInOut implements ActionMethodInOut {
         }
     }
 
+    /**
+     * Populate i18n-resolved label strings into the parameter map.
+     *
+     * @param paramMap the template parameter map
+     */
     private void extractedI18n(Map<String, Object> paramMap) {
         Consumer<String> i18n = key -> paramMap.put(key, Bundle.getMessage(key));
 
@@ -112,6 +151,12 @@ public final class DebugInOut implements ActionMethodInOut {
         i18n.accept(MessageKey.debugInOutTime);
     }
 
+    /**
+     * Extract the trace ID from the request and add it to the parameter map.
+     *
+     * @param request  the request message
+     * @param paramMap the template parameter map
+     */
     private void extractedTraceId(Request request, Map<String, Object> paramMap) {
         String traceId = request.getTraceId();
         if (traceId != null) {
@@ -119,6 +164,12 @@ public final class DebugInOut implements ActionMethodInOut {
         }
     }
 
+    /**
+     * Extract the connection type (TCP/WebSocket/UDP) from the request and add it to the parameter map.
+     *
+     * @param request  the request message
+     * @param paramMap the template parameter map
+     */
     private void extractedJoin(Request request, Map<String, Object> paramMap) {
         if (request instanceof UserRequestMessage) {
             String connectionWay = Bundle.getMessage(MessageKey.connectionWay);
@@ -133,6 +184,12 @@ public final class DebugInOut implements ActionMethodInOut {
         }
     }
 
+    /**
+     * Print error details when the action method resulted in a validation or business error.
+     *
+     * @param flowContext the current request flow context
+     * @param paramMap    the template parameter map
+     */
     private void printValidate(FlowContext flowContext, Map<String, Object> paramMap) {
         paramMap.put("errorCode", flowContext.getErrorCode());
         paramMap.put("validatorMsg", flowContext.getErrorMessage());
@@ -155,6 +212,12 @@ public final class DebugInOut implements ActionMethodInOut {
         this.printConsumer.accept(message, flowContext);
     }
 
+    /**
+     * Print normal debug output when the action method completed successfully.
+     *
+     * @param flowContext the current request flow context
+     * @param paramMap    the template parameter map
+     */
     private void printNormal(FlowContext flowContext, Map<String, Object> paramMap) {
         var actionCommand = flowContext.getActionCommand();
         paramMap.put("returnData", "void");

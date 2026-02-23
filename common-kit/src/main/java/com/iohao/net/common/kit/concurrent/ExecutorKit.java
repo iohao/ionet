@@ -25,7 +25,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 线程执行器工具
+ * Thread executor factory utilities.
  *
  * @author 渔民小镇
  * @date 2021-12-20
@@ -34,10 +34,10 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ExecutorKit {
 
     /**
-     * 创建虚拟线程执行器
+     * Create a virtual thread executor.
      *
-     * @param name name
-     * @return 执行器
+     * @param name thread name prefix
+     * @return the virtual thread executor
      */
     public ExecutorService newVirtualExecutor(String name) {
         ThreadFactory factory = Thread.ofVirtual().name(name).factory();
@@ -45,11 +45,11 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建虚拟线程执行器
+     * Create a virtual thread executor.
      *
-     * @param name  name
-     * @param start start
-     * @return 执行器
+     * @param name  thread name prefix
+     * @param start starting value for the thread name counter
+     * @return the virtual thread executor
      */
     public ExecutorService newVirtualExecutor(String name, int start) {
         ThreadFactory factory = Thread.ofVirtual().name(name, start).factory();
@@ -57,20 +57,20 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建虚拟线程执行器
+     * Create a virtual thread executor.
      *
-     * @param factory factory
-     * @return 执行器
+     * @param factory thread factory for virtual threads
+     * @return the virtual thread executor
      */
     public ExecutorService newVirtualExecutor(ThreadFactory factory) {
         return Executors.newThreadPerTaskExecutor(factory);
     }
 
     /**
-     * 创建单个线程执行器
+     * Create a single-thread executor.
      *
-     * @param namePrefix 线程名
-     * @return 执行器
+     * @param namePrefix thread name prefix
+     * @return the single-thread executor
      */
     public ExecutorService newSingleThreadExecutor(String namePrefix) {
         ThreadFactory threadFactory = createThreadFactory(namePrefix);
@@ -78,20 +78,20 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建单个线程执行器
+     * Create a single-thread executor.
      *
-     * @param threadFactory 线程创建工厂
-     * @return 执行器
+     * @param threadFactory thread factory
+     * @return the single-thread executor
      */
     public ExecutorService newSingleThreadExecutor(ThreadFactory threadFactory) {
         return Executors.newSingleThreadExecutor(threadFactory);
     }
 
     /**
-     * 创建线程池
+     * Create a cached thread pool.
      *
-     * @param namePrefix 线程名
-     * @return 执行器
+     * @param namePrefix thread name prefix
+     * @return the cached thread pool executor
      */
     public ExecutorService newCacheThreadPool(String namePrefix) {
         ThreadFactory threadFactory = createThreadFactory(namePrefix);
@@ -99,32 +99,32 @@ public class ExecutorKit {
     }
 
     /**
-     * 线程池
+     * Create a cached thread pool.
      *
-     * @param threadFactory 线程创建工厂
-     * @return 执行器
+     * @param threadFactory thread factory
+     * @return the cached thread pool executor
      */
     public ExecutorService newCacheThreadPool(ThreadFactory threadFactory) {
         return Executors.newCachedThreadPool(threadFactory);
     }
 
     /**
-     * 创建固定大小线程执行器
+     * Create a fixed-size thread pool.
      *
-     * @param corePoolSize  容量
-     * @param threadFactory 线程工厂
-     * @return 执行器
+     * @param corePoolSize  pool size
+     * @param threadFactory thread factory
+     * @return the fixed-size thread pool executor
      */
     public ExecutorService newFixedThreadPool(int corePoolSize, ThreadFactory threadFactory) {
         return Executors.newFixedThreadPool(corePoolSize, threadFactory);
     }
 
     /**
-     * 创建固定大小线程执行器
+     * Create a fixed-size thread pool.
      *
-     * @param corePoolSize 容量
-     * @param namePrefix   线程名
-     * @return 执行器
+     * @param corePoolSize pool size
+     * @param namePrefix   thread name prefix
+     * @return the fixed-size thread pool executor
      */
     public ExecutorService newFixedThreadPool(int corePoolSize, String namePrefix) {
         ThreadFactory threadFactory = createThreadFactory(namePrefix);
@@ -132,20 +132,20 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建单个线程调度执行器
+     * Create a single-thread scheduled executor.
      *
-     * @param threadFactory 线程创建工厂
-     * @return 调度 执行器
+     * @param threadFactory thread factory
+     * @return the single-thread scheduled executor
      */
     public ScheduledExecutorService newSingleScheduled(ThreadFactory threadFactory) {
         return newScheduled(1, threadFactory);
     }
 
     /**
-     * 创建单个线程调度执行器
+     * Create a single-thread scheduled executor.
      *
-     * @param namePrefix 线程名
-     * @return 调度 执行器
+     * @param namePrefix thread name prefix
+     * @return the single-thread scheduled executor
      */
     public ScheduledExecutorService newSingleScheduled(String namePrefix) {
         ThreadFactory threadFactory = createThreadFactory(namePrefix);
@@ -153,11 +153,11 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建指定数量 - 的线程调度执行器
+     * Create a scheduled executor with the specified pool size.
      *
-     * @param corePoolSize 容量
-     * @param namePrefix   线程名
-     * @return 指定数量的 调度 执行器
+     * @param corePoolSize pool size
+     * @param namePrefix   thread name prefix
+     * @return the scheduled executor
      */
     public ScheduledExecutorService newScheduled(int corePoolSize, String namePrefix) {
         ThreadFactory threadFactory = createThreadFactory(namePrefix);
@@ -165,35 +165,32 @@ public class ExecutorKit {
     }
 
     /**
-     * 创建指定数量 - 的线程调度执行器
+     * Create a scheduled executor with the specified pool size.
      *
-     * @param corePoolSize  容量
-     * @param threadFactory 线程创建工厂
-     * @return 指定数量的 调度 执行器
+     * @param corePoolSize  pool size
+     * @param threadFactory thread factory
+     * @return the scheduled executor
      */
     public ScheduledExecutorService newScheduled(int corePoolSize, ThreadFactory threadFactory) {
         return new ScheduledThreadPoolExecutor(corePoolSize, threadFactory);
     }
 
     /**
-     * 创建 线程工厂
-     * <pre>
-     *     daemon 参数默认是 true
-     * </pre>
+     * Create a thread factory. Daemon is true by default.
      *
-     * @param namePrefix 线程名
-     * @return 线程工厂
+     * @param namePrefix thread name prefix
+     * @return the thread factory
      */
     public ThreadFactory createThreadFactory(String namePrefix) {
         return createThreadFactory(namePrefix, true);
     }
 
     /**
-     * 创建线程工厂
+     * Create a thread factory.
      *
-     * @param namePrefix 线程名前缀
-     * @param daemon     置是否守护线程
-     * @return 线程工厂
+     * @param namePrefix thread name prefix
+     * @param daemon     whether threads are daemon threads
+     * @return the thread factory
      */
     public ThreadFactory createThreadFactory(@NonNull String namePrefix, boolean daemon) {
         final AtomicLong threadNumber = new AtomicLong();
@@ -206,6 +203,12 @@ public class ExecutorKit {
         };
     }
 
+    /**
+     * Create a single-named daemon thread factory.
+     *
+     * @param name the fixed thread name
+     * @return the thread factory
+     */
     public ThreadFactory createSigleThreadFactory(@NonNull String name) {
         return runnable -> {
             Thread thread = new Thread(runnable, name);

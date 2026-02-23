@@ -22,7 +22,10 @@ import com.iohao.net.framework.annotations.Enterprise;
 import com.iohao.net.framework.communication.eventbus.EventBusMessage;
 
 /**
- * EventBusMessageCommunication
+ * Communication interface for dispatching {@link EventBusMessage} events to remote logic servers.
+ * <p>
+ * Implementations are responsible for serializing and transmitting event bus messages
+ * across the network so that subscribers on other logic servers can process them.
  *
  * @author 渔民小镇
  * @date 2025-09-20
@@ -30,5 +33,10 @@ import com.iohao.net.framework.communication.eventbus.EventBusMessage;
  */
 @Enterprise
 public interface EventBusMessageCommunication {
+    /**
+     * Fire an event bus message to remote logic servers.
+     *
+     * @param message the event bus message to dispatch remotely
+     */
     void fireRemote(EventBusMessage message);
 }

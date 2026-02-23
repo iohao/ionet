@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Renders a {@link ToyTable} into a bordered ASCII table string and prints it
+ * to the console via {@link IonetBanner}.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */

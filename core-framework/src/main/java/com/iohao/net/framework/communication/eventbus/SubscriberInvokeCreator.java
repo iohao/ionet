@@ -19,7 +19,7 @@
 package com.iohao.net.framework.communication.eventbus;
 
 /**
- * create SubscriberInvoke
+ * Factory interface for creating {@link SubscriberInvoke} instances from {@link Subscriber} metadata.
  *
  * @author 渔民小镇
  * @date 2023-12-24
@@ -28,10 +28,10 @@ package com.iohao.net.framework.communication.eventbus;
 public interface SubscriberInvokeCreator {
 
     /**
-     * 创建订阅者 invoke
+     * Create a subscriber invoke for the given subscriber.
      *
-     * @param subscriber 订阅者
-     * @return 订阅者执行
+     * @param subscriber the subscriber metadata
+     * @return the subscriber invoke instance
      */
     SubscriberInvoke create(Subscriber subscriber);
 }

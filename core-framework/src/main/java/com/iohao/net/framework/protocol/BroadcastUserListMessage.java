@@ -23,7 +23,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * BroadcastUserListMessage
+ * Broadcast message targeting an explicit list of users.
+ * <p>
+ * Extends {@link BroadcastMessage} with a {@code userIds} array specifying the exact set
+ * of recipients. The external server delivers the payload to each connected user whose
+ * ID appears in the list.
  *
  * @author 渔民小镇
  * @date 2025-09-03

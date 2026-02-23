@@ -35,7 +35,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * ActionCommandRegions
+ * Registry of all {@link ActionCommandRegion} instances, indexed by cmd.
+ * Converts the region map into a 2D array for O(1) command lookup at runtime.
  *
  * @author 渔民小镇
  * @date 2022-05-15
@@ -56,9 +57,9 @@ public final class ActionCommandRegions {
     ActionCommand[][] actionCommands = EMPTY;
 
     /**
-     * listCmdMerge
+     * Collect all merged command IDs across all registered regions.
      *
-     * @return cmdMerge
+     * @return list of merged command IDs ({@code cmdMerge} values)
      */
     public List<Integer> listCmdMerge() {
         return regionMap.values()
@@ -74,6 +75,11 @@ public final class ActionCommandRegions {
                 ;
     }
 
+    /**
+     * Stream all registered {@link ActionCommandRegion} instances.
+     *
+     * @return parallel stream of action command regions
+     */
     public Stream<ActionCommandRegion> streamActionCommandRegion() {
         return this.regionMap.values().parallelStream();
     }

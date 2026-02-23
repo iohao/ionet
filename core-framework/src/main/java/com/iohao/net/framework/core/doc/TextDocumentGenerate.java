@@ -29,7 +29,10 @@ import java.io.File;
 import java.util.*;
 
 /**
- * TextDocumentGenerate
+ * {@link DocumentGenerate} implementation that produces a plain-text documentation file
+ * containing action routes, broadcast routes, and error codes.
+ * <p>
+ * The output is written to {@link #path} (defaults to {@code doc_temp.txt} in the working directory).
  *
  * @author 渔民小镇
  * @date 2024-06-25
@@ -49,7 +52,7 @@ public final class TextDocumentGenerate implements DocumentGenerate {
             broadcastDocumentMap.put(broadcastDocument.getCmdMerge(), broadcastDocument);
         });
 
-        // 生成文档 - action
+        // generate document - action
         document.actionDocList.forEach(actionDoc -> {
             var docInfo = new DocInfo();
 
@@ -60,7 +63,7 @@ public final class TextDocumentGenerate implements DocumentGenerate {
                         var cmdInfo = actionCommand.cmdInfo;
                         var authentication = DocumentHelper.getDocumentAccessAuthentication();
                         var cmdMerge = cmdInfo.cmdMerge();
-                        // 路由访问权限控制
+                        // route access permission control
                         return !authentication.reject(cmdMerge);
                     }).forEach(subBehavior -> {
                         docInfo.setHead(subBehavior);
@@ -76,10 +79,10 @@ public final class TextDocumentGenerate implements DocumentGenerate {
             this.docContentJoiner.add(render);
         });
 
-        // 广播文档
+        // broadcast document
         extractedBroadcastDoc(broadcastDocumentMap);
 
-        // 错误码文档
+        // error code document
         extractedErrorCode(document);
 
         String docText = this.docContentJoiner.toString();

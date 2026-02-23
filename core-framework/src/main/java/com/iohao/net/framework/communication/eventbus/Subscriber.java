@@ -21,7 +21,7 @@ package com.iohao.net.framework.communication.eventbus;
 import java.lang.invoke.MethodHandle;
 
 /**
- * Subscriber
+ * Represents a single event subscriber method bound to an {@link EventBusSubscriber} instance.
  *
  * @author 渔民小镇
  * @date 2023-12-24
@@ -29,8 +29,11 @@ import java.lang.invoke.MethodHandle;
  * @since 21
  */
 public final class Subscriber {
+   /** Unique subscriber ID assigned by the framework. */
    public final int id;
+   /** The subscriber object that contains the annotated method. */
    public Object eventBusSubscriber;
+   /** The method handle for reflective invocation of the subscriber method. */
    public MethodHandle methodHandle;
     /** Execution order (priority) */
    public int order;
@@ -41,6 +44,11 @@ public final class Subscriber {
     /** EventBus */
    public EventBus eventBus;
 
+    /**
+     * Create a subscriber with the given unique ID.
+     *
+     * @param id the unique subscriber ID
+     */
     public Subscriber(int id) {
         this.id = id;
     }

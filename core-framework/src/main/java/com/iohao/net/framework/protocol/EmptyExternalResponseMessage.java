@@ -22,6 +22,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * Lightweight external response that carries only error information and no payload.
+ * <p>
+ * Used when the external server needs to signal success or failure without
+ * returning any business data (e.g. acknowledgement-only responses).
  *
  * @author 渔民小镇
  * @date 2025-09-18
@@ -30,11 +34,20 @@ import lombok.Setter;
 @Setter
 @Getter
 public final class EmptyExternalResponseMessage implements CommonResponse, FutureMessage {
+    /** Correlation id used to match this response to its originating request. */
     long futureId;
 
+    /** Error code; 0 indicates success, non-zero indicates an error. */
     int errorCode;
+    /** Human-readable error message; {@code null} when the response is successful. */
     String errorMessage;
 
+    /**
+     * Create an empty response pre-populated with the given future id.
+     *
+     * @param futureId the correlation id of the originating request
+     * @return a new {@link EmptyExternalResponseMessage} instance
+     */
     public static EmptyExternalResponseMessage of(long futureId) {
         var message = new EmptyExternalResponseMessage();
         message.futureId = futureId;

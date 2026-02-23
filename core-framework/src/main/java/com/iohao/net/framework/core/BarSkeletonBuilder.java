@@ -39,7 +39,8 @@ import java.util.*;
 import java.util.function.Predicate;
 
 /**
- * BarSkeletonBuilder
+ * Builder for constructing a {@link BarSkeleton} instance. Configures action controllers,
+ * interceptors, flow executors, and other components.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -65,6 +66,11 @@ public final class BarSkeletonBuilder {
     BarSkeletonBuilder() {
     }
 
+    /**
+     * Build and return a fully configured {@link BarSkeleton} instance.
+     *
+     * @return a new {@link BarSkeleton} configured with the settings from this builder
+     */
     public BarSkeleton build() {
         this.scan();
         this.defaultSetting();
@@ -148,14 +154,20 @@ public final class BarSkeletonBuilder {
     }
 
     /**
-     * 扫描 action 类所在包，内部会扫描当前 acton 类的路径和子包路径下的所有类
+     * Scan the package of the given class for {@code @ActionController} annotated classes.
+     * Scans the package and all sub-packages of the specified class.
      *
-     * @param actionControllerClass action 类
+     * @param actionControllerClass a class whose package will be scanned for action controllers
      */
     public void scanActionPackage(@NonNull Class<?> actionControllerClass) {
         this.scanClassList.add(actionControllerClass);
     }
 
+    /**
+     * Register an action controller class to be scanned for {@code @ActionMethod} routes.
+     *
+     * @param actionControllerClass the action controller class to register
+     */
     public void addActionController(@NonNull Class<?> actionControllerClass) {
         actionControllerClassSet.add(actionControllerClass);
     }
@@ -173,19 +185,40 @@ public final class BarSkeletonBuilder {
         }
     }
 
+    /**
+     * Add a broadcast document definition for documentation generation.
+     *
+     * @param builder the broadcast document builder
+     * @return this builder for chaining
+     */
     public BarSkeletonBuilder addBroadcastDocument(@NonNull BroadcastDocumentBuilder builder) {
         DocumentHelper.addBroadcastDocument(builder.build());
         return this;
     }
 
+    /**
+     * Add an interceptor to the action method processing pipeline.
+     *
+     * @param inOut the interceptor to add
+     */
     public void addInOut(@NonNull ActionMethodInOut inOut) {
         inOutList.add(inOut);
     }
 
+    /**
+     * Add a runner to be executed during server startup.
+     *
+     * @param runner the runner to add
+     */
     public void addRunner(@NonNull Runner runner) {
         this.runners.addRunner(runner);
     }
 
+    /**
+     * Add a listener that is notified when action commands are parsed.
+     *
+     * @param listener the action parser listener to add
+     */
     public void addActionParserListener(@NonNull ActionParserListener listener) {
         this.actionParserListeners.addActionParserListener(listener);
     }

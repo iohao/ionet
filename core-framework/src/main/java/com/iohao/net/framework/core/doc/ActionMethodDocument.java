@@ -29,6 +29,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.Objects;
 
 /**
+ * Documentation model for a single action method, capturing parameter types, return types,
+ * comments, and type-mapping information used for client SDK code generation.
+ *
  * @author 渔民小镇
  * @date 2024-06-26
  */
@@ -37,52 +40,58 @@ import java.util.Objects;
 public final class ActionMethodDocument {
     final ActionCommandDoc actionCommandDoc;
     final TypeMappingDocument typeMappingDocument;
-    /** 类名 */
+    /** Controller class simple name. */
     final String actionSimpleName;
-    /** 方法名 */
+    /** Action method name (PascalCase). */
     String actionMethodName;
-    /** 方法的注释 */
+    /** Javadoc comment of the method. */
     final String methodComment;
 
-    /** true 表示方法有参数 */
+    /** true if the method has a business data parameter. */
     final boolean hasBizData;
-    /** 方法参数的名字 */
+    /** Parameter name. */
     String bizDataName;
-    /** 方法参数的类型 class */
+    /** Parameter type class. */
     Class<?> bizDataTypeClazz;
-    /** 方法参数的类型 */
+    /** Mapped parameter type name. */
     String bizDataType;
-    /** 方法参数的注释 */
+    /** Parameter comment. */
     String bizDataComment;
-    /** true 表示参数是 List 类型 */
+    /** true if the parameter is a List type. */
     boolean bizDataTypeIsList;
-    /** true 表示协议碎片，false 表示开发者自定义的协议 */
+    /** true if the parameter type is a built-in protocol fragment. */
     boolean internalBizDataType;
-    /** 参数类型（原始的，即使参数是 List，也会取泛型） */
+    /** Actual (generic) type name of the parameter. */
     String actualTypeName;
 
-    /** 使用的路由成员变量名 */
+    /** Route member constant name. */
     String memberCmdName;
-    /** 使用的 SDK api 名 */
+    /** SDK API method name. */
     String sdkMethodName;
 
     boolean isVoid;
-    /** 方法返回值的注释 */
+    /** Return value comment. */
     String returnComment;
     String returnDataName;
-    /** 返回值类型 class */
+    /** Return value type class. */
     Class<?> returnTypeClazz;
-    /** 返回值类型（原始的，即使参数是 List，也会取泛型） */
+    /** Actual (generic) type name of the return value. */
     String returnDataActualTypeName;
 
     boolean returnDataIsList;
-    /** true 表示协议碎片，false 表示开发者自定义的协议 */
+    /** true if the return type is a built-in protocol fragment. */
     boolean returnDataTypeIsInternal;
-    /** sdk result get 方法名 */
+    /** SDK result getter method name. */
     String resultMethodTypeName;
-    /** sdk result get list 方法名 */
+    /** SDK result list getter method name. */
     String resultMethodListTypeName;
 
+    /**
+     * Create a new method document from the given command doc and type mapping.
+     *
+     * @param actionCommandDoc     the command-level documentation
+     * @param typeMappingDocument  the type mapping configuration
+     */
     public ActionMethodDocument(ActionCommandDoc actionCommandDoc, TypeMappingDocument typeMappingDocument) {
         this.actionCommandDoc = actionCommandDoc;
         this.typeMappingDocument = typeMappingDocument;
@@ -90,7 +99,7 @@ public final class ActionMethodDocument {
         var actionCommand = actionCommandDoc.actionCommand;
         this.actionSimpleName = actionCommand.actionControllerClass.getSimpleName();
 
-        // 方法名
+        // method name
         var documentMethod = actionCommand.getAnnotation(DocumentMethod.class);
         if (Objects.nonNull(documentMethod)) {
             this.actionMethodName = StrKit.firstCharToUpperCase(documentMethod.value());
@@ -98,16 +107,16 @@ public final class ActionMethodDocument {
             this.actionMethodName = StrKit.firstCharToUpperCase(actionCommand.getActionMethodName());
         }
 
-        // 方法注释
+        // method comment
         this.methodComment = this.actionCommandDoc.comment;
 
         CmdInfo cmdInfo = actionCommand.cmdInfo;
         this.memberCmdName = "%s_%d_%d".formatted(actionCommand.getActionMethodName(), cmdInfo.cmd(), cmdInfo.subCmd());
 
-        // --------- 方法返回值相关 ---------
+        // --------- return value info ---------
         extractedReturnInfo(actionCommand);
 
-        // --------- 方法参数相关 ---------
+        // --------- parameter info ---------
         var bizParam = actionCommand.dataParameter;
         this.hasBizData = Objects.nonNull(bizParam);
         if (this.hasBizData) {
@@ -116,7 +125,7 @@ public final class ActionMethodDocument {
     }
 
     private void extractedReturnInfo(ActionCommand actionCommand) {
-        // 方法返回值注释
+        // return value comment
         this.returnComment = actionCommandDoc.methodReturnComment;
 
         var returnInfo = actionCommand.actionMethodReturn;
@@ -135,12 +144,12 @@ public final class ActionMethodDocument {
 
     private void extractedParamInfo(ActionMethodParameter actionMethodParameter, ActionCommandDoc actionCommandDoc) {
         this.bizDataTypeClazz = actionMethodParameter.getActualTypeArgumentClass();
-        // 方法参数类型
+        // method parameter type
         var typeMappingRecord = this.typeMappingDocument.getTypeMappingRecord(bizDataTypeClazz);
         this.bizDataTypeIsList = actionMethodParameter.isList();
         this.internalBizDataType = typeMappingRecord.isInternalType();
 
-        // sdk 方法名
+        // sdk method name
         this.sdkMethodName = typeMappingRecord.getOfMethodTypeName(this.bizDataTypeIsList);
 
         this.bizDataType = typeMappingRecord.getParamTypeName(this.bizDataTypeIsList);

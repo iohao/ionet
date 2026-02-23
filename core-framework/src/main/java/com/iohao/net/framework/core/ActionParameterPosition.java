@@ -19,15 +19,22 @@
 package com.iohao.net.framework.core;
 
 /**
+ * Enum describing the parameter layout of an action method.
+ * Determines how FlowContext and data parameters are positioned.
  *
  * @author 渔民小镇
  * @date 2025-09-09
  * @since 25.1
  */
 public enum ActionParameterPosition {
+    /** No parameters. */
     none,
+    /** Single data parameter only. */
     data,
+    /** Single FlowContext parameter only. */
     flowContext,
+    /** Data parameter first, FlowContext second. */
     dataAndFlowContext,
+    /** FlowContext first, data parameter second. */
     flowContextAndData,
 }

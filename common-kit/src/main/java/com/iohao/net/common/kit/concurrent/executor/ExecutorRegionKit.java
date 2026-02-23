@@ -53,14 +53,32 @@ public class ExecutorRegionKit {
         }
     };
 
+    /**
+     * Get a user thread executor by user index.
+     *
+     * @param index the user identifier used to select an executor
+     * @return the {@link ThreadExecutor} assigned to the given user index
+     */
     public ThreadExecutor getUserThreadExecutor(long index) {
         return executorRegion.getUserThreadExecutor(index);
     }
 
+    /**
+     * Get a user virtual thread executor by user index.
+     *
+     * @param index the user identifier used to select a virtual-thread executor
+     * @return the {@link ThreadExecutor} assigned to the given user index
+     */
     public ThreadExecutor getUserVirtualThreadExecutor(long index) {
         return executorRegion.getUserVirtualThreadExecutor(index);
     }
 
+    /**
+     * Get a simple thread executor by index.
+     *
+     * @param index the index used to select an executor from the simple region
+     * @return the {@link ThreadExecutor} mapped to the given index
+     */
     public ThreadExecutor getSimpleThreadExecutor(long index) {
         return executorRegion.getSimpleThreadExecutor(index);
     }

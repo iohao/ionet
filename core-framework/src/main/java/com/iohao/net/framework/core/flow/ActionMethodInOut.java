@@ -20,13 +20,24 @@ package com.iohao.net.framework.core.flow;
 
 
 /**
- * ActionMethodInOut
+ * Interceptor interface for pre/post processing of action method invocations.
+ * Implementations are executed in order before ({@link #fuckIn}) and after ({@link #fuckOut}) the action method.
  *
  * @author 渔民小镇
  * @date 2021-12-12
  */
 public interface ActionMethodInOut {
+    /**
+     * Pre-processing hook invoked before the action method executes.
+     *
+     * @param flowContext the current request flow context
+     */
     void fuckIn(FlowContext flowContext);
 
+    /**
+     * Post-processing hook invoked after the action method executes.
+     *
+     * @param flowContext the current request flow context
+     */
     void fuckOut(FlowContext flowContext);
 }

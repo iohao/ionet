@@ -21,6 +21,7 @@ package com.iohao.net.framework.communication.eventbus;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Utility class providing static access to the global {@link EventBusSetting} and {@link EventBusRegion}.
  *
  * @author 渔民小镇
  * @date 2025-10-10
@@ -28,8 +29,14 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class EventBusSettingKit {
+    /** The global EventBus setting instance. */
     public EventBusSetting setting = new FreeEventBusSetting();
 
+    /**
+     * Get the global EventBus region from the current setting.
+     *
+     * @return the EventBus region
+     */
     public EventBusRegion getEventBusRegion() {
         return setting.getEventBusRegion();
     }

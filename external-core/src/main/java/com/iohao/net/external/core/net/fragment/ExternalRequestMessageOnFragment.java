@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.agrona.DirectBuffer;
 
 /**
- * ExternalRequestMessageOnFragment
+ * Aeron fragment consumer that dispatches internal external-operation requests by template id.
  *
  * @author 渔民小镇
  * @date 2025-09-11
@@ -81,10 +81,21 @@ public class ExternalRequestMessageOnFragment implements OnFragment, NetServerSe
         processOnExternal(context);
     }
 
+    /**
+     * Resolve the user session container for the target external server id.
+     *
+     * @param externalServerId external server id
+     * @return user session container
+     */
     protected UserSessions<?, ?> getUserSessions(int externalServerId) {
         return ExternalServerSingle.userSessions;
     }
 
+    /**
+     * Execute the template handler asynchronously and always publish the response back to the requester netId.
+     *
+     * @param context external template execution context
+     */
     protected void processOnExternal(OnExternalContext context) {
         var templateId = decoder.templateId();
         var netId = decoder.netId();

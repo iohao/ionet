@@ -26,7 +26,23 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * Server
+ * Immutable record representing a registered server instance in the ionet cluster.
+ * <p>
+ * Holds the server's identity (id, name, tag), network coordinates (ip, netId, pubName),
+ * the set of command routes it handles ({@code cmdMerges}), an extensible payload map,
+ * and a reference to its {@link BarSkeleton} execution engine. Equality and hashing
+ * are based solely on the server {@link #id}.
+ *
+ * @param id           unique server identifier
+ * @param name         human-readable server name
+ * @param tag          grouping tag (defaults to name)
+ * @param serverType   the type of this server (e.g., LOGIC, EXTERNAL)
+ * @param netId        network-level identifier
+ * @param ip           the IP address of this server
+ * @param pubName      the publication name used for Aeron channels
+ * @param cmdMerges    array of merged command route keys this server handles
+ * @param payloadMap   extensible key-value payload storage
+ * @param barSkeleton  the execution engine associated with this server
  *
  * @author 渔民小镇
  * @date 2025-09-08
@@ -45,10 +61,22 @@ public record Server(
         Map<String, byte[]> payloadMap,
         BarSkeleton barSkeleton
 ) {
+    /**
+     * Retrieve a payload entry by name.
+     *
+     * @param name the payload key
+     * @return the payload byte array, or {@code null} if not present
+     */
     public byte[] getPayload(String name) {
         return payloadMap.get(name);
     }
 
+    /**
+     * Store a payload entry by name.
+     *
+     * @param name the payload key
+     * @param data the payload byte array
+     */
     public void addPayload(String name, byte[] data) {
         payloadMap.put(name, data);
     }

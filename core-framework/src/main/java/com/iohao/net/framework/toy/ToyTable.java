@@ -25,6 +25,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * A simple table model composed of named {@link ToyTableRegion} columns, used to
+ * render structured key-value information in the startup banner.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */

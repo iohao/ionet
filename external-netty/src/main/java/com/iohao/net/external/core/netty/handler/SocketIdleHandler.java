@@ -32,7 +32,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
 
 /**
- * IdleHandler
+ * Netty idle handler that processes heartbeat frames and idle timeout events.
  *
  * @author 渔民小镇
  * @date 2023-02-18
@@ -69,7 +69,7 @@ public final class SocketIdleHandler extends ChannelInboundHandlerAdapter implem
 
         if (this.pong) {
             if (this.idleHook != null) {
-                // Processing before heartbeat response
+                // Allow custom logic to enrich the pong payload before writing it back.
                 this.idleHook.pongBefore(message);
             }
 
@@ -89,7 +89,7 @@ public final class SocketIdleHandler extends ChannelInboundHandlerAdapter implem
                 close = idleHook.callback(userSession, event);
             }
 
-            // close ctx
+            // Remove and close the user session when the idle policy requests it.
             if (close) {
                 this.userSessions.removeUserSession(userSession);
             }

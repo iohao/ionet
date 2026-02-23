@@ -24,14 +24,29 @@ import com.iohao.net.framework.protocol.ExternalResponse;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * ExternalCommunication
+ * Interface for communicating with external (client-facing) servers.
+ * <p>
+ * Provides both asynchronous and blocking methods to send a request to an
+ * external server and receive a response.
  *
  * @author 渔民小镇
  * @date 2025-09-07
  * @since 25.1
  */
 public interface ExternalCommunication {
+    /**
+     * Send a request to an external server asynchronously.
+     *
+     * @param message the external request message
+     * @return a {@link CompletableFuture} that completes with the external response
+     */
     CompletableFuture<ExternalResponse> callExternalFuture(ExternalRequestMessage message);
 
+    /**
+     * Send a request to an external server and block until a response is received.
+     *
+     * @param message the external request message
+     * @return the external response
+     */
     ExternalResponse callExternal(ExternalRequestMessage message);
 }

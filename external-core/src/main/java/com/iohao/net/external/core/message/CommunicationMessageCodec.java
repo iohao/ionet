@@ -22,19 +22,36 @@ import com.iohao.net.framework.core.codec.DataCodecManager;
 import com.iohao.net.framework.protocol.CommunicationMessage;
 
 /**
- * External server protocol encoding and decoding
+ * Strategy for creating and serializing external communication messages.
  *
  * @author 渔民小镇
  * @date 2023-12-15
  */
 public interface CommunicationMessageCodec {
+    /**
+     * Create a new mutable message instance for outgoing writes.
+     *
+     * @return communication message implementation
+     */
     CommunicationMessage createCommunicationMessage();
 
+    /**
+     * Encode a communication message with the currently configured data codec.
+     *
+     * @param message message to encode
+     * @return serialized bytes
+     */
     default byte[] encode(CommunicationMessage message) {
         var codec = DataCodecManager.getDataCodec();
         return codec.encode(message);
     }
 
+    /**
+     * Decode a serialized external message.
+     *
+     * @param bytes serialized bytes
+     * @return decoded communication message
+     */
     default CommunicationMessage decode(byte[] bytes) {
         var codec = DataCodecManager.getDataCodec();
         return codec.decode(bytes, ExternalMessage.class);

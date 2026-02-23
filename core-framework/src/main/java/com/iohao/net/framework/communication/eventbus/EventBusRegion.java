@@ -33,8 +33,19 @@ import java.util.Set;
  * @since 21
  */
 public interface EventBusRegion {
+    /**
+     * Get the EventBus instance for the given server ID.
+     *
+     * @param serverId the server ID
+     * @return the EventBus instance associated with the server ID
+     */
     EventBus getEventBus(int serverId);
 
+    /**
+     * Register a local EventBus instance in this region.
+     *
+     * @param eventBus the EventBus instance to register
+     */
     void addLocal(EventBus eventBus);
 
     /**
@@ -45,9 +56,25 @@ public interface EventBusRegion {
      */
     List<Subscriber> listLocalSubscriber(EventBusMessage eventBusMessage);
 
+    /**
+     * Load event topics from a remote server.
+     *
+     * @param eventServerMessage the remote server message containing topic information
+     */
     void loadRemoteEventTopic(EventServerMessage eventServerMessage);
 
+    /**
+     * Unload event topics from a disconnected remote server.
+     *
+     * @param eventServerMessage the remote server message to unload
+     */
     void unloadRemoteTopic(EventServerMessage eventServerMessage);
 
+    /**
+     * Get remote server messages that have subscribers for the given event.
+     *
+     * @param eventBusMessage the event message to match against remote subscribers
+     * @return set of remote server messages with matching subscribers
+     */
     Set<EventServerMessage> listRemoteEventServerMessage(EventBusMessage eventBusMessage);
 }

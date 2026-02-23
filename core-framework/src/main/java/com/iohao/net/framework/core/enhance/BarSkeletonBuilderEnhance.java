@@ -21,9 +21,19 @@ package com.iohao.net.framework.core.enhance;
 import com.iohao.net.framework.core.BarSkeletonBuilder;
 
 /**
+ * SPI extension point for enhancing a {@link BarSkeletonBuilder} before the skeleton is built.
+ * <p>
+ * Implementations are discovered via {@link java.util.ServiceLoader} and applied by
+ * {@link BarSkeletonBuilderEnhances#enhance(BarSkeletonBuilder)}.
+ *
  * @author 渔民小镇
  * @date 2023-06-16
  */
 public interface BarSkeletonBuilderEnhance {
+    /**
+     * Apply enhancements to the given builder.
+     *
+     * @param builder the skeleton builder to enhance
+     */
     void enhance(BarSkeletonBuilder builder);
 }

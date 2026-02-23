@@ -25,21 +25,36 @@ import com.iohao.net.common.kit.trace.TraceKit;
 import java.util.concurrent.Executor;
 
 /**
- * CommonDecorator
+ * Base decorator interface providing access to the communication aggregation, trace ID, and current executor.
  *
  * @author 渔民小镇
  * @date 2025-09-28
  * @since 25.1
  */
 public interface CommonDecorator {
+    /**
+     * Get the global communication aggregation instance.
+     *
+     * @return the shared {@link CommunicationAggregation} singleton
+     */
     default CommunicationAggregation getCommunicationAggregation() {
         return CommunicationKit.communicationAggregation;
     }
 
+    /**
+     * Get the current trace ID from the MDC context.
+     *
+     * @return the trace ID string, or {@code null} if not set
+     */
     default String getTraceId() {
         return TraceKit.getTraceId();
     }
 
+    /**
+     * Get the executor assigned to the current flow context.
+     *
+     * @return the {@link Executor} bound to the current thread's flow context
+     */
     default Executor getCurrentExecutor() {
         FlowContext flowContext = FlowContextKeys.getFlowContext();
         return flowContext.getCurrentThreadExecutor().executor();

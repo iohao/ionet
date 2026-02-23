@@ -24,7 +24,8 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 /**
- * ErrorCodeDocument
+ * Documentation model for a single error code entry, carrying the enum constant name,
+ * numeric value, and human-readable description.
  *
  * @author 渔民小镇
  * @date 2024-06-26

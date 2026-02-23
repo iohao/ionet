@@ -27,7 +27,7 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import java.util.List;
 
 /**
- * Tcp Codec
+ * Netty codec that converts length-prefixed TCP frames to/from {@link CommunicationMessage}.
  *
  * @author 渔民小镇
  * @date 2023-02-21
@@ -35,7 +35,7 @@ import java.util.List;
 public final class TcpExternalCodec extends MessageToMessageCodec<ByteBuf, CommunicationMessage> {
     @Override
     protected void encode(ChannelHandlerContext ctx, CommunicationMessage message, List<Object> out) {
-        // Sending messages to the client
+        // Encode outbound messages with a 4-byte length prefix.
         byte[] bytes = CommunicationMessageKit.encode(message);
 
         ByteBuf buffer = ctx.alloc().buffer(bytes.length + 4);
@@ -47,7 +47,7 @@ public final class TcpExternalCodec extends MessageToMessageCodec<ByteBuf, Commu
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
-        // Receiving messages from the client
+        // Decode inbound length-prefixed TCP frames.
         int length = msg.readInt();
         byte[] bytes = new byte[length];
         msg.readBytes(bytes);

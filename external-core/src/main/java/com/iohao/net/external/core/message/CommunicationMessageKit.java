@@ -22,23 +22,41 @@ import com.iohao.net.framework.protocol.CommunicationMessage;
 import lombok.experimental.UtilityClass;
 
 /**
- * External server protocol encoding and decoding Kit
+ * Static facade for the configured {@link CommunicationMessageCodec}.
  *
  * @author 渔民小镇
  * @date 2023-12-15
  */
 @UtilityClass
 public class CommunicationMessageKit {
+    /** Active codec used by external transports. */
     public CommunicationMessageCodec communicationMessageCodec = new DefaultCommunicationMessageCodec();
 
+    /**
+     * Create a new communication message via the active codec.
+     *
+     * @return message instance
+     */
     public CommunicationMessage createCommunicationMessage() {
         return communicationMessageCodec.createCommunicationMessage();
     }
 
+    /**
+     * Encode a communication message to bytes.
+     *
+     * @param message message to encode
+     * @return serialized bytes
+     */
     public byte[] encode(CommunicationMessage message) {
         return communicationMessageCodec.encode(message);
     }
 
+    /**
+     * Decode an external message from bytes.
+     *
+     * @param bytes serialized bytes
+     * @return decoded communication message
+     */
     public CommunicationMessage decode(byte[] bytes) {
         return communicationMessageCodec.decode(bytes);
     }

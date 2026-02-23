@@ -63,6 +63,7 @@ hs_err_pid*
 
 doc_temp.txt
 
+/local/
 .codex
 .claude
 CLAUDE.md

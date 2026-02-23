@@ -39,6 +39,12 @@ import java.util.concurrent.TimeUnit;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j(topic = IonetLogName.ExternalTopic)
 public final class SocketMicroBootstrap implements MicroBootstrap {
+    /**
+     * Cast the transport-agnostic flow to the concrete bootstrap type expected by this implementation.
+     *
+     * @param microBootstrapFlow generic bootstrap flow
+     * @return typed bootstrap flow
+     */
     @SuppressWarnings("unchecked")
     private <T> MicroBootstrapFlow<T> map(MicroBootstrapFlow<?> microBootstrapFlow) {
         return (MicroBootstrapFlow<T>) microBootstrapFlow;

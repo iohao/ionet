@@ -29,7 +29,7 @@ import com.iohao.net.external.core.session.UserSessions;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * DefaultUserHook
+ * Default logging implementation of {@link UserHook}.
  *
  * @author 渔民小镇
  * @date 2023-02-20
@@ -53,6 +53,13 @@ public class DefaultUserHook implements UserHook, ExternalSettingAware {
         log.info(getString(userSession, MessageKey.userHookQuit));
     }
 
+    /**
+     * Build the localized log message and include current online user count.
+     *
+     * @param userSession user session
+     * @param key i18n message key
+     * @return formatted log content
+     */
     private String getString(UserSession userSession, String key) {
         return """
                 %s:%s

@@ -19,13 +19,28 @@
 package com.iohao.net.framework.protocol;
 
 /**
+ * Message that carries a future correlation id for asynchronous request/response matching.
+ * <p>
+ * Implemented by request and response messages that participate in
+ * asynchronous communication, allowing the caller to correlate a response
+ * back to its originating request.
  *
  * @author 渔民小镇
  * @date 2025-11-07
  * @since 25.1
  */
 public interface FutureMessage {
+    /**
+     * Get the future correlation id.
+     *
+     * @return the future id
+     */
     long getFutureId();
 
+    /**
+     * Set the future correlation id.
+     *
+     * @param futureId the future id
+     */
     void setFutureId(long futureId);
 }

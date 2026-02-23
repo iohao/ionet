@@ -25,7 +25,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * AbstractCommunicationMessage
+ * Abstract base implementation of {@link CommunicationMessage} for external protocol codecs.
+ * <p>
+ * Stores all routing, identity, and metadata fields as {@code transient} members annotated
+ * with {@code @Ignore} so they are excluded from protobuf serialization. Subclasses (e.g.,
+ * WebSocket and TCP codec messages) only serialize their protocol-specific wire fields while
+ * inheriting the full {@link CommunicationMessage} contract. Provides no-op defaults for
+ * fields not used in every codec variant (cmdCode, protocolSwitch, msgId, error fields).
  *
  * @author 渔民小镇
  * @date 2025-09-24
@@ -69,16 +75,24 @@ public abstract class AbstractCommunicationMessage implements CommunicationMessa
     @Ignore
     transient long nanoTime;
 
+    /** {@inheritDoc} */
     @Override
     public void setOutputError(ErrorInformation outputError) {
         this.setError(outputError);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setCmdInfo(CmdInfo cmdInfo) {
         this.setCmdMerge(cmdInfo.cmdMerge());
     }
 
+    /**
+     * Get the transient auxiliary object attached to this message.
+     *
+     * @param <T> the expected type
+     * @return the auxiliary object, cast to {@code T}
+     */
     @SuppressWarnings("unchecked")
     public <T> T getOther() {
         return (T) other;

@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TypeMappingDocument 类型映射
+ * Strategy interface for mapping Java/protobuf types to their client-side type names
+ * used during document and SDK code generation.
  *
  * @author 渔民小镇
  * @date 2024-06-26
@@ -38,10 +39,27 @@ public interface TypeMappingDocument {
     List<Class<?>> boolClassList = List.of(boolean.class, Boolean.class, BoolValue.class);
     List<Class<?>> stringClassList = List.of(String.class, StringValue.class);
 
+    /**
+     * Return the underlying type mapping table.
+     *
+     * @return map from Java class to its type mapping record
+     */
     Map<Class<?>, TypeMappingRecord> getMap();
 
+    /**
+     * Look up the type mapping record for the given class.
+     *
+     * @param protoTypeClazz the class to look up
+     * @return the corresponding type mapping record
+     */
     TypeMappingRecord getTypeMappingRecord(Class<?> protoTypeClazz);
 
+    /**
+     * Register a type mapping record for all classes in the given list.
+     *
+     * @param record    the type mapping record
+     * @param clazzList the classes to map
+     */
     default void mapping(TypeMappingRecord record, List<Class<?>> clazzList) {
         for (Class<?> clazz : clazzList) {
             this.getMap().put(clazz, record);

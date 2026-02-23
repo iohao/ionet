@@ -21,7 +21,7 @@ package com.iohao.net.external.core.micro;
 import java.util.Objects;
 
 /**
- * Pipeline Context
+ * Transport-agnostic adapter for adding/removing handlers in a connection pipeline.
  *
  * @author 渔民小镇
  * @date 2023-02-19
@@ -30,7 +30,7 @@ public interface PipelineContext {
     /**
      * Adds the handler to the first position.
      *
-     * @param handler The handler
+     * @param handler handler instance
      */
     default void addFirst(Object handler) {
         Objects.requireNonNull(handler);
@@ -41,15 +41,15 @@ public interface PipelineContext {
     /**
      * Adds the handler to the first position.
      *
-     * @param name    The name of the handler
-     * @param handler The handler
+     * @param name handler name
+     * @param handler handler instance
      */
     void addFirst(String name, Object handler);
 
     /**
      * Adds the handler to the last position.
      *
-     * @param handler The handler
+     * @param handler handler instance
      */
     default void addLast(Object handler) {
         Objects.requireNonNull(handler);
@@ -60,15 +60,15 @@ public interface PipelineContext {
     /**
      * Adds the handler to the last position.
      *
-     * @param name    The name of the handler
-     * @param handler The handler
+     * @param name handler name
+     * @param handler handler instance
      */
     void addLast(String name, Object handler);
 
     /**
      * Removes the specified handler.
      *
-     * @param name The name of the handler
+     * @param name handler name
      */
     void remove(String name);
 }

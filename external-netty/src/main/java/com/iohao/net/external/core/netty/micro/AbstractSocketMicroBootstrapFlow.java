@@ -33,7 +33,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 /**
- * SocketMicroBootstrapFlow
+ * Shared Netty socket pipeline flow for TCP/WebSocket external servers.
  *
  * @author 渔民小镇
  * @date 2023-05-31
@@ -62,8 +62,7 @@ abstract class AbstractSocketMicroBootstrapFlow implements MicroBootstrapFlow<Se
         IdleProcessSetting idleProcessSetting = this.setting.idleProcessSetting();
 
         if (idleProcessSetting == null) {
-            // 如果服务器没有配置心跳相关的内容，则排除心跳数据（不做任何处理）
-            // If the server is not configured with heartbeat processing, exclude heartbeat data
+            // If heartbeat processing is disabled, filter out heartbeat frames instead of handling them.
             context.addLast("SocketIdleExcludeHandler", SocketIdleExcludeHandler.me());
             return;
         }

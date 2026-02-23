@@ -24,7 +24,8 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * action 成员变量的路由文档
+ * Document model for a route member constant generated from an action method,
+ * carrying the command pair, a generated member name, and the Javadoc comment.
  *
  * @author 渔民小镇
  * @date 2024-06-26

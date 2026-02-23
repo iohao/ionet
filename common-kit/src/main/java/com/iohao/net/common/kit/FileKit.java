@@ -27,7 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * FileKit
+ * File I/O utilities.
  *
  * @author 渔民小镇
  * @date 2022-12-23
@@ -35,6 +35,13 @@ import java.nio.file.Path;
 @Slf4j
 @UtilityClass
 public class FileKit {
+    /**
+     * Write a UTF-8 string to the specified file path, creating parent directories and
+     * the file itself if they do not exist.
+     *
+     * @param content  the text content to write
+     * @param filePath the target file path
+     */
     public void writeUtf8String(String content, String filePath) {
         try {
             Path path = Path.of(filePath);

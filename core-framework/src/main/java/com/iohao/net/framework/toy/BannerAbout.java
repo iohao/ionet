@@ -29,6 +29,8 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
+ * Provides ASCII art banner data for the ionet startup display.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */
@@ -57,6 +59,8 @@ final class BannerData {
 }
 
 /**
+ * Randomly selects an ANSI coloring strategy for the startup banner text.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */
@@ -64,7 +68,7 @@ final class BannerColorStrategy {
 
     static Ansi.Color anyColor() {
         List<Ansi.Color> collect = Stream.of(Ansi.Color.values())
-                // 不需要黑色
+                // exclude black, white, blue, and default
                 .filter(color -> color != Ansi.Color.BLUE)
                 .filter(color -> color != Ansi.Color.WHITE)
                 .filter(color -> color != Ansi.Color.BLACK)
@@ -75,7 +79,7 @@ final class BannerColorStrategy {
     }
 
     UnaryOperator<String> anyColorFun() {
-        // 上色策略
+        // coloring strategy
         UnaryOperator<String> colorNon = s -> s;
         UnaryOperator<String> colorSingleFun = this::colorSingle;
         UnaryOperator<String> colorRandomLineFun = this::colorRandomLine;
@@ -246,14 +250,14 @@ final class BannerColorStrategy {
 
     private List<Ansi.Color> listColor() {
         return Stream.of(Ansi.Color.values())
-                // 不需要黑色
+                // exclude black
                 .filter(color -> color != Ansi.Color.BLACK)
                 .toList();
     }
 
     private static Ansi.Color randomColor() {
         List<Ansi.Color> collect = Stream.of(Ansi.Color.values())
-                // 不需要黑色
+                // exclude black
                 .filter(color -> color != Ansi.Color.BLACK)
                 .toList();
 
@@ -263,6 +267,8 @@ final class BannerColorStrategy {
 
 
 /**
+ * Provides JVM memory usage statistics (used, free, total) formatted as human-readable strings.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */

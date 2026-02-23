@@ -23,14 +23,29 @@ import org.jspecify.annotations.NonNull;
 import java.util.Objects;
 
 /**
- * ErrorInformation
+ * Contract for error information that can be used to throw {@link MessageException}s
+ * with assertion-style convenience methods.
+ * <p>
+ * Implementations provide a numeric {@link #getCode() code} and a human-readable
+ * {@link #getMessage() message}. The default methods offer a rich set of assertion
+ * helpers that throw {@link MessageException} when the condition is not met.
  *
  * @author 渔民小镇
  * @date 2022-01-14
  */
 public interface ErrorInformation {
+    /**
+     * Return the human-readable error message.
+     *
+     * @return the error message
+     */
     String getMessage();
 
+    /**
+     * Return the numeric error code.
+     *
+     * @return the error code
+     */
     int getCode();
 
     /**

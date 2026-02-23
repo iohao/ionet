@@ -24,7 +24,9 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 /**
- * BroadcastDocument
+ * Documentation model for a single broadcast (server-push) route, describing the
+ * command info, data type, method name, and associated metadata used for client
+ * SDK code generation.
  *
  * @author 渔民小镇
  * @date 2024-06-25
@@ -32,36 +34,41 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PUBLIC)
 public final class BroadcastDocument {
-    /** 路由 */
+    /** The route (command info) for this broadcast. */
     final CmdInfo cmdInfo;
-    /** 推送方法描述 */
+    /** Description of the broadcast method. */
     String methodDescription;
-    /** 方法名 */
+    /** Method name (PascalCase). */
     String methodName;
+    /** Method name (camelCase) for command-style usage. */
     String cmdMethodName;
 
-    /** 业务类型 */
+    /** Business data type class. */
     Class<?> dataClass;
-    /** 业务参数 */
+    /** Simple name of the business data type. */
     String dataClassName;
-    /** 广播业务参数的描述 */
+    /** Description of the broadcast data parameter. */
     String dataDescription;
 
-    /** true 表示协议碎片，false 表示开发者自定义的协议 */
+    /** true if the data type is a built-in protocol fragment; false for user-defined types. */
     boolean dataTypeIsInternal;
-    /** 广播业务参数是否是 List */
+    /** true if the broadcast data is a List type. */
     boolean dataIsList;
 
+    /** Mapped business data type name. */
     String bizDataType;
 
-    /** sdk result get 方法名 */
+    /** SDK result getter method name. */
     String resultMethodTypeName;
-    /** sdk result get list 方法名 */
+    /** SDK result list getter method name. */
     String resultMethodListTypeName;
 
+    /** Actual data type name. */
     String dataActualTypeName;
 
+    /** Example code snippet. */
     String exampleCode;
+    /** Example action code snippet. */
     String exampleCodeAction;
 
     public int getCmdMerge() {

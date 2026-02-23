@@ -19,16 +19,36 @@
 package com.iohao.net.framework.communication;
 
 /**
- * PublisherCommunication
+ * Interface for publishing messages to other servers in the cluster.
+ * <p>
+ * Supports targeting servers by net ID, server ID, or logical name.
  *
  * @author 渔民小镇
  * @date 2025-09-28
  * @since 25.1
  */
 public interface PublisherCommunication {
+    /**
+     * Publish a message to a server identified by its net ID.
+     *
+     * @param netId   the net ID of the target server
+     * @param message the message to publish
+     */
     void publishMessageByNetId(int netId, Object message);
 
+    /**
+     * Publish a message to a server identified by its server ID.
+     *
+     * @param serverId the server ID of the target server
+     * @param message  the message to publish
+     */
     void publishMessage(int serverId, Object message);
 
+    /**
+     * Publish a message to a server identified by its logical name.
+     *
+     * @param name    the logical name of the target server
+     * @param message the message to publish
+     */
     void publishMessage(String name, Object message);
 }

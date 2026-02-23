@@ -29,18 +29,23 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * LongValueMethodParser
+ * Method parser for {@code long}/{@link Long} parameters and return types.
+ * <p>
+ * Converts between Java {@code long}/{@link Long} values and the protocol wrapper types
+ * {@link LongValue} and {@link LongValueList}.
  *
  * @author 渔民小镇
  * @date 2023-02-10
  */
 final class LongValueMethodParser implements MethodParser {
 
+    /** {@inheritDoc} */
     @Override
     public Class<?> getActualClazz(ActualParameter parameterReturn) {
         return parameterReturn.isList() ? LongValueList.class : LongValue.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
         if (actionMethodParameter.isList()) {
@@ -58,6 +63,7 @@ final class LongValueMethodParser implements MethodParser {
         return codec.decode(data, LongValue.class).value;
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public Object parseDataList(Object data, DataCodec codec) {
@@ -66,6 +72,7 @@ final class LongValueMethodParser implements MethodParser {
         return valueList;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object parseData(Object data) {
         var longValue = new LongValue();
@@ -76,6 +83,11 @@ final class LongValueMethodParser implements MethodParser {
     private LongValueMethodParser() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code LongValueMethodParser}
+     */
     public static LongValueMethodParser me() {
         return Holder.ME;
     }

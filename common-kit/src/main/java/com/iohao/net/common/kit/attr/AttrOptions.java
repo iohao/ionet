@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Dynamic attribute options
+ * Thread-safe attribute storage container. Holds key-value pairs keyed by {@link AttrOption} instances.
  *
  * @author 渔民小镇
  * @date 2022-01-31
@@ -37,10 +37,16 @@ public class AttrOptions implements Serializable {
 
     final Map<AttrOption<?>, Object> options = CollKit.ofConcurrentHashMap();
 
+    /**
+     * Create a new container by copying all entries from the given source.
+     *
+     * @param attrOptions the source container whose entries are copied into this instance
+     */
     public AttrOptions(AttrOptions attrOptions) {
         this.options.putAll(attrOptions.options);
     }
 
+    /** Create an empty attribute storage container. */
     public AttrOptions() {
     }
 

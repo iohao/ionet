@@ -19,6 +19,7 @@
 package com.iohao.net.external.core.hook;
 
 /**
+ * Marker interface for transport-specific idle handlers.
  *
  * @author 渔民小镇
  * @date 2025-10-15

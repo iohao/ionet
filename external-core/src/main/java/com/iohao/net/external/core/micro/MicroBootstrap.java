@@ -19,17 +19,17 @@
 package com.iohao.net.external.core.micro;
 
 /**
- * Server connecting with real users
+ * Bootstrap contract for starting the external transport server.
  *
  * @author 渔民小镇
  * @date 2023-05-28
  */
 public interface MicroBootstrap {
     /**
-     * Starts the server that connects with real users
+     * Start the server that accepts real-user connections.
      *
-     * @param port               port
-     * @param microBootstrapFlow microBootstrapFlow
+     * @param port bind port
+     * @param microBootstrapFlow transport bootstrap/pipeline orchestration flow
      */
     void startup(int port, MicroBootstrapFlow<?> microBootstrapFlow);
 }

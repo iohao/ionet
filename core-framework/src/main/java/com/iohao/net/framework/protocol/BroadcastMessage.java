@@ -24,7 +24,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * BroadcastMessage
+ * Sealed base class for all broadcast message types sent from logic servers to external servers.
+ * <p>
+ * Carries the merged command route key ({@code cmdMerge}), serialized payload data, and a
+ * transient reference to the original unserialized data object. Permitted subclasses define
+ * the broadcast scope: {@link BroadcastUserMessage} (single user), {@link BroadcastUserListMessage}
+ * (explicit user list), and {@link BroadcastMulticastMessage} (all connected users).
  *
  * @author 渔民小镇
  * @date 2025-09-04
@@ -43,6 +48,11 @@ public abstract sealed class BroadcastMessage
 
     transient Object originalData;
 
+    /**
+     * Set the command route from a {@link CmdInfo} descriptor.
+     *
+     * @param cmdInfo the command info containing the merged route key
+     */
     public void setCmdInfo(CmdInfo cmdInfo) {
         this.cmdMerge = cmdInfo.cmdMerge();
     }

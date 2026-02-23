@@ -21,7 +21,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * ThreadCreator
+ * Base class for creating threads with configurable name prefix, priority, daemon flag, and thread group.
  *
  * @author 渔民小镇
  * @date 2023-04-02
@@ -42,10 +42,21 @@ public class ThreadCreator {
         this.threadNamePrefix = threadNamePrefix;
     }
 
+    /**
+     * Set the thread group by name.
+     *
+     * @param name the thread group name
+     */
     public void setThreadGroupName(String name) {
         this.threadGroup = new ThreadGroup(name);
     }
 
+    /**
+     * Create a new thread with the configured group, name, priority, and daemon flag.
+     *
+     * @param runnable the task to execute
+     * @return the newly created thread
+     */
     public Thread createThread(Runnable runnable) {
         Thread thread = new Thread(threadGroup, runnable, nextThreadName());
         thread.setPriority(threadPriority);
@@ -53,6 +64,11 @@ public class ThreadCreator {
         return thread;
     }
 
+    /**
+     * Generate the next thread name using the prefix and an auto-incrementing counter.
+     *
+     * @return the next thread name
+     */
     protected String nextThreadName() {
         String format = "%s-%d";
         return String.format(format, this.threadNamePrefix, this.threadCount.incrementAndGet());

@@ -19,6 +19,9 @@
 package com.iohao.net.framework.toy;
 
 /**
+ * A single key-value line within a {@link ToyTableRegion}, responsible for
+ * rendering itself with proper alignment and padding.
+ *
  * @author 渔民小镇
  * @date 2023-01-30
  */

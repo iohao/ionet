@@ -33,7 +33,13 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * ServerBuilder
+ * Builder for constructing {@link Server} instances with sensible defaults.
+ * <p>
+ * Provides a fluent API to configure server identity (id, name, tag), network address,
+ * server type, and the associated {@link BarSkeleton}. When {@link #build()} is called,
+ * unset fields receive default values: a random id, the name as tag, LOGIC server type,
+ * and the local IP address. If a {@link BarSkeleton} is provided, its command routes
+ * are extracted and registered with {@link BarSkeletonManager}.
  *
  * @author 渔民小镇
  * @date 2025-08-26
@@ -51,6 +57,15 @@ public final class ServerBuilder {
     BarSkeleton barSkeleton;
     ServerTypeEnum serverType;
 
+    /**
+     * Build and return a new {@link Server} instance from the current configuration.
+     * <p>
+     * Applies default values for any unset fields, extracts command routes from the
+     * {@link BarSkeleton} if present, and registers the skeleton with {@link BarSkeletonManager}.
+     *
+     * @return the constructed {@link Server}
+     * @throws NullPointerException if {@code name} has not been set
+     */
     public Server build() {
         Objects.requireNonNull(name);
 

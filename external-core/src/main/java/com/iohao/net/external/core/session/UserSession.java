@@ -26,7 +26,7 @@ import com.iohao.net.external.core.config.ExternalJoinEnum;
 import com.iohao.net.external.core.message.CommunicationMessageKit;
 
 /**
- * UserSession
+ * External user session abstraction for one connected client.
  *
  * @author 渔民小镇
  * @date 2023-02-18
@@ -34,46 +34,51 @@ import com.iohao.net.external.core.message.CommunicationMessageKit;
  */
 public interface UserSession extends AttrOptionDynamic {
     /**
-     * active
+     * Check whether the session is active.
      *
-     * @return true active
+     * @return true if the session is active
      */
     boolean isActive();
 
+    /**
+     * Set the transport type used by this session.
+     *
+     * @param externalJoin external transport type
+     */
     void setExternalJoin(ExternalJoinEnum externalJoin);
 
     /**
      * Sets the ID of the current user (player).
      *
-     * @param userId userId
+     * @param userId business user id
      */
     void setUserId(long userId);
 
     /**
      * Gets the ID of the current user (player).
      *
-     * @return The ID of the current user (player)
+     * @return current business user id
      */
     long getUserId();
 
     /**
      * Checks if the identity has been verified.
      *
-     * @return true: if logged in
+     * @return true if logged in
      */
     boolean isVerifyIdentity();
 
     /**
-     * UserSessionState of current player
+     * Get the current session state.
      *
-     * @return State
+     * @return session state
      */
     UserSessionState getState();
 
     /**
      * Gets the UserChannelId of the current user (player).
      *
-     * @return UserChannelId
+     * @return user channel id
      */
     long getUserChannelId();
 
@@ -81,31 +86,52 @@ public interface UserSession extends AttrOptionDynamic {
      * Adds user info to request.
      * Developers can extend data via HeadMetadata.setAttachmentData(byte[]), which will be forwarded to the logic server.
      *
-     * @param message message
+     * @param message outbound message to enrich with session identity/attachment data
      */
     void employ(CommunicationMessage message);
 
     /**
-     * writeAndFlush
+     * Write a message to the client and flush immediately.
      *
-     * @param message message
-     * @return ChannelFuture
+     * @param message message object
+     * @return transport-specific future or write result
      */
     <T> T writeAndFlush(Object message);
 
     /**
-     * Get player IP
+     * Get the client IP address.
      *
      * @return player IP
      */
     String getIp();
 
+    /**
+     * Set the attachment bytes stored on the session.
+     *
+     * @param attachment attachment bytes
+     */
     void setAttachment(byte[] attachment);
 
+    /**
+     * Set logic server bindings associated with this session.
+     *
+     * @param bindingLogicServerIds bound logic server ids
+     */
     void setBindingLogicServerIds(int[] bindingLogicServerIds);
 
+    /**
+     * Get logic server bindings associated with this session.
+     *
+     * @return bound logic server ids
+     */
     int[] getBindingLogicServerIds();
 
+    /**
+     * Create and populate a communication message for the given route.
+     *
+     * @param cmdInfo route metadata
+     * @return initialized communication message with session identity data
+     */
     default CommunicationMessage ofMessage(CmdInfo cmdInfo) {
         var message = CommunicationMessageKit.createCommunicationMessage();
         message.setCmdInfo(cmdInfo);

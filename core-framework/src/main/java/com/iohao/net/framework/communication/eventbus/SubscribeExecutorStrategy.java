@@ -22,10 +22,13 @@ import com.iohao.net.common.kit.concurrent.executor.ExecutorRegion;
 import com.iohao.net.common.kit.concurrent.executor.ThreadExecutor;
 
 /**
- * Subscriber thread executor selection strategy
+ * Strategy interface for selecting the thread executor used to run a subscriber method.
+ * Implement this interface to provide custom executor selection logic when the built-in
+ * {@link ExecutorSelector} options are insufficient.
  *
  * @author 渔民小镇
  * @date 2023-12-24
+ * @see ExecutorSelector#customExecutor
  * @since 21
  */
 public interface SubscribeExecutorStrategy {

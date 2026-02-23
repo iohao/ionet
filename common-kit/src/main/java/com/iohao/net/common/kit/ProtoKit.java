@@ -27,12 +27,20 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Objects;
 
 /**
+ * JProtobuf serialization utilities for encoding and decoding objects.
+ *
  * @author 渔民小镇
  * @date 2022-01-11
  */
 @UtilityClass
 @Slf4j(topic = IonetLogName.CommonStdout)
 public class ProtoKit {
+    /**
+     * Encode an object to a protobuf byte array.
+     *
+     * @param data the object to encode; if {@code null}, returns an empty byte array
+     * @return the encoded bytes, or an empty byte array on failure
+     */
     @SuppressWarnings("unchecked")
     public byte[] encode(Object data) {
 
@@ -52,6 +60,14 @@ public class ProtoKit {
         return CommonConst.emptyBytes;
     }
 
+    /**
+     * Decode a protobuf byte array into an object of the specified type.
+     *
+     * @param data  the byte array to decode; if {@code null}, returns {@code null}
+     * @param clazz the target class
+     * @param <T>   the target type
+     * @return the decoded object, or {@code null} on failure
+     */
     public <T> T decode(byte[] data, Class<T> clazz) {
 
         if (Objects.isNull(data)) {
@@ -69,6 +85,11 @@ public class ProtoKit {
         return null;
     }
 
+    /**
+     * Pre-create and warm up the protobuf codec for the given class on a virtual thread.
+     *
+     * @param clazz the class to pre-create a codec for
+     */
     public void create(Class<?> clazz) {
         TaskKit.executeVirtual(() -> {
             try {

@@ -23,7 +23,7 @@ import com.iohao.net.framework.protocol.OnExternalTemplateId;
 import com.iohao.net.common.kit.ByteKit;
 
 /**
- * AttachmentUpdate
+ * Handles template requests that update a user's session attachment.
  *
  * @author 渔民小镇
  * @date 2025-09-14

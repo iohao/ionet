@@ -31,6 +31,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
+ * Forwards validated user requests to the selected logic server.
+ *
  * @author 渔民小镇
  * @date 2023-02-19
  */

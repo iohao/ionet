@@ -19,11 +19,21 @@
 package com.iohao.net.framework.protocol;
 
 /**
+ * Response returned from an external (Netty) server.
+ * <p>
+ * Combines {@link CommonResponse} error handling, binary payload read/write
+ * capabilities, and future correlation into a single contract. Implementations
+ * carry the id of the external server that produced the response.
  *
  * @author 渔民小镇
  * @date 2025-09-16
  * @since 25.1
  */
 public interface ExternalResponse extends CommonResponse, ExternalPayloadGetting, ExternalPayloadSetting, FutureMessage {
+    /**
+     * Get the identifier of the external server that produced this response.
+     *
+     * @return the external server id
+     */
     int getExternalServerId();
 }

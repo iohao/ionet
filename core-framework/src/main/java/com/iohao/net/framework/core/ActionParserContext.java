@@ -22,7 +22,10 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 /**
- * ActionParserContext
+ * Mutable context passed to {@link ActionParserListener} callbacks during action parsing.
+ * <p>
+ * Carries the current {@link BarSkeleton} and the {@link ActionCommand} being processed
+ * so that listeners can inspect or enrich them.
  *
  * @author 渔民小镇
  * @date 2024-04-30
@@ -30,8 +33,8 @@ import lombok.experimental.FieldDefaults;
  */
 @FieldDefaults(level = AccessLevel.PUBLIC)
 public final class ActionParserContext {
-    /** 业务框架 */
+    /** The business framework skeleton that owns the action being parsed. */
     BarSkeleton barSkeleton;
-    /** action method */
+    /** The action command currently being parsed. */
     ActionCommand actionCommand;
 }

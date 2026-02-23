@@ -19,15 +19,28 @@
 package com.iohao.net.framework.core;
 
 /**
- * ActionFactoryBean
+ * Factory interface for creating or retrieving action controller instances.
+ * Implementations may delegate to DI containers like Spring.
  *
- * @param <T> t
+ * @param <T> the type of the action controller instance
  * @author 渔民小镇
  * @date 2021-12-20
  */
 public interface ActionFactoryBean<T> {
+    /**
+     * Get or create the action controller instance for the given action command.
+     *
+     * @param actionCommand the action command describing the target controller
+     * @return the action controller instance
+     */
     T getBean(ActionCommand actionCommand);
 
+    /**
+     * Get or create an action controller instance by class. Returns null by default.
+     *
+     * @param actionControllerClazz the action controller class
+     * @return the action controller instance, or null if not supported
+     */
     default T getBean(Class<?> actionControllerClazz) {
         return null;
     }

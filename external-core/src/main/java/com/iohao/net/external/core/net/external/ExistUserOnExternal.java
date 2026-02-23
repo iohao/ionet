@@ -22,7 +22,7 @@ import com.iohao.net.framework.core.exception.ActionErrorEnum;
 import com.iohao.net.framework.protocol.OnExternalTemplateId;
 
 /**
- * ExistUserOnExternal
+ * Handles template requests that check whether a user session exists.
  *
  * @author 渔民小镇
  * @date 2025-09-14

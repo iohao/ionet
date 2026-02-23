@@ -31,7 +31,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 
 /**
- * Startup process for WebSocket and actual user connection server
+ * Netty bootstrap flow for WebSocket-based external client connections.
  *
  * @author 渔民小镇
  * @date 2023-05-31
@@ -64,6 +64,11 @@ public class WebSocketMicroBootstrapFlow extends AbstractSocketMicroBootstrapFlo
         context.addLast("codec", new WebSocketExternalCodec());
     }
 
+    /**
+     * Install the WebSocket protocol handler.
+     *
+     * @param context Netty pipeline adapter
+     */
     public void websocketHandler(PipelineContext context) {
         var config = WebSocketServerProtocolConfig.newBuilder()
                 .websocketPath(ExternalGlobalConfig.websocketPath)
@@ -75,6 +80,11 @@ public class WebSocketMicroBootstrapFlow extends AbstractSocketMicroBootstrapFlo
         context.addLast("WebSocketServerProtocolHandler", new WebSocketServerProtocolHandler(config));
     }
 
+    /**
+     * Install HTTP handlers required before the WebSocket protocol upgrade.
+     *
+     * @param context Netty pipeline adapter
+     */
     public void httpHandler(PipelineContext context) {
         context.addLast("http-codec", new HttpServerCodec());
         context.addLast("aggregator", new HttpObjectAggregator(65536));

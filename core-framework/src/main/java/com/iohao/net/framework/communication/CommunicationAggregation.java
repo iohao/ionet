@@ -19,7 +19,11 @@
 package com.iohao.net.framework.communication;
 
 /**
- * Framework network communication aggregation interface
+ * Framework network communication aggregation interface.
+ * <p>
+ * Combines all low-level communication contracts: logic server communication,
+ * external server communication, broadcast, logic collect, external collect,
+ * and event bus messaging.
  *
  * @author 渔民小镇
  * @date 2022-07-27

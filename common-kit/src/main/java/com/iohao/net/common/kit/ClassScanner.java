@@ -31,27 +31,29 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * class 扫描
+ * Classpath scanner that discovers classes matching a predicate filter.
+ * <p>
+ * Supports scanning from both file system directories and JAR archives.
  *
  * @author 渔民小镇
  * @date 2021-12-12
  */
 @Slf4j(topic = IonetLogName.CommonStdout)
 public class ClassScanner {
-    /** 需要扫描的包名 */
+    /** Package path to scan (in URL path format, e.g. "com/iohao/net/") */
     final String packagePath;
-    /** 存放扫描过的 clazz */
+    /** Set of discovered classes that passed the filter */
     final Set<Class<?>> clazzSet = CollKit.ofConcurrentSet();
-    /** true 保留符合条件的class */
+    /** Predicate filter; returns {@code true} to keep the class */
     final Predicate<Class<?>> predicateFilter;
 
     ClassLoader classLoader;
 
     /**
-     * 扫描
+     * Create a scanner for the given package with a class filter.
      *
-     * @param packagePath     扫描路径
-     * @param predicateFilter 过滤条件
+     * @param packagePath     the base package to scan (dot-separated, e.g. "com.iohao.net")
+     * @param predicateFilter predicate that returns {@code true} for classes to include
      */
     public ClassScanner(String packagePath, Predicate<Class<?>> predicateFilter) {
         this.predicateFilter = predicateFilter;
@@ -62,6 +64,11 @@ public class ClassScanner {
         this.packagePath = path;
     }
 
+    /**
+     * Scan the classpath and return all classes that match the predicate filter.
+     *
+     * @return list of matching classes
+     */
     public List<Class<?>> listScan() {
         try {
             this.initClassLoad();
@@ -95,6 +102,12 @@ public class ClassScanner {
         this.classLoader = classLoader != null ? classLoader : ClassScanner.class.getClassLoader();
     }
 
+    /**
+     * Return the resource URLs for the configured package path, deduplicated by URI.
+     *
+     * @return list of unique resource URLs
+     * @throws IOException if an I/O error occurs while reading resources
+     */
     public List<URL> listResource() throws IOException {
         this.initClassLoad();
 
@@ -141,7 +154,7 @@ public class ClassScanner {
                     continue;
                 }
 
-                // 扫描 packagePath 下的类
+                // Scan classes under packagePath
                 if (jarEntryName.endsWith(".class") && jarEntryName.startsWith(packagePath)) {
                     jarEntryName = jarEntryName.substring(0, jarEntryName.length() - 6).replace('/', '.');
                     loadClass(jarEntryName);

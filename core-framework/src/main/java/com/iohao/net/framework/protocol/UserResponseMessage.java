@@ -27,7 +27,12 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * UserResponseMessage
+ * User-facing response message sent back through the external Netty pipeline to the client.
+ * <p>
+ * Extends {@link BarMessage} and implements {@link Response} to provide typed data extraction
+ * from the serialized payload. Decoding uses the external-facing codec obtained from
+ * {@link DataCodecManager}. The factory method {@link #of()} creates a new instance
+ * pre-configured with the business command code.
  *
  * @author 渔民小镇
  * @date 2021-12-20
@@ -36,12 +41,14 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public final class UserResponseMessage extends BarMessage implements Response {
+    /** {@inheritDoc} */
     @Override
     public <T> T getValue(Class<T> clazz) {
         var data = this.getData();
         return DataCodecManager.decode(data, clazz);
     }
 
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public <T> List<T> listValue(Class<? extends T> clazz) {
         var codec = DataCodecManager.getInternalDataCodec();
@@ -52,6 +59,11 @@ public final class UserResponseMessage extends BarMessage implements Response {
                 .toList();
     }
 
+    /**
+     * Create a new {@link UserResponseMessage} pre-configured with the business command code.
+     *
+     * @return a new user response message
+     */
     public static UserResponseMessage of() {
         var responseMessage = new UserResponseMessage();
         responseMessage.setCmdCode(CmdCodeConst.BIZ);

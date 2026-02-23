@@ -25,6 +25,8 @@ import io.netty.handler.codec.http.*;
 import io.netty.util.ReferenceCountUtil;
 
 /**
+ * Closes non-WebSocket HTTP requests after the WebSocket upgrade path handlers are installed.
+ *
  * @author 渔民小镇
  * @date 2025-06-28
  * @since 21.29

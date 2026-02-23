@@ -67,10 +67,23 @@ import java.util.stream.Collectors;
 public final class ThreadMonitorInOut implements ActionMethodInOut {
     final ThreadMonitorRegion region = new ThreadMonitorRegion();
 
+    /**
+     * No-op before action method execution.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckIn(FlowContext flowContext) {
     }
 
+    /**
+     * Record thread execution statistics after action method execution.
+     * <p>
+     * Captures the elapsed time and updates the {@link ThreadMonitorRegion} with the
+     * current thread executor's metrics.
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void fuckOut(FlowContext flowContext) {
         ThreadExecutor threadExecutor = flowContext.getCurrentThreadExecutor();
@@ -81,12 +94,18 @@ public final class ThreadMonitorInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - ThreadMonitorInOut - Thread monitoring related information
+     * Region that manages {@link ThreadMonitor} instances, one per business thread.
      */
     @Getter
     public static class ThreadMonitorRegion {
         final Map<String, ThreadMonitor> map = CollKit.ofConcurrentHashMap();
 
+        /**
+         * Get or create the {@link ThreadMonitor} for the given thread executor.
+         *
+         * @param threadExecutor the thread executor
+         * @return the monitoring record for the thread
+         */
         private ThreadMonitor getStatThread(ThreadExecutor threadExecutor) {
             String name = threadExecutor.name();
             ThreadMonitor threadMonitor = this.map.get(name);
@@ -99,10 +118,21 @@ public final class ThreadMonitorInOut implements ActionMethodInOut {
             return threadMonitor;
         }
 
+        /**
+         * Update the monitoring record for the given thread executor.
+         *
+         * @param time           elapsed time in milliseconds
+         * @param threadExecutor the thread executor
+         */
         void update(long time, ThreadExecutor threadExecutor) {
             this.getStatThread(threadExecutor).increment(time);
         }
 
+        /**
+         * Iterate over all non-empty thread monitors.
+         *
+         * @param action the action to perform for each monitor
+         */
         public void forEach(Consumer<ThreadMonitor> action) {
             this.map.values()
                     .stream()
@@ -121,7 +151,7 @@ public final class ThreadMonitorInOut implements ActionMethodInOut {
     }
 
     /**
-     * PluginInOut - ThreadMonitorInOut -Thread monitoring related information
+     * Per-thread monitoring record holding execution count, total time, and remaining queue size.
      *
      * @param name         Business thread name
      * @param executeCount Number of tasks already executed by the thread
@@ -130,15 +160,32 @@ public final class ThreadMonitorInOut implements ActionMethodInOut {
      */
     public record ThreadMonitor(String name, LongAdder executeCount, LongAdder totalTime, ThreadExecutor executor) {
 
+        /**
+         * Create a new monitoring record for the given thread.
+         *
+         * @param name     the thread name
+         * @param executor the thread executor
+         * @return a new {@code ThreadMonitor} instance
+         */
         public static ThreadMonitor create(String name, ThreadExecutor executor) {
             return new ThreadMonitor(name, new LongAdder(), new LongAdder(), executor);
         }
 
+        /**
+         * Increment the execution count and accumulate the elapsed time.
+         *
+         * @param time elapsed time in milliseconds
+         */
         void increment(long time) {
             this.executeCount.increment();
             this.totalTime.add(time);
         }
 
+        /**
+         * Check whether this monitor has recorded any executions.
+         *
+         * @return {@code true} if at least one task has been executed
+         */
         boolean notEmpty() {
             return this.executeCount.sum() > 0;
         }
@@ -163,7 +210,7 @@ public final class ThreadMonitorInOut implements ActionMethodInOut {
                     .orElse(0);
         }
 
-        /** 业务线程[%s] 共执行了 %s 次业务，平均耗时 %d ms, 剩余 %d 个任务未执行 */
+        /** Business thread [%s] executed %s tasks in total, average time cost %d ms, %d tasks remaining */
         private static final String threadMonitorInOutThreadMonitor = Bundle.getMessage(MessageKey.threadMonitorInOutThreadMonitor);
 
         @NonNull

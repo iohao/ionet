@@ -25,7 +25,10 @@ import lombok.experimental.FieldDefaults;
 import java.util.concurrent.*;
 
 /**
- * AbstractThreadExecutorRegion
+ * Abstract base for thread executor regions that distribute tasks across a fixed pool of executors.
+ * <p>
+ * Subclasses define how an index maps to a specific {@link ThreadExecutor} and may override
+ * {@link #createExecutorService(String)} to customize the underlying executor (e.g. virtual threads).
  *
  * @author 渔民小镇
  * @date 2023-12-01
@@ -39,6 +42,15 @@ abstract sealed class AbstractThreadExecutorRegion implements ThreadExecutorRegi
 
     final ThreadExecutor[] threadExecutors;
 
+    /**
+     * Create an executor region with the given thread name prefix and pool size.
+     * <p>
+     * Each executor in the pool is backed by a single-thread {@link java.util.concurrent.ExecutorService}
+     * created via {@link #createExecutorService(String)}, and is pre-warmed with a no-op task.
+     *
+     * @param threadName base name used to build each thread's name prefix
+     * @param executorSize number of {@link ThreadExecutor} instances in the pool
+     */
     AbstractThreadExecutorRegion(String threadName, int executorSize) {
         this.threadExecutors = new ThreadExecutor[executorSize];
 
@@ -54,6 +66,16 @@ abstract sealed class AbstractThreadExecutorRegion implements ThreadExecutorRegi
         }
     }
 
+    /**
+     * Create the {@link java.util.concurrent.ExecutorService} for a single {@link ThreadExecutor}.
+     * <p>
+     * The default implementation returns a single-thread {@link java.util.concurrent.ThreadPoolExecutor}
+     * with an unbounded queue. Subclasses may override this to provide alternative executors
+     * (e.g. virtual-thread-based).
+     *
+     * @param name the thread name prefix for the executor
+     * @return a new executor service instance
+     */
     protected ExecutorService createExecutorService(String name) {
         ThreadFactory threadFactory = new FixedNameThreadFactory(name);
 

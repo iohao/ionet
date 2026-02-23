@@ -27,7 +27,12 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 /**
- * CommonMessage
+ * Base class for internal messages exchanged between logic servers via Aeron.
+ * <p>
+ * Carries the common fields shared by all internal message types: the merged command
+ * route key ({@code cmdMerge}), trace identifier, server routing IDs (external, logic,
+ * source), network identifier, timing information, serialized payload data, and an
+ * optional error output. Subclasses extend this to add request- or response-specific fields.
  *
  * @author 渔民小镇
  * @date 2025-09-15
@@ -52,11 +57,13 @@ public class CommonMessage implements RemoteMessage {
 
     ErrorInformation outputError;
 
+    /** {@inheritDoc} */
     @Override
     public void setCmdInfo(CmdInfo cmdInfo) {
         this.cmdMerge = cmdInfo.cmdMerge();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CmdInfo getCmdInfo() {
         return CmdInfo.of(this.cmdMerge);

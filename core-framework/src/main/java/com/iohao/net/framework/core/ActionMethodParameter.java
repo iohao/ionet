@@ -31,7 +31,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * ActionMethodParameter
+ * Metadata about an action method parameter, including generic type resolution
+ * and JSR-380 validation group configuration.
  *
  * @author 渔民小镇
  * @date 2025-09-09
@@ -80,6 +81,12 @@ public final class ActionMethodParameter implements ActualParameter {
         return this.toString(false);
     }
 
+    /**
+     * Format the parameter type and name as a string, optionally using fully qualified class names.
+     *
+     * @param fullName {@code true} to use fully qualified names, {@code false} for simple names
+     * @return formatted parameter string (e.g. {@code "List<Foo> param"})
+     */
     public String toString(boolean fullName) {
         if (this.list) {
             String simpleNameParamClazz = this.parameterClass.getSimpleName();

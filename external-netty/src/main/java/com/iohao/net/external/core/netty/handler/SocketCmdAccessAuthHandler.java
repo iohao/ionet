@@ -32,7 +32,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Setter;
 
 /**
- * Route access authentication
+ * Netty handler that enforces external route access control and login requirements.
  *
  * @author 渔民小镇
  * @date 2023-05-05

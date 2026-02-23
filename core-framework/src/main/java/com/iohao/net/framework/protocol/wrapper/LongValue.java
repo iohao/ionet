@@ -26,7 +26,10 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 /**
- * long value
+ * Protocol wrapper for a single long value.
+ * <p>
+ * Wraps a primitive {@code long} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-10
@@ -35,10 +38,16 @@ import lombok.experimental.FieldDefaults;
 @ProtobufClass
 @FieldDefaults(level = AccessLevel.PUBLIC)
 public final class LongValue {
-    /** long 值 */
+    /** the wrapped long value */
     @Protobuf(fieldType = FieldType.SINT64, order = 1)
     public long value;
 
+    /**
+     * Create a LongValue wrapping the given long.
+     *
+     * @param value the long value to wrap
+     * @return a new LongValue instance
+     */
     public static LongValue of(long value) {
         var theValue = new LongValue();
         theValue.value = value;

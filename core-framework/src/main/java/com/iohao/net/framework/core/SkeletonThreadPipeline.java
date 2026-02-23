@@ -21,11 +21,19 @@ package com.iohao.net.framework.core;
 import com.iohao.net.framework.core.flow.FlowContext;
 
 /**
- * SkeletonThreadPipeline
+ * Strategy for dispatching a {@link FlowContext} to a thread executor within a {@link BarSkeleton}.
+ * <p>
+ * Implementations decide which executor to use and how to submit the request for processing.
  *
  * @author 渔民小镇
  * @date 2022-06-26
  */
 public interface SkeletonThreadPipeline {
+    /**
+     * Dispatch the given flow context for execution on an appropriate thread.
+     *
+     * @param barSkeleton the skeleton that will handle the request
+     * @param flowContext  the per-request flow context
+     */
     void execute(BarSkeleton barSkeleton, FlowContext flowContext);
 }

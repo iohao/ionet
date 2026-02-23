@@ -19,14 +19,26 @@
 package com.iohao.net.external.core.net.external;
 
 /**
- * OnExternal
+ * Handler for template-based internal external operations.
  *
  * @author 渔民小镇
  * @date 2025-09-10
  * @since 25.1
  */
 public interface OnExternal {
+    /**
+     * Process the template payload and write the result into the context response.
+     *
+     * @param payload serialized payload
+     * @param payloadLength valid payload length
+     * @param context execution context
+     */
     void process(byte[] payload, int payloadLength, OnExternalContext context);
 
+    /**
+     * Get the template id handled by this processor.
+     *
+     * @return template id
+     */
     int getTemplateId();
 }

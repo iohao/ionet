@@ -25,7 +25,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
- * Exclude heartbeat message
+ * Filters out heartbeat messages when no idle handler is configured.
  *
  * @author 渔民小镇
  * @date 2024-11-09

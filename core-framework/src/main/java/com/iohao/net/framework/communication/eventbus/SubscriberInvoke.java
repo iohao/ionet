@@ -19,7 +19,7 @@
 package com.iohao.net.framework.communication.eventbus;
 
 /**
- * Subscriber execution
+ * Strategy interface for invoking a subscriber method when an event is dispatched.
  *
  * @author 渔民小镇
  * @date 2023-12-24

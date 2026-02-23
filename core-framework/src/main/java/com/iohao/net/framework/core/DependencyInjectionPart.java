@@ -24,7 +24,11 @@ import lombok.experimental.FieldDefaults;
 import java.lang.annotation.Annotation;
 
 /**
- * Part for Dependency Injection, often used for integrating third-party frameworks
+ * Singleton bridge for third-party dependency injection frameworks (e.g. Spring).
+ * <p>
+ * When {@link #injection} is {@code true}, controller instances are obtained from
+ * the external container via the configured {@link ActionFactoryBean} instead of
+ * being instantiated directly by the framework.
  *
  * @author 渔民小镇
  * @date 2022-10-25
@@ -41,14 +45,34 @@ public final class DependencyInjectionPart {
     /** The currently used ActionFactoryBean */
     ActionFactoryBean<?> actionFactoryBean;
 
+    /**
+     * Check whether the given controller class is managed by the external container.
+     *
+     * @param controllerClazz the controller class to check
+     * @return {@code true} if the class carries the container annotation
+     */
     public boolean deliveryContainer(Class<?> controllerClazz) {
         return controllerClazz.getAnnotation(annotationClass) != null;
     }
 
+    /**
+     * Obtain a controller bean from the external container for the given action command.
+     *
+     * @param actionCommand the action command whose controller is requested
+     * @param <T>           the controller type
+     * @return the controller instance
+     */
     public <T> T getBean(ActionCommand actionCommand) {
         return (T) actionFactoryBean.getBean(actionCommand);
     }
 
+    /**
+     * Obtain a controller bean from the external container by class.
+     *
+     * @param actionControllerClazz the controller class
+     * @param <T>                   the controller type
+     * @return the controller instance
+     */
     public <T> T getBean(Class<?> actionControllerClazz) {
         return (T) actionFactoryBean.getBean(actionControllerClazz);
     }
@@ -56,10 +80,16 @@ public final class DependencyInjectionPart {
     private DependencyInjectionPart() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the global {@link DependencyInjectionPart}
+     */
     public static DependencyInjectionPart me() {
         return Holder.ME;
     }
 
+    /** Lazy holder for the singleton instance. */
     private static class Holder {
         static final DependencyInjectionPart ME = new DependencyInjectionPart();
     }

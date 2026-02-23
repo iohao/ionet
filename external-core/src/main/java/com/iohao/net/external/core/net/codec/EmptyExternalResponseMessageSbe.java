@@ -25,6 +25,7 @@ import com.iohao.net.sbe.EmptyExternalResponseMessageEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
+ * SBE encoder for {@link EmptyExternalResponseMessage}.
  *
  * @author 渔民小镇
  * @date 2025-09-18

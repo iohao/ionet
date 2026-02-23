@@ -21,6 +21,8 @@ package com.iohao.net.framework.core.flow;
 import com.iohao.net.framework.communication.LogicCallCommunicationDecorator;
 
 /**
+ * Flow-level cross-logic-server call communication. Delegates to
+ * {@link LogicCallCommunicationDecorator}.
  *
  * @author 渔民小镇
  * @date 2025-10-09

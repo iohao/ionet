@@ -29,7 +29,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Setter;
 
 /**
- * UserSessionHandler
+ * Creates and removes {@link SocketUserSession} instances on Netty channel lifecycle events.
  *
  * @author 渔民小镇
  * @date 2023-02-19
@@ -54,7 +54,7 @@ public final class SocketUserSessionHandler extends ChannelInboundHandlerAdapter
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         int id = server.id();
-        // Add to session management
+        // Register the new channel immediately so downstream handlers can resolve the session.
         SocketUserSession userSession = userSessions.add(ctx);
         userSession.setExternalServerId(id);
 
@@ -63,7 +63,7 @@ public final class SocketUserSessionHandler extends ChannelInboundHandlerAdapter
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        // Remove from session management
+        // Clean up session state when the channel closes normally.
         var userSession = this.userSessions.getUserSession(ctx);
         this.userSessions.removeUserSession(userSession);
 

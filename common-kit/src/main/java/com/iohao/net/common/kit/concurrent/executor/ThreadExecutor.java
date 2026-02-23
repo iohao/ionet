@@ -66,6 +66,13 @@ public record ThreadExecutor(String name, Executor executor, int threadNo) {
         });
     }
 
+    /**
+     * Get the current size of the work queue of the underlying executor.
+     * <p>
+     * Returns 0 if the executor is not a {@link ThreadPoolExecutor} (e.g. a virtual-thread executor).
+     *
+     * @return the number of tasks waiting in the work queue, or 0 if not applicable
+     */
     public int getWorkQueue() {
         if (this.executor instanceof ThreadPoolExecutor threadPoolExecutor) {
             return threadPoolExecutor.getQueue().size();

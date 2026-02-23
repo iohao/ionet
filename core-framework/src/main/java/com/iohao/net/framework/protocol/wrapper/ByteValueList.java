@@ -31,7 +31,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * object
+ * Protocol wrapper for a list of byte array values.
+ * <p>
+ * Wraps a {@link List} of {@code byte[]} for protobuf serialization. Each element in the list
+ * is an individually encoded object, enabling transport of heterogeneous or complex object lists
+ * over the wire. An empty singleton is cached for the no-data case.
  *
  * @author 渔民小镇
  * @date 2023-04-17
@@ -39,13 +43,19 @@ import java.util.List;
 @ToString
 @ProtobufClass
 public final class ByteValueList {
-    /** byte[] List */
+    /** the wrapped list of encoded byte arrays */
     @Protobuf(fieldType = FieldType.BYTES, order = 1)
     public List<byte[]> values;
 
     @Ignore
     private static final ByteValueList empty = new ByteValueList();
 
+    /**
+     * Create a ByteValueList from pre-encoded byte arrays.
+     *
+     * @param values the list of byte arrays
+     * @return a new ByteValueList, or an empty instance if the list is empty
+     */
     private static ByteValueList ofBytes(List<byte[]> values) {
         if (CollKit.isEmpty(values)) {
             return new ByteValueList();
@@ -56,10 +66,25 @@ public final class ByteValueList {
         return theValue;
     }
 
+    /**
+     * Encode each element in the collection using the default codec and wrap the results.
+     *
+     * @param values the collection of objects to encode
+     * @param <T>    the element type
+     * @return a ByteValueList containing the encoded byte arrays
+     */
     public static <T> ByteValueList of(Collection<T> values) {
         return of(values, DataCodecManager.getDataCodec());
     }
 
+    /**
+     * Encode each element in the collection using the specified codec and wrap the results.
+     *
+     * @param values the collection of objects to encode
+     * @param codec  the codec to use for encoding each element
+     * @param <T>    the element type
+     * @return a ByteValueList containing the encoded byte arrays, or a cached empty instance
+     */
     public static <T> ByteValueList of(Collection<T> values, DataCodec codec) {
         if (CollKit.isEmpty(values)) {
             return empty;

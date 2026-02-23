@@ -21,7 +21,7 @@ package com.iohao.net.framework.annotations;
 import java.lang.annotation.*;
 
 /**
- * ActionMethod - subCmd
+ * Marks a method within an {@link ActionController} as a request handler for a specific sub-command.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -31,9 +31,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface ActionMethod {
     /**
-     * subCmd
+     * The sub-command ID for this action method.
      *
-     * @return subCmd
+     * @return the subCmd value
      */
     int value();
 }

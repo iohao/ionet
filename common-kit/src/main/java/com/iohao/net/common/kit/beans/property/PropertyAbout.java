@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * Internal helper that tracks property value changes and dispatches events to a single listener.
+ *
+ * @param <T> the type of the observed property value
  * @author 渔民小镇
  * @date 2024-04-17
  */
@@ -90,10 +93,20 @@ abstract class ChangeHelper<T> {
     }
 }
 
+/**
+ * Internal list of {@link ChangeHelper} instances that manages listener registration and event dispatching.
+ *
+ * @param <T> the type of the observed property value
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE)
 final class ChangeHelperList<T> {
     List<ChangeHelper<? super T>> list;
 
+    /**
+     * Add a pre-built change helper to the internal list.
+     *
+     * @param helper the change helper to add
+     */
     void addListener(ChangeHelper<? super T> helper) {
         if (Objects.isNull(this.list)) {
             this.list = new CopyOnWriteArrayList<>();
@@ -102,6 +115,11 @@ final class ChangeHelperList<T> {
         this.list.add(helper);
     }
 
+    /**
+     * Remove the change helper associated with the given listener.
+     *
+     * @param listener the listener whose helper should be removed
+     */
     void removeListener(PropertyChangeListener<? super T> listener) {
         if (Objects.isNull(this.list) || Objects.isNull(listener)) {
             return;
@@ -111,6 +129,12 @@ final class ChangeHelperList<T> {
         this.list.remove(helper);
     }
 
+    /**
+     * Create and add a change helper for the given observable and listener.
+     *
+     * @param observable the property being observed
+     * @param listener   the listener to notify on value changes
+     */
     void addListener(PropertyValueObservable<T> observable, PropertyChangeListener<? super T> listener) {
 
         if (observable == null || listener == null) {
@@ -121,6 +145,9 @@ final class ChangeHelperList<T> {
         this.addListener(helper);
     }
 
+    /**
+     * Fire value change events to all registered listeners.
+     */
     void fireValueChangedEvent() {
         if (Objects.isNull(this.list)) {
             return;

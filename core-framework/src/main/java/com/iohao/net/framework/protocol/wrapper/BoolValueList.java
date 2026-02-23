@@ -26,7 +26,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * boolean list
+ * Protocol wrapper for a list of boolean values.
+ * <p>
+ * Wraps a {@link List} of {@link Boolean} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-07
@@ -34,10 +37,16 @@ import java.util.List;
 @ToString
 @ProtobufClass
 public final class BoolValueList {
-    /** boolList */
+    /** the wrapped list of boolean values */
     @Protobuf(fieldType = FieldType.BOOL, order = 1)
     public List<Boolean> values;
 
+    /**
+     * Create a BoolValueList wrapping the given list of booleans.
+     *
+     * @param values the list of boolean values to wrap
+     * @return a new BoolValueList instance
+     */
     public static BoolValueList of(List<Boolean> values) {
         var theValue = new BoolValueList();
         theValue.values = values;

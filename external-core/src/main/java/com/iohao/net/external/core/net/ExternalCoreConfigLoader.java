@@ -12,7 +12,13 @@ import com.iohao.net.common.SbeMessageManager;
 import com.iohao.net.external.core.net.external.*;
 import com.iohao.net.external.core.net.fragment.*;
 
+/**
+ * Registers external-core SBE decoders and Aeron fragment handlers.
+ */
 public class ExternalCoreConfigLoader implements CoreConfigLoader {
+    /**
+     * Register all external-core runtime integrations.
+     */
     @Override
     public void config() {
         configSBE();
@@ -20,12 +26,14 @@ public class ExternalCoreConfigLoader implements CoreConfigLoader {
         configOnExternal();
     }
 
+    /** Register SBE message codecs used by external-core messages. */
     void configSBE() {
         SbeMessageManager.register(ExternalMessage.class, new CommunicationMessageSbe());
         SbeMessageManager.register(ExternalResponseMessage.class, new ExternalResponseMessageSbe());
         SbeMessageManager.register(EmptyExternalResponseMessage.class, new EmptyExternalResponseMessageSbe());
     }
 
+    /** Register Aeron fragment consumers for external message distribution. */
     void configOnFragment() {
         OnFragmentManager.register(new BroadcastMulticastMessageOnFragment());
         OnFragmentManager.register(new BroadcastUserMessageOnFragment());
@@ -34,6 +42,7 @@ public class ExternalCoreConfigLoader implements CoreConfigLoader {
         OnFragmentManager.register(new ExternalRequestMessageOnFragment());
     }
 
+    /** Register template-based internal external operations (set userId, force offline, etc.). */
     void configOnExternal() {
         OnExternalManager.register(new SettingUserIdOnExternal());
         OnExternalManager.register(new AttachmentUpdateOnExternal());

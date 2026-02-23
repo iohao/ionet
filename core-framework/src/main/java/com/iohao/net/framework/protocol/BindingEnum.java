@@ -21,7 +21,10 @@ package com.iohao.net.framework.protocol;
 import lombok.Getter;
 
 /**
- * Dynamic Binding Enum for Logic Server
+ * Enumeration of dynamic binding operations for logic server assignment.
+ * <p>
+ * Controls how a player's set of bound logic servers is modified when
+ * a binding request is processed.
  *
  * @author 渔民小镇
  * @date 2023-06-07
@@ -78,6 +81,12 @@ public enum BindingEnum {
         this.value = value;
     }
 
+    /**
+     * Resolve a {@link BindingEnum} from its integer value.
+     *
+     * @param value the integer value (0=COVER, 1=APPEND, 2=REMOVE, other=CLEAR)
+     * @return the corresponding enum constant
+     */
     public static BindingEnum ofValue(int value) {
         return switch (value) {
             case 0 -> COVER;

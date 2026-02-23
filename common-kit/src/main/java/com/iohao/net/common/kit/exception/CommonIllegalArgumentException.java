@@ -19,17 +19,28 @@
 package com.iohao.net.common.kit.exception;
 
 /**
- * IllegalArgumentException
+ * Common illegal argument exception used throughout the ionet framework.
  *
  * @author 渔民小镇
  * @date 2024-08-02
  * @since 21.14
  */
 public class CommonIllegalArgumentException extends IllegalArgumentException {
+    /**
+     * Create a new instance with the given detail message.
+     *
+     * @param s the detail message
+     */
     public CommonIllegalArgumentException(String s) {
         super(s);
     }
 
+    /**
+     * Create a new instance with the given detail message and cause.
+     *
+     * @param message the detail message
+     * @param cause   the cause
+     */
     public CommonIllegalArgumentException(String message, Throwable cause) {
         super(message, cause);
     }

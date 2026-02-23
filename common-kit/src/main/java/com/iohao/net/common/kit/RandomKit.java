@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 /**
- * RandomKit
+ * Random number generation utilities.
  *
  * @author 渔民小镇
  * @date 2022-07-14
@@ -131,6 +131,13 @@ public class RandomKit {
         return generator.nextBoolean();
     }
 
+    /**
+     * Select a random element from the given list.
+     *
+     * @param list the list to pick from
+     * @param <T>  the element type
+     * @return a randomly selected element
+     */
     public <T> T randomEle(List<T> list) {
         int size = list.size();
         return size == 1
@@ -138,18 +145,36 @@ public class RandomKit {
                 : list.get(randomInt(size));
     }
 
+    /**
+     * Select a random element from the given array.
+     *
+     * @param array the array to pick from
+     * @param <T>   the element type
+     * @return a randomly selected element
+     */
     public <T> T randomEle(@NonNull T[] array) {
         return array.length == 1
                 ? array[0]
                 : array[randomInt(array.length)];
     }
 
+    /**
+     * Select a random element from the given int array.
+     *
+     * @param array the int array to pick from
+     * @return a randomly selected element
+     */
     public int randomEle(int[] array) {
         return array.length == 1
                 ? array[0]
                 : array[randomInt(array.length)];
     }
 
+    /**
+     * Generate a random double value in the range [0.0, 1.0).
+     *
+     * @return a random double
+     */
     public double randomDouble() {
         return generator.nextDouble();
     }

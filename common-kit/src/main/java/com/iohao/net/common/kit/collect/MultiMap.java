@@ -23,6 +23,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A map that associates each key with a collection of values.
+ * Base interface for {@link ListMultiMap} and {@link SetMultiMap}.
+ *
  * @author 渔民小镇
  * @date 2023-12-07
  */
@@ -96,14 +99,31 @@ interface MultiMap<K, V> {
         return collection.add(value);
     }
 
+    /**
+     * Check whether this multimap contains no key-collection mappings.
+     *
+     * @return {@code true} if this multimap contains no mappings
+     */
     default boolean isEmpty() {
         return this.asMap().isEmpty();
     }
 
+    /**
+     * Check whether this multimap contains a mapping for the specified key.
+     *
+     * @param key the key to look up
+     * @return {@code true} if this multimap contains at least one mapping for the key
+     */
     default boolean containsKey(K key) {
         return this.asMap().containsKey(key);
     }
 
+    /**
+     * Check whether any collection in this multimap contains the specified value.
+     *
+     * @param value the value to search for across all collections
+     * @return {@code true} if the value is found in any collection
+     */
     default boolean containsValue(V value) {
         for (Collection<V> vs : this.asMap().values()) {
             if (vs.contains(value)) {
@@ -114,10 +134,18 @@ interface MultiMap<K, V> {
         return false;
     }
 
+    /**
+     * Remove all key-collection mappings from this multimap.
+     */
     default void clear() {
         this.asMap().clear();
     }
 
+    /**
+     * Return the set of keys that have at least one associated value.
+     *
+     * @return a set view of the keys contained in this multimap
+     */
     default Set<K> keySet() {
         return this.asMap().keySet();
     }

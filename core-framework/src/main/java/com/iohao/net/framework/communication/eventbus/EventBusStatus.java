@@ -19,12 +19,15 @@
 package com.iohao.net.framework.communication.eventbus;
 
 /**
+ * Lifecycle status of an EventBus instance.
  *
  * @author 渔民小镇
  * @date 2025-10-10
  * @since 25.1
  */
 public enum EventBusStatus {
+    /** The EventBus is in the registration phase, accepting subscriber registrations. */
     REGISTER,
+    /** The EventBus is running and actively dispatching events. */
     RUN
 }

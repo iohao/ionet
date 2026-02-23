@@ -27,7 +27,7 @@ import lombok.experimental.UtilityClass;
 
 
 /**
- * ValidatorKit
+ * Jakarta Bean Validation utilities for validating action method parameters.
  *
  * @author 渔民小镇
  * @date 2022-01-16
@@ -37,6 +37,13 @@ public class ValidatorKit {
     @Setter
     private ParameterValidator validator = new JakartaValidator();
 
+    /**
+     * Validate the given object against the specified validation groups.
+     *
+     * @param data   the object to validate
+     * @param groups the validation groups to apply
+     * @return the first violation message, or {@code null} if valid
+     */
     public String validate(Object data, Class<?>... groups) {
         return validator.validate(data, groups);
     }

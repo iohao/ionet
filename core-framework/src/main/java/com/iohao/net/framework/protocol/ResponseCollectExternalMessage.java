@@ -26,7 +26,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 /**
- * 同时访问多个对外服
+ * Default implementation of {@link ResponseCollectExternal} that stores
+ * aggregated responses collected from multiple external (Netty) servers.
  *
  * @author 渔民小镇
  * @date 2022-07-27
@@ -35,5 +36,6 @@ import java.util.List;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class ResponseCollectExternalMessage implements ResponseCollectExternal {
+    /** Individual responses collected from external servers. */
     List<ExternalResponse> responseList;
 }

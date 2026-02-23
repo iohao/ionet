@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/// AttrOptionDynamic
+/// Interface for objects that support dynamic, type-safe attributes.
 /// ```java
 /// AttrOptionDynamic options = ...;
 /// AttrOption<Long> timeKey = AttrOption.valueOf("myLongValue");

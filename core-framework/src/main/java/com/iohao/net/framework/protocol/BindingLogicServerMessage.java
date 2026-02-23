@@ -34,7 +34,11 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * BindingLogicServerMessage
+ * Message that requests a dynamic binding change between users and logic servers.
+ * <p>
+ * Carries the target user ids, logic server ids, and the {@link BindingEnum} operation
+ * that determines how the binding set is modified (cover, append, remove, or clear).
+ * Instances are created via the fluent {@link Builder}.
  *
  * @author 渔民小镇
  * @date 2025-09-18
@@ -44,16 +48,27 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class BindingLogicServerMessage {
+    /** Correlation id for asynchronous request/response matching. */
     @Setter
     long futureId;
+    /** Network id of the originating server. */
     int sourceNetId;
+    /** Identifier of the external server that initiated the binding. */
     @Setter
     int externalServerId;
 
+    /** User ids affected by this binding operation. */
     long[] userIds;
+    /** Logic server ids involved in this binding operation. */
     int[] logicServerIds;
+    /** The binding operation to perform. */
     BindingEnum operation;
 
+    /**
+     * Create a shallow clone of this message, copying all fields except futureId and externalServerId.
+     *
+     * @return a new {@link BindingLogicServerMessage} with the same core field values
+     */
     public BindingLogicServerMessage ofClone() {
         var message = new BindingLogicServerMessage();
         message.sourceNetId = this.sourceNetId;
@@ -64,10 +79,21 @@ public final class BindingLogicServerMessage {
         return message;
     }
 
+    /**
+     * Create a new {@link Builder} for the given binding operation.
+     *
+     * @param operation the binding operation type (cover, append, remove, or clear)
+     * @return a new builder instance
+     */
     public static Builder builder(BindingEnum operation) {
         return new Builder(operation);
     }
 
+    /**
+     * Fluent builder for constructing {@link BindingLogicServerMessage} instances.
+     * <p>
+     * At least one user id must be added before calling {@link #build()}.
+     */
     @Setter
     @Accessors(chain = true)
     @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -84,6 +110,12 @@ public final class BindingLogicServerMessage {
             this.operation = operation;
         }
 
+        /**
+         * Build the {@link BindingLogicServerMessage}.
+         *
+         * @return a new message instance
+         * @throws IllegalArgumentException if no user ids have been added
+         */
         public BindingLogicServerMessage build() {
 
 
@@ -101,16 +133,34 @@ public final class BindingLogicServerMessage {
             return message;
         }
 
+        /**
+         * Add a single user id.
+         *
+         * @param userId the user id
+         * @return this builder
+         */
         public Builder addUserId(long userId) {
             this.userIdSet.add(userId);
             return this;
         }
 
+        /**
+         * Add multiple user ids from a collection.
+         *
+         * @param userIds the user ids to add
+         * @return this builder
+         */
         public Builder addUserId(Collection<Long> userIds) {
             this.userIdSet.addAll(userIds);
             return this;
         }
 
+        /**
+         * Add multiple user ids from an array.
+         *
+         * @param userIds the user ids to add
+         * @return this builder
+         */
         public Builder addUserId(long[] userIds) {
             for (long userId : userIds) {
                 this.userIdSet.add(userId);
@@ -119,16 +169,34 @@ public final class BindingLogicServerMessage {
             return this;
         }
 
+        /**
+         * Add a single logic server id.
+         *
+         * @param logicServerId the logic server id
+         * @return this builder
+         */
         public Builder addLogicServerId(int logicServerId) {
             this.logicServerIdSet.add(logicServerId);
             return this;
         }
 
+        /**
+         * Add multiple logic server ids from a collection.
+         *
+         * @param logicServerIds the logic server ids to add
+         * @return this builder
+         */
         public Builder addLogicServerId(Collection<Integer> logicServerIds) {
             this.logicServerIdSet.addAll(logicServerIds);
             return this;
         }
 
+        /**
+         * Add multiple logic server ids from an array.
+         *
+         * @param logicServerIds the logic server ids to add
+         * @return this builder
+         */
         public Builder addLogicServerId(int[] logicServerIds) {
             for (int logicServerId : logicServerIds) {
                 this.logicServerIdSet.add(logicServerId);

@@ -34,15 +34,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.ToIntFunction;
 
 /**
- * DocumentHelper
+ * Central helper for collecting action documentation, broadcast documents, error codes,
+ * and triggering document generation.
  * <p>
- * for example
+ * Usage example:
  * <pre>{@code
- *     // 添加自定义的文档生成器
+ *     // Add a custom document generator
  *     DocumentHelper.addDocumentGenerate(new YourDocumentGenerate());
- *     // 添加枚举错误码 class，用于生成错误码相关信息
+ *     // Add error code enum class for error code documentation
  *     DocumentHelper.addErrorCodeClass(YourErrorCode.class);
- *     // 生成文档
+ *     // Generate documents
  *     DocumentHelper.generateDocument();
  * }</pre>
  *
@@ -53,65 +54,65 @@ import java.util.function.ToIntFunction;
 @UtilityClass
 public class DocumentHelper {
     /**
-     * action 文档相关信息
+     * Action documentation map.
      * <pre>
-     *      key : action controller
-     *      value : action 文档
+     *      key : action controller class
+     *      value : action doc
      *  </pre>
      */
     private final Map<Class<?>, ActionDoc> actionDocMap = CollKit.ofConcurrentHashMap();
-    /** 错误码枚举类信息，用于生成错误码相关信息 */
+    /** Error code enum classes used for generating error code documentation. */
     private final Set<Class<? extends ErrorInformation>> errorCodeClassSet = CollKit.ofConcurrentSet();
     private final Set<DocumentGenerate> documentGenerateSet = CollKit.ofConcurrentSet();
     private final List<BroadcastDocument> broadcastDocumentList = new CopyOnWriteArrayList<>();
 
-    /** true 生成文档 */
+    /** true to enable document generation. */
     private boolean generateDoc = true;
     private boolean once = true;
-    /** 文档路由访问权限控制 */
+    /** Access authentication control for document routes. */
     @Getter
     @Setter
     private DocumentAccessAuthentication documentAccessAuthentication = cmdMerge -> false;
 
     /**
-     * 当为 false 时，将不会生成文档
+     * Enable or disable document generation.
      *
-     * @param generateDoc generateDoc
+     * @param generateDoc false to suppress document generation
      */
     public void setGenerateDoc(boolean generateDoc) {
         DocumentHelper.generateDoc = generateDoc;
     }
 
     /**
-     * 对接文档生成
+     * Trigger document generation (idempotent -- only runs once).
      */
     public void generateDocument() {
         if (!DocumentHelper.generateDoc || !once) {
             return;
         }
 
-        // 只生成一次
+        // generate only once
         once = false;
 
         if (!CoreGlobalConfig.setting.parseDoc) {
             throw new RuntimeException("CoreGlobalConfig.setting.parseDoc must be true!");
         }
 
-        // 文档解析
+        // analyse documents
         Document document = analyse();
 
-        // 文档生成
+        // generate documents
         documentGenerateSet.forEach(documentGenerate -> documentGenerate.generate(document));
     }
 
     private Document analyse() {
-        // 添加文本文档解析器
+        // add text document generator
         DocumentHelper.addDocumentGenerate(new TextDocumentGenerate());
 
         Document document = new Document();
 
-        // ------- 错误码解析 -------
-        // 框架默认提供的错误码
+        // ------- error code analysis -------
+        // built-in error codes provided by the framework
         DocumentHelper.addErrorCodeClass(ActionErrorEnum.class);
 
         document.errorCodeDocumentList = DocumentHelper.errorCodeClassSet
@@ -120,7 +121,7 @@ public class DocumentHelper {
                 .sorted(Comparator.comparingInt(o -> o.value))
                 .toList();
 
-        // ------- 广播解析 -------
+        // ------- broadcast analysis -------
         document.broadcastDocumentList = DocumentHelper.broadcastDocumentList;
         document.broadcastDocumentList.sort(Comparator.comparingInt(BroadcastDocument::getCmdMerge));
         document.broadcastDocumentList
@@ -128,13 +129,13 @@ public class DocumentHelper {
                 .filter(broadcastDocument -> Objects.nonNull(broadcastDocument.dataClass))
                 .filter(broadcastDocument -> StrKit.isEmpty(broadcastDocument.dataDescription))
                 .forEach(broadcastDocument -> {
-                    // 广播业务数据解析，使用类信息的文档注释
+                    // resolve broadcast data description from class-level Javadoc comment
                     Class<?> dataClass = broadcastDocument.dataClass;
                     JavaClass javaClass = DocumentAnalyseKit.analyseJavaClass(dataClass).javaClass();
                     broadcastDocument.dataDescription = javaClass.getComment();
                 });
 
-        // ------- action 解析 -------
+        // ------- action analysis -------
         document.actionDocList = DocumentHelper.actionDocMap
                 .values()
                 .stream()
@@ -147,47 +148,47 @@ public class DocumentHelper {
     }
 
     /**
-     * 添加文档生成器，相同类型只能添加一个
+     * Register a document generator. Only one instance per type is kept.
      *
-     * @param documentGenerate 文档生成接口
+     * @param documentGenerate the document generator
      */
     public void addDocumentGenerate(DocumentGenerate documentGenerate) {
         documentGenerateSet.add(documentGenerate);
     }
 
     /**
-     * 添加枚举错误码 class
+     * Register an error code enum class for documentation.
      *
-     * @param clazz 枚举错误码 class
+     * @param clazz the error code enum class
      */
     public void addErrorCodeClass(Class<? extends ErrorInformation> clazz) {
         DocumentHelper.errorCodeClassSet.add(clazz);
     }
 
     /**
-     * 添加广播文档
+     * Register a broadcast document.
      *
-     * @param broadcastDocument broadcastDocument
+     * @param broadcastDocument the broadcast document
      */
     public void addBroadcastDocument(BroadcastDocument broadcastDocument) {
         DocumentHelper.broadcastDocumentList.add(broadcastDocument);
     }
 
     /**
-     * 添加广播文档
+     * Register a broadcast document from a builder.
      *
-     * @param broadcastDocumentBuilder broadcastDocumentBuilder
+     * @param broadcastDocumentBuilder the broadcast document builder
      */
     public void addBroadcastDocument(BroadcastDocumentBuilder broadcastDocumentBuilder) {
         addBroadcastDocument(broadcastDocumentBuilder.build());
     }
 
     /**
-     * 获取 ActionDoc，如果 ActionDoc 不存在则创建
+     * Obtain or create an {@link ActionDoc} for the given command and controller class.
      *
-     * @param cmd             主路由
-     * @param controllerClazz action class
-     * @return 一定不为 null
+     * @param cmd             the primary command ID
+     * @param controllerClazz the action controller class
+     * @return the existing or newly created {@link ActionDoc}, never null
      */
     public ActionDoc ofActionDoc(int cmd, Class<?> controllerClazz) {
         ActionDoc actionDocRegion = DocumentHelper.actionDocMap.get(controllerClazz);

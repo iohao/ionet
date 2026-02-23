@@ -24,7 +24,7 @@ import com.iohao.net.external.core.config.ExternalJoinEnum;
 import lombok.experimental.UtilityClass;
 
 /**
- * ExternalMapper
+ * Convenience factory for creating Netty-based external server builders.
  *
  * @author 渔民小镇
  * @date 2025-10-17
@@ -32,18 +32,37 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class ExternalMapper {
+    /** Factory used to create the concrete external server implementation. */
     public ExternalServerCreator externalServerCreator = DefaultExternalServer::new;
 
+    /**
+     * Create a builder preconfigured with the Netty external server creator.
+     *
+     * @return external server builder
+     */
     public ExternalServerBuilder builder() {
         var builder = new ExternalServerBuilder();
         builder.setExternalServerCreator(externalServerCreator);
         return builder;
     }
 
+    /**
+     * Create a WebSocket external server builder on the given port.
+     *
+     * @param port bind port
+     * @return external server builder
+     */
     public ExternalServerBuilder builder(int port) {
         return builder(port, ExternalJoinEnum.WEBSOCKET);
     }
 
+    /**
+     * Create an external server builder on the given port and transport type.
+     *
+     * @param port bind port
+     * @param joinEnum transport type
+     * @return external server builder
+     */
     public ExternalServerBuilder builder(int port, ExternalJoinEnum joinEnum) {
         var builder = builder();
         builder.setPort(port);

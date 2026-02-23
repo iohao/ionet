@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * AttrOptionDynamic
+ * Dynamic attribute system providing type-safe key-value storage via {@link com.iohao.net.common.kit.attr.AttrOption}.
  *
  * @author 渔民小镇
  * @date 2022-01-02

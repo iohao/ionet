@@ -33,33 +33,52 @@ import com.iohao.net.common.kit.CollKit;
 import java.util.List;
 
 /**
- * FlowExternalWriteCommunication
+ * Flow-level communication for writing response data back to the external client, supporting
+ * various data types and list encodings.
  *
  * @author 渔民小镇
  * @date 2025-10-09
  * @since 25.1
  */
 public interface FlowExternalWriteCommunication extends FlowCommon, ExternalCommunicationDecorator {
+    /** Write an int response message to the external client. @see #writeMessage(Object) */
     default void writeMessage(int data) {
         _writeMessage(data);
     }
 
+    /** Write a long response message to the external client. @see #writeMessage(Object) */
     default void writeMessage(long data) {
         _writeMessage(data);
     }
 
+    /** Write a boolean response message to the external client. @see #writeMessage(Object) */
     default void writeMessage(boolean data) {
         _writeMessage(data);
     }
 
+    /** Write a String response message to the external client. @see #writeMessage(Object) */
     default void writeMessage(String data) {
         _writeMessage(data);
     }
 
+    /**
+     * Write a response message with the given data to the external client.
+     * <p>
+     * The data is encoded using the appropriate {@link DataCodec} based on the communication type,
+     * wrapped in a response, and published to the external server via the communication aggregation.
+     *
+     * @param data the response data object to encode and send
+     */
     default void writeMessage(Object data) {
         _writeMessage(data);
     }
 
+    /**
+     * Write a response message containing a list of objects to the external client.
+     *
+     * @param dataList the list of objects to encode and send
+     * @see #writeMessage(Object)
+     */
     default void writeMessage(List<?> dataList) {
         var response = ofResponse();
 
@@ -77,6 +96,7 @@ public interface FlowExternalWriteCommunication extends FlowCommon, ExternalComm
         this.getCommunicationAggregation().publishMessageByNetId(netId, response);
     }
 
+    /** Create a response message appropriate for the current communication type. */
     private Response ofResponse() {
         Response response;
         var request = this.getRequest();
@@ -96,12 +116,14 @@ public interface FlowExternalWriteCommunication extends FlowCommon, ExternalComm
         return response;
     }
 
+    /** Get the data codec based on the current communication type. */
     private DataCodec getDataCodec() {
         return this.getCommunicationType() == CommunicationType.USER_REQUEST
                 ? DataCodecManager.getDataCodec()
                 : DataCodecManager.getInternalDataCodec();
     }
 
+    /** Internal helper that encodes a single data object and writes the response. */
     private void _writeMessage(Object data) {
 
         MethodParser methodParser = MethodParsers.getMethodParser(data.getClass());

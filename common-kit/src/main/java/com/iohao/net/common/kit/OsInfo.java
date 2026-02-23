@@ -23,7 +23,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * OsInfo
+ * Operating system detection utilities.
  *
  * @author 渔民小镇
  * @date 2025-08-27
@@ -32,13 +32,22 @@ import lombok.extern.slf4j.Slf4j;
 @UtilityClass
 @Slf4j(topic = IonetLogName.CommonStdout)
 public final class OsInfo {
+    /** The operating system name, or {@code null} if it could not be determined. */
     @Getter
     final String osName = getName();
+    /** {@code true} if the current OS is Linux. */
     @Getter
     final boolean linux = getOsMatches("Linux") || getOsMatches("LINUX");
+    /** {@code true} if the current OS is macOS. */
     @Getter
     final boolean mac = getOsMatches("Mac") || getOsMatches("Mac OS X");
 
+    /**
+     * Check whether the OS name starts with the given prefix.
+     *
+     * @param osNamePrefix the prefix to match against
+     * @return {@code true} if the OS name starts with the prefix
+     */
     private boolean getOsMatches(String osNamePrefix) {
         if (osName == null) {
             return false;
@@ -47,6 +56,11 @@ public final class OsInfo {
         return osName.startsWith(osNamePrefix);
     }
 
+    /**
+     * Retrieve the OS name from system properties, falling back to environment variables.
+     *
+     * @return the OS name, or {@code null} if unavailable
+     */
     private String getName() {
         String value = null;
         try {

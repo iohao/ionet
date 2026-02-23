@@ -25,6 +25,9 @@ import com.iohao.net.framework.protocol.wrapper.*;
 import java.util.Map;
 
 /**
+ * Default {@link CodeSuggest} implementation that recommends replacing wrapper types
+ * (e.g. {@link IntValue}) with their primitive or collection equivalents in action
+ * method parameters and return types.
  *
  * @author 渔民小镇
  * @date 2025-10-13

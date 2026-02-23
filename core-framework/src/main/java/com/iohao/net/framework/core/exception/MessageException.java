@@ -24,7 +24,8 @@ import java.io.Serial;
 import java.util.Objects;
 
 /**
- * MessageException
+ * Exception carrying an error code and message, thrown during action method processing
+ * to signal business errors to the client.
  *
  * @author 渔民小镇
  * @date 2021-12-20
@@ -37,17 +38,33 @@ public class MessageException extends RuntimeException {
     final int errorCode;
     ErrorInformation errorInformation;
 
+    /**
+     * Create with an error code and message.
+     *
+     * @param errorCode the error code to return to the client
+     * @param message   the error message describing the failure
+     */
     public MessageException(int errorCode, String message) {
 
         super(message);
         this.errorCode = errorCode;
     }
 
+    /**
+     * Create from an {@link ErrorInformation} instance.
+     *
+     * @param errorInformation the error information containing code and message
+     */
     public MessageException(ErrorInformation errorInformation) {
         this(errorInformation.getCode(), errorInformation.getMessage());
         this.errorInformation = errorInformation;
     }
 
+    /**
+     * Get the error information, lazily creating an internal instance if not set.
+     *
+     * @return the error information
+     */
     public ErrorInformation getErrorInformation() {
         return Objects.isNull(this.errorInformation)
                 ? this.errorInformation = new InternalError(errorCode, getMessage())

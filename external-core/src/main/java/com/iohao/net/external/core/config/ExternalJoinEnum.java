@@ -21,7 +21,7 @@ package com.iohao.net.external.core.config;
 import lombok.Getter;
 
 /**
- * Connection method
+ * External client transport types supported by the gateway.
  *
  * @author 渔民小镇
  * @date 2023-02-18
@@ -34,6 +34,7 @@ public enum ExternalJoinEnum {
     WEBSOCKET("WebSocket", 2),
     /** UDP socket */
     UDP("UDP", 3),
+    /** Custom external socket implementation. */
     EXT_SOCKET("ext socket", 4);
 
     final String name;
@@ -44,6 +45,12 @@ public enum ExternalJoinEnum {
         this.index = index;
     }
 
+    /**
+     * Compute the default port for this transport based on a shared base port.
+     *
+     * @param port base external port
+     * @return transport-specific port
+     */
     public int cocPort(int port) {
         return switch (this) {
             case TCP -> port + 1;

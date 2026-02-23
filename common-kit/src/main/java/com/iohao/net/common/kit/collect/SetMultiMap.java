@@ -23,10 +23,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * 线程安全的 SetMultiMap
- * <pre>
- *     value 为 set 集合实现
- * </pre>
+ * A thread-safe multimap that associates each key with a {@link java.util.Set} of values, ensuring uniqueness.
+ * <p>
  * for example
  * <pre>{@code
  * SetMultiMap<Integer, String> map = SetMultiMap.of();
@@ -89,6 +87,11 @@ public interface SetMultiMap<K, V> extends MultiMap<K, V> {
         return asMap().get(key);
     }
 
+    /**
+     * Return a set view of the key-set mappings contained in this multimap.
+     *
+     * @return a set of map entries where each value is a {@link Set} of elements
+     */
     Set<Map.Entry<K, Set<V>>> entrySet();
 
     /**

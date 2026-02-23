@@ -24,75 +24,142 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * BizDataCodec
+ * Strategy interface for encoding and decoding business data.
+ * <p>
+ * Provides methods to serialize objects to {@code byte[]} and deserialize {@code byte[]} back
+ * to typed objects. Default convenience methods handle primitive wrappers ({@link IntValue},
+ * {@link LongValue}, {@link BoolValue}, {@link StringValue}) and list wrappers
+ * ({@link IntValueList}, {@link LongValueList}, {@link BoolValueList}, {@link StringValueList},
+ * {@link ByteValueList}) transparently.
  *
  * @author 渔民小镇
  * @date 2022-05-18
  */
 public interface DataCodec {
     /**
-     * encode data
+     * Encode an object to a byte array.
      *
-     * @param data data
-     * @return bytes
+     * @param data the object to encode
+     * @return the encoded byte array
      */
     byte[] encode(Object data);
 
     /**
-     * decode data
+     * Decode a byte array into an object of the specified type.
      *
-     * @param data      data
-     * @param dataClass dataClass
-     * @param <T>       t
-     * @return data
+     * @param data      the byte array to decode
+     * @param dataClass the target class
+     * @param <T>       the target type
+     * @return the decoded object
      */
     <T> T decode(byte[] data, Class<T> dataClass);
 
     /**
-     * codecName
+     * Return the human-readable name of this codec.
      *
-     * @return codecName
+     * @return the codec name
      */
     default String codecName() {
         return this.getClass().getSimpleName();
     }
 
+    /**
+     * Encode an int value by wrapping it in {@link IntValue}.
+     *
+     * @param data the int value
+     * @return the encoded byte array
+     */
     default byte[] encode(int data) {
         return encode(IntValue.of(data));
     }
 
+    /**
+     * Encode a boolean value by wrapping it in {@link BoolValue}.
+     *
+     * @param data the boolean value
+     * @return the encoded byte array
+     */
     default byte[] encode(boolean data) {
         return encode(BoolValue.of(data));
     }
 
+    /**
+     * Encode a long value by wrapping it in {@link LongValue}.
+     *
+     * @param data the long value
+     * @return the encoded byte array
+     */
     default byte[] encode(long data) {
         return encode(LongValue.of(data));
     }
 
+    /**
+     * Encode a string value by wrapping it in {@link StringValue}.
+     *
+     * @param data the string value
+     * @return the encoded byte array
+     */
     default byte[] encode(String data) {
         return encode(StringValue.of(data));
     }
 
+    /**
+     * Encode a list of integers by wrapping it in {@link IntValueList}.
+     *
+     * @param dataList the list of integers
+     * @return the encoded byte array
+     */
     default byte[] encodeListInt(List<Integer> dataList) {
         return encode(IntValueList.of(dataList));
     }
 
+    /**
+     * Encode a list of booleans by wrapping it in {@link BoolValueList}.
+     *
+     * @param dataList the list of booleans
+     * @return the encoded byte array
+     */
     default byte[] encodeListBool(List<Boolean> dataList) {
         return encode(BoolValueList.of(dataList));
     }
 
+    /**
+     * Encode a list of longs by wrapping it in {@link LongValueList}.
+     *
+     * @param dataList the list of longs
+     * @return the encoded byte array
+     */
     default byte[] encodeListLong(List<Long> dataList) {
         return encode(LongValueList.of(dataList));
     }
 
+    /**
+     * Encode a list of strings by wrapping it in {@link StringValueList}.
+     *
+     * @param dataList the list of strings
+     * @return the encoded byte array
+     */
     default byte[] encodeListString(List<String> dataList) {
         return encode(StringValueList.of(dataList));
     }
 
+    /**
+     * Encode a collection of objects into a {@link ByteValueList} using the default codec.
+     *
+     * @param dataList the collection of objects to encode
+     * @return the encoded byte array
+     */
     default byte[] encodeList(Collection<?> dataList) {
         return encodeList(dataList, DataCodecManager.getDataCodec());
     }
 
+    /**
+     * Encode a collection of objects into a {@link ByteValueList} using the specified codec.
+     *
+     * @param dataList the collection of objects to encode
+     * @param codec    the codec to use for encoding each element
+     * @return the encoded byte array
+     */
     default byte[] encodeList(Collection<?> dataList, DataCodec codec) {
         return encode(ByteValueList.of(dataList, codec));
     }

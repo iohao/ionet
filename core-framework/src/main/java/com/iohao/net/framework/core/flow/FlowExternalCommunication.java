@@ -22,13 +22,22 @@ import com.iohao.net.framework.communication.ExternalCommunicationDecorator;
 import com.iohao.net.framework.protocol.ExternalRequestMessage;
 
 /**
- * FlowExternalCommunication
+ * Flow-level communication for sending requests to external servers.
  *
  * @author 渔民小镇
  * @date 2025-10-09
  * @since 25.1
  */
 public interface FlowExternalCommunication extends FlowCommon, ExternalCommunicationDecorator {
+    /**
+     * Create an {@link ExternalRequestMessage} targeting the specified external server template ID,
+     * with the given payload. Routing fields (user identity, trace ID, net ID, external server ID)
+     * are copied from the current request and server.
+     *
+     * @param templateId the external server template ID
+     * @param payload    the encoded byte payload (may be {@code null})
+     * @return a new ExternalRequestMessage with routing fields populated
+     */
     default ExternalRequestMessage ofExternalRequestMessage(int templateId, byte[] payload) {
         var message = new ExternalRequestMessage();
         message.setPayload(payload);

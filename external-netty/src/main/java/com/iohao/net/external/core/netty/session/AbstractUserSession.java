@@ -32,6 +32,8 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 /**
+ * Base Netty user session implementation with shared identity/attachment behavior.
+ *
  * @author 渔民小镇
  * @date 2023-05-28
  */
@@ -75,6 +77,11 @@ abstract class AbstractUserSession implements UserSession {
         }
     }
 
+    /**
+     * Mark the session as identity-verified when the business user id is assigned.
+     *
+     * @param userId business user id
+     */
     @Override
     public void setUserId(long userId) {
         this.userId = userId;

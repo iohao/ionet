@@ -21,7 +21,10 @@ package com.iohao.net.framework.protocol;
 import lombok.ToString;
 
 /**
- * BroadcastMulticastMessage
+ * Broadcast message targeting all connected users (multicast / global broadcast).
+ * <p>
+ * Extends {@link BroadcastMessage} without adding any additional fields. The external
+ * server delivers the payload to every currently connected user session.
  *
  * @author 渔民小镇
  * @date 2025-09-03

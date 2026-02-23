@@ -36,7 +36,7 @@ import org.agrona.concurrent.SnowflakeIdGenerator;
 import java.util.Objects;
 
 /**
- * Session managers for TCP and WebSocket
+ * Netty session manager for TCP and WebSocket external transports.
  *
  * @author 渔民小镇
  * @date 2023-02-18
@@ -55,6 +55,12 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
         }
     }
 
+    /**
+     * Add a newly connected channel as a user session and assign a generated channel-scoped id.
+     *
+     * @param channelHandlerContext netty channel context
+     * @return created user session
+     */
     @Override
     public SocketUserSession add(ChannelHandlerContext channelHandlerContext) {
 
@@ -95,7 +101,7 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
 
         this.userIdMap.put(userId, userSession);
 
-        // online
+        // Fire online hook only after the session is fully identity-verified.
         if (userSession.isVerifyIdentity()) {
             this.userHookInto(userSession);
         }

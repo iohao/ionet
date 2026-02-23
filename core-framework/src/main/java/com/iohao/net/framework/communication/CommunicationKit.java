@@ -29,7 +29,11 @@ import lombok.experimental.UtilityClass;
 import java.util.function.Supplier;
 
 /**
- * CommunicationKit
+ * Utility class providing static access to the global communication infrastructure.
+ * <p>
+ * Holds the singleton {@link CommunicationAggregation} and {@link Communication} instances,
+ * and offers convenience methods for common cross-server operations such as forced user
+ * offline and user existence checks.
  *
  * @author 渔民小镇
  * @date 2025-09-28
@@ -45,22 +49,45 @@ public final class CommunicationKit {
     @Setter
     Supplier<Communication> communicationSupplier = DefaultCommunication::new;
 
+    /**
+     * Set the global communication aggregation and initialize the communication instance.
+     *
+     * @param communicationAggregation the aggregation implementation to use
+     */
     public void setCommunicationAggregation(CommunicationAggregation communicationAggregation) {
         CommunicationKit.communicationAggregation = communicationAggregation;
         CommunicationKit.communication = communicationSupplier.get();
     }
 
+    /**
+     * Force a user offline by broadcasting a forced-offline request to all external servers.
+     *
+     * @param userId the ID of the user to disconnect
+     */
     public void forcedOffline(long userId) {
         var message = ofExternalRequestMessage(userId, OnExternalTemplateId.forcedOffline);
         communicationAggregation.callCollectExternal(message);
     }
 
+    /**
+     * Check whether a user is currently connected to any external server.
+     *
+     * @param userId the ID of the user to check
+     * @return {@code true} if the user exists on at least one external server
+     */
     public boolean existUser(long userId) {
         var message = ofExternalRequestMessage(userId, OnExternalTemplateId.existUser);
         var responseCollectExternal = communicationAggregation.callCollectExternal(message);
         return responseCollectExternal.anySuccess();
     }
 
+    /**
+     * Create an external request message for the given user and template.
+     *
+     * @param userId     the target user ID
+     * @param templateId the external template operation ID
+     * @return a new {@link ExternalRequestMessage} populated with user, template, net ID, and trace ID
+     */
     private ExternalRequestMessage ofExternalRequestMessage(long userId, int templateId) {
         var message = new ExternalRequestMessage();
         message.setPayload(userId);

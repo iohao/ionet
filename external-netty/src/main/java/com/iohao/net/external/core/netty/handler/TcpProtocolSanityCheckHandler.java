@@ -26,6 +26,8 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
+ * One-time guard that validates the first TCP length-prefixed frame header before normal decoding.
+ *
  * @author 渔民小镇
  * @date 2025-06-28
  * @since 21.29

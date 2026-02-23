@@ -29,7 +29,7 @@ public interface EventBusListener {
     /**
      * Subscriber exception handling
      *
-     * @param e               e
+     * @param e               the exception thrown by the subscriber
      * @param eventSource     Event source
      * @param eventBusMessage Event message
      */

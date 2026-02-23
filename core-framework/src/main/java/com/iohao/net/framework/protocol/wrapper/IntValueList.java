@@ -26,7 +26,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * int list
+ * Protocol wrapper for a list of int values.
+ * <p>
+ * Wraps a {@link List} of {@link Integer} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-10
@@ -34,10 +37,16 @@ import java.util.List;
 @ToString
 @ProtobufClass
 public final class IntValueList {
-    /** intList */
+    /** the wrapped list of int values */
     @Protobuf(fieldType = FieldType.SINT32, order = 1)
     public List<Integer> values;
 
+    /**
+     * Create an IntValueList wrapping the given list of integers.
+     *
+     * @param values the list of integer values to wrap
+     * @return a new IntValueList instance
+     */
     public static IntValueList of(List<Integer> values) {
         var theValue = new IntValueList();
         theValue.values = values;

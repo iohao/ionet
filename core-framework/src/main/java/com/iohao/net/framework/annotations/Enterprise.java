@@ -19,7 +19,7 @@
 package com.iohao.net.framework.annotations;
 
 /**
- * Enterprise
+ * Marker annotation indicating that the annotated element requires the Enterprise Edition.
  *
  * @author 渔民小镇
  * @date 2025-10-09

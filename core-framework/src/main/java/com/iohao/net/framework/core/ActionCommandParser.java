@@ -21,14 +21,25 @@ package com.iohao.net.framework.core;
 import java.util.Set;
 
 /**
- * ActionCommandParser
+ * Parse {@code @ActionController} annotated classes and build the corresponding
+ * {@link ActionCommandRegions} routing table.
  *
  * @author 渔民小镇
  * @date 2025-09-09
  * @since 25.1
  */
 public interface ActionCommandParser {
+    /**
+     * Return the action command regions built by this parser.
+     *
+     * @return the parsed action command regions
+     */
     ActionCommandRegions getActionCommandRegions();
 
+    /**
+     * Scan the given set of controller classes and register their action commands.
+     *
+     * @param classSet classes annotated with {@code @ActionController}
+     */
     void buildAction(Set<Class<?>> classSet);
 }

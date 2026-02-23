@@ -23,7 +23,12 @@ import lombok.experimental.UtilityClass;
 import java.util.*;
 
 /**
- * WrapperKit
+ * Utility class for protocol wrapper type resolution.
+ * <p>
+ * Maintains a registry of supported primitive/boxed types and their corresponding
+ * protocol wrapper classes ({@link IntValue}, {@link LongValue}, etc.). Provides
+ * lookup methods to determine whether a type is a supported wrapper type and to
+ * retrieve the associated {@link ValueRecord}.
  *
  * @author 渔民小镇
  * @date 2023-06-09
@@ -47,6 +52,12 @@ public class WrapperKit {
             StringValue.class
     );
 
+    /**
+     * Check whether the given class is not a supported wrapper type.
+     *
+     * @param clazz the class to check
+     * @return {@code true} if the class is not a supported wrapper type
+     */
     public boolean notSupport(Class<?> clazz) {
         return !wrapperTypeSet.contains(clazz);
     }
@@ -74,6 +85,12 @@ public class WrapperKit {
         refTypeMap.put(StringValue.class, stringRecord);
     }
 
+    /**
+     * Look up the {@link ValueRecord} for the given class.
+     *
+     * @param clazz the primitive, boxed, or wrapper class to look up
+     * @return an {@link Optional} containing the ValueRecord, or empty if not found
+     */
     public Optional<ValueRecord> optionalValueRecord(Class<?> clazz) {
         return Optional.ofNullable(refTypeMap.get(clazz));
     }

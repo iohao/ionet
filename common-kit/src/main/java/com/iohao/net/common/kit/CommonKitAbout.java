@@ -22,7 +22,11 @@ import lombok.experimental.UtilityClass;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Internal helper holding the global atomic counter for {@link OperationCode} assignment.
+ */
 @UtilityClass
 class OperationCodeKit {
+    /** Atomic counter that provides unique, auto-incrementing operation codes. */
     final AtomicInteger codeAtomic = new AtomicInteger(1);
 }

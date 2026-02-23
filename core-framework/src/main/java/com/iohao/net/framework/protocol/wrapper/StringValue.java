@@ -24,7 +24,10 @@ import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import lombok.ToString;
 
 /**
- * string value
+ * Protocol wrapper for a single String value.
+ * <p>
+ * Wraps a {@link String} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-05
@@ -32,10 +35,16 @@ import lombok.ToString;
 @ToString
 @ProtobufClass
 public final class StringValue {
-    /** string value */
+    /** the wrapped string value */
     @Protobuf(fieldType = FieldType.STRING, order = 1)
     public String value;
 
+    /**
+     * Create a StringValue wrapping the given string.
+     *
+     * @param value the string value to wrap
+     * @return a new StringValue instance
+     */
     public static StringValue of(String value) {
         var theValue = new StringValue();
         theValue.value = value;

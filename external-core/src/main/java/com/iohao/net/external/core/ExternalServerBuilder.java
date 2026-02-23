@@ -48,7 +48,7 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
- * ExternalServerBuilder
+ * Builder for assembling an external server and its runtime dependencies.
  *
  * @author 渔民小镇
  * @date 2023-02-19
@@ -74,6 +74,11 @@ public final class ExternalServerBuilder implements ExternalServerBuilderSetting
     MicroBootstrap microBootstrap;
     ExternalServerCreator externalServerCreator;
 
+    /**
+     * Build an {@link ExternalServer} with defaults, transport-specific settings, and injected dependencies.
+     *
+     * @return configured external server instance
+     */
     public ExternalServer build() {
         this.defaultSetting();
         // Generate a MicroBootstrapFlow, MicroBootstrap, UserSessions, PipelineCustom according to ExternalJoinEnum
@@ -120,6 +125,9 @@ public final class ExternalServerBuilder implements ExternalServerBuilderSetting
         );
     }
 
+    /**
+     * Fill missing builder values with framework defaults before transport-specific setup.
+     */
     private void defaultSetting() {
         Objects.requireNonNull(externalServerCreator);
 

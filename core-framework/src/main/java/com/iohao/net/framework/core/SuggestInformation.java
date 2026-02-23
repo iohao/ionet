@@ -30,7 +30,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * SuggestInformation
+ * Collects contextual information about an {@link ActionCommand} and formats
+ * code-improvement suggestions for display on the console.
  *
  * @author 渔民小镇
  * @date 2025-10-13
@@ -41,6 +42,11 @@ public final class SuggestInformation {
     final Map<String, Object> paramMap = new HashMap<>();
     final ActionCommand command;
 
+    /**
+     * Create a new suggestion context for the given action command.
+     *
+     * @param command the action command to inspect
+     */
     public SuggestInformation(ActionCommand command) {
         this.command = command;
         paramMap.put("codeSuggestTitle", Bundle.getMessage(MessageKey.codeSuggestTitle));
@@ -57,6 +63,11 @@ public final class SuggestInformation {
         paramMap.put("returnInfo", actionMethodReturn.toString());
     }
 
+    /**
+     * Format and print a suggestion message to standard output.
+     *
+     * @param text the suggestion text to display
+     */
     public void see(String text) {
         var template = """
                 ┏━━ {codeSuggestTitle}.({className}.java:{lineNumber}) ━━ [{returnInfo} {actionMethodName}({paramInfo})] ━━ {cmdInfo} ━━━━

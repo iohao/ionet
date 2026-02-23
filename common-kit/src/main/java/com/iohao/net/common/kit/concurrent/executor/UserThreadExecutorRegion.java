@@ -21,7 +21,10 @@ package com.iohao.net.common.kit.concurrent.executor;
 import com.iohao.net.common.kit.RuntimeKit;
 
 /**
- * UserThreadExecutorRegion
+ * A {@link ThreadExecutorRegion} that distributes tasks by user ID, ensuring same-user tasks
+ * execute on the same thread.
+ * <p>
+ * The user ID is mapped to an executor via a bitmask, so the pool size must be a power of two.
  *
  * @author 渔民小镇
  * @date 2023-12-01
@@ -29,11 +32,18 @@ import com.iohao.net.common.kit.RuntimeKit;
 final class UserThreadExecutorRegion extends AbstractThreadExecutorRegion {
     final int executorLength;
 
+    /** Create a region with a pool size equal to the nearest power-of-two of available processors. */
     UserThreadExecutorRegion() {
         super("User", RuntimeKit.availableProcessors2n);
         this.executorLength = RuntimeKit.availableProcessors2n - 1;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param userId the user identifier; tasks with the same user ID always run on the same executor
+     * @return the {@link ThreadExecutor} assigned to the given user ID
+     */
     @Override
     public ThreadExecutor getThreadExecutor(long userId) {
         return this.threadExecutors[(int) (userId & this.executorLength)];

@@ -22,30 +22,30 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
 
 /**
- * GroupChannelOption
+ * Provides OS-specific Netty event-loop groups and server channel class selection.
  *
  * @author 渔民小镇
  * @date 2023-02-18
  */
 public interface GroupChannelOption {
     /**
-     * EventLoopGroup bossGroup
+     * Create the boss event-loop group.
      *
-     * @return EventLoopGroup
+     * @return boss event-loop group
      */
     EventLoopGroup bossGroup();
 
     /**
-     * EventLoopGroup workerGroup
+     * Create the worker event-loop group.
      *
-     * @return EventLoopGroup
+     * @return worker event-loop group
      */
     EventLoopGroup workerGroup();
 
     /**
-     * channelClass
+     * Get the server channel implementation class.
      *
-     * @return channelClass
+     * @return server channel class
      */
     Class<? extends ServerChannel> channelClass();
 }

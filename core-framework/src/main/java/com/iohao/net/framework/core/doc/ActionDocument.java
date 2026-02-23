@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Action Document
+ * Aggregated documentation model for a single {@link ActionDoc}, containing the
+ * generated member-constant documents and method-level documents used for
+ * client SDK code generation.
  *
  * @author 渔民小镇
  * @date 2024-06-26

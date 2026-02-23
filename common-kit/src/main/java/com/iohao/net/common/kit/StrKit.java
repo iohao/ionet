@@ -24,12 +24,21 @@ import org.jspecify.annotations.NonNull;
 import java.util.Map;
 
 /**
+ * String manipulation utilities.
+ *
  * @author 渔民小镇
  * @date 2022-05-28
  */
 @UtilityClass
 public class StrKit {
 
+    /**
+     * Convert the first character of the string to upper case.
+     *
+     * @param value the source string
+     * @return the string with its first character converted to upper case,
+     *         or the original string if already upper case
+     */
     public String firstCharToUpperCase(String value) {
         char firstChar = value.charAt(0);
         if (firstChar >= 'a' && firstChar <= 'z') {
@@ -41,6 +50,13 @@ public class StrKit {
         return value;
     }
 
+    /**
+     * Convert the first character of the string to lower case.
+     *
+     * @param value the source string
+     * @return the string with its first character converted to lower case,
+     *         or the original string if already lower case
+     */
     public String firstCharToLowerCase(String value) {
         char firstChar = value.charAt(0);
         if (firstChar >= 'A' && firstChar <= 'Z') {
@@ -52,18 +68,46 @@ public class StrKit {
         return value;
     }
 
+    /**
+     * Check whether the string is {@code null} or blank (whitespace only).
+     *
+     * @param str the string to check
+     * @return {@code true} if the string is {@code null} or blank
+     */
     public boolean isEmpty(String str) {
         return str == null || str.isBlank();
     }
 
+    /**
+     * Check whether the character sequence is {@code null} or empty.
+     *
+     * @param str the character sequence to check
+     * @return {@code true} if the sequence is {@code null} or empty
+     */
     public boolean isEmpty(CharSequence str) {
         return str == null || str.isEmpty();
     }
 
+    /**
+     * Check whether the string is neither {@code null} nor blank.
+     *
+     * @param str the string to check
+     * @return {@code true} if the string is not {@code null} and not blank
+     */
     public boolean isNotEmpty(String str) {
         return !isEmpty(str);
     }
 
+    /**
+     * Replace {@code {key}} placeholders in the template with corresponding map values.
+     *
+     * <p>Entries whose value is {@code null} are skipped. All occurrences of each
+     * placeholder are replaced.
+     *
+     * @param template the template string containing {@code {key}} placeholders
+     * @param map      the key-value pairs used for substitution
+     * @return the formatted string with placeholders replaced
+     */
     public String format(@NonNull String template, @NonNull Map<?, ?> map) {
         if (template.isEmpty() || map.isEmpty()) {
             return template;

@@ -23,16 +23,31 @@ import com.iohao.net.framework.protocol.BroadcastUserMessage;
 import com.iohao.net.framework.protocol.BroadcastUserListMessage;
 
 /**
- * BroadcastCommunication
+ * Aggregate broadcast communication interface combining multicast, unicast, and user-list broadcast capabilities.
  *
  * @author 渔民小镇
  * @date 2025-09-07
  * @since 25.1
  */
 public interface BroadcastCommunication {
+    /**
+     * Broadcast a message to a single user (unicast).
+     *
+     * @param message the unicast broadcast message
+     */
     void broadcast(BroadcastUserMessage message);
 
+    /**
+     * Broadcast a message to a specific list of users.
+     *
+     * @param message the user-list broadcast message
+     */
     void broadcast(BroadcastUserListMessage message);
 
+    /**
+     * Broadcast a message to multiple recipients via multicast.
+     *
+     * @param message the multicast broadcast message
+     */
     void broadcast(BroadcastMulticastMessage message);
 }

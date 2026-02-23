@@ -75,6 +75,11 @@ import java.util.*;
  * @since 21
  */
 public interface EventBus {
+    /**
+     * Get the unique ID of this EventBus instance.
+     *
+     * @return the EventBus instance ID
+     */
     int getId();
 
     /**
@@ -364,6 +369,12 @@ public interface EventBus {
      */
     EventServerMessage getEventServerMessage();
 
+    /**
+     * Get the event source class for the given topic name.
+     *
+     * @param topic the topic name
+     * @return the event source class associated with the topic
+     */
     Class<?> getTopicClass(String topic);
 
     /**

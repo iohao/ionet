@@ -26,7 +26,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * string list
+ * Protocol wrapper for a list of String values.
+ * <p>
+ * Wraps a {@link List} of {@link String} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers.
  *
  * @author 渔民小镇
  * @date 2023-02-05
@@ -34,10 +37,16 @@ import java.util.List;
 @ToString
 @ProtobufClass
 public final class StringValueList {
-    /** string list */
+    /** the wrapped list of string values */
     @Protobuf(fieldType = FieldType.STRING, order = 1)
     public List<String> values;
 
+    /**
+     * Create a StringValueList wrapping the given list of strings.
+     *
+     * @param values the list of string values to wrap
+     * @return a new StringValueList instance
+     */
     public static StringValueList of(List<String> values) {
         var theValue = new StringValueList();
         theValue.values = values;

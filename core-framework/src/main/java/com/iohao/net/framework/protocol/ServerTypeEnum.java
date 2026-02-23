@@ -21,13 +21,19 @@ package com.iohao.net.framework.protocol;
 import lombok.Getter;
 
 /**
+ * Enumeration of server types within the ionet cluster.
+ * <p>
+ * Each server is classified as either a {@link #LOGIC} server (handles business
+ * logic) or an {@link #EXTERNAL} server (handles client-facing connections).
  *
  * @author 渔民小镇
  * @date 2025-08-25
  * @since 25.1
  */
 public enum ServerTypeEnum {
+    /** Logic server that processes business actions. */
     LOGIC((byte) 0),
+    /** External (Netty) server that manages client connections. */
     EXTERNAL((byte) 1);
 
     @Getter
@@ -37,6 +43,12 @@ public enum ServerTypeEnum {
         this.value = value;
     }
 
+    /**
+     * Resolve a {@link ServerTypeEnum} from its byte value.
+     *
+     * @param value the byte value (0 for LOGIC, 1 for EXTERNAL)
+     * @return the corresponding enum constant
+     */
     public static ServerTypeEnum valueOf(byte value) {
         return value == 0 ? LOGIC : EXTERNAL;
     }

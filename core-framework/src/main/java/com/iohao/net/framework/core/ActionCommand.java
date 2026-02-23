@@ -59,10 +59,20 @@ public final class ActionCommand {
     /** true means it's managed by a container like Spring */
     boolean deliveryContainer;
 
+    /**
+     * Check if this action method has a data parameter (request body).
+     *
+     * @return {@code true} if a data parameter is present
+     */
     public boolean hasDataParameter() {
         return dataParameter != null;
     }
 
+    /**
+     * Get the name of the action method.
+     *
+     * @return the method name
+     */
     public String getActionMethodName() {
         return method.getName();
     }

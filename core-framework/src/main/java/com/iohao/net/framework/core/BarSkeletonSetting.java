@@ -22,7 +22,9 @@ import com.iohao.net.framework.core.flow.DefaultFlowContext;
 import com.iohao.net.framework.core.flow.FlowContextFactory;
 
 /**
- * Business Framework Setting
+ * Configuration settings for the business framework skeleton ({@link BarSkeleton}).
+ * Controls action routing dimensions, logging flags, validation, and pluggable
+ * components such as the flow context factory and flow executor.
  *
  * @author 渔民小镇
  * @date 2021-12-20
@@ -73,13 +75,18 @@ public final class BarSkeletonSetting {
     ///  </dependency>
     ///```
     public boolean validator;
+    /// Whether to automatically invoke validation on action parameters.
     public boolean validatorAutoCall;
 
     /** Set to true to enable documentation parsing */
     public boolean parseDoc;
 
+    /** Factory for creating {@link FlowContext} instances per request. */
     public FlowContextFactory flowContextFactory = DefaultFlowContext::new;
+    /** Executor responsible for running the flow pipeline. */
     public FlowExecutor flowExecutor = new DefaultFlowExecutor();
+    /** Strategy for generating developer-facing code suggestions on errors. */
     public CodeSuggest codeSuggest = new DefaultCodeSuggest();
+    /** Strategy for {@link CmdInfo} flyweight caching. */
     public CmdInfoFlyweightStrategy cmdInfoFlyweightStrategy = CmdInfoFlyweightStrategy.TWO_ARRAY;
 }

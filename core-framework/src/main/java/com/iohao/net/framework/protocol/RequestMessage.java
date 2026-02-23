@@ -24,7 +24,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Internal Request Message
+ * Internal request message used for logic-to-logic server communication via Aeron.
+ * <p>
+ * Extends {@link CommonMessage} with {@link Request} fields including user identity,
+ * hop tracking, logic-server binding, and per-request attachment. Provides factory
+ * methods for creation and shallow cloning to support request forwarding across
+ * logic server boundaries.
  *
  * @author 渔民小镇
  * @date 2025-09-02
@@ -39,6 +44,13 @@ public class RequestMessage extends CommonMessage implements Request {
     int[] bindingLogicServerIds;
     byte[] attachment;
 
+    /**
+     * Create a new {@link RequestMessage} with the given command route and payload.
+     *
+     * @param cmdInfo the command route descriptor
+     * @param data    the serialized request payload
+     * @return a new request message
+     */
     public static RequestMessage of(CmdInfo cmdInfo, byte[] data) {
         var message = new RequestMessage();
         message.setCmdInfo(cmdInfo);
@@ -46,6 +58,14 @@ public class RequestMessage extends CommonMessage implements Request {
         return message;
     }
 
+    /**
+     * Create a shallow clone of this request message, copying all routing and identity fields.
+     * <p>
+     * Useful when forwarding a request to another logic server while preserving the
+     * original context.
+     *
+     * @return a new {@link RequestMessage} with the same field values
+     */
     public RequestMessage ofClone() {
         var message = new RequestMessage();
         message.userId = this.userId;

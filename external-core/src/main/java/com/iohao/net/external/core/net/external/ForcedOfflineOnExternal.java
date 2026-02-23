@@ -23,7 +23,7 @@ import com.iohao.net.framework.protocol.OnExternalTemplateId;
 import com.iohao.net.framework.protocol.UserResponseMessage;
 
 /**
- * ForcedOfflineOnExternal
+ * Handles template requests that forcibly disconnect a user session.
  *
  * @author 渔民小镇
  * @date 2025-09-14

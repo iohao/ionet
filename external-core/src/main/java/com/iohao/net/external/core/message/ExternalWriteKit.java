@@ -23,6 +23,7 @@ import com.iohao.net.external.core.session.UserSessions;
 import lombok.experimental.UtilityClass;
 
 /**
+ * Writes outbound messages to a user session resolved from {@link UserSessions}.
  *
  * @author 渔民小镇
  * @date 2025-11-12
@@ -30,12 +31,19 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public final class ExternalWriteKit {
+    /**
+     * Resolve the target user session and flush the message if the session exists.
+     *
+     * @param message outbound communication message
+     * @param userSessions session container used to resolve the user channel
+     */
     public void writeAndFlush(CommunicationMessage message, UserSessions<?, ?> userSessions) {
         if (userSessions == null) {
             return;
         }
 
         var userId = message.getUserId();
+        // Identity-verified requests are indexed by business userId; otherwise use the channel-scoped id.
         var userSession = message.isVerifyIdentity()
                 ? userSessions.getUserSession(userId)
                 : userSessions.getUserSessionByUserChannelId(userId);

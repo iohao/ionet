@@ -19,12 +19,14 @@
 package com.iohao.net.external.core.session;
 
 /**
- * UserSessionState
+ * Lifecycle state of an external user session.
  *
  * @author 渔民小镇
  * @date 2023-02-18
  */
 public enum UserSessionState {
+    /** Session is connected and can receive messages. */
     ACTIVE,
+    /** Session is closed or no longer valid. */
     DEAD;
 }

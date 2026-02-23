@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ExternalManager
+ * Registry of external server settings and their user session containers.
  *
  * @author 渔民小镇
  * @date 2025-09-11
@@ -35,16 +35,32 @@ public final class ExternalManager {
     static final Int2ObjectHashMap<ExternalSetting> map = new Int2ObjectHashMap<>();
     static final List<UserSessions<?, ?>> list = new ArrayList<>();
 
+    /**
+     * Register an external server setting and expose its session container.
+     *
+     * @param setting external server setting
+     */
     public static void addExternalSetting(ExternalSetting setting) {
         int externalServerId = setting.server().id();
         map.put(externalServerId, setting);
         list.add(setting.userSessions());
     }
 
+    /**
+     * List all registered user session containers.
+     *
+     * @return registered user session containers
+     */
     public static List<UserSessions<?, ?>> listUserSessions() {
         return list;
     }
 
+    /**
+     * Get the user session container for an external server id.
+     *
+     * @param externalServerId external server id
+     * @return user sessions, or {@code null} if not registered
+     */
     public static UserSessions<?, ?> getUserSessions(int externalServerId) {
         var setting = map.get(externalServerId);
         if (setting == null) {

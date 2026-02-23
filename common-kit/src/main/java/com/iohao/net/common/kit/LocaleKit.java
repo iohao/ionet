@@ -23,6 +23,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Locale;
 
 /**
+ * Locale detection utilities.
  *
  * @author 渔民小镇
  * @date 2025-10-04
@@ -33,6 +34,13 @@ public class LocaleKit {
     private boolean checked;
     private boolean defaultValue;
 
+    /**
+     * Check if the default locale is Chinese (zh_CN).
+     * <p>
+     * Result is cached after first invocation.
+     *
+     * @return {@code true} if the default locale is zh_CN
+     */
     public boolean isChina() {
         if (checked) {
             return defaultValue;

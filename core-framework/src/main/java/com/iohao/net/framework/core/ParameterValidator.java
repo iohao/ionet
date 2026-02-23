@@ -21,7 +21,8 @@ package com.iohao.net.framework.core;
 import com.iohao.net.common.kit.CommonConst;
 
 /**
- * ParameterValidator
+ * Strategy interface for validating action method parameters,
+ * typically backed by Jakarta Bean Validation.
  *
  * @author 渔民小镇
  * @date 2025-10-23

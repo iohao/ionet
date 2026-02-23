@@ -23,7 +23,8 @@ import com.iohao.net.framework.core.kit.FlowExecutorKit;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * DefaultFlowExecutor
+ * Default {@link FlowExecutor} implementation that executes the flow pipeline
+ * within a {@link ScopedValue} context for thread-scoped FlowContext propagation.
  *
  * @author 渔民小镇
  * @date 2021-12-17

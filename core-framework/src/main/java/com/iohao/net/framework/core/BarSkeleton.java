@@ -30,7 +30,10 @@ import lombok.experimental.FieldDefaults;
 
 
 /**
- * BarSkeleton
+ * Central execution engine of the ionet business framework.
+ * <p>
+ * Holds action commands, flow executor, interceptors, and communication aggregation.
+ * Built via {@link BarSkeletonBuilder}.
  *
  * @author 渔民小镇
  * @date 2021-12-12
@@ -54,10 +57,20 @@ public final class BarSkeleton {
     EventBus eventBus;
     CommunicationAggregation communicationAggregation;
 
+    /**
+     * Create a new {@link BarSkeletonBuilder} instance.
+     *
+     * @return a new builder
+     */
     public static BarSkeletonBuilder builder() {
         return new BarSkeletonBuilder();
     }
 
+    /**
+     * Handle an incoming request by executing the flow pipeline.
+     *
+     * @param flowContext the per-request flow context
+     */
     public void handle(final FlowContext flowContext) {
         flowContext.setCommunicationAggregation(communicationAggregation);
         flowContext.setBarSkeleton(this);

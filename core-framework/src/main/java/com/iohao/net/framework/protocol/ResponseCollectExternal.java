@@ -25,14 +25,28 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * Aggregated response collected from multiple external (Netty) servers.
+ * <p>
+ * Provides convenience methods to check whether any of the collected
+ * {@link ExternalResponse} instances indicate success.
  *
  * @author 渔民小镇
  * @date 2025-09-16
  * @since 25.1
  */
 public interface ResponseCollectExternal {
+    /**
+     * Get the list of responses collected from external servers.
+     *
+     * @return the external response list
+     */
     List<ExternalResponse> getResponseList();
 
+    /**
+     * Check whether at least one collected response is successful.
+     *
+     * @return {@code true} if any response has a zero error code
+     */
     default boolean anySuccess() {
         var responseList = this.getResponseList();
         if (Objects.isNull(responseList)) {
@@ -48,6 +62,11 @@ public interface ResponseCollectExternal {
         return false;
     }
 
+    /**
+     * Return an {@link Optional} containing any successful response, or empty if none succeeded.
+     *
+     * @return an optional successful {@link ExternalResponse}
+     */
     default Optional<ExternalResponse> optionalAnySuccess() {
         var responseList = this.getResponseList();
         if (CollKit.isEmpty(responseList)) {

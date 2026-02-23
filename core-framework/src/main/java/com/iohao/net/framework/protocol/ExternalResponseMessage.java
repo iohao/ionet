@@ -22,7 +22,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ExternalResponseMessage
+ * Concrete response message returned from an external (Netty) server to a logic server.
+ * <p>
+ * Extends {@link ExternalCommonMessage} with error information and implements
+ * {@link ExternalResponse} to provide payload access and future correlation.
  *
  * @author 渔民小镇
  * @date 2025-09-10
@@ -31,6 +34,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public final class ExternalResponseMessage extends ExternalCommonMessage implements ExternalResponse {
+    /** Error code; 0 indicates success, non-zero indicates an error. */
     int errorCode;
+    /** Human-readable error message; {@code null} when the response is successful. */
     String errorMessage;
 }

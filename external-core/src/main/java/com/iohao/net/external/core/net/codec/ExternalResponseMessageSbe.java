@@ -26,7 +26,7 @@ import com.iohao.net.sbe.MessageHeaderEncoder;
 import org.agrona.MutableDirectBuffer;
 
 /**
- * InternalExternalResponseMessage
+ * SBE encoder for {@link ExternalResponseMessage} returned to internal request senders.
  *
  * @author 渔民小镇
  * @date 2025-09-11

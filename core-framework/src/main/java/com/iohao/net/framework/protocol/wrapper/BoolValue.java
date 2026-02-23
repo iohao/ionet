@@ -25,7 +25,11 @@ import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import lombok.ToString;
 
 /**
- * boolean value
+ * Protocol wrapper for a single boolean value.
+ * <p>
+ * Wraps a primitive {@code boolean} for protobuf serialization, allowing it to be used
+ * as a parameter or return type in {@code @ActionMethod} handlers. Instances for
+ * {@code true} and {@code false} are cached and reused via the factory methods.
  *
  * @author 渔民小镇
  * @date 2023-02-07
@@ -41,14 +45,30 @@ public final class BoolValue {
     @Ignore
     private static final BoolValue falseValue = create(false);
 
+    /**
+     * Return a cached BoolValue for the given boolean.
+     *
+     * @param value the boolean value
+     * @return the cached BoolValue instance
+     */
     public static BoolValue of(boolean value) {
         return value ? trueValue : falseValue;
     }
 
+    /**
+     * Return the cached BoolValue for {@code true}.
+     *
+     * @return the true BoolValue instance
+     */
     public static BoolValue ofTrue() {
         return trueValue;
     }
 
+    /**
+     * Return the cached BoolValue for {@code false}.
+     *
+     * @return the false BoolValue instance
+     */
     public static BoolValue ofFalse() {
         return falseValue;
     }

@@ -25,25 +25,50 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Collection Kit
+ * Collection manipulation utilities.
  *
  * @author 渔民小镇
  * @date 2022-01-14
  */
 @UtilityClass
 public class CollKit {
+    /**
+     * Check whether the collection is not {@code null} and not empty.
+     *
+     * @param collection the collection to check
+     * @return {@code true} if the collection contains at least one element
+     */
     public boolean notEmpty(Collection<?> collection) {
         return !isEmpty(collection);
     }
 
+    /**
+     * Check whether the collection is {@code null} or empty.
+     *
+     * @param collection the collection to check
+     * @return {@code true} if the collection is {@code null} or contains no elements
+     */
     public boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
 
+    /**
+     * Create a new concurrent {@link Set} backed by a {@link ConcurrentHashMap}.
+     *
+     * @param <T> the element type
+     * @return a new thread-safe set
+     */
     public <T> Set<T> ofConcurrentSet() {
         return ConcurrentHashMap.newKeySet();
     }
 
+    /**
+     * Create a new {@link ConcurrentHashMap}.
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @return a new thread-safe map
+     */
     public <K, V> Map<K, V> ofConcurrentHashMap() {
         return new ConcurrentHashMap<>();
     }

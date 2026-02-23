@@ -22,6 +22,8 @@ import com.iohao.net.framework.annotations.Enterprise;
 import com.iohao.net.framework.communication.LogicCallCollectCommunicationDecorator;
 
 /**
+ * Flow-level cross-logic-server collect call communication for broadcasting requests
+ * to all logic servers.
  *
  * @author 渔民小镇
  * @date 2025-10-09

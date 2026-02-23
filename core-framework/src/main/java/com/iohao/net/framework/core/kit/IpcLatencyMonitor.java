@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
 import java.util.concurrent.atomic.LongAdder;
 
 /**
- * Test Aeron IPC 延迟监控器。
+ * Aeron IPC latency monitor using bucket-based histogram for percentile calculations.
  *
  * @author 渔民小镇
  * @date 2025-11-08
@@ -34,14 +34,18 @@ import java.util.concurrent.atomic.LongAdder;
  */
 @Slf4j
 public final class IpcLatencyMonitor {
-    // 0~9999 微秒的分布桶
+    // Distribution buckets for 0-9999 microseconds
     private final int MAX_BUCKETS = 10000;
     private final AtomicLongArray buckets = new AtomicLongArray(MAX_BUCKETS);
     private final LongAdder totalCount = new LongAdder();
     private final LongAdder totalMicros = new LongAdder();
     private final AtomicLong maxMicros = new AtomicLong(0L);
 
-    /** 记录一次 IPC 延迟（单位：微秒） */
+    /**
+     * Record a single IPC latency measurement in microseconds.
+     *
+     * @param micros the latency in microseconds
+     */
     public void record(long micros) {
         if (micros <= 0) return;
 
@@ -67,11 +71,15 @@ public final class IpcLatencyMonitor {
         }
     }
 
-    /** 打印统计结果 */
+    /**
+     * Print latency statistics.
+     *
+     * @param title the label for this statistics report
+     */
     public void printStats(String title) {
         long count = totalCount.sum();
         if (count == 0) {
-            log.info("[{}] 无统计数据", title);
+            log.info("[{}] No statistics data", title);
             return;
         }
 
@@ -81,24 +89,29 @@ public final class IpcLatencyMonitor {
         long p99 = percentile(99);
 
         log.info("""
-                        [{}] IPC 延迟统计：
-                        总次数: {}
-                        平均: {} µs
+                        [{}] IPC latency statistics:
+                        Total count: {}
+                        Average: {} µs
                         P95: {} µs
                         P99: {} µs
-                        最大: {} µs
+                        Maximum: {} µs
                         """,
                 title, count, avg, p95, p99, max
         );
     }
 
-    /** 计算百分位延迟（简单桶累加法） */
+    /**
+     * Calculate percentile latency using simple bucket accumulation.
+     *
+     * @param percent the target percentile (e.g. 95, 99)
+     * @return the latency value at the given percentile in microseconds
+     */
     private long percentile(int percent) {
         long count = totalCount.sum();
         if (count == 0) return 0;
 
-        // 目标序号（1-based），确保至少为 1
-        long target = Math.max(1, (count * percent + 99) / 100); // 向上取整的近似
+        // Target ordinal (1-based), ensure at least 1
+        long target = Math.max(1, (count * percent + 99) / 100); // ceiling approximation
         long cumulative = 0;
         for (int i = 0; i < MAX_BUCKETS; i++) {
             cumulative += buckets.get(i);
@@ -107,7 +120,7 @@ public final class IpcLatencyMonitor {
         return MAX_BUCKETS - 1;
     }
 
-    /** 重置统计数据 */
+    /** Reset all statistics data. */
     public void reset() {
         for (int i = 0; i < MAX_BUCKETS; i++) {
             buckets.set(i, 0L);

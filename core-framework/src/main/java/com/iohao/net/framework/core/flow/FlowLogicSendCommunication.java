@@ -24,12 +24,21 @@ import com.iohao.net.framework.communication.LogicSendCommunicationDecorator;
 import com.iohao.net.framework.protocol.SendMessage;
 
 /**
+ * Flow-level fire-and-forget message sending to other logic servers.
  *
  * @author 渔民小镇
  * @date 2025-10-09
  * @since 25.1
  */
 public interface FlowLogicSendCommunication extends FlowCommon, LogicSendCommunicationDecorator {
+    /**
+     * Create a {@link SendMessage} for the given command, copying routing fields from the
+     * current request.
+     *
+     * @param cmdInfo the target command info
+     * @param data    the encoded byte data payload
+     * @return a new SendMessage with routing fields populated from the current request and server
+     */
     @Override
     default SendMessage ofSendMessage(CmdInfo cmdInfo, byte[] data) {
         var message = SendMessage.of(cmdInfo, data);

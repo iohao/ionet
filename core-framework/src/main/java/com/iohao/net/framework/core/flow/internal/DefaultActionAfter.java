@@ -28,13 +28,22 @@ import com.iohao.net.framework.protocol.UserResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * ActionAfter
+ * Default {@link com.iohao.net.framework.core.flow.ActionAfter} implementation that encodes
+ * the action method result into the response message.
  *
  * @author 渔民小镇
  * @date 2021-12-20
  */
 @Slf4j
 public final class DefaultActionAfter implements ActionAfter {
+    /**
+     * Encode the action method result and prepare the response for sending.
+     * <p>
+     * Delegates to the appropriate handler based on the communication type
+     * (user request or internal call).
+     *
+     * @param flowContext the current request flow context
+     */
     @Override
     public void execute(FlowContext flowContext) {
         switch (flowContext.getCommunicationType()) {
@@ -43,6 +52,11 @@ public final class DefaultActionAfter implements ActionAfter {
         }
     }
 
+    /**
+     * Process an internal (logic-to-logic) call response.
+     *
+     * @param flowContext the current request flow context
+     */
     private void processInternalRequest(FlowContext flowContext) {
         var request = flowContext.getRequest();
         var server = flowContext.getServer();
@@ -78,6 +92,11 @@ public final class DefaultActionAfter implements ActionAfter {
         communicationAggregation.publishMessageByNetId(netId, response);
     }
 
+    /**
+     * Process a user request response, encoding the result and writing it back to the client.
+     *
+     * @param flowContext the current request flow context
+     */
     private void processUserRequest(FlowContext flowContext) {
         if (flowContext.hasError()) {
             var response = ofUserResponseMessage(flowContext);
@@ -109,6 +128,12 @@ public final class DefaultActionAfter implements ActionAfter {
         flowContext.getCommunicationAggregation().writeMessage(response);
     }
 
+    /**
+     * Create a {@link UserResponseMessage} populated with request metadata.
+     *
+     * @param flowContext the current request flow context
+     * @return a new user response message
+     */
     private UserResponseMessage ofUserResponseMessage(FlowContext flowContext) {
         var request = flowContext.getRequest();
         var server = flowContext.getServer();
@@ -123,6 +148,11 @@ public final class DefaultActionAfter implements ActionAfter {
     private DefaultActionAfter() {
     }
 
+    /**
+     * Return the singleton instance.
+     *
+     * @return the singleton {@code DefaultActionAfter}
+     */
     public static DefaultActionAfter me() {
         return Holder.ME;
     }

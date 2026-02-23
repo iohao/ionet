@@ -22,17 +22,31 @@ import com.iohao.net.framework.core.kit.CmdKit;
 import org.jspecify.annotations.NonNull;
 
 /**
- * CmdInfo
+ * Command routing information composed of a cmd (module) and subCmd (action) pair.
+ * Uses flyweight pattern for instance caching via {@link CmdInfoFlyweightFactory}.
  *
  * @author 渔民小镇
  * @date 2021-12-20
  */
 public record CmdInfo(int cmd, int subCmd, int cmdMerge) {
 
+    /**
+     * Get or create a CmdInfo for the given cmd and subCmd pair.
+     *
+     * @param cmd    the module-level command ID
+     * @param subCmd the action-level sub-command ID
+     * @return a cached or newly created {@code CmdInfo} instance
+     */
     public static CmdInfo of(int cmd, int subCmd) {
         return CmdInfoFlyweightFactory.of(cmd, subCmd);
     }
 
+    /**
+     * Get or create a CmdInfo from a merged command ID.
+     *
+     * @param cmdMerge the merged command ID encoding both cmd and subCmd
+     * @return a cached or newly created {@code CmdInfo} instance
+     */
     public static CmdInfo of(int cmdMerge) {
         return CmdInfoFlyweightFactory.of(cmdMerge);
     }

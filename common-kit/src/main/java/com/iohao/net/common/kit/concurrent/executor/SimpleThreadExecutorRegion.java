@@ -23,7 +23,10 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 /**
- * SimpleThreadExecutorRegion
+ * A general-purpose {@link ThreadExecutorRegion} for non-user-specific task distribution.
+ * <p>
+ * Tasks are assigned to executors using a bitmask on the supplied index, providing
+ * a fast modulo distribution across the available pool.
  *
  * @author 渔民小镇
  * @date 2023-12-01
@@ -32,11 +35,18 @@ import lombok.experimental.FieldDefaults;
 final class SimpleThreadExecutorRegion extends AbstractThreadExecutorRegion {
     final int executorLength;
 
+    /** Create a region with a pool size equal to the nearest power-of-two of available processors. */
     SimpleThreadExecutorRegion() {
         super("Simple", RuntimeKit.availableProcessors2n);
         this.executorLength = RuntimeKit.availableProcessors2n - 1;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param i arbitrary index used to select an executor via bitmask
+     * @return the {@link ThreadExecutor} mapped to the given index
+     */
     @Override
     public ThreadExecutor getThreadExecutor(long i) {
         return this.threadExecutors[(int) (i & this.executorLength)];

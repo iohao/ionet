@@ -21,13 +21,16 @@ package com.iohao.net.common.kit.exception;
 import com.iohao.net.common.kit.LocaleKit;
 
 /**
- * EnterpriseSupportException
+ * Exception thrown when attempting to use a feature that requires the Enterprise Edition.
  *
  * @author 渔民小镇
  * @date 2025-10-13
  * @since 25.1
  */
 public final class EnterpriseSupportException extends RuntimeException {
+    /**
+     * Create a new instance with a locale-aware message indicating Enterprise Edition is required.
+     */
     public EnterpriseSupportException() {
         super(LocaleKit.isChina()
                 ? "该功能由企业版提供支持"

@@ -24,7 +24,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * SetMultiMapImpl
+ * Non-blocking {@link SetMultiMap} implementation backed by
+ * {@link java.util.concurrent.ConcurrentHashMap} and concurrent hash sets.
  *
  * @author 渔民小镇
  * @date 2023-12-07
@@ -42,6 +43,9 @@ final class NonBlockingSetMultiMap<K, V> implements SetMultiMap<K, V> {
         var set = this.map.get(key);
 
         if (Objects.isNull(set)) {
+            // Double-check pattern: putIfAbsent is atomic, so if another thread
+            // inserted first, it returns the existing set and we fall through.
+            // A null return means our newValueSet was successfully stored.
             Set<V> newValueSet = CollKit.ofConcurrentSet();
             set = this.map.putIfAbsent(key, newValueSet);
 

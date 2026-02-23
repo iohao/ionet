@@ -35,7 +35,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * Prepared action proto
+ * Eagerly creates protobuf proxy classes for action method parameter and return types
+ * annotated with {@code @ProtobufClass}.
+ * <p>
+ * Built-in wrapper types (e.g. {@link IntValue}, {@link StringValue}) are pre-created
+ * in the static initializer; user-defined protobuf types discovered during parsing are
+ * collected and created in {@link #onAfter(BarSkeleton)}.
  *
  * @author 渔民小镇
  * @date 2024-05-01
@@ -62,12 +67,20 @@ final class ProtobufActionParserListener implements ActionParserListener {
         ProtoKit.create(StringValueList.class);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onActionCommand(ActionParserContext context) {
         Predicate<Class<?>> protobufClassPredicate = c -> Objects.nonNull(c.getAnnotation(ProtobufClass.class));
         collect(context, protobufClassPredicate, protoSet);
     }
 
+    /**
+     * Collect protobuf types from the action command's parameter and return type that match the predicate.
+     *
+     * @param context                  the current parser context
+     * @param protobufClassPredicate   predicate to test whether a class qualifies
+     * @param protoSet                 target set to collect matching classes into
+     */
     static void collect(ActionParserContext context, Predicate<Class<?>> protobufClassPredicate, Set<Class<?>> protoSet) {
         var actionCommand = context.actionCommand;
 
@@ -86,12 +99,17 @@ final class ProtobufActionParserListener implements ActionParserListener {
                 .ifPresent(protoSet::add);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onAfter(BarSkeleton barSkeleton) {
         protoSet.forEach(ProtoKit::create);
     }
 }
 
+/**
+ * Validation listener that detects action parameter/return types missing the {@code @ProtobufClass}
+ * annotation and logs an error for each offending class after parsing completes.
+ */
 @Slf4j
 final class ProtobufCheckActionParserListener implements ActionParserListener {
     static final Set<Class<?>> protoSet = CollKit.ofConcurrentSet();

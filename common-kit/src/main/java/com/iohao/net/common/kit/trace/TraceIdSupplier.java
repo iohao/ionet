@@ -21,7 +21,7 @@ package com.iohao.net.common.kit.trace;
 import java.util.function.Supplier;
 
 /**
- * TraceId 生成策略
+ * Strategy interface for generating trace IDs.
  *
  * @author 渔民小镇
  * @date 2024-01-21

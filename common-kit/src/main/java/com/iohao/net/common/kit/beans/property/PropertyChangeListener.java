@@ -19,19 +19,20 @@
 package com.iohao.net.common.kit.beans.property;
 
 /**
- * Property value change event listener
+ * Listener interface for property value change events.
  *
+ * @param <T> the type of the observed property value
  * @author 渔民小镇
  * @date 2024-04-17
  */
 @FunctionalInterface
 public interface PropertyChangeListener<T> {
     /**
-     * Value change listener
+     * Invoke when the observed property value changes.
      *
-     * @param observable current Property
-     * @param oldValue   oldValue
-     * @param newValue   newValue
+     * @param observable the property whose value changed
+     * @param oldValue   the previous value before the change
+     * @param newValue   the new value after the change
      */
     void changed(PropertyValueObservable<? extends T> observable, T oldValue, T newValue);
 }

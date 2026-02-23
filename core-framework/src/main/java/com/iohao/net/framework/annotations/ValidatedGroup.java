@@ -21,7 +21,7 @@ package com.iohao.net.framework.annotations;
 import java.lang.annotation.*;
 
 /**
- * Validation Group
+ * Specifies validation groups for Jakarta Bean Validation on action method parameters.
  *
  * @author fangwei
  * @date 2022-09-20

@@ -28,6 +28,11 @@ import com.iohao.net.common.kit.concurrent.executor.ExecutorRegionKit;
 import java.util.Collections;
 
 /**
+ * Lightweight {@link DefaultFlowContext} used when no real client request is available,
+ * for example during runner execution or internal framework operations.
+ * <p>
+ * Initializes with a dummy {@link UserRequestMessage}, a zero-valued {@link CmdInfo},
+ * and a virtual-thread executor.
  *
  * @author 渔民小镇
  * @date 2025-10-05

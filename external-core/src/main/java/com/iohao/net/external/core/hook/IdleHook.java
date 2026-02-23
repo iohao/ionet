@@ -22,7 +22,7 @@ import com.iohao.net.framework.protocol.CommunicationMessage;
 import com.iohao.net.external.core.session.UserSession;
 
 /**
- * Heartbeat IdleHook
+ * Heartbeat/idle event callback hook for external user sessions.
  *
  * @author 渔民小镇
  * @date 2023-02-18
@@ -33,8 +33,8 @@ public interface IdleHook<IdleEvent> {
      * <p>
      * You only need to handle your business logic here, such as notifying other players in the room that the user has gone offline.
      *
-     * @param userSession userSession
-     * @param event       event
+     * @param userSession target user session
+     * @param event       idle event payload from the transport implementation
      * @return true to disconnect the player
      */
     boolean callback(UserSession userSession, IdleEvent event);
@@ -43,7 +43,7 @@ public interface IdleHook<IdleEvent> {
      * Callback before heartbeat response (pong).
      * Developers can add some extra information to the heartbeat message, such as the current time.
      *
-     * @param idleMessage idleMessage
+     * @param idleMessage heartbeat response message that will be sent to the client
      */
     default void pongBefore(CommunicationMessage idleMessage) {
     }

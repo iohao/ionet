@@ -22,32 +22,40 @@ import com.iohao.net.framework.core.BarSkeleton;
 import com.iohao.net.framework.core.flow.FlowContext;
 
 /**
+ * Flow execution pipeline utility. Orchestrates the complete request processing:
+ * interceptors -> controller instantiation -> method invocation -> response handling.
  *
  * @author 渔民小镇
  * @date 2025-10-11
  * @since 25.1
  */
 public final class FlowExecutorKit {
+    /**
+     * Execute the full action method processing pipeline.
+     *
+     * @param flowContext  the current request flow context
+     * @param barSkeleton  the skeleton holding action commands, interceptors, and processors
+     */
     public static void execute(FlowContext flowContext, BarSkeleton barSkeleton) {
-        // ---- inOut fuckIn ----
+        // Pre-processing interceptors
         var inOuts = barSkeleton.inOuts;
         for (var actionMethodInOut : inOuts) {
             actionMethodInOut.fuckIn(flowContext);
         }
 
-        // ---- 1 ActionController ----
+        // Instantiate action controller
         var factoryBean = barSkeleton.actionFactoryBean;
         var actionCommand = flowContext.getActionCommand();
         var controller = factoryBean.getBean(actionCommand);
         flowContext.setActionController(controller);
 
-        // ---- 2 ActionMethodInvoke ----
+        // Invoke action method
         var actionMethodInvoke = barSkeleton.actionMethodInvoke;
         var result = actionMethodInvoke.invoke(flowContext);
         flowContext.setMethodResult(result);
         flowContext.setOriginalMethodResult(result);
 
-        // ---- 3 ActionAfter, response data ----
+        // Post-action response processing
         var actionAfter = barSkeleton.actionAfter;
         actionAfter.execute(flowContext);
 

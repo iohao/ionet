@@ -26,6 +26,11 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
+ * Registry and executor for {@link BarSkeletonBuilderEnhance} extensions.
+ * <p>
+ * Implementations are auto-discovered via {@link ServiceLoader} at class-load time.
+ * Call {@link #enhance(BarSkeletonBuilder)} to apply all registered enhancements.
+ *
  * @author 渔民小镇
  * @date 2023-06-16
  */
@@ -38,10 +43,20 @@ public class BarSkeletonBuilderEnhances {
         ServiceLoader.load(BarSkeletonBuilderEnhance.class).forEach(BarSkeletonBuilderEnhances::add);
     }
 
+    /**
+     * Register an additional enhance instance.
+     *
+     * @param enhance the enhance to add
+     */
     void add(BarSkeletonBuilderEnhance enhance) {
         enhanceSet.add(enhance);
     }
 
+    /**
+     * Apply all registered enhancements to the given builder.
+     *
+     * @param builder the skeleton builder to enhance
+     */
     public void enhance(BarSkeletonBuilder builder) {
         for (BarSkeletonBuilderEnhance enhance : enhanceSet) {
             enhance.enhance(builder);

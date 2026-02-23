@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * MicroRooms
+ * Thread-safe room registry that manages {@link MicroRoom} instances by ID.
  *
  * @author 渔民小镇
  * @date 2023-07-12
@@ -44,18 +44,43 @@ public class MicroRooms<Room extends MicroRoom> {
     @Setter
     Supplier<Room> roomSupplier;
 
+    /**
+     * Check if a room with the given ID exists.
+     *
+     * @param id the room ID
+     * @return {@code true} if the room exists
+     */
     public boolean contains(long id) {
         return roomMap.containsKey(id);
     }
 
+    /**
+     * Remove the room with the given ID.
+     *
+     * @param id the room ID
+     * @return the removed room, or {@code null} if not found
+     */
     public Room remove(long id) {
         return this.roomMap.remove(id);
     }
 
+    /**
+     * Get the room with the given ID.
+     *
+     * @param id the room ID
+     * @return the room, or {@code null} if not found
+     */
     public Room getRoom(long id) {
         return roomMap.get(id);
     }
 
+    /**
+     * Add a room to the registry. If a room with the same ID already exists,
+     * the existing room is returned instead.
+     *
+     * @param room the room to add
+     * @return the room now associated with the ID
+     */
     public Room add(Room room) {
         long id = room.getId();
         var anyRegion = roomMap.putIfAbsent(id, room);
@@ -67,18 +92,21 @@ public class MicroRooms<Room extends MicroRoom> {
         return anyRegion;
     }
 
+    /**
+     * Get the room with the given ID as an {@link Optional}.
+     *
+     * @param id the room ID
+     * @return an Optional containing the room, or empty if not found
+     */
     public Optional<Room> optionalRoom(long id) {
         return Optional.ofNullable(roomMap.get(id));
     }
 
     /**
-     * 得到对应的房间对象
-     * <pre>
-     *     如果房间不存在就创建
-     * </pre>
+     * Get the room by ID, creating it if absent.
      *
      * @param id roomId
-     * @return 房间对象
+     * @return the room instance
      */
     public Room ofRoom(long id) {
 
@@ -94,6 +122,11 @@ public class MicroRooms<Room extends MicroRoom> {
         return region;
     }
 
+    /**
+     * Return a stream of all rooms in the registry.
+     *
+     * @return a stream of rooms
+     */
     public Stream<Room> stream() {
         return this.roomMap.values().stream();
     }
