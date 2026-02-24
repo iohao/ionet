@@ -264,12 +264,89 @@
 
 
     <profiles>
+        <!--
+        Javadoc with Lombok support (delombok)
+        mvnd generate-sources javadoc:aggregate -P javadoc
+        -->
+        <profile>
+            <id>javadoc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>1.18.20.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/delombok</outputDirectory>
+                            <addOutputDirectory>false</addOutputDirectory>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.12.0</version>
+                        <configuration>
+                            <sourcepath>
+                                ${project.basedir}/common-kit/target/delombok:${project.basedir}/core-framework/target/delombok:${project.basedir}/net-common/target/delombok:${project.basedir}/net-center/target/delombok:${project.basedir}/net-server/target/delombok:${project.basedir}/net-logic-server/target/delombok:${project.basedir}/external-core/target/delombok:${project.basedir}/external-netty/target/delombok:${project.basedir}/run-one/target/delombok:${project.basedir}/extension-client/target/delombok:${project.basedir}/extension-domain-event/target/delombok:${project.basedir}/extension-jprotobuf/target/delombok:${project.basedir}/extension-room/target/delombok:${project.basedir}/extension-codegen/target/delombok:${project.basedir}/extension-spring/target/delombok
+                            </sourcepath>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- mvn clean deploy -P oss-release -Dmaven.test.skip=true -e -->
         <profile>
             <id>oss-release</id>
 
             <build>
                 <plugins>
+                    <!-- Delombok: expand Lombok annotations for Javadoc -->
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>1.18.20.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/delombok</outputDirectory>
+                            <addOutputDirectory>false</addOutputDirectory>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+
                     <!-- Gpg Signature https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -306,7 +383,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.12.0</version>
-                        <inherited>false</inherited>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -314,13 +390,9 @@
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
-                            </execution>
-                            <execution>
-                                <id>aggregate-apidocs</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>aggregate</goal>
-                                </goals>
+                                <configuration>
+                                    <sourcepath>${project.build.directory}/delombok</sourcepath>
+                                </configuration>
                             </execution>
                         </executions>
                         <configuration>
