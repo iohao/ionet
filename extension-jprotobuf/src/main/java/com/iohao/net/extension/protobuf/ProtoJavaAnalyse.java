@@ -26,17 +26,16 @@ import com.iohao.net.common.kit.ClassScanner;
 import com.iohao.net.common.kit.CollKit;
 import com.iohao.net.common.kit.MoreKit;
 import com.iohao.net.common.kit.StrKit;
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaAnnotation;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
+import com.iohao.net.common.kit.source.SourceAnnotation;
+import com.iohao.net.common.kit.source.SourceClass;
+import com.iohao.net.common.kit.source.SourceField;
+import com.iohao.net.common.kit.source.SourceParserKit;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -49,37 +48,39 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ProtoJavaAnalyse {
-    static final Map<String, JavaProjectBuilder> javaProjectBuilderMap = CollKit.ofConcurrentHashMap();
+    static final Map<String, Map<String, SourceClass>> sourceClassCacheMap = CollKit.ofConcurrentHashMap();
     final Map<ProtoJavaRegionKey, ProtoJavaRegion> protoJavaRegionMap = CollKit.ofConcurrentHashMap();
     final Map<Class<?>, ProtoJava> protoJavaMap = CollKit.ofConcurrentHashMap();
-    final Map<String, JavaClass> protoJavaSourceFileMap = CollKit.ofConcurrentHashMap();
+    final Map<String, SourceClass> protoJavaSourceFileMap = CollKit.ofConcurrentHashMap();
 
     public Map<ProtoJavaRegionKey, ProtoJavaRegion> analyse(String protoPackagePath, String protoSourcePath) {
         return this.analyse(protoPackagePath, protoSourcePath, this.predicateFilter);
     }
 
     public Map<ProtoJavaRegionKey, ProtoJavaRegion> analyse(String protoPackagePath, String protoSourcePath, Predicate<Class<?>> predicateFilter) {
-        var javaProjectBuilder = getJavaProjectBuilder(protoSourcePath);
-        Collection<JavaClass> javaClassCollection = javaProjectBuilder.getClasses();
+        var sourceClassMap = getSourceClassMap(protoSourcePath);
+        Collection<SourceClass> sourceClassCollection = sourceClassMap.values();
 
-        javaClassCollection.parallelStream().filter(javaClass -> {
-            List<JavaAnnotation> annotations = javaClass.getAnnotations();
+        sourceClassCollection.parallelStream().filter(sourceClass -> {
+            List<SourceAnnotation> annotations = sourceClass.getAnnotations();
             if (annotations.size() < 2) {
                 return false;
             }
 
             long count = annotations.stream().filter(annotation -> {
-                String string = annotation.getType().toString();
-                return string.contains(ProtobufClass.class.getName())
-                        || string.contains(ProtoFileMerge.class.getName());
+                String typeName = annotation.typeName();
+                return typeName.contains(ProtobufClass.class.getName())
+                        || typeName.contains(ProtobufClass.class.getSimpleName())
+                        || typeName.contains(ProtoFileMerge.class.getName())
+                        || typeName.contains(ProtoFileMerge.class.getSimpleName());
             }).count();
 
             return count >= 2;
-        }).forEach(javaClass -> {
-            protoJavaSourceFileMap.put(javaClass.toString(), javaClass);
+        }).forEach(sourceClass -> {
+            protoJavaSourceFileMap.put(sourceClass.toString(), sourceClass);
 
             if (ProtoGenerateSetting.enableLog) {
-                log.info("javaClass: {}", javaClass);
+                log.info("sourceClass: {}", sourceClass);
             }
         });
 
@@ -98,16 +99,14 @@ public class ProtoJavaAnalyse {
         return protoJavaRegionMap;
     }
 
-    static JavaProjectBuilder getJavaProjectBuilder(String protoSourcePath) {
-        JavaProjectBuilder javaProjectBuilder = javaProjectBuilderMap.get(protoSourcePath);
-        if (javaProjectBuilder == null) {
-            var builder = new JavaProjectBuilder();
-            builder.setEncoding(StandardCharsets.UTF_8.name());
-            builder.addSourceTree(new File(protoSourcePath));
-            return MoreKit.putIfAbsent(javaProjectBuilderMap, protoSourcePath, builder);
+    static Map<String, SourceClass> getSourceClassMap(String protoSourcePath) {
+        Map<String, SourceClass> sourceClassMap = sourceClassCacheMap.get(protoSourcePath);
+        if (sourceClassMap == null) {
+            var parsed = SourceParserKit.parseSourceTree(new File(protoSourcePath));
+            return MoreKit.putIfAbsent(sourceClassCacheMap, protoSourcePath, parsed);
         }
 
-        return javaProjectBuilder;
+        return sourceClassMap;
     }
 
     private List<ProtoJava> convert(List<Class<?>> classList) {
@@ -116,15 +115,15 @@ public class ProtoJavaAnalyse {
             ProtoFileMerge annotation = clazz.getAnnotation(ProtoFileMerge.class);
             String fileName = annotation.fileName();
             String filePackage = annotation.filePackage();
-            JavaClass javaClass = protoJavaSourceFileMap.get(clazz.toString());
+            SourceClass sourceClass = protoJavaSourceFileMap.get(clazz.getName());
 
             var protoJava = new ProtoJava();
             protoJava.className = clazz.getSimpleName();
-            protoJava.comment = javaClass.getComment();
+            protoJava.comment = sourceClass.getComment();
             protoJava.clazz = clazz;
             protoJava.fileName = fileName;
             protoJava.filePackage = filePackage;
-            protoJava.javaClass = javaClass;
+            protoJava.sourceClass = sourceClass;
 
             protoJavaMap.put(clazz, protoJava);
 
@@ -142,7 +141,7 @@ public class ProtoJavaAnalyse {
                 ? Arrays.stream(clazz.getDeclaredFields()).filter(field -> field.getType().isEnum()).toArray(Field[]::new)
                 : clazz.getFields();
 
-        JavaClass javaClass = protoJava.javaClass;
+        SourceClass sourceClass = protoJava.sourceClass;
         // Enum numeric values start from 0, while message field indices start from 1.
         int order = clazz.isEnum() ? 0 : 1;
         var enumConstants = clazz.isEnum() ? clazz.getEnumConstants() : CommonConst.emptyObjects;
@@ -155,12 +154,12 @@ public class ProtoJavaAnalyse {
 
             Class<?> fieldTypeClass = field.getType();
             String fieldName = field.getName();
-            JavaField javaField = javaClass.getFieldByName(fieldName);
+            SourceField sourceField = sourceClass.getFieldByName(fieldName);
 
             ProtoJavaField protoJavaField = new ProtoJavaField();
             protoJavaField.repeated = List.class.equals(fieldTypeClass);
             protoJavaField.fieldName = fieldName;
-            protoJavaField.comment = javaField.getComment();
+            protoJavaField.comment = sourceField != null ? sourceField.getComment() : null;
             protoJavaField.order = order++;
             protoJavaField.fieldTypeClass = fieldTypeClass;
             protoJavaField.field = field;

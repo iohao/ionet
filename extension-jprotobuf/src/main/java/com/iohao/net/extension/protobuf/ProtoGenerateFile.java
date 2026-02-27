@@ -50,7 +50,7 @@ import java.util.function.Consumer;
 public class ProtoGenerateFile {
     /** proto package path */
     final Set<String> protoPackageSet = new HashSet<>();
-    /** Source code root path used by QDox scanning. */
+    /** Source code root path used by source scanning. */
     String protoSourcePath;
     /** Output directory for generated proto files. */
     String generateFolder;
@@ -94,7 +94,7 @@ public class ProtoGenerateFile {
     public void generate() {
         checked();
 
-        ProtoJavaAnalyse.getJavaProjectBuilder(protoSourcePath);
+        ProtoJavaAnalyse.getSourceClassMap(protoSourcePath);
 
         ProtoJavaAnalyse analyse = new ProtoJavaAnalyse();
         Map<ProtoJavaRegionKey, ProtoJavaRegion> regionMap = CollKit.ofConcurrentHashMap();

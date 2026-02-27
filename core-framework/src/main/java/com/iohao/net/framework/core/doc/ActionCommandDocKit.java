@@ -21,8 +21,8 @@ package com.iohao.net.framework.core.doc;
 import com.iohao.net.common.kit.CollKit;
 import com.iohao.net.common.kit.IonetLogName;
 import com.iohao.net.common.kit.ClassScanner;
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
+import com.iohao.net.common.kit.source.SourceClass;
+import com.iohao.net.common.kit.source.SourceParserKit;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +88,7 @@ public class ActionCommandDocKit {
     public Map<String, JavaClassDocInfo> getJavaClassDocInfoMap(Set<Class<?>> controllerList) {
 
         Set<String> sourceTreeSet = new HashSet<>();
-        JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder();
+        List<File> sourceDirs = new ArrayList<>();
 
         for (Class<?> actionClazz : controllerList) {
             try {
@@ -118,12 +118,14 @@ public class ActionCommandDocKit {
                         sourceTreeSet.add(path);
                     }
 
-                    javaProjectBuilder.addSourceTree(file);
+                    sourceDirs.add(file);
                 }
 
-                var classes = javaProjectBuilder.getClasses();
-                for (JavaClass javaClass : classes) {
-                    javaClassDocInfoMap.computeIfAbsent(javaClass.toString(), _ -> new JavaClassDocInfo(javaClass));
+                Map<String, SourceClass> parsed = SourceParserKit.parseSourceTree(
+                        sourceDirs.toArray(File[]::new));
+                for (var entry : parsed.entrySet()) {
+                    javaClassDocInfoMap.computeIfAbsent(entry.getKey(),
+                            _ -> new JavaClassDocInfo(entry.getValue()));
                 }
             } catch (IOException e) {
                 log.error(e.getMessage(), e);

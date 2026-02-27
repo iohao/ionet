@@ -77,7 +77,7 @@ class ActionCommandDocParserKit {
             }
 
             // java source
-            var javaClassDocInfo = javaClassDocInfoMap.get(controllerClass.toString());
+            var javaClassDocInfo = javaClassDocInfoMap.get(controllerClass.getName());
 
             var cmd = controllerClass.getAnnotation(ActionController.class).value();
             var actionCommandRegion = actionCommandRegions.getActionCommandRegion(cmd);

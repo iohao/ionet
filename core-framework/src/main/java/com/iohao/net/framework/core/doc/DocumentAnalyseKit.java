@@ -21,9 +21,9 @@ package com.iohao.net.framework.core.doc;
 import com.iohao.net.framework.core.exception.ActionErrorEnum;
 import com.iohao.net.framework.core.exception.ErrorInformation;
 import com.iohao.net.common.kit.CollKit;
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.expression.Expression;
+import com.iohao.net.common.kit.source.SourceClass;
+import com.iohao.net.common.kit.source.SourceField;
+import com.iohao.net.common.kit.source.SourceParserKit;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,7 +71,7 @@ public class DocumentAnalyseKit {
             return analyseActionErrorEnumDocument(clazz);
         }
 
-        return analyseErrorCodeDocument(analyseJavaClassRecord.javaClass());
+        return analyseErrorCodeDocument(analyseJavaClassRecord.sourceClass());
     }
 
     private List<ErrorCodeDocument> analyseActionErrorEnumDocument(Class<? extends ErrorInformation> clazz) {
@@ -100,33 +100,31 @@ public class DocumentAnalyseKit {
         URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
         String srcPath = ActionCommandDocKit.sourceFilePathFun.apply(resource).replace("class", "java");
 
-        JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder();
-
         File file = new File(srcPath);
         // only process if source file exists in this package
         boolean exists = file.exists();
-        if (exists) {
-            javaProjectBuilder.addSourceTree(file);
-        }
 
         if (!exists && !ActionErrorEnum.class.equals(clazz)) {
             log.warn("Unable to obtain source code for {}", clazz);
         }
 
-        JavaClass javaClass = javaProjectBuilder.getClassByName(clazz.getName());
+        SourceClass sourceClass = exists
+                ? SourceParserKit.parseClass(clazz.getName(), file)
+                : new SourceClass(clazz.getName(), null, 0,
+                Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
-        return new AnalyseJavaClassRecord(exists, javaClass);
+        return new AnalyseJavaClassRecord(exists, sourceClass);
     }
 
-    record AnalyseJavaClassRecord(boolean exists, JavaClass javaClass) {
+    record AnalyseJavaClassRecord(boolean exists, SourceClass sourceClass) {
 
     }
 
     private final AtomicInteger errorCodeOrdinal = new AtomicInteger(0);
 
-    private List<ErrorCodeDocument> analyseErrorCodeDocument(JavaClass javaClass) {
-        return javaClass.getFields().stream().map(field -> {
-            List<Expression> enumConstantArguments = field.getEnumConstantArguments();
+    private List<ErrorCodeDocument> analyseErrorCodeDocument(SourceClass sourceClass) {
+        return sourceClass.getFields().stream().map(field -> {
+            List<Object> enumConstantArguments = field.getEnumConstantArguments();
             if (CollKit.isEmpty(enumConstantArguments)) {
                 return null;
             }
@@ -135,7 +133,7 @@ public class DocumentAnalyseKit {
             if (enumConstantArguments.size() == 1) {
                 errorCode = errorCodeOrdinal.getAndIncrement();
             } else if (enumConstantArguments.size() == 2) {
-                Object enumValue = enumConstantArguments.getFirst().getParameterValue();
+                Object enumValue = enumConstantArguments.getFirst();
                 errorCode = Integer.parseInt(enumValue.toString());
             }
 
@@ -145,8 +143,12 @@ public class DocumentAnalyseKit {
             errorCodeDocument.name = name;
             errorCodeDocument.value = errorCode;
 
-            String description = enumConstantArguments.getLast().getParameterValue().toString();
-            description = description.substring(1, description.length() - 1);
+            String description = enumConstantArguments.getLast().toString();
+            // strip surrounding quotes if present
+            if (description.length() >= 2
+                    && description.startsWith("\"") && description.endsWith("\"")) {
+                description = description.substring(1, description.length() - 1);
+            }
             errorCodeDocument.description = description;
 
             return errorCodeDocument;

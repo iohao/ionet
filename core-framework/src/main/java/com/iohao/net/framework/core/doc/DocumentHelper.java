@@ -24,7 +24,7 @@ import com.iohao.net.framework.core.exception.ErrorInformation;
 import com.iohao.net.common.kit.CollKit;
 import com.iohao.net.common.kit.MoreKit;
 import com.iohao.net.common.kit.StrKit;
-import com.thoughtworks.qdox.model.JavaClass;
+import com.iohao.net.common.kit.source.SourceClass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
@@ -131,8 +131,8 @@ public class DocumentHelper {
                 .forEach(broadcastDocument -> {
                     // resolve broadcast data description from class-level Javadoc comment
                     Class<?> dataClass = broadcastDocument.dataClass;
-                    JavaClass javaClass = DocumentAnalyseKit.analyseJavaClass(dataClass).javaClass();
-                    broadcastDocument.dataDescription = javaClass.getComment();
+                    SourceClass sourceClass = DocumentAnalyseKit.analyseJavaClass(dataClass).sourceClass();
+                    broadcastDocument.dataDescription = sourceClass.getComment();
                 });
 
         // ------- action analysis -------

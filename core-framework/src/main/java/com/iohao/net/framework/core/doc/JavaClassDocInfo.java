@@ -21,9 +21,9 @@ package com.iohao.net.framework.core.doc;
 import com.iohao.net.framework.annotations.ActionMethod;
 import com.iohao.net.common.kit.CollKit;
 import com.iohao.net.common.kit.StrKit;
-import com.thoughtworks.qdox.model.DocletTag;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaMethod;
+import com.iohao.net.common.kit.source.SourceClass;
+import com.iohao.net.common.kit.source.SourceDocTag;
+import com.iohao.net.common.kit.source.SourceMethod;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Wrapper around a QDox {@link JavaClass} that indexes its methods by signature
+ * Wrapper around a {@link SourceClass} that indexes its methods by name
  * and provides factory methods for creating {@link ActionCommandDoc} from reflection
  * {@link Method} objects.
  *
@@ -39,28 +39,28 @@ import java.util.Map;
  * @date 2022-01-28
  */
 public final class JavaClassDocInfo {
-    final JavaClass javaClass;
-    Map<String, JavaMethod> javaMethodMap = new HashMap<>();
+    final SourceClass sourceClass;
+    Map<String, SourceMethod> sourceMethodMap = new HashMap<>();
 
-    public JavaClassDocInfo(JavaClass javaClass) {
-        this.javaClass = javaClass;
+    public JavaClassDocInfo(SourceClass sourceClass) {
+        this.sourceClass = sourceClass;
 
-        List<JavaMethod> methods = javaClass.getMethods();
-        for (JavaMethod method : methods) {
-            javaMethodMap.put(method.toString(), method);
+        List<SourceMethod> methods = sourceClass.getMethods();
+        for (SourceMethod method : methods) {
+            sourceMethodMap.put(method.getName(), method);
         }
     }
 
     public ActionCommandDoc createActionCommandDoc(Method method) {
-        JavaMethod javaMethod = javaMethodMap.get(method.toString());
+        SourceMethod sourceMethod = sourceMethodMap.get(method.getName());
         int subCmd = method.getAnnotation(ActionMethod.class).value();
 
         ActionCommandDoc actionCommandDoc = new ActionCommandDoc();
         actionCommandDoc.subCmd = subCmd;
-        actionCommandDoc.classComment = this.javaClass.getComment();
-        actionCommandDoc.classLineNumber = this.javaClass.getLineNumber();
-        actionCommandDoc.comment = javaMethod.getComment();
-        actionCommandDoc.lineNumber = javaMethod.getLineNumber();
+        actionCommandDoc.classComment = this.sourceClass.getComment();
+        actionCommandDoc.classLineNumber = this.sourceClass.getLineNumber();
+        actionCommandDoc.comment = sourceMethod.getComment();
+        actionCommandDoc.lineNumber = sourceMethod.getLineNumber();
 
         if (actionCommandDoc.classComment == null) {
             actionCommandDoc.classComment = "";
@@ -70,20 +70,20 @@ public final class JavaClassDocInfo {
             actionCommandDoc.comment = "";
         }
 
-        methodParamReturnComment(actionCommandDoc, javaMethod);
+        methodParamReturnComment(actionCommandDoc, sourceMethod);
 
         return actionCommandDoc;
     }
 
-    private void methodParamReturnComment(ActionCommandDoc actionCommandDoc, JavaMethod javaMethod) {
-        List<DocletTag> tags = javaMethod.getTags();
+    private void methodParamReturnComment(ActionCommandDoc actionCommandDoc, SourceMethod sourceMethod) {
+        List<SourceDocTag> tags = sourceMethod.getTags();
         if (CollKit.isEmpty(tags)) {
             return;
         }
 
-        for (DocletTag tag : tags) {
-            String name = tag.getName();
-            String value = tag.getValue();
+        for (SourceDocTag tag : tags) {
+            String name = tag.name();
+            String value = tag.value();
 
             if (StrKit.isEmpty(value) || value.contains("flowContext")) {
                 continue;
@@ -99,6 +99,6 @@ public final class JavaClassDocInfo {
     }
 
     public String getComment() {
-        return this.javaClass.getComment();
+        return this.sourceClass.getComment();
     }
 }

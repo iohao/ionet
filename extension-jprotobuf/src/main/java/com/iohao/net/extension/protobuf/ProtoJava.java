@@ -19,7 +19,7 @@
 package com.iohao.net.extension.protobuf;
 
 import com.iohao.net.common.kit.StrKit;
-import com.thoughtworks.qdox.model.JavaClass;
+import com.iohao.net.common.kit.source.SourceClass;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class ProtoJava {
     String fileName;
     String filePackage;
 
-    JavaClass javaClass;
+    SourceClass sourceClass;
 
     List<ProtoJavaField> protoJavaFieldList = new ArrayList<>();
 

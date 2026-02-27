@@ -64,8 +64,6 @@
 
         <!-- https://mvnrepository.com/artifact/org.fusesource.jansi/jansi  -->
         <jansi.version>2.4.2</jansi.version>
-        <!-- https://mvnrepository.com/artifact/com.thoughtworks.qdox/qdox -->
-        <qdox.version>2.2.0</qdox.version>
 
         <!-- JSR-380 https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
