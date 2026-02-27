@@ -41,8 +41,6 @@ import java.util.jar.JarFile;
 public class ClassScanner {
     /** Package path to scan (in URL path format, e.g. "com/iohao/net/") */
     final String packagePath;
-    /** Set of discovered classes that passed the filter */
-    final Set<Class<?>> clazzSet = CollKit.ofConcurrentSet();
     /** Predicate filter; returns {@code true} to keep the class */
     final Predicate<Class<?>> predicateFilter;
 
@@ -69,10 +67,11 @@ public class ClassScanner {
      * @return list of matching classes
      */
     public List<Class<?>> listScan() {
-        try {
-            this.initClassLoad();
-            this.clazzSet.clear();
+        this.initClassLoad();
 
+        Set<Class<?>> classSet = new HashSet<>();
+
+        try {
             Enumeration<URL> urlEnumeration = classLoader.getResources(packagePath);
 
             while (urlEnumeration.hasMoreElements()) {
@@ -80,9 +79,9 @@ public class ClassScanner {
                 String protocol = url.getProtocol();
 
                 if ("jar".equals(protocol)) {
-                    scanJar(url);
+                    scanJar(url, classSet);
                 } else if ("file".equals(protocol)) {
-                    scanFile(url);
+                    scanFile(url, classSet);
                 }
             }
 
@@ -90,7 +89,7 @@ public class ClassScanner {
             ThrowKit.ofRuntimeException(e);
         }
 
-        return new ArrayList<>(clazzSet);
+        return new ArrayList<>(classSet);
     }
 
     private void initClassLoad() {
@@ -134,40 +133,42 @@ public class ClassScanner {
         return list;
     }
 
-    private void scanJar(URL url) throws IOException {
+    private void scanJar(URL url, Set<Class<?>> classSet) throws IOException {
         URLConnection urlConn = url.openConnection();
 
         if (urlConn instanceof JarURLConnection jarUrlConn) {
-            JarFile jarFile = jarUrlConn.getJarFile();
+            jarUrlConn.setUseCaches(false);
+            try (JarFile jarFile = jarUrlConn.getJarFile()) {
 
-            Enumeration<JarEntry> entries = jarFile.entries();
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                // jarEntryName
-                String jarEntryName = entry.getName();
+                Enumeration<JarEntry> entries = jarFile.entries();
+                while (entries.hasMoreElements()) {
+                    JarEntry entry = entries.nextElement();
+                    // jarEntryName
+                    String jarEntryName = entry.getName();
 
-                if (jarEntryName.isEmpty()) {
-                    continue;
-                }
+                    if (jarEntryName.isEmpty()) {
+                        continue;
+                    }
 
-                if (jarEntryName.charAt(0) == '/') {
-                    jarEntryName = jarEntryName.substring(1);
-                }
+                    if (jarEntryName.charAt(0) == '/') {
+                        jarEntryName = jarEntryName.substring(1);
+                    }
 
-                if (entry.isDirectory() || !jarEntryName.startsWith(packagePath)) {
-                    continue;
-                }
+                    if (entry.isDirectory() || !jarEntryName.startsWith(packagePath)) {
+                        continue;
+                    }
 
-                // Scan classes under packagePath
-                if (jarEntryName.endsWith(".class")) {
-                    jarEntryName = jarEntryName.substring(0, jarEntryName.length() - 6).replace('/', '.');
-                    loadClass(jarEntryName);
+                    // Scan classes under packagePath
+                    if (jarEntryName.endsWith(".class")) {
+                        jarEntryName = jarEntryName.substring(0, jarEntryName.length() - 6).replace('/', '.');
+                        loadClass(jarEntryName, classSet);
+                    }
                 }
             }
         }
     }
 
-    private void scanFile(URL url) {
+    private void scanFile(URL url, Set<Class<?>> classSet) {
         File file;
         try {
             file = new File(url.toURI());
@@ -177,10 +178,14 @@ public class ClassScanner {
         }
 
         String classPath = getClassPath(file);
-        scanFile(file, classPath);
+        if (classPath == null) {
+            return;
+        }
+
+        scanFile(file, classPath, classSet);
     }
 
-    private void scanFile(File file, String classPath) {
+    private void scanFile(File file, String classPath, Set<Class<?>> classSet) {
         if (file.isDirectory()) {
 
             File[] files = file.listFiles();
@@ -190,7 +195,7 @@ public class ClassScanner {
             }
 
             for (File value : files) {
-                scanFile(value, classPath);
+                scanFile(value, classPath, classSet);
             }
 
         } else if (file.isFile()) {
@@ -203,7 +208,7 @@ public class ClassScanner {
                         .substring(classPath.length(), absolutePath.length() - 6)
                         .replace(File.separatorChar, '.');
 
-                loadClass(className);
+                loadClass(className, classSet);
             }
         }
     }
@@ -219,25 +224,26 @@ public class ClassScanner {
 
         int index = absolutePath.lastIndexOf(ret);
 
-        if (index != -1) {
-            absolutePath = absolutePath.substring(0, index);
+        if (index == -1) {
+            log.warn("Package path [{}] not found in absolute path [{}]", ret, absolutePath);
+            return null;
         }
 
-        return absolutePath;
+        return absolutePath.substring(0, index);
     }
 
-    private void loadClass(String className) {
+    private void loadClass(String className, Set<Class<?>> classSet) {
         Class<?> clazz = null;
 
         try {
             clazz = classLoader.loadClass(className);
         } catch (ClassNotFoundException | LinkageError e) {
-            log.error(e.getMessage(), e);
+            log.debug(e.getMessage(), e);
         }
 
-        if (clazz != null && !clazzSet.contains(clazz)) {
+        if (clazz != null && !classSet.contains(clazz)) {
             if (predicateFilter.test(clazz)) {
-                clazzSet.add(clazz);
+                classSet.add(clazz);
             }
         }
     }
