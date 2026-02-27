@@ -18,10 +18,8 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.function.*;
+import lombok.experimental.*;
 
 /**
  * Null-presence conditional execution utilities.
@@ -40,7 +38,7 @@ public class PresentKit {
      * @param action the action to be performed, if a value is null
      */
     public void ifNull(Object value, Runnable action) {
-        if (Objects.isNull(value)) {
+        if (value == null) {
             action.run();
         }
     }
@@ -54,7 +52,7 @@ public class PresentKit {
      * @since 21.8
      */
     public <T> void ifPresent(T value, Consumer<T> action) {
-        if (Objects.nonNull(value)) {
+        if (value != null) {
             action.accept(value);
         }
     }

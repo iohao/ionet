@@ -18,7 +18,7 @@
  */
 package com.iohao.net.external.core.config;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * External client transport types supported by the gateway.

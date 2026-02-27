@@ -18,11 +18,9 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
+import com.iohao.net.framework.i18n.*;
 import com.iohao.net.framework.protocol.wrapper.*;
-
-import java.util.Map;
+import java.util.*;
 
 /**
  * Default {@link CodeSuggest} implementation that recommends replacing wrapper types

@@ -18,20 +18,15 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.IonetLogName;
-import com.iohao.net.common.kit.ClassScanner;
-import com.iohao.net.common.kit.source.SourceClass;
-import com.iohao.net.common.kit.source.SourceParserKit;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.source.*;
+import java.io.*;
+import java.net.*;
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Utility for scanning Java source files and building a map of {@link JavaClassDocInfo}

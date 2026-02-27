@@ -18,12 +18,11 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.BarSkeleton;
-import lombok.Builder;
+import com.iohao.net.framework.core.*;
+import java.util.*;
+import lombok.*;
 import org.jspecify.annotations.NonNull;
-
-import java.util.Arrays;
-import java.util.Map;
+import org.jspecify.annotations.*;
 
 /**
  * Immutable record representing a registered server instance in the ionet cluster.

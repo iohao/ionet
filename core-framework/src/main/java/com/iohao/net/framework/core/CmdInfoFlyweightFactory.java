@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.CoreGlobalConfig;
+import com.iohao.net.framework.*;
 
 /**
  * Factory that produces cached {@link CmdInfo} instances using the flyweight pattern.

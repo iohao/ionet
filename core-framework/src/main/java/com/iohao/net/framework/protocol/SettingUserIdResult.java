@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.core.exception.ErrorInformation;
+import com.iohao.net.framework.core.exception.*;
 
 /**
  * Result of a user id binding (setting) operation on the external server.

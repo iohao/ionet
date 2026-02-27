@@ -18,10 +18,9 @@
  */
 package com.iohao.net.extension.client.command;
 
-import com.iohao.net.extension.client.user.ClientUserChannel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.iohao.net.extension.client.user.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Executable client request command sent to the server.

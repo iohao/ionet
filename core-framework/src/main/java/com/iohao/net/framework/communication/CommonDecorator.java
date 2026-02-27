@@ -18,11 +18,10 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.core.FlowContextKeys;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.common.kit.trace.TraceKit;
-
-import java.util.concurrent.Executor;
+import com.iohao.net.common.kit.trace.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.flow.*;
+import java.util.concurrent.*;
 
 /**
  * Base decorator interface providing access to the communication aggregation, trace ID, and current executor.

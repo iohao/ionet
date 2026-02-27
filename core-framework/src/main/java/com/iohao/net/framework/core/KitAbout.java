@@ -18,35 +18,23 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.annotations.ActionController;
-import com.iohao.net.framework.annotations.ActionMethod;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.core.doc.ActionCommandDoc;
-import com.iohao.net.framework.core.doc.ActionCommandDocKit;
-import com.iohao.net.framework.core.doc.DocumentHelper;
-import com.iohao.net.framework.core.doc.JavaClassDocInfo;
-import com.iohao.net.framework.core.flow.ActionMethodInOut;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.core.kit.ValidatorKit;
-import com.iohao.net.framework.core.runner.Runners;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.framework.toy.IonetBanner;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import jakarta.validation.Valid;
-import com.iohao.net.framework.toy.AnsiColor;
-
-import java.lang.invoke.MethodType;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.doc.*;
+import com.iohao.net.framework.core.flow.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.core.runner.*;
+import com.iohao.net.framework.i18n.*;
+import com.iohao.net.framework.toy.*;
+import jakarta.validation.*;
+import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 /**
  * Utility for parsing Java source-level documentation (Javadoc) from {@code @ActionController}
@@ -371,14 +359,14 @@ class PrintActionKit {
         for (int cmd = 0; cmd < behaviors.length; cmd++) {
             ActionCommand[] subBehaviors = behaviors[cmd];
 
-            if (Objects.isNull(subBehaviors)) {
+            if (subBehaviors == null) {
                 continue;
             }
 
             for (int subCmd = 0; subCmd < subBehaviors.length; subCmd++) {
                 ActionCommand subBehavior = subBehaviors[subCmd];
 
-                if (Objects.isNull(subBehavior)) {
+                if (subBehavior == null) {
                     continue;
                 }
 

@@ -18,15 +18,10 @@
  */
 package com.iohao.net.external.core.hook.internal;
 
-import com.iohao.net.external.core.hook.IdleHook;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-
-import java.util.concurrent.TimeUnit;
+import com.iohao.net.external.core.hook.*;
+import java.util.concurrent.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Builder for {@link IdleProcessSetting} heartbeat/idle configuration.

@@ -18,19 +18,14 @@
  */
 package com.iohao.net.extension.room;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.communication.CommunicationKit;
-import com.iohao.net.framework.communication.RangeBroadcast;
-import com.iohao.net.framework.protocol.BroadcastUserListMessage;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.Set;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /// Broadcasts to the specified list of users.
 /// ```java

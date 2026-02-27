@@ -19,7 +19,7 @@
 package com.iohao.net.framework.core.kit;
 
 import com.iohao.net.framework.protocol.*;
-import lombok.experimental.UtilityClass;
+import lombok.experimental.*;
 
 /**
  * Message field copying utilities for transferring common fields between request and response messages.

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.center.creator;
 
-import com.iohao.net.center.CenterConnectionManager;
+import com.iohao.net.center.*;
 
 /**
  * Factory for creating center-server connection managers.

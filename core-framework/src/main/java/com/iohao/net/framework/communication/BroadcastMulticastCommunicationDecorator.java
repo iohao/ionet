@@ -18,14 +18,11 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.BroadcastMulticastMessage;
-import com.iohao.net.common.kit.CommonConst;
-
-import java.util.Collection;
-import java.util.List;
-
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Decorator providing multicast broadcast methods to send messages to all connected users.

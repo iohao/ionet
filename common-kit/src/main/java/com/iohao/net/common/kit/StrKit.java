@@ -18,10 +18,9 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-import org.jspecify.annotations.NonNull;
-
-import java.util.Map;
+import java.util.*;
+import lombok.experimental.*;
+import org.jspecify.annotations.*;
 
 /**
  * String manipulation utilities.

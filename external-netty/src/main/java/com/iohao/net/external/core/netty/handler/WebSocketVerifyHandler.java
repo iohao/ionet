@@ -18,19 +18,13 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.external.core.ExternalSetting;
-import com.iohao.net.external.core.ExternalSettingAware;
-import com.iohao.net.external.core.netty.session.SocketUserSession;
-import com.iohao.net.external.core.netty.session.SocketUserSessions;
-import com.iohao.net.server.ConvenientCommunication;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import com.iohao.net.external.core.*;
+import com.iohao.net.external.core.netty.session.*;
+import com.iohao.net.server.*;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
-
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Optional WebSocket handshake verification handler executed before protocol upgrade completion.

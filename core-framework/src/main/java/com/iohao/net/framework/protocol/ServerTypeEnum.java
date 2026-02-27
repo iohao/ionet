@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Enumeration of server types within the ionet cluster.

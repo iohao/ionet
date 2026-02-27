@@ -18,11 +18,9 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
-import io.netty.util.ReferenceCountUtil;
+import io.netty.util.*;
 
 /**
  * Closes non-WebSocket HTTP requests after the WebSocket upgrade path handlers are installed.

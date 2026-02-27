@@ -18,10 +18,9 @@
  */
 package com.iohao.net.extension.client.kit;
 
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.experimental.UtilityClass;
-
-import java.util.Scanner;
+import com.iohao.net.common.kit.exception.*;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Console input helper utilities for simulated clients.

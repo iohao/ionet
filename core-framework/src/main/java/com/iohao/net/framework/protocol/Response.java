@@ -19,8 +19,7 @@
 package com.iohao.net.framework.protocol;
 
 import com.iohao.net.framework.protocol.wrapper.*;
-
-import java.util.List;
+import java.util.*;
 
 /**
  * Represent an outbound response message with typed data extraction capabilities.

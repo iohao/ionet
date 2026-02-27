@@ -18,14 +18,11 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.core.flow.DefaultFlowContext;
-import com.iohao.net.framework.protocol.Request;
-import com.iohao.net.framework.protocol.UserRequestMessage;
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.common.kit.concurrent.executor.ExecutorRegionKit;
-
-import java.util.Collections;
+import com.iohao.net.common.kit.concurrent.executor.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.core.flow.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Lightweight {@link DefaultFlowContext} used when no real client request is available,

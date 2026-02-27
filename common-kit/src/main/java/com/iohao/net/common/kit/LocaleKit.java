@@ -18,9 +18,8 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.Locale;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Locale detection utilities.

@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.CommunicationMessage;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Strategy for creating and serializing external communication messages.

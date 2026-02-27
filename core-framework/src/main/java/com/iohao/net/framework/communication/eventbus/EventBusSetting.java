@@ -18,8 +18,8 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import com.iohao.net.framework.annotations.Enterprise;
-import com.iohao.net.framework.core.runner.Runner;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.core.runner.*;
 
 /**
  * Configuration interface for the EventBus subsystem, providing factory methods

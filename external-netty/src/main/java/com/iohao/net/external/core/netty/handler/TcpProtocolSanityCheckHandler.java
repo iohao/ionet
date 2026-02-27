@@ -18,12 +18,11 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.external.core.config.ExternalGlobalConfig;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
-
-import java.util.List;
+import com.iohao.net.external.core.config.*;
+import io.netty.buffer.*;
+import io.netty.channel.*;
+import io.netty.handler.codec.*;
+import java.util.*;
 
 /**
  * One-time guard that validates the first TCP length-prefixed frame header before normal decoding.

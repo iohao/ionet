@@ -18,15 +18,11 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.external.core.ExternalSetting;
-import com.iohao.net.external.core.ExternalSettingAware;
-import com.iohao.net.external.core.netty.session.SocketUserSession;
-import com.iohao.net.external.core.netty.session.SocketUserSessions;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import lombok.Setter;
+import com.iohao.net.external.core.*;
+import com.iohao.net.external.core.netty.session.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
+import lombok.*;
 
 /**
  * Creates and removes {@link SocketUserSession} instances on Netty channel lifecycle events.

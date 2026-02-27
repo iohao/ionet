@@ -18,12 +18,10 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.protocol.Server;
-import lombok.Getter;
-
-import java.util.Collection;
-import java.util.Set;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
+import lombok.*;
 
 /**
  * Holds event topic information and server metadata for a logic server participating in the EventBus system.

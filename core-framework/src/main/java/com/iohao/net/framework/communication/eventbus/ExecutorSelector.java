@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import com.iohao.net.common.kit.concurrent.executor.ExecutorRegion;
+import com.iohao.net.common.kit.concurrent.executor.*;
 
 /**
  * Subscriber thread executor selection strategy.

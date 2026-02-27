@@ -18,16 +18,12 @@
  */
 package com.iohao.net.external.core;
 
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.common.kit.attr.AttrOption;
-import com.iohao.net.common.kit.attr.AttrOptionDynamic;
-import com.iohao.net.common.kit.attr.AttrOptions;
-import com.iohao.net.external.core.hook.internal.IdleProcessSetting;
-import com.iohao.net.external.core.session.UserSessions;
-import com.iohao.net.server.ConvenientCommunication;
-import com.iohao.net.server.NetServerSetting;
-import com.iohao.net.server.NetServerSettingAware;
-import lombok.Builder;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.hook.internal.*;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.server.*;
+import lombok.*;
 
 /**
  * Immutable runtime settings for one external server instance.

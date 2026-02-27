@@ -18,13 +18,10 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.ActionCommand;
-import com.iohao.net.framework.core.BarSkeleton;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.communication.CommunicationAggregation;
-import com.iohao.net.framework.communication.CommunicationType;
-import com.iohao.net.framework.protocol.Request;
-import com.iohao.net.common.kit.concurrent.executor.ThreadExecutor;
+import com.iohao.net.common.kit.concurrent.executor.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * The FlowContext's lifecycle is limited to the duration of a single request flow.

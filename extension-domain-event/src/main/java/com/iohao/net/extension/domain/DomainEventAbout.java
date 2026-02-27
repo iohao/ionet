@@ -19,14 +19,10 @@
 package com.iohao.net.extension.domain;
 
 
-import com.lmax.disruptor.EventHandler;
-import com.lmax.disruptor.EventTranslatorOneArg;
-import com.lmax.disruptor.ExceptionHandler;
-import com.lmax.disruptor.dsl.Disruptor;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.lmax.disruptor.*;
+import com.lmax.disruptor.dsl.*;
+import java.util.concurrent.atomic.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Disruptor event handler adapter that delegates to {@link DomainEventHandler}.
@@ -66,7 +62,7 @@ final class DefaultCommonEventProducer implements CommonEventProducer {
     public void onData(Object domainSource, Class<?> topic, boolean eventSource) {
         var disruptor = DisruptorManager.getDisruptor(topic);
 
-        if (Objects.isNull(disruptor)) {
+        if (disruptor == null) {
             throw new NullPointerException("No processor configured for domain event: " + topic + ".");
         }
 

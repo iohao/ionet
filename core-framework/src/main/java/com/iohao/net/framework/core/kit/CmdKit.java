@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.core.kit;
 
-import com.iohao.net.framework.core.CmdInfo;
+import com.iohao.net.framework.core.*;
 
 /**
  * Command ID manipulation utilities. Packs cmd and subCmd into a single int

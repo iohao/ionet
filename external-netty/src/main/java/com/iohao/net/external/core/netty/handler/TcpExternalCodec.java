@@ -18,13 +18,12 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.external.core.message.CommunicationMessageKit;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageCodec;
-
-import java.util.List;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.buffer.*;
+import io.netty.channel.*;
+import io.netty.handler.codec.*;
+import java.util.*;
 
 /**
  * Netty codec that converts length-prefixed TCP frames to/from {@link CommunicationMessage}.

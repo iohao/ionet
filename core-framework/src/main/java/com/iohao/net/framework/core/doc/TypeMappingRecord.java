@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Record describing how a Java/protobuf type maps to client-side type names,

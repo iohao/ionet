@@ -18,15 +18,12 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.core.kit.BarMessageKit;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.FlowContextKeys;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.framework.protocol.ExternalRequestMessage;
-import com.iohao.net.framework.protocol.RequestMessage;
-import com.iohao.net.framework.protocol.Request;
-import lombok.extern.slf4j.Slf4j;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.flow.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Default implementation of {@link Communication} that delegates to the global {@link CommunicationAggregation}.

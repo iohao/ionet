@@ -18,27 +18,20 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.common.kit.CollKit;
+import com.iohao.net.common.kit.*;
 import com.iohao.net.extension.client.command.*;
-import com.iohao.net.extension.client.kit.ClientMessageKit;
-import com.iohao.net.extension.client.kit.ClientUserConfigs;
-import com.iohao.net.external.core.message.ExternalMessage;
-import com.iohao.net.framework.protocol.CmdCodeConst;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.iohao.net.extension.client.kit.*;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Client communication channel facade for sending requests and receiving server responses.
@@ -138,7 +131,7 @@ public class ClientUserChannel {
     }
 
     public void writeAndFlush(ExternalMessage message) {
-        if (Objects.isNull(this.channelAccept)) {
+        if (this.channelAccept == null) {
             return;
         }
 
@@ -229,7 +222,7 @@ public class ClientUserChannel {
                 );
 
                 CallbackDelegate callback = requestCommand.getCallback();
-                if (Objects.isNull(callback)) {
+                if (callback == null) {
                     log.warn("callback is null");
                 }
             }

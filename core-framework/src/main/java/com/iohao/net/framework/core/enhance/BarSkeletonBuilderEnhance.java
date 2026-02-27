@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.core.enhance;
 
-import com.iohao.net.framework.core.BarSkeletonBuilder;
+import com.iohao.net.framework.core.*;
 
 /**
  * SPI extension point for enhancing a {@link BarSkeletonBuilder} before the skeleton is built.

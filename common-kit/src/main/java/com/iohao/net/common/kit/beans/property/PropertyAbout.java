@@ -18,12 +18,10 @@
  */
 package com.iohao.net.common.kit.beans.property;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.*;
+import java.util.concurrent.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Internal helper that tracks property value changes and dispatches events to a single listener.
@@ -108,7 +106,7 @@ final class ChangeHelperList<T> {
      * @param helper the change helper to add
      */
     void addListener(ChangeHelper<? super T> helper) {
-        if (Objects.isNull(this.list)) {
+        if (this.list == null) {
             this.list = new CopyOnWriteArrayList<>();
         }
 
@@ -121,7 +119,7 @@ final class ChangeHelperList<T> {
      * @param listener the listener whose helper should be removed
      */
     void removeListener(PropertyChangeListener<? super T> listener) {
-        if (Objects.isNull(this.list) || Objects.isNull(listener)) {
+        if (this.list == null || listener == null) {
             return;
         }
 
@@ -149,7 +147,7 @@ final class ChangeHelperList<T> {
      * Fire value change events to all registered listeners.
      */
     void fireValueChangedEvent() {
-        if (Objects.isNull(this.list)) {
+        if (this.list == null) {
             return;
         }
 

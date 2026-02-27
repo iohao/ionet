@@ -18,36 +18,21 @@
  */
 package com.iohao.net.extension.codegen;
 
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.time.*;
+import com.iohao.net.extension.protobuf.*;
 import com.iohao.net.framework.core.doc.*;
-import com.iohao.net.framework.protocol.wrapper.BoolValue;
-import com.iohao.net.framework.protocol.wrapper.IntValue;
-import com.iohao.net.framework.protocol.wrapper.LongValue;
-import com.iohao.net.framework.protocol.wrapper.StringValue;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.FileKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.time.TimeFormatKit;
-import com.iohao.net.common.kit.time.TimeKit;
-import com.iohao.net.extension.protobuf.ProtoFileMerge;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.UtilityClass;
-import org.beetl.core.Configuration;
-import org.beetl.core.Context;
-import org.beetl.core.GroupTemplate;
-import org.beetl.core.Template;
-import org.beetl.core.resource.ClasspathResourceLoader;
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import com.iohao.net.framework.core.exception.*;
+import com.iohao.net.framework.protocol.wrapper.*;
+import java.io.*;
+import java.nio.charset.*;
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.*;
 import java.util.function.Function;
+import lombok.*;
+import lombok.experimental.*;
+import org.beetl.core.*;
+import org.beetl.core.resource.*;
 
 @UtilityClass
 class DocumentGenerateKit {
@@ -129,7 +114,7 @@ class DocumentGenerateKit {
         @Override
         public Object call(Object[] paras, Context ctx) {
             var value = paras[0];
-            if (Objects.isNull(value)) {
+            if (value == null) {
                 return "";
             }
 
@@ -216,7 +201,7 @@ final class BroadcastGenerate {
 
     private void extractedBroadcastExampleCode(BroadcastDocument broadcastDocument) {
         Class<?> dataClass = broadcastDocument.dataClass;
-        if (Objects.isNull(dataClass)) {
+        if (dataClass == null) {
             if (Objects.nonNull(broadcastRenderBeforeConsumer)) {
                 broadcastRenderBeforeConsumer.accept(broadcastDocument);
             }
@@ -243,7 +228,7 @@ final class BroadcastGenerate {
     private String render(BroadcastDocument broadcastDocument, TypeMappingRecord typeMappingRecord, String examplePath) {
         Template exampleTemplate = templateCreator.apply(examplePath);
 
-        if (Objects.isNull(exampleTemplate)) {
+        if (exampleTemplate == null) {
             return "";
         }
 
@@ -393,7 +378,7 @@ class InternalProtoClassKit {
             return true;
         }).forEach(protoClass -> {
             ProtoFileMerge annotation = protoClass.getAnnotation(ProtoFileMerge.class);
-            if (Objects.isNull(annotation)) {
+            if (annotation == null) {
                 return;
             }
 

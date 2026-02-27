@@ -18,15 +18,10 @@
  */
 package com.iohao.net.extension.client;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.extension.client.command.CallbackDelegate;
-import com.iohao.net.extension.client.command.InputCommand;
-import com.iohao.net.extension.client.command.ListenCommand;
-import com.iohao.net.extension.client.command.RequestCommand;
-import com.iohao.net.extension.client.user.ClientUser;
-import com.iohao.net.extension.client.user.ClientUserChannel;
-import com.iohao.net.extension.client.user.ClientUserInputCommands;
-import lombok.Getter;
+import com.iohao.net.extension.client.command.*;
+import com.iohao.net.extension.client.user.*;
+import com.iohao.net.framework.core.*;
+import lombok.*;
 
 /**
  * Base implementation for grouping simulated client input commands by command region.

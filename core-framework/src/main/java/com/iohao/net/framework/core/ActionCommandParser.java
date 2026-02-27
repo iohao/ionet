@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.core;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * Parse {@code @ActionController} annotated classes and build the corresponding

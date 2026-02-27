@@ -19,15 +19,12 @@
 package com.iohao.net.extension.codegen;
 
 import com.iohao.net.framework.core.doc.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-import org.beetl.core.Template;
-
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
+import org.beetl.core.*;
 
 /**
  * Generate TypeScript code, such as broadcast, error code, action
@@ -148,7 +145,7 @@ public final class TypeScriptDocumentGenerate extends AbstractDocumentGenerate {
 
     private Template ofTemplate(String fileName) {
         var template = DocumentGenerateKit.getTemplate("ts/" + fileName);
-        template.binding("protoPrefix", Objects.isNull(this.protoPrefix) ? "" : this.protoPrefix);
+        template.binding("protoPrefix", this.protoPrefix == null ? "" : this.protoPrefix);
         return template;
     }
 

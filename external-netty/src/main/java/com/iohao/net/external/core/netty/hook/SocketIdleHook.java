@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.netty.hook;
 
-import com.iohao.net.external.core.hook.IdleHook;
-import io.netty.handler.timeout.IdleStateEvent;
+import com.iohao.net.external.core.hook.*;
+import io.netty.handler.timeout.*;
 
 /**
  * TCP/WebSocket heartbeat hook

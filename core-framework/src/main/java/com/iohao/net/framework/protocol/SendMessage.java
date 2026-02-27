@@ -19,7 +19,7 @@
 package com.iohao.net.framework.protocol;
 
 
-import com.iohao.net.framework.core.CmdInfo;
+import com.iohao.net.framework.core.*;
 
 /**
  * Fire-and-forget request message for one-way logic-to-logic server communication.

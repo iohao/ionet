@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Event message carrying the event source data, topic, routing info, and fire type flags

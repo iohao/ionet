@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.domain;
 
-import lombok.experimental.UtilityClass;
+import lombok.experimental.*;
 
 /**
  * Static facade for publishing domain events through the configured producer.

@@ -18,10 +18,8 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Type mapping table from Java field types to proto scalar types.

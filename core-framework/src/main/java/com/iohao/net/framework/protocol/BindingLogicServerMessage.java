@@ -18,20 +18,12 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Message that requests a dynamic binding change between users and logic servers.

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.balanced;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Default holder for logic and external load-balancing implementations.

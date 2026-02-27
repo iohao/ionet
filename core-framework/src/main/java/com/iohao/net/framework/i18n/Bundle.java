@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.i18n;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Locale-aware resource bundle accessor for framework i18n messages.
@@ -45,7 +42,7 @@ public final class Bundle {
      * @return the resource bundle
      */
     ResourceBundle getBundle() {
-        if (Objects.isNull(bundle)) {
+        if (bundle == null) {
             bundle = ResourceBundle.getBundle(baseName, Locale.getDefault());
         }
 

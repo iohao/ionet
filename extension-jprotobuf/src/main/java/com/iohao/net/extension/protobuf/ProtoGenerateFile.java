@@ -18,24 +18,15 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.FileKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.exception.*;
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Generates grouped `.proto` files by scanning annotated Java classes.
@@ -73,7 +64,7 @@ public class ProtoGenerateFile {
 
         mkdir(this.generateFolder);
 
-        if (Objects.isNull(this.protoSourcePath)) {
+        if (this.protoSourcePath == null) {
             this.protoSourcePath = System.getProperty("user.dir");
         }
 

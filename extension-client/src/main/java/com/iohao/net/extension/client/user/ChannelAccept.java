@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Transport callback used to send a communication message through the active client channel.

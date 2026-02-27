@@ -18,30 +18,13 @@
  */
 package com.iohao.net.common.kit.source;
 
-import com.sun.source.doctree.BlockTagTree;
-import com.sun.source.doctree.DocTree;
-import com.sun.source.doctree.ParamTree;
+import com.sun.source.doctree.*;
 import com.sun.source.doctree.ReturnTree;
-import com.sun.source.doctree.TextTree;
-import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.CompilationUnitTree;
-import com.sun.source.tree.MethodTree;
-import com.sun.source.tree.ModifiersTree;
-import com.sun.source.tree.NewClassTree;
-import com.sun.source.tree.Tree;
-import com.sun.source.tree.VariableTree;
-import com.sun.source.util.DocTrees;
-import com.sun.source.util.TreePath;
-import com.sun.source.util.TreeScanner;
-import com.sun.source.util.Trees;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.sun.source.tree.*;
+import com.sun.source.util.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Visits class declarations in a compilation unit, extracting metadata
@@ -121,12 +104,12 @@ final class ClassVisitor extends TreeScanner<Void, Void> {
     }
 
     private String extractComment(TreePath path) {
-        if (Objects.isNull(path)) {
+        if (path == null) {
             return null;
         }
 
         var docComment = this.docTrees.getDocCommentTree(path);
-        if (Objects.isNull(docComment)) {
+        if (docComment == null) {
             return null;
         }
 
@@ -172,7 +155,7 @@ final class ClassVisitor extends TreeScanner<Void, Void> {
     }
 
     private List<SourceAnnotation> extractAnnotations(ModifiersTree modifiers) {
-        if (Objects.isNull(modifiers)) {
+        if (modifiers == null) {
             return Collections.emptyList();
         }
 
@@ -190,12 +173,12 @@ final class ClassVisitor extends TreeScanner<Void, Void> {
     }
 
     private List<SourceDocTag> extractDocTags(TreePath path) {
-        if (Objects.isNull(path)) {
+        if (path == null) {
             return Collections.emptyList();
         }
 
         var docComment = this.docTrees.getDocCommentTree(path);
-        if (Objects.isNull(docComment)) {
+        if (docComment == null) {
             return Collections.emptyList();
         }
 

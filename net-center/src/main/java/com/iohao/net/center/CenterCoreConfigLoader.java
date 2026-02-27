@@ -1,11 +1,10 @@
 package com.iohao.net.center;
 
-import com.iohao.net.framework.protocol.ConnectResponseMessage;
-import com.iohao.net.center.codec.ConnectResponseMessageSbe;
-import com.iohao.net.center.fragment.ConnectRequestMessageOnFragment;
-import com.iohao.net.framework.core.CoreConfigLoader;
-import com.iohao.net.common.OnFragmentManager;
-import com.iohao.net.common.SbeMessageManager;
+import com.iohao.net.center.codec.*;
+import com.iohao.net.center.fragment.*;
+import com.iohao.net.common.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Registers center-server SBE encoders and fragment handlers into shared registries.

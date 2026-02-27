@@ -18,17 +18,11 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.annotations.ActionMethod;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.source.SourceClass;
-import com.iohao.net.common.kit.source.SourceDocTag;
-import com.iohao.net.common.kit.source.SourceMethod;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.source.*;
+import com.iohao.net.framework.annotations.*;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * Wrapper around a {@link SourceClass} that indexes its methods by name

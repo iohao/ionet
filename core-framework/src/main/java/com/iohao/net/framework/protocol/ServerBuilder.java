@@ -18,19 +18,12 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.core.BarSkeleton;
-import com.iohao.net.framework.core.BarSkeletonManager;
 import com.iohao.net.common.kit.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.core.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Builder for constructing {@link Server} instances with sensible defaults.

@@ -18,9 +18,9 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.OnExternalTemplateId;
-import com.iohao.net.common.kit.exception.ThrowKit;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Flow-level attachment communication for reading and writing request-scoped attachment data.

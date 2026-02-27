@@ -18,9 +18,9 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.Getter;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Operating system detection utilities.

@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.hook.cache;
 
-import com.iohao.net.framework.annotations.Enterprise;
-import com.iohao.net.framework.protocol.CommunicationMessage;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Interfaces for external server cache data query and addition.

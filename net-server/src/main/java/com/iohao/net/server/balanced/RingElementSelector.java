@@ -18,13 +18,11 @@
  */
 package com.iohao.net.server.balanced;
 
-import com.iohao.net.common.kit.CommonConst;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Round-robin selector backed by an array snapshot.
@@ -65,7 +63,7 @@ public final class RingElementSelector<T> implements ElementSelector<T> {
     public T get() {
         T next = next();
 
-        if (Objects.isNull(next)) {
+        if (next == null) {
             throw new NullPointerException("RingElementSelector next is null, likely due to an empty element list.");
         }
 

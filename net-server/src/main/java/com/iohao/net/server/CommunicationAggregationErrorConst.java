@@ -18,12 +18,9 @@
  */
 package com.iohao.net.server;
 
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.protocol.EmptyExternalResponseMessage;
-import com.iohao.net.framework.protocol.ExternalResponseMessage;
-import com.iohao.net.framework.protocol.ResponseCollectExternal;
-import com.iohao.net.framework.protocol.ResponseCollectExternalMessage;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.framework.core.exception.*;
+import com.iohao.net.framework.protocol.*;
+import lombok.experimental.*;
 
 /**
  * Shared fallback responses and error constants for communication aggregation flows.

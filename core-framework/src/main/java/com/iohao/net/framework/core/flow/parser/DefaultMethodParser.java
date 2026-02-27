@@ -18,16 +18,12 @@
  */
 package com.iohao.net.framework.core.flow.parser;
 
-import com.iohao.net.framework.core.ActionMethodParameter;
-import com.iohao.net.framework.core.ActualParameter;
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.protocol.wrapper.ByteValueList;
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.wrapper.*;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Default method parser for complex (non-primitive) action method parameters and return types.
@@ -52,7 +48,7 @@ class DefaultMethodParser implements MethodParser {
         Class<?> actualTypeArgumentClazz = actionMethodParameter.getActualTypeArgumentClass();
 
         if (actionMethodParameter.isList()) {
-            if (Objects.isNull(data)) {
+            if (data == null) {
                 return Collections.emptyList();
             }
 
@@ -67,7 +63,7 @@ class DefaultMethodParser implements MethodParser {
                     .toList();
         }
 
-        if (Objects.isNull(data)) {
+        if (data == null) {
             // If an action parameter type Supplier is configured, the object is created through the Supplier.
             var o = MethodParsers.newObject(actualTypeArgumentClazz);
             if (Objects.nonNull(o)) {

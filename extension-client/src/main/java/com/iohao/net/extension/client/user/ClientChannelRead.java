@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.external.core.message.ExternalMessage;
+import com.iohao.net.external.core.message.*;
 
 /**
  * @author 渔民小镇

@@ -18,11 +18,9 @@
  */
 package com.iohao.net.framework.toy;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
+import lombok.experimental.*;
 
 /**
  * Lightweight ANSI escape code utility, replacing the external jansi library.

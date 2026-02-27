@@ -18,8 +18,7 @@
  */
 package com.iohao.net.center.creator;
 
-import com.iohao.net.center.CenterServer;
-import com.iohao.net.center.CenterServerSetting;
+import com.iohao.net.center.*;
 
 /**
  * Factory for creating center-server runtime instances.

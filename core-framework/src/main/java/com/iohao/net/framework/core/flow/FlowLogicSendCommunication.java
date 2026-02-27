@@ -18,10 +18,10 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.kit.BarMessageKit;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.communication.LogicSendCommunicationDecorator;
-import com.iohao.net.framework.protocol.SendMessage;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Flow-level fire-and-forget message sending to other logic servers.

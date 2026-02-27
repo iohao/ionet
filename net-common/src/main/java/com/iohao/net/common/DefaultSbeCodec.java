@@ -18,12 +18,8 @@
  */
 package com.iohao.net.common;
 
-import com.iohao.net.framework.protocol.RemoteMessage;
-import com.iohao.net.framework.protocol.UserIdentity;
-import com.iohao.net.sbe.CommonMessageDecoder;
-import com.iohao.net.sbe.CommonMessageEncoder;
-import com.iohao.net.sbe.UserIdentityMessageDecoder;
-import com.iohao.net.sbe.UserIdentityMessageEncoder;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
 
 /**
  * Default {@link SbeCodec} that maps framework message fields to SBE generated codecs.

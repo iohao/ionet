@@ -18,10 +18,7 @@
  */
 package com.iohao.net.extension.room;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Extension interface for room management related operations
@@ -71,7 +68,7 @@ public interface RoomService {
         // Get roomId via userId
         Long roomId = this.getUserRoomMap().get(userId);
 
-        if (Objects.isNull(roomId)) {
+        if (roomId == null) {
             return null;
         }
 

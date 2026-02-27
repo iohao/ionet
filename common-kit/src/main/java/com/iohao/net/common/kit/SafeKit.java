@@ -18,11 +18,8 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Null-safe value retrieval utilities. Guarantees non-null return values by providing defaults.
@@ -86,7 +83,7 @@ public class SafeKit {
      * @return the unboxed long, or {@code defaultValue}
      */
     public long getLong(Long value, long defaultValue) {
-        return Objects.isNull(value) ? defaultValue : value;
+        return value == null ? defaultValue : value;
     }
 
     /**
@@ -122,7 +119,7 @@ public class SafeKit {
      * @return the unboxed boolean, or {@code defaultValue}
      */
     public boolean getBoolean(Boolean value, boolean defaultValue) {
-        return Objects.isNull(value) ? defaultValue : value;
+        return value == null ? defaultValue : value;
     }
 
     /**

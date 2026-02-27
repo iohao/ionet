@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Lightweight external response that carries only error information and no payload.

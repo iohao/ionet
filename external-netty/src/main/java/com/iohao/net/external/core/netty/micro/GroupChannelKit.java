@@ -18,20 +18,15 @@
  */
 package com.iohao.net.external.core.netty.micro;
 
-import com.iohao.net.common.kit.OsInfo;
-import com.iohao.net.common.kit.concurrent.DaemonThreadFactory;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.ServerChannel;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.kqueue.KQueueEventLoopGroup;
-import io.netty.channel.kqueue.KQueueServerSocketChannel;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import lombok.experimental.UtilityClass;
-
-import java.util.concurrent.ThreadFactory;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import io.netty.channel.*;
+import io.netty.channel.epoll.*;
+import io.netty.channel.kqueue.*;
+import io.netty.channel.nio.*;
+import io.netty.channel.socket.nio.*;
+import java.util.concurrent.*;
+import lombok.experimental.*;
 
 /**
  * Selects Netty event-loop/channel implementations based on the current operating system.

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.client.kit;
 
-import lombok.experimental.UtilityClass;
+import lombok.experimental.*;
 
 /**
  * Configuration flags for simulated client behavior and logging.

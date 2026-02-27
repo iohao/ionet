@@ -18,14 +18,11 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.core.doc.JavaClassDocInfo;
-
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.Collection;
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.doc.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * A command region holding all {@link ActionCommand} entries for a single cmd value, keyed by subCmd.

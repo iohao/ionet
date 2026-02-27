@@ -18,12 +18,11 @@
  */
 package com.iohao.net.extension.room.operation;
 
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.extension.domain.Eo;
-import com.iohao.net.extension.room.Room;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.iohao.net.extension.domain.*;
+import com.iohao.net.extension.room.*;
+import com.iohao.net.framework.core.flow.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Room gameplay operation execution context and domain-event payload.

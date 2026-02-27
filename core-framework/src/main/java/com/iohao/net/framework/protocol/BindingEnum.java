@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Enumeration of dynamic binding operations for logic server assignment.

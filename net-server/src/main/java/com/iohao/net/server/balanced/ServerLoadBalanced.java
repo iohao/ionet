@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.balanced;
 
-import com.iohao.net.framework.protocol.Server;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Base contract for registering and removing servers from a load-balancer.

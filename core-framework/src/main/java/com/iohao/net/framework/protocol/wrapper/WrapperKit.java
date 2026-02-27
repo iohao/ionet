@@ -18,9 +18,8 @@
  */
 package com.iohao.net.framework.protocol.wrapper;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Utility class for protocol wrapper type resolution.

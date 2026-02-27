@@ -18,10 +18,9 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.common.kit.attr.AttrOptionDynamic;
-import com.iohao.net.extension.client.InputCommandRegion;
-
-import java.util.List;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.extension.client.*;
+import java.util.*;
 
 /**
  * @author 渔民小镇

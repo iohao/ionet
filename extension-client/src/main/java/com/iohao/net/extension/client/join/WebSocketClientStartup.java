@@ -18,21 +18,18 @@
  */
 package com.iohao.net.extension.client.join;
 
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.common.kit.IonetLogName;
-import com.iohao.net.extension.client.ClientConnectOption;
-import com.iohao.net.extension.client.user.ClientUser;
-import com.iohao.net.extension.client.user.ClientUserChannel;
-import com.iohao.net.external.core.message.ExternalMessage;
-import lombok.extern.slf4j.Slf4j;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.handshake.ServerHandshake;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.extension.client.*;
+import com.iohao.net.extension.client.user.*;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.core.codec.*;
+import java.net.*;
+import java.nio.*;
+import java.util.*;
+import lombok.extern.slf4j.*;
+import org.java_websocket.client.*;
+import org.java_websocket.drafts.*;
+import org.java_websocket.handshake.*;
 
 /**
  * WebSocket client connector startup implementation.

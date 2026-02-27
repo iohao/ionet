@@ -18,10 +18,8 @@
  */
 package com.iohao.net.common.kit.collect;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
+import java.util.*;
+import java.util.function.*;
 
 /**
  * A thread-safe multimap that associates each key with a {@link java.util.List} of values, allowing duplicates.

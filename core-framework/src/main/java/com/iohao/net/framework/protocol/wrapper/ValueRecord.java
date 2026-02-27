@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol.wrapper;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Record that pairs a single-value wrapper class with its corresponding list wrapper class.

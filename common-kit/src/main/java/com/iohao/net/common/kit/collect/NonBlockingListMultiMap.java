@@ -18,11 +18,10 @@
  */
 package com.iohao.net.common.kit.collect;
 
-import com.iohao.net.common.kit.CollKit;
-
+import com.iohao.net.common.kit.*;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
+import java.util.concurrent.*;
+import java.util.function.*;
 
 /**
  * Non-blocking {@link ListMultiMap} implementation backed by
@@ -43,14 +42,14 @@ final class NonBlockingListMultiMap<K, V> implements ListMultiMap<K, V> {
     public List<V> ofIfAbsent(K key, Consumer<List<V>> consumer) {
         var list = this.map.get(key);
 
-        if (Objects.isNull(list)) {
+        if (list == null) {
             // Double-check pattern: putIfAbsent is atomic, so if another thread
             // inserted first, it returns the existing list and we fall through.
             // A null return means our newValueList was successfully stored.
             List<V> newValueList = new CopyOnWriteArrayList<>();
             list = this.map.putIfAbsent(key, newValueList);
 
-            if (Objects.isNull(list)) {
+            if (list == null) {
                 List<V> initList = this.map.get(key);
 
                 // First initialization callback

@@ -18,11 +18,10 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.source.SourceClass;
-
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.source.*;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 /**
  * Parsed Java class metadata used to render a proto message/enum block.

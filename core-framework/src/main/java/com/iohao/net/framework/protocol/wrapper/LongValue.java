@@ -18,12 +18,10 @@
  */
 package com.iohao.net.framework.protocol.wrapper;
 
-import com.baidu.bjf.remoting.protobuf.FieldType;
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
-import lombok.AccessLevel;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Protocol wrapper for a single long value.

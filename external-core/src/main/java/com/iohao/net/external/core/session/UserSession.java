@@ -19,11 +19,11 @@
 package com.iohao.net.external.core.session;
 
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.common.kit.attr.AttrOptionDynamic;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
-import com.iohao.net.external.core.message.CommunicationMessageKit;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * External user session abstraction for one connected client.

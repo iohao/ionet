@@ -18,15 +18,10 @@
  */
 package com.iohao.net.framework.core.flow.parser;
 
-import com.iohao.net.framework.core.ActionMethodParameter;
-import com.iohao.net.framework.core.ActualParameter;
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.protocol.wrapper.LongValue;
-import com.iohao.net.framework.protocol.wrapper.LongValueList;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.wrapper.*;
+import java.util.*;
 
 /**
  * Method parser for {@code long}/{@link Long} parameters and return types.
@@ -49,14 +44,14 @@ final class LongValueMethodParser implements MethodParser {
     @Override
     public Object parseParam(byte[] data, ActionMethodParameter actionMethodParameter, DataCodec codec) {
         if (actionMethodParameter.isList()) {
-            if (Objects.isNull(data)) {
+            if (data == null) {
                 return Collections.emptyList();
             }
 
             return codec.decode(data, LongValueList.class).values;
         }
 
-        if (Objects.isNull(data)) {
+        if (data == null) {
             return 0L;
         }
 

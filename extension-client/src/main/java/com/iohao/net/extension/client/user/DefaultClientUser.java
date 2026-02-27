@@ -18,15 +18,11 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.common.kit.attr.AttrOptions;
-import com.iohao.net.extension.client.InputCommandRegion;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.extension.client.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Default client-side user model.
@@ -62,7 +58,7 @@ public class DefaultClientUser implements ClientUser {
 
     @Override
     public void callbackInputCommandRegion() {
-        if (Objects.isNull(this.inputCommandRegions)) {
+        if (this.inputCommandRegions == null) {
             return;
         }
 

@@ -18,11 +18,10 @@
  */
 package com.iohao.net.extension.client.kit;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.external.core.message.CommunicationMessageKit;
-import com.iohao.net.external.core.message.ExternalMessage;
-import com.iohao.net.framework.protocol.CmdCodeConst;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
+import lombok.experimental.*;
 
 /**
  * Factory helpers for client communication and idle messages.

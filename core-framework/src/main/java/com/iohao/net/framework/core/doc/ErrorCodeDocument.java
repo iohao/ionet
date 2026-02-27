@@ -18,10 +18,8 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Documentation model for a single error code entry, carrying the enum constant name,

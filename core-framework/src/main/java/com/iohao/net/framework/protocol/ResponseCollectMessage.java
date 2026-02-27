@@ -18,13 +18,9 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Default implementation of {@link ResponseCollect} that stores aggregated

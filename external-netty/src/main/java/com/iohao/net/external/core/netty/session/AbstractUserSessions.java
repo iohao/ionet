@@ -18,19 +18,14 @@
  */
 package com.iohao.net.external.core.netty.session;
 
-import com.iohao.net.common.kit.attr.AttrOptions;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
-import com.iohao.net.external.core.hook.UserHook;
-import com.iohao.net.external.core.session.UserSession;
-import com.iohao.net.external.core.session.UserSessions;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.hook.*;
+import com.iohao.net.external.core.session.*;
+import io.netty.channel.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Base implementation of Netty-backed user session registries.
@@ -104,7 +99,7 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
      * @param userSession user session
      */
     void userHookInto(UserSession userSession) {
-        if (Objects.isNull(this.userHook)) {
+        if (this.userHook == null) {
             return;
         }
 
@@ -117,7 +112,7 @@ abstract class AbstractUserSessions<ChannelHandlerContext, Session extends UserS
      * @param userSession user session
      */
     void userHookQuit(UserSession userSession) {
-        if (Objects.isNull(userHook)) {
+        if (userHook == null) {
             return;
         }
 

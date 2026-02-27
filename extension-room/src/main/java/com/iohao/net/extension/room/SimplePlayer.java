@@ -18,10 +18,8 @@
  */
 package com.iohao.net.extension.room;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Basic mutable {@link Player} implementation for room-based games.

@@ -18,14 +18,10 @@
  */
 package com.iohao.net.framework.toy;
 
-import com.iohao.net.common.kit.RandomKit;
-import lombok.experimental.UtilityClass;
-import org.jspecify.annotations.NonNull;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import lombok.experimental.*;
+import org.jspecify.annotations.*;
 
 /**
  * Startup news and tips manager that randomly selects documentation links

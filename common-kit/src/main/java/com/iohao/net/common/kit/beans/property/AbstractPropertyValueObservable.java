@@ -18,8 +18,6 @@
  */
 package com.iohao.net.common.kit.beans.property;
 
-import java.util.Objects;
-
 /**
  * Abstract base implementation of {@link PropertyValueObservable} with listener management.
  *
@@ -38,7 +36,7 @@ abstract class AbstractPropertyValueObservable<T> implements PropertyValueObserv
 
     @Override
     public void addListener(PropertyChangeListener<? super T> listener) {
-        if (Objects.isNull(this.helperList)) {
+        if (this.helperList == null) {
             this.helperList = new ChangeHelperList<>();
         }
 
@@ -47,7 +45,7 @@ abstract class AbstractPropertyValueObservable<T> implements PropertyValueObserv
 
     @Override
     public void removeListener(PropertyChangeListener<? super T> listener) {
-        if (Objects.nonNull(this.helperList)) {
+        if (this.helperList != null) {
             this.helperList.removeListener(listener);
         }
     }
@@ -63,7 +61,7 @@ abstract class AbstractPropertyValueObservable<T> implements PropertyValueObserv
     }
 
     private void fireValueChangedEvent() {
-        if (Objects.nonNull(this.helperList)) {
+        if (this.helperList != null) {
             this.helperList.fireValueChangedEvent();
         }
     }

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.common.kit.trace;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Strategy interface for generating trace IDs.

@@ -18,10 +18,8 @@
  */
 package com.iohao.net.framework.core.exception;
 
-import lombok.Getter;
-
-import java.io.Serial;
-import java.util.Objects;
+import java.io.*;
+import lombok.*;
 
 /**
  * Exception carrying an error code and message, thrown during action method processing
@@ -66,7 +64,7 @@ public class MessageException extends RuntimeException {
      * @return the error information
      */
     public ErrorInformation getErrorInformation() {
-        return Objects.isNull(this.errorInformation)
+        return this.errorInformation == null
                 ? this.errorInformation = new InternalError(errorCode, getMessage())
                 : this.errorInformation;
     }

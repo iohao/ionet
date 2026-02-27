@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.net.external;
 
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.protocol.OnExternalTemplateId;
+import com.iohao.net.framework.core.exception.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Handles template requests that bind a business userId to a user channel.

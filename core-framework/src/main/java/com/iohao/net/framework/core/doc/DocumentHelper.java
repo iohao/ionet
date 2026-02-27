@@ -18,20 +18,15 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.core.exception.ErrorInformation;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.source.SourceClass;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
-
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.source.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.core.exception.*;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.ToIntFunction;
+import java.util.concurrent.*;
+import java.util.function.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Central helper for collecting action documentation, broadcast documents, error codes,
@@ -193,7 +188,7 @@ public class DocumentHelper {
     public ActionDoc ofActionDoc(int cmd, Class<?> controllerClazz) {
         ActionDoc actionDocRegion = DocumentHelper.actionDocMap.get(controllerClazz);
 
-        if (Objects.isNull(actionDocRegion)) {
+        if (actionDocRegion == null) {
             return MoreKit.putIfAbsent(actionDocMap, controllerClazz, new ActionDoc(cmd, controllerClazz));
         }
 

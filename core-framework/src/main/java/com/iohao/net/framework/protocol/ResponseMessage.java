@@ -18,13 +18,10 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.wrapper.ByteValueList;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.util.List;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.wrapper.*;
+import java.util.*;
+import lombok.*;
 
 /**
  * Internal response message used for logic-to-logic server communication via Aeron.

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.connection;
 
-import com.iohao.net.common.CommonConnectionManager;
+import com.iohao.net.common.*;
 
 /**
  * Net-server connection manager for peer publications and inbound fragment polling.

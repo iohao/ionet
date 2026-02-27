@@ -18,11 +18,9 @@
  */
 package com.iohao.net.common;
 
-import com.iohao.net.framework.protocol.ServerMessage;
-import com.iohao.net.framework.protocol.ServerTypeEnum;
-import com.iohao.net.sbe.ServerMessageCommonDecoder;
-import com.iohao.net.sbe.ServerMessageCommonEncoder;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import lombok.experimental.*;
 
 /**
  * Encodes and decodes {@link ServerMessage} common fields with SBE generated codecs.

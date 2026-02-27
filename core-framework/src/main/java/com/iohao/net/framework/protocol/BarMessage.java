@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Base message class for user-facing request and response messages in the Netty pipeline.

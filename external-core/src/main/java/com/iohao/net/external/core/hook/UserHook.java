@@ -18,7 +18,7 @@
  */
 package com.iohao.net.external.core.hook;
 
-import com.iohao.net.external.core.session.UserSession;
+import com.iohao.net.external.core.session.*;
 
 /**
  * User session lifecycle callbacks for online/offline events.

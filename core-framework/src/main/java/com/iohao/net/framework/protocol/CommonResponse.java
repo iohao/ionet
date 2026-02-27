@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.exception.ErrorInformation;
+import com.iohao.net.framework.core.exception.*;
 
 /**
  * Common response contract providing error code and message accessors.

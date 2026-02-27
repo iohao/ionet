@@ -18,9 +18,8 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.common.kit.ByteKit;
-import lombok.Getter;
-import lombok.Setter;
+import com.iohao.net.common.kit.*;
+import lombok.*;
 
 /**
  * Base message exchanged between external (Netty) servers and logic servers.

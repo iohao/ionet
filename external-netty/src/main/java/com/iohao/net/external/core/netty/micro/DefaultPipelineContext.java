@@ -18,11 +18,9 @@
  */
 package com.iohao.net.external.core.netty.micro;
 
-import com.iohao.net.external.core.ExternalSetting;
-import com.iohao.net.external.core.micro.PipelineContext;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelPipeline;
+import com.iohao.net.external.core.*;
+import com.iohao.net.external.core.micro.*;
+import io.netty.channel.*;
 
 /**
  * PipelineContext is mainly used to wrap the SocketChannel channel, aiming to enhance the Handler aware capability

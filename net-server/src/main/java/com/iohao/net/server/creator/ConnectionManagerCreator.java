@@ -18,8 +18,7 @@
  */
 package com.iohao.net.server.creator;
 
-import com.iohao.net.server.connection.ConnectionManager;
-import com.iohao.net.server.connection.ConnectionManagerParameter;
+import com.iohao.net.server.connection.*;
 
 /**
  * Factory for creating net-server connection managers.

@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.iohao.net.external.core.session.UserSessions;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.external.core.session.*;
+import lombok.experimental.*;
 
 /**
  * Shared holder for the active external server user session container.

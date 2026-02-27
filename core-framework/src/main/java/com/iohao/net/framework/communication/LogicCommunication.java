@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.protocol.RequestMessage;
-import com.iohao.net.framework.protocol.SendMessage;
-import com.iohao.net.framework.protocol.Response;
-
-import java.util.concurrent.CompletableFuture;
+import com.iohao.net.framework.protocol.*;
+import java.util.concurrent.*;
 
 /**
  * Interface for inter-logic-server communication.

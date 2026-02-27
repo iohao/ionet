@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.domain;
 
-import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.*;
 
 /**
  * Interface for building Disruptor

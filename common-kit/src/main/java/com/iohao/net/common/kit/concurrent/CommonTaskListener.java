@@ -18,7 +18,7 @@
  */
 package com.iohao.net.common.kit.concurrent;
 
-import java.util.concurrent.Executor;
+import java.util.concurrent.*;
 
 /**
  * Task listener callback

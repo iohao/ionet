@@ -18,16 +18,12 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.baidu.bjf.remoting.protobuf.FieldType;
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
-import com.iohao.net.framework.protocol.AbstractCommunicationMessage;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-
-import java.util.Arrays;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Default external transport message used between clients and the external server.

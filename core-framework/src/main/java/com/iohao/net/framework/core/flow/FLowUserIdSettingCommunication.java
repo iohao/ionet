@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.protocol.OnExternalTemplateId;
-import com.iohao.net.framework.protocol.SettingUserIdResult;
+import com.iohao.net.framework.protocol.*;
 
 /**
  *

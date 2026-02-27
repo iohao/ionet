@@ -18,12 +18,10 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.core.kit.*;
+import java.util.*;
 
 /**
  * Internal flyweight interface and its implementations for caching {@link CmdInfo} instances.

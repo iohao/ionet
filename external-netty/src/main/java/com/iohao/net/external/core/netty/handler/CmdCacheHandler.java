@@ -18,14 +18,9 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.external.core.config.ExternalGlobalConfig;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.util.Objects;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
 
 /**
  * CmdCacheHandler, externalServer data cache
@@ -37,7 +32,7 @@ import java.util.Objects;
 public final class CmdCacheHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        if (Objects.isNull(ExternalGlobalConfig.externalCmdCache)) {
+        if (ExternalGlobalConfig.externalCmdCache == null) {
             // remove self
             ctx.pipeline().remove(this);
         }

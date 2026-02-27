@@ -18,11 +18,9 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.core.flow.parser.MethodParsers;
-
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.flow.parser.*;
+import java.util.*;
 
 final class ParseClientRequestDataKit {
     static Object parse(Object requestData) {

@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.common.kit.CollKit;
-import lombok.experimental.UtilityClass;
-
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Global registry that maps logic-server IDs to their {@link BarSkeleton} instances.

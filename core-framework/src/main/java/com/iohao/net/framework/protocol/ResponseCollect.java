@@ -18,9 +18,8 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.exception.ErrorInformation;
-
-import java.util.List;
+import com.iohao.net.framework.core.exception.*;
+import java.util.*;
 
 /**
  * Aggregated response collected from multiple logic servers.

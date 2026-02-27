@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Broadcast message targeting a single user (unicast).

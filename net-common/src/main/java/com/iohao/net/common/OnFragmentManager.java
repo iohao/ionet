@@ -18,8 +18,8 @@
  */
 package com.iohao.net.common;
 
-import com.iohao.net.common.kit.exception.CommonIllegalArgumentException;
-import lombok.extern.slf4j.Slf4j;
+import com.iohao.net.common.kit.exception.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Registry for {@link OnFragment} handlers keyed by SBE template id.

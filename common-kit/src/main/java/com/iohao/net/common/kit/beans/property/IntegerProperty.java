@@ -18,7 +18,7 @@
  */
 package com.iohao.net.common.kit.beans.property;
 
-import lombok.ToString;
+import lombok.*;
 
 /**
  * int - Property has listening feature. A listening event will be triggered when the value changes.

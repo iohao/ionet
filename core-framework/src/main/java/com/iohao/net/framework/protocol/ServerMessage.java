@@ -18,14 +18,9 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Sealed base class for server registration and connection messages exchanged with the center server.

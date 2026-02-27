@@ -18,15 +18,12 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.communication.BroadcastMulticastCommunicationDecorator;
-import com.iohao.net.framework.communication.BroadcastUserCommunicationDecorator;
-import com.iohao.net.framework.communication.BroadcastUserListCommunicationDecorator;
-import com.iohao.net.framework.protocol.BroadcastUserMessage;
-import com.iohao.net.common.kit.CommonConst;
-
-import java.util.List;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Flow-level broadcast communication providing methods to broadcast messages to the requesting

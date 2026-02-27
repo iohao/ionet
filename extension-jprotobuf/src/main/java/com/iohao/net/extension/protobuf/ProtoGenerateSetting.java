@@ -18,9 +18,8 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.function.Function;
+import java.util.function.*;
+import lombok.experimental.*;
 
 /**
  * Global settings for proto file generation behavior and field-name formatting.

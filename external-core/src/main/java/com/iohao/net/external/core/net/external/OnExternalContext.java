@@ -18,10 +18,9 @@
  */
 package com.iohao.net.external.core.net.external;
 
-import com.iohao.net.framework.protocol.ExternalResponse;
-import com.iohao.net.common.kit.ByteKit;
-import com.iohao.net.external.core.session.UserSession;
-import com.iohao.net.external.core.session.UserSessions;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Execution context for an {@link OnExternal} template handler.

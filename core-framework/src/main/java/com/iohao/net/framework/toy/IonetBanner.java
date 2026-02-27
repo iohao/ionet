@@ -18,27 +18,21 @@
  */
 package com.iohao.net.framework.toy;
 
-import com.iohao.net.framework.IonetVersion;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.RandomKit;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.text.SimpleDateFormat;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.i18n.*;
+import java.io.*;
+import java.lang.management.*;
+import java.text.*;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
-import static java.lang.System.out;
+import static java.lang.System.*;
 
 /**
  * Startup banner renderer for the ionet framework.
@@ -236,7 +230,7 @@ public final class IonetBanner {
     }
 
     private void extractedErrorCount() {
-        if (Objects.isNull(errorCount) || errorCount.get() == 0) {
+        if (errorCount == null || errorCount.get() == 0) {
             return;
         }
 

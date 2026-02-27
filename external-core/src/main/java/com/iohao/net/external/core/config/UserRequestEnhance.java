@@ -18,7 +18,7 @@
  */
 package com.iohao.net.external.core.config;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Hook for enriching inbound user requests before business routing.

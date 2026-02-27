@@ -18,11 +18,11 @@
  */
 package com.iohao.net.framework;
 
-import com.iohao.net.framework.core.BarSkeletonSetting;
-import com.iohao.net.common.kit.RandomKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.Getter;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.core.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Global configuration constants for the ionet core framework.

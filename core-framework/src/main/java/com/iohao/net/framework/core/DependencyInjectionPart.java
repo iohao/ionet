@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.lang.annotation.Annotation;
+import java.lang.annotation.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Singleton bridge for third-party dependency injection frameworks (e.g. Spring).

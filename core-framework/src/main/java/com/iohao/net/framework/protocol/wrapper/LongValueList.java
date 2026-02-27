@@ -18,14 +18,11 @@
  */
 package com.iohao.net.framework.protocol.wrapper;
 
-import com.baidu.bjf.remoting.protobuf.FieldType;
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
-import lombok.AccessLevel;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Protocol wrapper for a list of long values.

@@ -1,11 +1,8 @@
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-import java.util.List;
+import java.net.*;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Network utilities for local IP address detection.

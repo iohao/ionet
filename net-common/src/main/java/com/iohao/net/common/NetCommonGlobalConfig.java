@@ -18,8 +18,8 @@
  */
 package com.iohao.net.common;
 
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Global configuration entry for net-common components.

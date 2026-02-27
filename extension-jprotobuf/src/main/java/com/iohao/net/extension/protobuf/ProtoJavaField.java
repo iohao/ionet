@@ -18,15 +18,11 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import com.iohao.net.common.kit.StrKit;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import java.lang.reflect.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Parsed Java field metadata used to render a proto field line.
@@ -83,7 +79,7 @@ public class ProtoJavaField {
     private String getTemplateFiled(boolean fieldIsInEnum) {
         StringBuilder templateFiled = new StringBuilder();
 
-        if (!Objects.isNull(this.comment)) {
+        if (this.comment != null) {
             templateFiled.append("""
                       // {comment}
                     """);

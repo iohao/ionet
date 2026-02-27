@@ -18,12 +18,10 @@
  */
 package com.iohao.net.external.core.netty.session;
 
-import com.iohao.net.external.core.session.UserSessionOption;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-
-import java.net.InetSocketAddress;
-import java.util.Objects;
+import com.iohao.net.external.core.session.*;
+import io.netty.channel.*;
+import java.net.*;
+import java.util.*;
 
 /**
  * Netty channel-backed implementation of an external user session.

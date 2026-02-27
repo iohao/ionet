@@ -18,17 +18,12 @@
  */
 package com.iohao.net.common.kit.micro.room;
 
-import com.iohao.net.common.kit.CollKit;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Thread-safe room registry that manages {@link MicroRoom} instances by ID.
@@ -85,7 +80,7 @@ public class MicroRooms<Room extends MicroRoom> {
         long id = room.getId();
         var anyRegion = roomMap.putIfAbsent(id, room);
 
-        if (Objects.isNull(anyRegion)) {
+        if (anyRegion == null) {
             anyRegion = roomMap.get(id);
         }
 
@@ -112,7 +107,7 @@ public class MicroRooms<Room extends MicroRoom> {
 
         Room region = roomMap.get(id);
 
-        if (Objects.isNull(region)) {
+        if (region == null) {
             region = roomSupplier.get();
             region.setId(id);
 

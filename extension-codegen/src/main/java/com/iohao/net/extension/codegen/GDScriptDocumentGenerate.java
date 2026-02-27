@@ -18,19 +18,15 @@
  */
 package com.iohao.net.extension.codegen;
 
-import com.iohao.net.common.kit.StrKit;
+import com.iohao.net.common.kit.*;
 import com.iohao.net.framework.core.doc.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-import org.beetl.core.Template;
-
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
+import org.beetl.core.*;
 
 /**
  * @author 渔民小镇
@@ -230,7 +226,7 @@ public final class GDScriptDocumentGenerate extends AbstractDocumentGenerate {
             var protoMessage = analyseImport.getProtoMessage(protoTypeClazz);
 
             String paramTypeName;
-            if (Objects.isNull(protoMessage)) {
+            if (protoMessage == null) {
                 paramTypeName = protoTypeClazz.getSimpleName();
             } else {
                 paramTypeName = protoMessage.getFullParamTypeName();

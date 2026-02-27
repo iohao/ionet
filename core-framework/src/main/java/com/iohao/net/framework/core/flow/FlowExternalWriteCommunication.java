@@ -18,19 +18,13 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.communication.CommunicationType;
-import com.iohao.net.framework.communication.ExternalCommunicationDecorator;
-import com.iohao.net.framework.core.flow.parser.MethodParser;
-import com.iohao.net.framework.core.flow.parser.MethodParsers;
-import com.iohao.net.framework.core.kit.BarMessageKit;
-import com.iohao.net.framework.protocol.Response;
-import com.iohao.net.framework.protocol.ResponseMessage;
-import com.iohao.net.framework.protocol.UserResponseMessage;
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.List;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.flow.parser.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Flow-level communication for writing response data back to the external client, supporting

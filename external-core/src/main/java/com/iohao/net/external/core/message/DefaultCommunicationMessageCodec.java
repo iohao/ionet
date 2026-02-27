@@ -18,8 +18,7 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.iohao.net.framework.protocol.CmdCodeConst;
-import com.iohao.net.framework.protocol.CommunicationMessage;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Default codec implementation that creates {@link ExternalMessage} instances.

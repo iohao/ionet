@@ -19,15 +19,11 @@
 package com.iohao.net.server.cmd;
 
 
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Default command-region registry that maps command merges to candidate logic servers.
@@ -90,7 +86,7 @@ public final class DefaultCmdRegions implements CmdRegions {
     private CmdRegion getCmdRegion(int cmdMerge) {
         var cmdRegion = this.cmdRegionMap.get(cmdMerge);
 
-        if (Objects.isNull(cmdRegion)) {
+        if (cmdRegion == null) {
             CmdRegion newValue = new DefaultCmdRegion(cmdMerge);
             return MoreKit.putIfAbsent(cmdRegionMap, cmdMerge, newValue);
         }
@@ -100,7 +96,7 @@ public final class DefaultCmdRegions implements CmdRegions {
 
     private Set<CmdRegion> getCmdRegionSet(int serverId) {
         var cmdRegionSet = this.serverCmdRegionMap.get(serverId);
-        if (Objects.isNull(cmdRegionSet)) {
+        if (cmdRegionSet == null) {
             return MoreKit.putIfAbsent(this.serverCmdRegionMap, serverId, CollKit.ofConcurrentSet());
         }
 

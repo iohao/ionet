@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.CmdInfo;
+import com.iohao.net.framework.core.*;
 
 /**
  * Contract for external communication messages exchanged between clients and the external server.

@@ -18,12 +18,10 @@
  */
 package com.iohao.net.server.logic;
 
-import com.iohao.net.framework.core.BarSkeleton;
-import com.iohao.net.framework.core.kit.ActionCommandRegionGlobalCheckKit;
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.framework.protocol.ServerBuilder;
-import com.iohao.net.server.LogicServer;
-import com.iohao.net.server.LogicServerManager;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.server.*;
 
 /**
  * Bootstraps a {@link LogicServer} into a {@link Server} definition for net-server startup.

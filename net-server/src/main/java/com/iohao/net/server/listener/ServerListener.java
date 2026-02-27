@@ -18,8 +18,8 @@
  */
 package com.iohao.net.server.listener;
 
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.server.NetServerSetting;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.server.*;
 
 /**
  * Listener for net-server peer lifecycle events (before connect, online, offline).

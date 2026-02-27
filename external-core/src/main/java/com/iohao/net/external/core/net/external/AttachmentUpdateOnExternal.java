@@ -18,9 +18,9 @@
  */
 package com.iohao.net.external.core.net.external;
 
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.protocol.OnExternalTemplateId;
-import com.iohao.net.common.kit.ByteKit;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.exception.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Handles template requests that update a user's session attachment.

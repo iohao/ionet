@@ -18,8 +18,8 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.communication.ExternalCommunicationDecorator;
-import com.iohao.net.framework.protocol.ExternalRequestMessage;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Flow-level communication for sending requests to external servers.

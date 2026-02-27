@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.framework.protocol.*;
+import lombok.experimental.*;
 
 /**
  * Static facade for the configured {@link CommunicationMessageCodec}.

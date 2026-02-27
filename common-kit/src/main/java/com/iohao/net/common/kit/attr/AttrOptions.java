@@ -18,12 +18,9 @@
  */
 package com.iohao.net.common.kit.attr;
 
-import com.iohao.net.common.kit.CollKit;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import java.io.*;
+import java.util.*;
 
 /**
  * Thread-safe attribute storage container. Holds key-value pairs keyed by {@link AttrOption} instances.
@@ -61,17 +58,17 @@ public class AttrOptions implements Serializable {
     @SuppressWarnings("unchecked")
     public <T> T option(AttrOption<T> option) {
         Object value = options.get(option);
-        if (Objects.nonNull(value)) {
+        if (value != null) {
             return (T) value;
         }
 
-        if (Objects.nonNull(option.supplier())) {
+        if (option.supplier() != null) {
             T newValue = option.supplier().get();
             this.option(option, newValue);
             return newValue;
         }
 
-        if (Objects.nonNull(option.defaultValue())) {
+        if (option.defaultValue() != null) {
             return option.defaultValue();
         }
 
@@ -88,7 +85,7 @@ public class AttrOptions implements Serializable {
      * @return this
      */
     public <T> AttrOptions option(AttrOption<T> option, T value) {
-        if (Objects.isNull(value)) {
+        if (value == null) {
             options.remove(option);
             return this;
         }

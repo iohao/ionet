@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.balanced;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Strategy interface for selecting the next element from a candidate set.

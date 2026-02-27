@@ -18,18 +18,15 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.core.exception.ActionErrorEnum;
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.common.kit.CommonConst;
-import com.iohao.net.external.core.ExternalSetting;
-import com.iohao.net.external.core.ExternalSettingAware;
-import com.iohao.net.external.core.config.ExternalGlobalConfig;
-import com.iohao.net.external.core.netty.session.SocketUserSessions;
-import com.iohao.net.external.core.session.UserSessions;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import lombok.Setter;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.external.core.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.netty.session.*;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.core.exception.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
+import lombok.*;
 
 /**
  * Netty handler that enforces external route access control and login requirements.

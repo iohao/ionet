@@ -18,15 +18,12 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.protocol.ExternalRequestMessage;
-import com.iohao.net.framework.protocol.OnExternalTemplateId;
-import com.iohao.net.common.kit.trace.TraceKit;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
-
-import java.util.function.Supplier;
+import com.iohao.net.common.kit.trace.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.function.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Utility class providing static access to the global communication infrastructure.

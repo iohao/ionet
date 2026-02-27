@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import java.lang.invoke.MethodHandle;
+import java.lang.invoke.*;
 
 /**
  * Represents a single event subscriber method bound to an {@link EventBusSubscriber} instance.

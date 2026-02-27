@@ -18,11 +18,10 @@
  */
 package com.iohao.net.common;
 
-import com.iohao.net.common.kit.CollKit;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Registry for message-class to {@link MessageSbe} encoder mappings.

@@ -19,10 +19,8 @@
 package com.iohao.net.framework.communication;
 
 import com.iohao.net.framework.protocol.*;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.function.Consumer;
+import java.util.concurrent.*;
+import java.util.function.*;
 
 /**
  * Decorator interface providing convenience methods for communicating with external (client-facing) servers.

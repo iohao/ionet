@@ -18,12 +18,11 @@
  */
 package com.iohao.net.common.kit.trace;
 
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
-import org.slf4j.MDC;
-
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+import lombok.*;
+import lombok.experimental.*;
+import org.slf4j.*;
 
 /**
  * Distributed tracing utilities using SLF4J MDC for trace ID propagation.

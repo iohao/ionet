@@ -18,27 +18,16 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import com.baidu.bjf.remoting.protobuf.EnumReadable;
-import com.baidu.bjf.remoting.protobuf.annotation.Ignore;
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
-import com.iohao.net.common.kit.CommonConst;
-import com.iohao.net.common.kit.ClassScanner;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.source.SourceAnnotation;
-import com.iohao.net.common.kit.source.SourceClass;
-import com.iohao.net.common.kit.source.SourceField;
-import com.iohao.net.common.kit.source.SourceParserKit;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.source.*;
+import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Analyzes annotated Java classes and converts them into proto generation metadata.
@@ -221,7 +210,7 @@ public class ProtoJavaAnalyse {
         Class<?> fieldTypeClass = protoJavaField.fieldTypeClass;
         String fieldName = protoJavaField.fieldName;
 
-        if (Objects.isNull(protoJavaField.comment)) {
+        if (protoJavaField.comment == null) {
             ProtoJava protoJavaFieldType = this.getFieldProtoJava(fieldTypeClass, fieldName, protoJavaField);
             protoJavaField.comment = protoJavaFieldType.comment;
         }
@@ -237,7 +226,7 @@ public class ProtoJavaAnalyse {
         Class<?> firstClass = (Class<?>) actualTypeArguments[0];
         String fieldProtoType = ProtoFieldTypeHolder.getProtoType(firstClass);
 
-        if (Objects.isNull(fieldProtoType)) {
+        if (fieldProtoType == null) {
             fieldProtoType = this.fieldProtoTypeToString(protoJavaField, firstClass);
         }
 
@@ -260,7 +249,7 @@ public class ProtoJavaAnalyse {
         String keyFieldProtoType = ProtoFieldTypeHolder.getProtoType(keyClass);
         map.put("keyStr", keyFieldProtoType);
 
-        if (Objects.isNull(keyFieldProtoType)) {
+        if (keyFieldProtoType == null) {
             // Key is a proto object type
             String keyStr = this.fieldProtoTypeToString(protoJavaField, keyClass);
             map.put("keyStr", keyStr);
@@ -269,7 +258,7 @@ public class ProtoJavaAnalyse {
         Class<?> valueClass = (Class<?>) actualTypeArguments[1];
         String valueFieldProtoType = ProtoFieldTypeHolder.getProtoType(valueClass);
         map.put("valueStr", valueFieldProtoType);
-        if (Objects.isNull(valueFieldProtoType)) {
+        if (valueFieldProtoType == null) {
             // Value is a proto object type
             String valueStr = this.fieldProtoTypeToString(protoJavaField, valueClass);
             map.put("valueStr", valueStr);
@@ -311,13 +300,13 @@ public class ProtoJavaAnalyse {
     private ProtoJavaRegion getProtoJavaRegion(ProtoJavaRegionKey key) {
         ProtoJavaRegion protoJavaRegion = protoJavaRegionMap.get(key);
 
-        if (Objects.isNull(protoJavaRegion)) {
+        if (protoJavaRegion == null) {
 
             protoJavaRegion = new ProtoJavaRegion();
 
             protoJavaRegion = protoJavaRegionMap.putIfAbsent(key, protoJavaRegion);
 
-            if (Objects.isNull(protoJavaRegion)) {
+            if (protoJavaRegion == null) {
                 protoJavaRegion = protoJavaRegionMap.get(key);
             }
 

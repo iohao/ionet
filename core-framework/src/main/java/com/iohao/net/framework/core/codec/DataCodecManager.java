@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core.codec;
 
-import com.iohao.net.framework.communication.CommunicationType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.framework.communication.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Central manager for the active {@link DataCodec} instances.

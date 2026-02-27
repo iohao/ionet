@@ -18,14 +18,11 @@
  */
 package com.iohao.net.common.kit.time;
 
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-import lombok.experimental.UtilityClass;
-
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.Map;
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import java.time.format.*;
+import java.time.temporal.*;
+import java.util.*;
+import lombok.experimental.*;
 
 /**
  * Date/time formatting utilities with cached {@link java.time.format.DateTimeFormatter} instances.
@@ -47,7 +44,7 @@ public final class TimeFormatKit {
      */
     public DateTimeFormatter ofPattern(String pattern) {
         var dateTimeFormatter = map.get(pattern);
-        if (Objects.isNull(dateTimeFormatter)) {
+        if (dateTimeFormatter == null) {
             return MoreKit.putIfAbsent(map, pattern, DateTimeFormatter.ofPattern(pattern));
         }
 

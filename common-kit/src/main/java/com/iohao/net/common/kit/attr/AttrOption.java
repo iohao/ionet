@@ -18,9 +18,9 @@
  */
 package com.iohao.net.common.kit.attr;
 
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.function.Supplier;
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
 
 /**
  * Type-safe attribute key for use with {@link AttrOptionDynamic}. Supports default values

@@ -18,18 +18,13 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.external.core.ExternalSetting;
-import com.iohao.net.external.core.ExternalSettingAware;
-import com.iohao.net.external.core.hook.IdleHandler;
-import com.iohao.net.external.core.hook.IdleHook;
-import com.iohao.net.framework.protocol.CmdCodeConst;
-import com.iohao.net.external.core.netty.session.SocketUserSession;
-import com.iohao.net.external.core.session.UserSessions;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.IdleStateEvent;
+import com.iohao.net.external.core.*;
+import com.iohao.net.external.core.hook.*;
+import com.iohao.net.external.core.netty.session.*;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
+import io.netty.handler.timeout.*;
 
 /**
  * Netty idle handler that processes heartbeat frames and idle timeout events.

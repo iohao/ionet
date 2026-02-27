@@ -18,15 +18,12 @@
  */
 package com.iohao.net.server.codec;
 
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.framework.protocol.ServerRequestMessage;
-import com.iohao.net.common.ServerMessageCodecKit;
-import com.iohao.net.common.MessageSbe;
-import com.iohao.net.sbe.ConnectRequestMessageEncoder;
-import com.iohao.net.sbe.MessageHeaderEncoder;
-import org.agrona.MutableDirectBuffer;
-
-import java.util.Map;
+import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import java.util.*;
+import org.agrona.*;
 
 /**
  * SBE encoder for {@link ServerRequestMessage} registration messages.

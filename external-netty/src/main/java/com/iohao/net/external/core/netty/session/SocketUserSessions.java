@@ -19,21 +19,17 @@
 package com.iohao.net.external.core.netty.session;
 
 
-import com.iohao.net.common.kit.RandomKit;
-import com.iohao.net.common.kit.concurrent.executor.ExecutorRegionKit;
-import com.iohao.net.external.core.session.UserSessionState;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.util.AttributeKey;
-import io.netty.util.concurrent.GlobalEventExecutor;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import org.agrona.concurrent.SnowflakeIdGenerator;
-
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.executor.*;
+import com.iohao.net.external.core.session.*;
+import io.netty.channel.*;
+import io.netty.channel.group.*;
+import io.netty.util.*;
+import io.netty.util.concurrent.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
+import org.agrona.concurrent.*;
 
 /**
  * Netty session manager for TCP and WebSocket external transports.
@@ -88,7 +84,7 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
     public boolean settingUserId(long userChannelId, long userId) {
 
         SocketUserSession userSession = this.getUserSessionByUserChannelId(userChannelId);
-        if (Objects.isNull(userSession)) {
+        if (userSession == null) {
             return false;
         }
 
@@ -111,7 +107,7 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
 
     @Override
     public void removeUserSession(SocketUserSession userSession) {
-        if (Objects.isNull(userSession)) {
+        if (userSession == null) {
             return;
         }
 

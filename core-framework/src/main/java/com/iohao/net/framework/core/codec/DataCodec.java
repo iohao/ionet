@@ -19,9 +19,7 @@
 package com.iohao.net.framework.core.codec;
 
 import com.iohao.net.framework.protocol.wrapper.*;
-
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Strategy interface for encoding and decoding business data.

@@ -18,16 +18,11 @@
  */
 package com.iohao.net.framework.core.flow;
 
-import com.iohao.net.framework.core.BarSkeleton;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.communication.CommonDecorator;
-import com.iohao.net.framework.communication.CommunicationType;
-import com.iohao.net.framework.protocol.Request;
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.common.kit.concurrent.executor.ExecutorRegion;
-import com.iohao.net.common.kit.concurrent.executor.ThreadExecutor;
-
-import java.util.concurrent.Executor;
+import com.iohao.net.common.kit.concurrent.executor.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.concurrent.*;
 
 /**
  * Base interface for flow communication, providing access to the server, request, executor,

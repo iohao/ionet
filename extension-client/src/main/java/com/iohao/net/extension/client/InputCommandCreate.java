@@ -18,25 +18,17 @@
  */
 package com.iohao.net.extension.client;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.protocol.wrapper.IntValue;
-import com.iohao.net.framework.protocol.wrapper.LongValue;
-import com.iohao.net.framework.protocol.wrapper.StringValue;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import com.iohao.net.extension.client.command.InputCommand;
-import com.iohao.net.extension.client.command.RequestDataDelegate;
-import com.iohao.net.extension.client.kit.AssertKit;
-import com.iohao.net.extension.client.kit.ClientUserConfigs;
-import com.iohao.net.extension.client.kit.ScannerKit;
-import com.iohao.net.extension.client.user.ClientUserInputCommands;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Objects;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.extension.client.command.*;
+import com.iohao.net.extension.client.kit.*;
+import com.iohao.net.extension.client.user.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.wrapper.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Helper for creating simulated input commands within a module command region.

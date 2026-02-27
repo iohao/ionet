@@ -18,28 +18,21 @@
  */
 package com.iohao.net.app;
 
-import com.iohao.net.framework.core.kit.ActionCommandRegionGlobalCheckKit;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.toy.IonetBanner;
-import com.iohao.net.center.CenterServerBuilder;
-import com.iohao.net.common.NetCommonGlobalConfig;
-import com.iohao.net.common.kit.IonetLogName;
-import com.iohao.net.common.kit.SafeKit;
-import com.iohao.net.external.core.ExternalServer;
-import com.iohao.net.common.Publisher;
-import com.iohao.net.server.LogicServer;
-import com.iohao.net.server.NetServerBuilder;
-import com.iohao.net.server.connection.ServerShutdownHook;
-import com.iohao.net.server.logic.LogicServerApplication;
-import io.aeron.Aeron;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.center.*;
+import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.external.core.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.toy.*;
+import com.iohao.net.server.*;
+import com.iohao.net.server.connection.*;
+import com.iohao.net.server.logic.*;
+import io.aeron.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Coordinates startup for a combined deployment that can host the external server, multiple logic

@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Request message sent from one server to another within the cluster.

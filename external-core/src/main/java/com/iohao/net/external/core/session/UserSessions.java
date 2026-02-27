@@ -18,14 +18,11 @@
  */
 package com.iohao.net.external.core.session;
 
-import com.iohao.net.common.kit.attr.AttrOptionDynamic;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
-import com.iohao.net.external.core.hook.UserHook;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.hook.*;
+import java.util.*;
+import java.util.function.*;
 
 /**
  * UserSession manager

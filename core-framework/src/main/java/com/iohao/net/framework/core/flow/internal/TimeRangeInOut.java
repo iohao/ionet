@@ -18,24 +18,19 @@
  */
 package com.iohao.net.framework.core.flow.internal;
 
-import com.iohao.net.framework.core.flow.ActionMethodInOut;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.common.kit.time.TimeFormatKit;
-import com.iohao.net.common.kit.time.TimeKit;
-import lombok.Getter;
-import org.jspecify.annotations.NonNull;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.common.kit.time.*;
+import com.iohao.net.framework.core.flow.*;
+import com.iohao.net.framework.i18n.*;
+import java.time.*;
 import java.util.*;
-import java.util.concurrent.atomic.LongAdder;
-import java.util.function.BiConsumer;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.*;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.*;
 
 /**
  * PluginInOut - TimeRangeInOut - <a href="https://iohao.github.io/ionet/docs/core_plugin/action_time_range">Call Statistics Plugin for Each Time Period</a>
@@ -178,12 +173,12 @@ public final class TimeRangeInOut implements ActionMethodInOut {
             TimeRangeDay timeRangeDay = this.map.get(localDate);
 
             // Lock-free lazy initialization
-            if (Objects.isNull(timeRangeDay)) {
+            if (timeRangeDay == null) {
 
                 TimeRangeDay rangeDay = TimeRangeInOut.this.listener.createTimeRangeDay(localDate);
                 timeRangeDay = this.map.putIfAbsent(localDate, Objects.requireNonNull(rangeDay));
 
-                if (Objects.isNull(timeRangeDay)) {
+                if (timeRangeDay == null) {
                     timeRangeDay = this.map.get(localDate);
 
                     /*

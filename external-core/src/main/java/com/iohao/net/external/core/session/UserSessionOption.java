@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.session;
 
-import com.iohao.net.common.kit.attr.AttrOption;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.config.*;
 
 /**
  * Dynamic attribute names for UserSession

@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * User-facing request message received from the external Netty pipeline.

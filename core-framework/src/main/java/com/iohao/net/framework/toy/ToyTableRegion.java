@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.toy;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A single named column region within a {@link ToyTable}, holding key-value lines
@@ -43,7 +41,7 @@ final class ToyTableRegion {
     void putLine(String key, String value) {
         ToyLine line = this.lineMap.get(key);
 
-        if (Objects.isNull(line)) {
+        if (line == null) {
             line = new ToyLine();
             line.key = key;
             line.value = value;

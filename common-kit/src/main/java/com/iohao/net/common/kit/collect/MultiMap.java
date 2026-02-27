@@ -18,9 +18,7 @@
  */
 package com.iohao.net.common.kit.collect;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A map that associates each key with a collection of values.

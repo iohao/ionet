@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import com.iohao.net.common.kit.*;
+import java.util.*;
 
 /**
  * Aggregated response collected from multiple external (Netty) servers.
@@ -49,7 +46,7 @@ public interface ResponseCollectExternal {
      */
     default boolean anySuccess() {
         var responseList = this.getResponseList();
-        if (Objects.isNull(responseList)) {
+        if (responseList == null) {
             return false;
         }
 

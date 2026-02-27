@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.core.kit.CmdKit;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import com.iohao.net.framework.core.kit.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Document model for a route member constant generated from an action method,

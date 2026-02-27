@@ -18,10 +18,9 @@
  */
 package com.iohao.net.extension.protobuf;
 
-import com.iohao.net.common.kit.ArrayKit;
-import lombok.experimental.UtilityClass;
-
-import java.io.File;
+import com.iohao.net.common.kit.*;
+import java.io.*;
+import lombok.experimental.*;
 
 /**
  * Convenience utilities for generating `.proto` files from annotated Java classes.

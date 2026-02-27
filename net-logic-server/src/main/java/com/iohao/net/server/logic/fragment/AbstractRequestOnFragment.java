@@ -18,15 +18,12 @@
  */
 package com.iohao.net.server.logic.fragment;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.SkeletonThreadPipeline;
-import com.iohao.net.framework.core.BarSkeletonManager;
-import com.iohao.net.framework.communication.CommunicationType;
-import com.iohao.net.framework.protocol.Request;
-import com.iohao.net.common.OnFragment;
-import com.iohao.net.server.NetServerSetting;
-import com.iohao.net.server.NetServerSettingAware;
-import lombok.extern.slf4j.Slf4j;
+import com.iohao.net.common.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.server.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Base fragment handler for request-like messages dispatched to logic action pipelines.

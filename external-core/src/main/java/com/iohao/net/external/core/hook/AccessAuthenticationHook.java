@@ -18,7 +18,7 @@
  */
 package com.iohao.net.external.core.hook;
 
-import com.iohao.net.external.core.session.UserSession;
+import com.iohao.net.external.core.session.*;
 
 /**
  * <a href="https://iohao.github.io/ionet/docs/manual/access_authentication">Routing access control</a>

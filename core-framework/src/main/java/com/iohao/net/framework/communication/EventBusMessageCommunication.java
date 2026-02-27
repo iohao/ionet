@@ -18,8 +18,8 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.annotations.Enterprise;
-import com.iohao.net.framework.communication.eventbus.EventBusMessage;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.communication.eventbus.*;
 
 /**
  * Communication interface for dispatching {@link EventBusMessage} events to remote logic servers.

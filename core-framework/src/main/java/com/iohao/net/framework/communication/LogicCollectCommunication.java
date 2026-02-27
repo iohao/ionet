@@ -18,11 +18,9 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.annotations.Enterprise;
-import com.iohao.net.framework.protocol.RequestMessage;
-import com.iohao.net.framework.protocol.ResponseCollect;
-
-import java.util.concurrent.CompletableFuture;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.concurrent.*;
 
 /**
  * Communication interface for collecting aggregated responses from multiple logic servers.

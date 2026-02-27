@@ -18,13 +18,10 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.exception.ErrorInformation;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.exception.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Base class for internal messages exchanged between logic servers via Aeron.

@@ -18,16 +18,13 @@
  */
 package com.iohao.net.common.kit;
 
-import com.iohao.net.common.kit.exception.ThrowKit;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
-import java.io.IOException;
+import com.iohao.net.common.kit.exception.*;
+import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.function.*;
+import java.util.jar.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Classpath scanner that discovers classes matching a predicate filter.
@@ -93,7 +90,7 @@ public class ClassScanner {
     }
 
     private void initClassLoad() {
-        if (Objects.nonNull(this.classLoader)) {
+        if (this.classLoader != null) {
             return;
         }
 
@@ -190,7 +187,7 @@ public class ClassScanner {
 
             File[] files = file.listFiles();
 
-            if (Objects.isNull(files)) {
+            if (files == null) {
                 return;
             }
 

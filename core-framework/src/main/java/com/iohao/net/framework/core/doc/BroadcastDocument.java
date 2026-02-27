@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.core.CmdInfo;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import com.iohao.net.framework.core.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Documentation model for a single broadcast (server-push) route, describing the

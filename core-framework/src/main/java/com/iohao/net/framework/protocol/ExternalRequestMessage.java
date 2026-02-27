@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Request message sent from an external (Netty) server to a logic server.

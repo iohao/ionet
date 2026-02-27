@@ -18,9 +18,8 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.protocol.FutureMessage;
-
-import java.util.concurrent.CompletableFuture;
+import com.iohao.net.framework.protocol.*;
+import java.util.concurrent.*;
 
 /**
  * Manage the lifecycle of {@link CompletableFuture} instances used for asynchronous request-response

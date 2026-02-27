@@ -18,10 +18,9 @@
  */
 package com.iohao.net.common.kit.collect;
 
-import com.iohao.net.common.kit.CollKit;
-
+import com.iohao.net.common.kit.*;
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.*;
 
 /**
  * Non-blocking {@link SetMultiMap} implementation backed by
@@ -42,14 +41,14 @@ final class NonBlockingSetMultiMap<K, V> implements SetMultiMap<K, V> {
     public Set<V> ofIfAbsent(K key, Consumer<Set<V>> consumer) {
         var set = this.map.get(key);
 
-        if (Objects.isNull(set)) {
+        if (set == null) {
             // Double-check pattern: putIfAbsent is atomic, so if another thread
             // inserted first, it returns the existing set and we fall through.
             // A null return means our newValueSet was successfully stored.
             Set<V> newValueSet = CollKit.ofConcurrentSet();
             set = this.map.putIfAbsent(key, newValueSet);
 
-            if (Objects.isNull(set)) {
+            if (set == null) {
                 Set<V> initSet = this.map.get(key);
 
                 // First initialization callback

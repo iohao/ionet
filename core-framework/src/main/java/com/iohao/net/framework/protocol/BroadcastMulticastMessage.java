@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.protocol;
 
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Broadcast message targeting all connected users (multicast / global broadcast).

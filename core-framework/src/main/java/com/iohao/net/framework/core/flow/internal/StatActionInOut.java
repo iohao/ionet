@@ -18,28 +18,20 @@
  */
 package com.iohao.net.framework.core.flow.internal;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.core.flow.ActionMethodInOut;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.common.kit.CollKit;
-import com.iohao.net.common.kit.MoreKit;
-import com.iohao.net.common.kit.exception.ThrowKit;
-import com.iohao.net.common.kit.time.TimeKit;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.common.kit.time.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.flow.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.i18n.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.*;
 import org.jspecify.annotations.NonNull;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.LongAdder;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.jspecify.annotations.*;
 
 /// PluginInOut - StatActionInOut - <a href="https://iohao.github.io/ionet/docs/core_plugin/action_stat">Action Call Statistics Plugin</a>
 ///
@@ -142,7 +134,7 @@ public final class StatActionInOut implements ActionMethodInOut {
         public StatAction getStatAction(CmdInfo cmdInfo) {
             StatAction statAction = this.map.get(cmdInfo);
 
-            if (Objects.isNull(statAction)) {
+            if (statAction == null) {
                 var newValue = new StatAction(cmdInfo);
                 return MoreKit.putIfAbsent(this.map, cmdInfo, newValue);
             }
@@ -200,7 +192,7 @@ public final class StatActionInOut implements ActionMethodInOut {
 
         private StatAction(CmdInfo cmdInfo) {
 
-            this.timeRangeList = Objects.isNull(StatActionInOut.this.listener)
+            this.timeRangeList = StatActionInOut.this.listener == null
                     ? emptyRangeList
                     : StatActionInOut.this.listener.createTimeRangeList();
 

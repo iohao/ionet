@@ -18,15 +18,12 @@
  */
 package com.iohao.net.center.codec;
 
-import com.iohao.net.framework.protocol.ConnectResponseMessage;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.ServerMessageCodecKit;
-import com.iohao.net.common.MessageSbe;
-import com.iohao.net.sbe.ConnectResponseMessageEncoder;
-import com.iohao.net.sbe.MessageHeaderEncoder;
-import org.agrona.MutableDirectBuffer;
-
-import java.util.Map;
+import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import java.util.*;
+import org.agrona.*;
 
 /**
  * SBE encoder for center-server connect-response messages.

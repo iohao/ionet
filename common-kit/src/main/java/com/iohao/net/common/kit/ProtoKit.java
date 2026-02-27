@@ -18,13 +18,10 @@
  */
 package com.iohao.net.common.kit;
 
-import com.baidu.bjf.remoting.protobuf.Codec;
-import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Objects;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.iohao.net.common.kit.concurrent.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * JProtobuf serialization utilities for encoding and decoding objects.
@@ -44,7 +41,7 @@ public class ProtoKit {
     @SuppressWarnings("unchecked")
     public byte[] encode(Object data) {
 
-        if (Objects.isNull(data)) {
+        if (data == null) {
             return CommonConst.emptyBytes;
         }
 
@@ -70,7 +67,7 @@ public class ProtoKit {
      */
     public <T> T decode(byte[] data, Class<T> clazz) {
 
-        if (Objects.isNull(data)) {
+        if (data == null) {
             return null;
         }
 

@@ -18,8 +18,8 @@
  */
 package com.iohao.net.external.core.hook;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.external.core.session.UserSession;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Heartbeat/idle event callback hook for external user sessions.

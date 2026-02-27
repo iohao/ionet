@@ -18,9 +18,7 @@
  */
 package com.iohao.net.common.kit.attr;
 
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /// Interface for objects that support dynamic, type-safe attributes.
 /// ```java
@@ -68,7 +66,7 @@ public interface AttrOptionDynamic {
     default <T> T optionValue(AttrOption<T> option, T value) {
         T data = this.option(option);
 
-        if (Objects.isNull(data)) {
+        if (data == null) {
             return value;
         }
 
@@ -97,7 +95,7 @@ public interface AttrOptionDynamic {
      */
     default <T> void ifPresent(AttrOption<T> option, Consumer<T> consumer) {
         T data = this.option(option);
-        if (Objects.nonNull(data)) {
+        if (data != null) {
             consumer.accept(data);
         }
     }
@@ -112,7 +110,7 @@ public interface AttrOptionDynamic {
      */
     default <T> void ifNull(AttrOption<T> option, Supplier<T> supplier) {
         T data = this.option(option);
-        if (Objects.isNull(data)) {
+        if (data == null) {
             this.option(option, supplier.get());
         }
     }

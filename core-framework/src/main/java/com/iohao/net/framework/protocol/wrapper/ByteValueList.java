@@ -18,17 +18,12 @@
  */
 package com.iohao.net.framework.protocol.wrapper;
 
-import com.baidu.bjf.remoting.protobuf.FieldType;
-import com.baidu.bjf.remoting.protobuf.annotation.Ignore;
-import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
-import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.common.kit.CollKit;
-import lombok.ToString;
-
-import java.util.Collection;
-import java.util.List;
+import com.baidu.bjf.remoting.protobuf.*;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.codec.*;
+import java.util.*;
+import lombok.*;
 
 /**
  * Protocol wrapper for a list of byte array values.

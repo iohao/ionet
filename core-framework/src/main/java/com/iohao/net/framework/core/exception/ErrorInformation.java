@@ -18,9 +18,8 @@
  */
 package com.iohao.net.framework.core.exception;
 
-import org.jspecify.annotations.NonNull;
-
-import java.util.Objects;
+import java.util.*;
+import org.jspecify.annotations.*;
 
 /**
  * Contract for error information that can be used to throw {@link MessageException}s
@@ -102,7 +101,7 @@ public interface ErrorInformation {
      * @throws MessageException e
      */
     default void assertNullThrows(Object value) throws MessageException {
-        assertTrueThrows(Objects.isNull(value));
+        assertTrueThrows(value == null);
     }
 
     /**
@@ -113,7 +112,7 @@ public interface ErrorInformation {
      * @throws MessageException e
      */
     default void assertNullThrows(Object value, String msg) throws MessageException {
-        assertTrueThrows(Objects.isNull(value), msg);
+        assertTrueThrows(value == null, msg);
     }
 
     /**

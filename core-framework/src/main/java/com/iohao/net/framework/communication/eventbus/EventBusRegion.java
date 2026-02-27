@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Event Bus Management Domain

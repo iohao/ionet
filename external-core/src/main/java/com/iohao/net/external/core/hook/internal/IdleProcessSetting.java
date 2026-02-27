@@ -18,9 +18,8 @@
  */
 package com.iohao.net.external.core.hook.internal;
 
-import com.iohao.net.external.core.hook.IdleHook;
-
-import java.util.concurrent.TimeUnit;
+import com.iohao.net.external.core.hook.*;
+import java.util.concurrent.*;
 
 /**
  * Immutable heartbeat/idle processing configuration for an external server.

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.communication.eventbus;
 
-import lombok.experimental.UtilityClass;
+import lombok.experimental.*;
 
 /**
  * Utility class providing static access to the global {@link EventBusSetting} and {@link EventBusRegion}.

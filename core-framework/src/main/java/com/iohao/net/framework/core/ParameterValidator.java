@@ -18,7 +18,7 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.common.kit.CommonConst;
+import com.iohao.net.common.kit.*;
 
 /**
  * Strategy interface for validating action method parameters,

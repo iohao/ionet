@@ -18,11 +18,10 @@
  */
 package com.iohao.net.external.core.net.codec;
 
-import com.iohao.net.framework.protocol.EmptyExternalResponseMessage;
-import com.iohao.net.common.MessageSbe;
-import com.iohao.net.sbe.MessageHeaderEncoder;
-import com.iohao.net.sbe.EmptyExternalResponseMessageEncoder;
-import org.agrona.MutableDirectBuffer;
+import com.iohao.net.common.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import org.agrona.*;
 
 /**
  * SBE encoder for {@link EmptyExternalResponseMessage}.

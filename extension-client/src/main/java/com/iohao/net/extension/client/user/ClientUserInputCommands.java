@@ -18,25 +18,18 @@
  */
 package com.iohao.net.extension.client.user;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.framework.toy.IonetBanner;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.extension.client.command.InputCommand;
-import com.iohao.net.extension.client.command.RequestCommand;
-import com.iohao.net.extension.client.kit.ClientUserConfigs;
-import com.iohao.net.extension.client.kit.ScannerKit;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.extension.client.command.*;
+import com.iohao.net.extension.client.kit.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.i18n.*;
+import com.iohao.net.framework.toy.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Simulated command manager.
@@ -97,7 +90,7 @@ public class ClientUserInputCommands {
 
     void request(String inputName) {
         InputCommand inputCommand = this.getInputCommand(inputName);
-        if (Objects.isNull(inputCommand)) {
+        if (inputCommand == null) {
             var clientInputCommandNotExist = Bundle.getMessage(MessageKey.clientInputCommandNotExist);
             System.err.printf(clientInputCommandNotExist + "%n", inputName);
             return;

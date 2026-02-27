@@ -18,16 +18,12 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.core.ActionCommand;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.common.kit.CollKit;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.*;
+import java.util.*;
+import java.util.stream.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Documentation model for a single {@code @ActionController}, grouping all

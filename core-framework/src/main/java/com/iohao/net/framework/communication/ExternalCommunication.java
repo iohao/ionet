@@ -18,10 +18,8 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.protocol.ExternalRequestMessage;
-import com.iohao.net.framework.protocol.ExternalResponse;
-
-import java.util.concurrent.CompletableFuture;
+import com.iohao.net.framework.protocol.*;
+import java.util.concurrent.*;
 
 /**
  * Interface for communicating with external (client-facing) servers.

@@ -18,11 +18,8 @@
  */
 package com.iohao.net.framework.core.codec;
 
-import com.iohao.net.framework.protocol.wrapper.BoolValue;
-import com.iohao.net.common.kit.CommonConst;
-import com.iohao.net.common.kit.ProtoKit;
-
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.wrapper.*;
 
 /**
  * Protobuf-based implementation of {@link DataCodec}.
@@ -42,7 +39,7 @@ public final class ProtoDataCodec implements DataCodec {
 
     @Override
     public <T> T decode(byte[] data, Class<T> dataClass) {
-        if (Objects.isNull(data)) {
+        if (data == null) {
             return ProtoKit.decode(CommonConst.emptyBytes, dataClass);
         }
 

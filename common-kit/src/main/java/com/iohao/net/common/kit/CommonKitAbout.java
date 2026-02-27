@@ -18,9 +18,8 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.*;
+import lombok.experimental.*;
 
 /**
  * Internal helper holding the global atomic counter for {@link OperationCode} assignment.

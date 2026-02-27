@@ -18,12 +18,8 @@
  */
 package com.iohao.net.extension.room;
 
-import com.iohao.net.framework.communication.RangeBroadcast;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import com.iohao.net.framework.communication.*;
+import java.util.*;
 
 /**
  * No-op {@link RangeBroadcast} implementation used to disable range broadcasting.

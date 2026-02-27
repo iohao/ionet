@@ -18,32 +18,19 @@
  */
 package com.iohao.net.extension.client.join;
 
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.common.kit.IonetLogName;
-import com.iohao.net.common.kit.PresentKit;
-import com.iohao.net.common.kit.concurrent.IntervalTaskListener;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.extension.client.ClientConnectOption;
-import com.iohao.net.extension.client.InputCommandRegion;
-import com.iohao.net.extension.client.kit.ClientMessageKit;
-import com.iohao.net.extension.client.user.ClientUser;
-import com.iohao.net.extension.client.user.ClientUserChannel;
-import com.iohao.net.extension.client.user.PressureKit;
-import com.iohao.net.extension.client.user.DefaultClientUser;
-import com.iohao.net.external.core.config.ExternalGlobalConfig;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
-
-import java.net.InetSocketAddress;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.extension.client.*;
+import com.iohao.net.extension.client.kit.*;
+import com.iohao.net.extension.client.user.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.framework.i18n.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.*;
+import lombok.*;
+import lombok.experimental.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Convenience bootstrap for starting a single simulated client instance.
@@ -70,7 +57,7 @@ public final class ClientRunOne {
     ClientConnectOption option;
 
     public void startup() {
-        if (Objects.isNull(this.clientUser)) {
+        if (this.clientUser == null) {
             this.clientUser = new DefaultClientUser();
         }
 
@@ -88,7 +75,7 @@ public final class ClientRunOne {
         ClientConnectOption option = getOption();
 
         ClientConnect clientConnect = ClientConnects.getClientConnect(joinEnum);
-        if (Objects.isNull(clientConnect)) {
+        if (clientConnect == null) {
             log.error("{} has no corresponding implementation class", joinEnum);
             return;
         }
@@ -131,7 +118,7 @@ public final class ClientRunOne {
 
     private ClientConnectOption getOption() {
 
-        if (Objects.isNull(option)) {
+        if (option == null) {
             option = new ClientConnectOption();
         }
 

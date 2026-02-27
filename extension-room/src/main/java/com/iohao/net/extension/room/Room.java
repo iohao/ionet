@@ -18,21 +18,15 @@
  */
 package com.iohao.net.extension.room;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.flow.FlowContext;
-import com.iohao.net.framework.communication.RangeBroadcast;
-import com.iohao.net.common.kit.OperationCode;
-import com.iohao.net.common.kit.PresentKit;
-import com.iohao.net.common.kit.concurrent.TaskKit;
-import com.iohao.net.extension.room.operation.OperationContext;
-import com.iohao.net.extension.room.operation.OperationHandler;
-import com.iohao.net.extension.room.operation.OperationService;
-import com.iohao.net.extension.room.operation.SimpleOperationHandler;
-
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.extension.room.operation.*;
+import com.iohao.net.framework.communication.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.flow.*;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Core room abstraction for player lifecycle, seating, and room-level game operations.

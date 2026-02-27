@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import lombok.Getter;
-import lombok.Setter;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.kit.*;
+import lombok.*;
 
 /**
  * Sealed base class for all broadcast message types sent from logic servers to external servers.

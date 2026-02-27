@@ -18,9 +18,9 @@
  */
 package com.iohao.net.external.core.message;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.external.core.session.UserSessions;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
+import lombok.experimental.*;
 
 /**
  * Writes outbound messages to a user session resolved from {@link UserSessions}.

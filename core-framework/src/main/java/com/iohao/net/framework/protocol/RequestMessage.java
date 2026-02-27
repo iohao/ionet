@@ -19,9 +19,8 @@
 package com.iohao.net.framework.protocol;
 
 
-import com.iohao.net.framework.core.CmdInfo;
-import lombok.Getter;
-import lombok.Setter;
+import com.iohao.net.framework.core.*;
+import lombok.*;
 
 /**
  * Internal request message used for logic-to-logic server communication via Aeron.

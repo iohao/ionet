@@ -18,14 +18,10 @@
  */
 package com.iohao.net.framework.toy;
 
-import com.iohao.net.common.kit.RandomKit;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
+import com.iohao.net.common.kit.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Provides ASCII art banner data for the ionet startup display.

@@ -18,17 +18,13 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.annotations.ValidatedGroup;
-import com.iohao.net.framework.core.flow.parser.MethodParser;
-import com.iohao.net.framework.core.flow.parser.MethodParsers;
-import com.iohao.net.common.kit.CommonConst;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
-import java.util.Objects;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.core.flow.parser.*;
+import java.lang.reflect.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Metadata about an action method parameter, including generic type resolution
@@ -73,7 +69,7 @@ public final class ActionMethodParameter implements ActualParameter {
         this.actualClass = methodParser.getActualClazz(this);
 
         var validatedAnn = this.parameter.getAnnotation(ValidatedGroup.class);
-        this.validatorGroup = Objects.isNull(validatedAnn) ? CommonConst.emptyClasses : validatedAnn.value();
+        this.validatorGroup = validatedAnn == null ? CommonConst.emptyClasses : validatedAnn.value();
     }
 
     @Override

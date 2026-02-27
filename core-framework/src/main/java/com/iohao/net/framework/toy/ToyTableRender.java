@@ -18,8 +18,7 @@
  */
 package com.iohao.net.framework.toy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Renders a {@link ToyTable} into a bordered ASCII table string and prints it

@@ -18,21 +18,15 @@
  */
 package com.iohao.net.framework.core;
 
-import com.iohao.net.framework.CoreGlobalConfig;
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.framework.toy.IonetBanner;
-import com.iohao.net.common.kit.MoreKit;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import com.iohao.net.common.kit.CollKit;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.*;
+import com.iohao.net.framework.i18n.*;
+import com.iohao.net.framework.toy.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Registry of all {@link ActionCommandRegion} instances, indexed by cmd.
@@ -88,7 +82,7 @@ public final class ActionCommandRegions {
 
         var actionCommandRegion = this.regionMap.get(cmd);
 
-        if (Objects.isNull(actionCommandRegion)) {
+        if (actionCommandRegion == null) {
             var newValue = new ActionCommandRegion(cmd);
             return MoreKit.putIfAbsent(this.regionMap, cmd, newValue);
         }

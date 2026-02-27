@@ -18,17 +18,11 @@
  */
 package com.iohao.net.server.connection;
 
-import com.iohao.net.framework.protocol.ServerOfflineMessage;
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.common.kit.MoreKit;
-import com.iohao.net.server.NetServerSetting;
-import com.iohao.net.server.ServerManager;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.server.*;
+import java.util.*;
+import lombok.extern.slf4j.*;
 
 /**
  * Shutdown hook that broadcasts local server-offline messages to remote net-server groups.

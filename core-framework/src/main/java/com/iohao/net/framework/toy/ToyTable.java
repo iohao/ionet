@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.toy;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A simple table model composed of named {@link ToyTableRegion} columns, used to
@@ -74,7 +72,7 @@ final class ToyTable {
 
         ToyTableRegion region = this.regionMap.get(regionName);
 
-        if (Objects.isNull(region)) {
+        if (region == null) {
 
             region = new ToyTableRegion();
             region.head = regionName;

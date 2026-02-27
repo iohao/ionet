@@ -18,27 +18,15 @@
  */
 package com.iohao.net.common.kit.source;
 
-import com.sun.source.tree.CompilationUnitTree;
-import com.sun.source.util.DocTrees;
-import com.sun.source.util.JavacTask;
-import com.sun.source.util.Trees;
-import lombok.experimental.UtilityClass;
-
-import javax.tools.ToolProvider;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.sun.source.tree.*;
+import com.sun.source.util.*;
+import java.io.*;
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.util.*;
+import javax.tools.*;
+import lombok.experimental.*;
 
 /**
  * Utility for parsing Java source files using the JDK Compiler Tree API.
@@ -107,7 +95,7 @@ public class SourceParserKit {
 
     private Map<String, SourceClass> doParse(List<File> javaFiles) {
         var compiler = ToolProvider.getSystemJavaCompiler();
-        if (Objects.isNull(compiler)) {
+        if (compiler == null) {
             return Collections.emptyMap();
         }
 
@@ -122,7 +110,7 @@ public class SourceParserKit {
             var trees = Trees.instance(task);
 
             for (CompilationUnitTree unit : units) {
-                var packageName = Objects.nonNull(unit.getPackageName())
+                var packageName = unit.getPackageName() != null
                         ? unit.getPackageName().toString() : "";
 
                 unit.accept(new ClassVisitor(packageName, unit, docTrees, trees, result), null);

@@ -18,7 +18,7 @@
  */
 package com.iohao.net.extension.client;
 
-import com.iohao.net.extension.client.user.ClientUser;
+import com.iohao.net.extension.client.user.*;
 
 /**
  * 命令域

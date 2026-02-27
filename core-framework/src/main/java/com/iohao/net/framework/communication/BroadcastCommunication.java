@@ -18,9 +18,7 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.protocol.BroadcastMulticastMessage;
-import com.iohao.net.framework.protocol.BroadcastUserMessage;
-import com.iohao.net.framework.protocol.BroadcastUserListMessage;
+import com.iohao.net.framework.protocol.*;
 
 /**
  * Aggregate broadcast communication interface combining multicast, unicast, and user-list broadcast capabilities.

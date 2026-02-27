@@ -18,7 +18,7 @@
  */
 package com.iohao.net.common.kit.exception;
 
-import com.iohao.net.common.kit.LocaleKit;
+import com.iohao.net.common.kit.*;
 
 /**
  * Exception thrown when attempting to use a feature that requires the Enterprise Edition.

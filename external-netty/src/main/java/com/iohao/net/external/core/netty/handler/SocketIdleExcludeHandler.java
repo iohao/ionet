@@ -18,11 +18,8 @@
  */
 package com.iohao.net.external.core.netty.handler;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.framework.protocol.CmdCodeConst;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
 
 /**
  * Filters out heartbeat messages when no idle handler is configured.

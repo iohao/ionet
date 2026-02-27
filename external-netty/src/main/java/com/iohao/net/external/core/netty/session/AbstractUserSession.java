@@ -18,18 +18,14 @@
  */
 package com.iohao.net.external.core.netty.session;
 
-import com.iohao.net.framework.protocol.CommunicationMessage;
-import com.iohao.net.common.kit.CommonConst;
-import com.iohao.net.common.kit.attr.AttrOptions;
-import com.iohao.net.external.core.config.ExternalJoinEnum;
-import com.iohao.net.external.core.session.UserSession;
-import com.iohao.net.external.core.session.UserSessionOption;
-import com.iohao.net.external.core.session.UserSessionState;
-import io.netty.channel.Channel;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.attr.*;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.session.*;
+import com.iohao.net.framework.protocol.*;
+import io.netty.channel.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Base Netty user session implementation with shared identity/attachment behavior.

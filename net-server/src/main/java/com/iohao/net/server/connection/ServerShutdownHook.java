@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.connection;
 
-import com.iohao.net.server.NetServerSetting;
+import com.iohao.net.server.*;
 
 /**
  * Hook executed during net-server JVM shutdown.

@@ -18,10 +18,9 @@
  */
 package com.iohao.net.common.kit;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
+import lombok.experimental.*;
 
 /**
  * Array manipulation utilities.

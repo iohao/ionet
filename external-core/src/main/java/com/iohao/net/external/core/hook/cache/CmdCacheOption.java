@@ -18,13 +18,10 @@
  */
 package com.iohao.net.external.core.hook.cache;
 
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-
-import java.time.Duration;
-import java.util.Objects;
+import java.time.*;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * External server cache configuration.

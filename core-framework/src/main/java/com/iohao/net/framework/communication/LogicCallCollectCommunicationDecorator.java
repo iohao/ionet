@@ -18,16 +18,13 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.annotations.Enterprise;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.common.kit.exception.EnterpriseSupportException;
-import com.iohao.net.framework.protocol.RequestMessage;
-import com.iohao.net.framework.protocol.ResponseCollect;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.function.Consumer;
+import com.iohao.net.common.kit.exception.*;
+import com.iohao.net.framework.annotations.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
 
 /**
  * Decorator providing cross-logic-server collect-style calls that aggregate responses from multiple logic servers.

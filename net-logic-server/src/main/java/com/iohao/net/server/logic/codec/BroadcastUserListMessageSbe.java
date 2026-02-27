@@ -18,13 +18,11 @@
  */
 package com.iohao.net.server.logic.codec;
 
-import com.iohao.net.framework.protocol.BroadcastUserListMessage;
-import com.iohao.net.common.kit.ArrayKit;
-import com.iohao.net.common.MessageSbe;
-import com.iohao.net.common.kit.ByteKit;
-import com.iohao.net.sbe.BroadcastUserListMessageEncoder;
-import com.iohao.net.sbe.MessageHeaderEncoder;
-import org.agrona.MutableDirectBuffer;
+import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import org.agrona.*;
 
 /**
  * SBE encoder for user-list broadcast messages.

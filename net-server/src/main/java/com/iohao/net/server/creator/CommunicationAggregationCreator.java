@@ -18,7 +18,7 @@
  */
 package com.iohao.net.server.creator;
 
-import com.iohao.net.framework.communication.CommunicationAggregation;
+import com.iohao.net.framework.communication.*;
 
 /**
  * Factory for creating the {@link CommunicationAggregation} used by net-server.

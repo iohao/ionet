@@ -18,14 +18,10 @@
  */
 package com.iohao.net.common;
 
-import com.iohao.net.framework.protocol.RemoteMessage;
-import com.iohao.net.framework.protocol.UserIdentity;
-import com.iohao.net.sbe.CommonMessageDecoder;
-import com.iohao.net.sbe.CommonMessageEncoder;
-import com.iohao.net.sbe.UserIdentityMessageDecoder;
-import com.iohao.net.sbe.UserIdentityMessageEncoder;
-import lombok.Setter;
-import lombok.experimental.UtilityClass;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Static facade for the active {@link SbeCodec} implementation.

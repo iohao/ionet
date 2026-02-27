@@ -18,15 +18,12 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import com.iohao.net.framework.i18n.Bundle;
-import com.iohao.net.framework.i18n.MessageKey;
-import com.iohao.net.common.kit.FileKit;
-import com.iohao.net.common.kit.StrKit;
-import com.iohao.net.common.kit.time.TimeFormatKit;
-import lombok.Setter;
-
-import java.io.File;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.time.*;
+import com.iohao.net.framework.i18n.*;
+import java.io.*;
 import java.util.*;
+import lombok.*;
 
 /**
  * {@link DocumentGenerate} implementation that produces a plain-text documentation file

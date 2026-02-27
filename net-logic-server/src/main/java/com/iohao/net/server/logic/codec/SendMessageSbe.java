@@ -18,13 +18,11 @@
  */
 package com.iohao.net.server.logic.codec;
 
-import com.iohao.net.framework.protocol.SendMessage;
-import com.iohao.net.common.MessageSbe;
-import com.iohao.net.common.kit.ByteKit;
-import com.iohao.net.sbe.MessageHeaderEncoder;
-import com.iohao.net.common.SbeKit;
-import com.iohao.net.sbe.SendMessageEncoder;
-import org.agrona.MutableDirectBuffer;
+import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.protocol.*;
+import com.iohao.net.sbe.*;
+import org.agrona.*;
 
 /**
  * Base SBE encoder for internal send messages.

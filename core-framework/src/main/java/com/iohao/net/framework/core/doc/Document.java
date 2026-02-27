@@ -18,10 +18,9 @@
  */
 package com.iohao.net.framework.core.doc;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Document-related information, such as action-related, broadcast-related, and error code-related details.

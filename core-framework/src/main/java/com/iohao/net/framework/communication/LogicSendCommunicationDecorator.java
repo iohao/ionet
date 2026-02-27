@@ -18,17 +18,12 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.core.kit.BarMessageKit;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.FlowContextKeys;
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.SendMessage;
-import com.iohao.net.framework.protocol.Server;
-import com.iohao.net.common.kit.CommonConst;
-
-import java.util.List;
-
+import com.iohao.net.common.kit.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.kit.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Decorator providing fire-and-forget message sending to other logic servers.

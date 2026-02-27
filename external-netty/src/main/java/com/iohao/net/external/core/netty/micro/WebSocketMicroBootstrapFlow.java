@@ -18,17 +18,13 @@
  */
 package com.iohao.net.external.core.netty.micro;
 
-import com.iohao.net.external.core.config.ExternalGlobalConfig;
-import com.iohao.net.external.core.micro.PipelineContext;
-import com.iohao.net.external.core.netty.handler.HttpFallbackHandler;
-import com.iohao.net.external.core.netty.handler.WebSocketExternalCodec;
-import com.iohao.net.external.core.netty.handler.WebSocketVerifyHandler;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelOption;
-import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import com.iohao.net.external.core.config.*;
+import com.iohao.net.external.core.micro.*;
+import com.iohao.net.external.core.netty.handler.*;
+import io.netty.bootstrap.*;
+import io.netty.channel.*;
+import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.websocketx.*;
 
 /**
  * Netty bootstrap flow for WebSocket-based external client connections.

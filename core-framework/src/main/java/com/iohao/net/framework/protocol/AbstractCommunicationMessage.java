@@ -18,11 +18,10 @@
  */
 package com.iohao.net.framework.protocol;
 
-import com.baidu.bjf.remoting.protobuf.annotation.Ignore;
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.exception.ErrorInformation;
-import lombok.Getter;
-import lombok.Setter;
+import com.baidu.bjf.remoting.protobuf.annotation.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.exception.*;
+import lombok.*;
 
 /**
  * Abstract base implementation of {@link CommunicationMessage} for external protocol codecs.

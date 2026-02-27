@@ -18,16 +18,14 @@
  */
 package com.iohao.net.extension.client.command;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.kit.CmdKit;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.external.core.message.ExternalMessage;
+import com.iohao.net.external.core.message.*;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.core.kit.*;
 import com.iohao.net.framework.protocol.wrapper.*;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Callback result wrapper with lazy response payload decoding helpers.
@@ -58,7 +56,7 @@ public class CommandResult {
     public <T> T getValue(Class<? extends T> clazz) {
         byte[] data = this.message.getData();
 
-        if (Objects.isNull(this.value)) {
+        if (this.value == null) {
             this.value = DataCodecManager.decode(data, clazz);
         }
 

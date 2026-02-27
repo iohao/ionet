@@ -18,12 +18,10 @@
  */
 package com.iohao.net.framework.communication;
 
-import com.iohao.net.framework.core.CmdInfo;
-import com.iohao.net.framework.core.codec.DataCodec;
-import com.iohao.net.framework.core.codec.DataCodecManager;
-import com.iohao.net.framework.protocol.RequestMessage;
-
-import java.util.List;
+import com.iohao.net.framework.core.*;
+import com.iohao.net.framework.core.codec.*;
+import com.iohao.net.framework.protocol.*;
+import java.util.*;
 
 /**
  * Decorator interface that provides convenience factory methods for creating {@link RequestMessage}
