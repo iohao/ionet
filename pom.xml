@@ -62,8 +62,6 @@
         <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
         <disruptor.version>4.0.0</disruptor.version>
 
-        <!-- https://mvnrepository.com/artifact/org.fusesource.jansi/jansi  -->
-        <jansi.version>2.4.2</jansi.version>
 
         <!-- JSR-380 https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>

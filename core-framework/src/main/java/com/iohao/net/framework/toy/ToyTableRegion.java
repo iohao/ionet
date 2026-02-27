@@ -18,9 +18,9 @@
  */
 package com.iohao.net.framework.toy;
 
-import org.fusesource.jansi.Ansi;
-
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A single named column region within a {@link ToyTable}, holding key-value lines
@@ -96,8 +96,7 @@ final class ToyTableRegion {
     }
 
     String renderHead() {
-        Ansi.Color color = Ansi.Color.CYAN;
-        String head = Ansi.ansi().fg(color).a(this.head).reset().toString();
+        String head = AnsiColor.fg(AnsiColor.Color.CYAN, this.head);
 
         var headBuilder = new StringBuilder();
         headBuilder.append(this.prefix);

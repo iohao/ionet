@@ -40,7 +40,7 @@ import com.iohao.net.common.kit.StrKit;
 import com.iohao.net.common.kit.concurrent.TaskKit;
 import com.iohao.net.common.kit.exception.ThrowKit;
 import jakarta.validation.Valid;
-import org.fusesource.jansi.Ansi;
+import com.iohao.net.framework.toy.AnsiColor;
 
 import java.lang.invoke.MethodType;
 import java.lang.reflect.*;
@@ -322,14 +322,14 @@ class PrintActionKit {
         Runners runners = barSkeleton.runners;
         List<String> nameList = runners.listRunnerName();
         String title = "@|CYAN ======================== Runners ========================= |@";
-        IonetBanner.println1(Ansi.ansi().render(title));
+        IonetBanner.println1(AnsiColor.render(title));
 
         var printActionKitClose = Bundle.getMessage(MessageKey.printActionKitPrintClose);
         IonetBanner.printlnMsg(printActionKitClose + " BarSkeletonBuilder.setting.printRunners");
 
         for (String name : nameList) {
             String info = String.format("@|BLUE %s |@", name);
-            IonetBanner.println1(Ansi.ansi().render(info));
+            IonetBanner.println1(AnsiColor.render(info));
         }
     }
 
@@ -346,13 +346,13 @@ class PrintActionKit {
 
         for (ActionMethodInOut inOut : inOuts) {
             String info = String.format("@|BLUE %s |@", inOut.getClass());
-            IonetBanner.println1(Ansi.ansi().render(info));
+            IonetBanner.println1(AnsiColor.render(info));
         }
     }
 
     private static void printTitle(String title) {
         String formatted = "@|CYAN ======================== %s ========================= |@".formatted(title);
-        IonetBanner.println1(Ansi.ansi().render(formatted));
+        IonetBanner.println1(AnsiColor.render(formatted));
     }
 
     static void printActionCommand(ActionCommand[][] behaviors, boolean shortName) {
@@ -435,7 +435,7 @@ class PrintActionKit {
 
                 String lineTemplate = "{routeCell}{actionCell} {methodNameCell}({paramInfoCell}) -- return {returnValueCell} -- see.({actionSimpleName}.java:{lineNumber})";
                 String text = StrKit.format(lineTemplate, params);
-                IonetBanner.println1(Ansi.ansi().render(text));
+                IonetBanner.println1(AnsiColor.render(text));
             }
         }
     }
@@ -449,7 +449,7 @@ class PrintActionKit {
 
         var codec = DataCodecManager.getDataCodec();
         String info = String.format("@|BLUE %s - %s |@", codec.codecName(), codec.getClass().getName());
-        IonetBanner.println1(Ansi.ansi().render(info));
+        IonetBanner.println1(AnsiColor.render(info));
 
     }
 

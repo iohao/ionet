@@ -19,7 +19,6 @@
 package com.iohao.net.framework.toy;
 
 import com.iohao.net.common.kit.RandomKit;
-import org.fusesource.jansi.Ansi;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -66,13 +65,13 @@ final class BannerData {
  */
 final class BannerColorStrategy {
 
-    static Ansi.Color anyColor() {
-        List<Ansi.Color> collect = Stream.of(Ansi.Color.values())
+    static AnsiColor.Color anyColor() {
+        List<AnsiColor.Color> collect = Stream.of(AnsiColor.Color.values())
                 // exclude black, white, blue, and default
-                .filter(color -> color != Ansi.Color.BLUE)
-                .filter(color -> color != Ansi.Color.WHITE)
-                .filter(color -> color != Ansi.Color.BLACK)
-                .filter(color -> color != Ansi.Color.DEFAULT)
+                .filter(color -> color != AnsiColor.Color.BLUE)
+                .filter(color -> color != AnsiColor.Color.WHITE)
+                .filter(color -> color != AnsiColor.Color.BLACK)
+                .filter(color -> color != AnsiColor.Color.DEFAULT)
                 .toList();
 
         return RandomKit.randomEle(collect);
@@ -112,14 +111,14 @@ final class BannerColorStrategy {
 
     private String colorRandomLine(String banner) {
         // 按行来上色
-        List<Ansi.Color> colorList = listColor();
+        List<AnsiColor.Color> colorList = listColor();
 
-        Ansi ansi = Ansi.ansi();
+        var ansi = AnsiColor.builder();
 
         char[] array = banner.toCharArray();
 
         int anInt = RandomKit.randomInt(colorList.size());
-        Ansi.Color color = colorList.get(anInt);
+        AnsiColor.Color color = colorList.get(anInt);
 
         for (char c : array) {
             ansi.fg(color).a(c);
@@ -134,21 +133,21 @@ final class BannerColorStrategy {
 
     private String colorSingle(String banner) {
         // 上单色
-        Ansi.Color color = randomColor();
-        Ansi ansi = Ansi.ansi().fg(color).a(banner);
+        AnsiColor.Color color = randomColor();
+        var ansi = AnsiColor.builder().fg(color).a(banner);
         return ansi.reset().toString();
     }
 
     private String colorRandom(String banner) {
         // 随机字符上色
 
-        List<Ansi.Color> colorList = listColor();
+        List<AnsiColor.Color> colorList = listColor();
 
-        Ansi ansi = Ansi.ansi();
+        var ansi = AnsiColor.builder();
         char[] array = banner.toCharArray();
 
         for (char c : array) {
-            Ansi.Color color = RandomKit.randomEle(colorList);
+            AnsiColor.Color color = RandomKit.randomEle(colorList);
             ansi.fg(color).a(c);
         }
 
@@ -158,9 +157,9 @@ final class BannerColorStrategy {
     private String colorRandomColumn(String banner) {
         // 达到换行的字符数量
         int widthLen = RandomKit.randomInt(1, 10);
-        Ansi.Color color = randomColor();
+        AnsiColor.Color color = randomColor();
 
-        Ansi ansi = Ansi.ansi();
+        var ansi = AnsiColor.builder();
 
         char[] array = banner.toCharArray();
         for (int i = 0; i < array.length; i++) {
@@ -179,7 +178,7 @@ final class BannerColorStrategy {
     }
 
     private String colorColumn(String banner) {
-        Ansi ansi = Ansi.ansi();
+        var ansi = AnsiColor.builder();
 
         TheColorColumn colorColumn = TheColorColumn.create();
         List<TheColorColumn> list = new ArrayList<>();
@@ -218,11 +217,11 @@ final class BannerColorStrategy {
     }
 
     private static class TheColorColumn {
-        Ansi.Color color;
+        AnsiColor.Color color;
         int widthLen;
         int num;
 
-        TheColorColumn(Ansi.Color color, int widthLen) {
+        TheColorColumn(AnsiColor.Color color, int widthLen) {
             this.color = color;
             this.widthLen = widthLen;
             this.num = widthLen;
@@ -234,11 +233,11 @@ final class BannerColorStrategy {
 
         static TheColorColumn create() {
             int widthLen = RandomKit.randomInt(1, 5);
-            Ansi.Color color = randomColor();
+            AnsiColor.Color color = randomColor();
             return new TheColorColumn(color, widthLen);
         }
 
-        void render(Ansi ansi, char c) {
+        void render(AnsiColor.Builder ansi, char c) {
             this.num--;
             ansi.fg(color).a(c);
         }
@@ -248,17 +247,17 @@ final class BannerColorStrategy {
         }
     }
 
-    private List<Ansi.Color> listColor() {
-        return Stream.of(Ansi.Color.values())
+    private List<AnsiColor.Color> listColor() {
+        return Stream.of(AnsiColor.Color.values())
                 // exclude black
-                .filter(color -> color != Ansi.Color.BLACK)
+                .filter(color -> color != AnsiColor.Color.BLACK)
                 .toList();
     }
 
-    private static Ansi.Color randomColor() {
-        List<Ansi.Color> collect = Stream.of(Ansi.Color.values())
+    private static AnsiColor.Color randomColor() {
+        List<AnsiColor.Color> collect = Stream.of(AnsiColor.Color.values())
                 // exclude black
-                .filter(color -> color != Ansi.Color.BLACK)
+                .filter(color -> color != AnsiColor.Color.BLACK)
                 .toList();
 
         return RandomKit.randomEle(collect);
