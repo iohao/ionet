@@ -93,8 +93,6 @@ final class DefaultActionCommandParser implements ActionCommandParser {
                 try {
                     var methodType = ActionCommandParserKit.ofMethodType(method, actionMethodReturn.returnTypeClass);
                     var methodHandle = privateLookup.findVirtual(controllerClazz, methodName, methodType);
-                    // warmUp
-                    methodHandle.asType(methodHandle.type());
 
                     builder.setMethodHandle(methodHandle);
                 } catch (Exception e) {

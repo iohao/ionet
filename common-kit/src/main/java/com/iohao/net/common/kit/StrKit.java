@@ -121,11 +121,12 @@ public class StrKit {
             }
 
             String placeholder = "{" + entry.getKey() + "}";
+            String stringValue = value.toString();
             int index = result.indexOf(placeholder);
 
             while (index != -1) {
-                result.replace(index, index + placeholder.length(), value.toString());
-                index = result.indexOf(placeholder, index + value.toString().length());
+                result.replace(index, index + placeholder.length(), stringValue);
+                index = result.indexOf(placeholder, index + stringValue.length());
             }
         }
 

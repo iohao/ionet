@@ -40,7 +40,7 @@ public class ProtoJava {
 
     SourceClass sourceClass;
 
-    List<ProtoJavaField> protoJavaFieldList = new ArrayList<>();
+    List<ProtoJavaField> protoJavaFieldList = new ArrayList<>(16);
 
     public void addProtoJavaFiled(ProtoJavaField protoJavaField) {
         this.protoJavaFieldList.add(protoJavaField);

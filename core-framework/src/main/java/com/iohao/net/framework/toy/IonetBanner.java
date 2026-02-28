@@ -25,7 +25,8 @@ import com.iohao.net.framework.*;
 import com.iohao.net.framework.i18n.*;
 import java.io.*;
 import java.lang.management.*;
-import java.text.*;
+import java.time.*;
+import java.time.format.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
@@ -47,6 +48,8 @@ import static java.lang.System.*;
 @Slf4j
 @UtilityClass
 public final class IonetBanner {
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
     AtomicBoolean trigger = new AtomicBoolean(false);
     AtomicInteger errorCount = new AtomicInteger(0);
     Map<String, AtomicInteger> serverNodeMap = CollKit.ofConcurrentHashMap();
@@ -195,14 +198,12 @@ public final class IonetBanner {
     }
 
     private void extractedTime(ToyTable table, Date startTime, Date endTime) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
         var consumeTime = (endTime.getTime() - startTime.getTime()) / 1000f;
-        var consume = String.format("%.2f s", consumeTime);
+        var consume = "%.2f s".formatted(consumeTime);
 
         ToyTableRegion other = table.getRegion("Time");
-        other.putLine("start", simpleDateFormat.format(startTime));
-        other.putLine("end", simpleDateFormat.format(endTime));
+        other.putLine("start", TIME_FORMATTER.format(startTime.toInstant().atZone(ZoneId.systemDefault())));
+        other.putLine("end", TIME_FORMATTER.format(endTime.toInstant().atZone(ZoneId.systemDefault())));
         other.putLine("consume", consume);
     }
 

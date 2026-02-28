@@ -205,7 +205,7 @@ final class ActionCommandParserKit {
     static void checkDuplicateRoute(Class<?> controllerClass, int subCmd, ActionCommandRegion actionCommandRegion) {
 
         if (actionCommandRegion.containsKey(subCmd)) {
-            String message = String.format("%s already exists. see: %s",
+            String message = "%s already exists. see: %s".formatted(
                     CmdInfo.of(actionCommandRegion.cmd, subCmd), controllerClass
             );
 

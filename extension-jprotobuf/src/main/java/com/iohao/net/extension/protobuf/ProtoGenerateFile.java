@@ -40,7 +40,7 @@ import lombok.extern.slf4j.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProtoGenerateFile {
     /** proto package path */
-    final Set<String> protoPackageSet = new HashSet<>();
+    final Set<String> protoPackageSet = new HashSet<>(16);
     /** Source code root path used by source scanning. */
     String protoSourcePath;
     /** Output directory for generated proto files. */

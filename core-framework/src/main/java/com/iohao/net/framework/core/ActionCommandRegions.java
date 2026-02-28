@@ -57,10 +57,9 @@ public final class ActionCommandRegions {
      */
     public List<Integer> listCmdMerge() {
         return regionMap.values()
-                // Concurrent stream
-                .parallelStream()
+                .stream()
                 // Merge map.values into a list
-                .flatMap((Function<ActionCommandRegion, Stream<ActionCommand>>) actionCommandRegion -> actionCommandRegion.values().parallelStream())
+                .flatMap(actionCommandRegion -> actionCommandRegion.values().stream())
                 // Convert to command routing information
                 .map(o -> o.cmdInfo)
                 // Convert to merged routing

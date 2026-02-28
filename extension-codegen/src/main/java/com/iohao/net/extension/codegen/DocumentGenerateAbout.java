@@ -334,7 +334,7 @@ class InternalProtoClassKit {
         }
 
         // --------- collect proto class ---------
-        final Set<Class<?>> protoClassSet = new HashSet<>();
+        final Set<Class<?>> protoClassSet = new HashSet<>(32);
         document.actionDocList.stream()
                 .flatMap(actionDoc -> actionDoc.actionCommandDocMap.values().stream())
                 .forEach(actionCommandDoc -> {

@@ -51,7 +51,7 @@ public class ProtoJavaField {
     }
 
     private Map<String, String> createParam() {
-        Map<String, String> messageMap = new HashMap<>();
+        Map<String, String> messageMap = new HashMap<>(8);
 
         messageMap.put("comment", this.comment);
         messageMap.put("repeated", "");

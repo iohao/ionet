@@ -89,11 +89,9 @@ public class InputCommand {
         String inputNameFormat = "%-" + width + "s";
 
         if (StrKit.isEmpty(cmdName)) {
-            var format = inputNameFormat + ": %s";
-            return String.format(format, inputName, title);
+            return (inputNameFormat + ": %s").formatted(inputName, title);
         }
 
-        var format = inputNameFormat + ": [%s] - %s";
-        return String.format(format, inputName, cmdName, title);
+        return (inputNameFormat + ": [%s] - %s").formatted(inputName, cmdName, title);
     }
 }

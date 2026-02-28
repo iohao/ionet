@@ -77,7 +77,7 @@ public final class TypeScriptDocumentGenerate extends AbstractDocumentGenerate {
     @Override
     protected void generateBroadcast(Document document) {
 
-        List<Class<?>> protoMessageClassList = new ArrayList<>();
+        List<Class<?>> protoMessageClassList = new ArrayList<>(document.broadcastDocumentList.size());
         document.broadcastDocumentList.forEach(broadcastDocument -> {
             Class<?> dataClass = broadcastDocument.dataClass;
             TsProtoMessage bizDataProtoMessage = this.analyseImport.getProtoMessage(dataClass);
@@ -105,7 +105,7 @@ public final class TypeScriptDocumentGenerate extends AbstractDocumentGenerate {
     protected void generateAction(Document document) {
         List<ActionDocument> actionDocumentList = DocumentAnalyseKit.analyseActionDocument(document, typeMappingDocument);
 
-        List<Class<?>> protoMessageClassList = new ArrayList<>();
+        List<Class<?>> protoMessageClassList = new ArrayList<>(actionDocumentList.size());
         actionDocumentList.forEach(actionDocument -> {
 
             // collect the action inputParam and outputParam
@@ -151,7 +151,7 @@ public final class TypeScriptDocumentGenerate extends AbstractDocumentGenerate {
 
     private static class TypeScriptMappingDocument implements TypeMappingDocument {
         @Getter
-        final Map<Class<?>, TypeMappingRecord> map = new HashMap<>();
+        final Map<Class<?>, TypeMappingRecord> map = new HashMap<>(32);
         final TypeScriptDocumentGenerate documentGenerate;
 
         public TypeScriptMappingDocument(TypeScriptDocumentGenerate documentGenerate) {
