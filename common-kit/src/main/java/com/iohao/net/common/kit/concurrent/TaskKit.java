@@ -140,7 +140,7 @@ import lombok.extern.slf4j.*;
 @Slf4j
 @UtilityClass
 public class TaskKit {
-    private Timer wheelTimer = new HashedWheelTimer();
+    private volatile Timer wheelTimer = new HashedWheelTimer();
 
     @Getter
     final ExecutorService cacheExecutor = ExecutorKit.newFixedThreadPool(RuntimeKit.availableProcessors2n, "netThread");

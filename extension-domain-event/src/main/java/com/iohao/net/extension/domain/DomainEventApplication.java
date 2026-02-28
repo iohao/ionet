@@ -31,7 +31,7 @@ import java.util.stream.*;
  * @date 2021-12-26
  */
 public class DomainEventApplication {
-    boolean init;
+    final AtomicBoolean init = new AtomicBoolean();
 
     /**
      * Initializes disruptors for all registered handlers and starts them once.
@@ -39,11 +39,9 @@ public class DomainEventApplication {
      * @param setting domain-event configuration
      */
     public void startup(DomainEventSetting setting) {
-        if (init) {
+        if (!init.compareAndSet(false, true)) {
             return;
         }
-
-        init = true;
         Set<String> topicSet = new HashSet<>();
         var domainEventHandlerSet = setting.domainEventHandlerSet;
 

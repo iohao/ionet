@@ -20,6 +20,7 @@ package com.iohao.net.external.core;
 
 import com.iohao.net.external.core.session.*;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.agrona.collections.*;
 
 /**
@@ -31,7 +32,7 @@ import org.agrona.collections.*;
  */
 public final class ExternalManager {
     static final Int2ObjectHashMap<ExternalSetting> map = new Int2ObjectHashMap<>();
-    static final List<UserSessions<?, ?>> list = new ArrayList<>();
+    static final List<UserSessions<?, ?>> list = new CopyOnWriteArrayList<>();
 
     /**
      * Register an external server setting and expose its session container.
