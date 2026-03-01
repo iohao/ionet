@@ -31,23 +31,17 @@ import lombok.experimental.*;
  */
 @UtilityClass
 public final class LogicServerManager {
-    Map<Integer, LogicServer> logicServerMap = CollKit.ofConcurrentHashMap();
+    final Map<Integer, LogicServer> logicServerMap = CollKit.ofConcurrentHashMap();
 
     public void put(int serverId, LogicServer logicServer) {
-        if (logicServerMap != null) {
-            logicServerMap.put(serverId, logicServer);
-        }
+        logicServerMap.put(serverId, logicServer);
     }
 
     public LogicServer remove(int serverId) {
-        if (logicServerMap == null) {
-            return null;
-        }
-
         return logicServerMap.remove(serverId);
     }
 
     public void clearSelf() {
-        logicServerMap = null;
+        logicServerMap.clear();
     }
 }

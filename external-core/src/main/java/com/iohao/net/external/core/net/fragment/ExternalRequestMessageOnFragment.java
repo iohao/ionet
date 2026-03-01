@@ -101,6 +101,11 @@ public class ExternalRequestMessageOnFragment implements OnFragment, NetServerSe
             try {
                 var onExternals = OnExternalManager.getOnExternals(templateId);
                 var on = onExternals[Math.abs(templateId)];
+                if (on == null) {
+                    log.error("No OnExternal handler registered for templateId: {}", templateId);
+                    context.response().setError(ActionErrorEnum.systemOtherErrCode);
+                    return;
+                }
                 on.process(context.payload(), context.payloadLength(), context);
             } catch (Throwable e) {
                 log.error(e.getMessage(), e);

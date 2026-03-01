@@ -43,11 +43,11 @@ public final class ServerLineKit {
     private final int threadIndex = ConnectResponseMessageDecoder.TEMPLATE_ID;
 
     public void onlineProcess(Server otherServer, NetServerSetting setting) {
-        if (idRecordSet.contains(otherServer.id())) {
+        // Atomically check and add: if already present, skip duplicate processing
+        if (!idRecordSet.add(otherServer.id())) {
             return;
         }
 
-        idRecordSet.add(otherServer.id());
         ServerManager.addServer(otherServer);
 
         ExecutorRegionKit.getSimpleThreadExecutor(threadIndex).executeTry(() -> {

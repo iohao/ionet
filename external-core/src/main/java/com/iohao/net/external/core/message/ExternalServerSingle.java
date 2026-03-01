@@ -31,5 +31,5 @@ import lombok.experimental.*;
 @UtilityClass
 public final class ExternalServerSingle {
     /** Global user session registry exposed for convenience APIs. */
-    public UserSessions<?, ?> userSessions;
+    public volatile UserSessions<?, ?> userSessions;
 }

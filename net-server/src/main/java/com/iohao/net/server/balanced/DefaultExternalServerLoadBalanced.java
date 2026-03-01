@@ -29,8 +29,8 @@ import java.util.*;
  * @since 25.1
  */
 final class DefaultExternalServerLoadBalanced implements ExternalServerLoadBalanced {
-    Server server;
-    List<Server> serverMessageList = Collections.emptyList();
+    volatile Server server;
+    volatile List<Server> serverMessageList = Collections.emptyList();
 
     @Override
     public void register(Server message) {

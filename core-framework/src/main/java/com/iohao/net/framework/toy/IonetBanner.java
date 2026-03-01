@@ -50,12 +50,13 @@ import static java.lang.System.*;
 public final class IonetBanner {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-    AtomicBoolean trigger = new AtomicBoolean(false);
-    AtomicInteger errorCount = new AtomicInteger(0);
-    Map<String, AtomicInteger> serverNodeMap = CollKit.ofConcurrentHashMap();
+    final AtomicBoolean trigger = new AtomicBoolean(false);
+    final AtomicInteger errorCount = new AtomicInteger(0);
+    final Map<String, AtomicInteger> serverNodeMap = CollKit.ofConcurrentHashMap();
+    final AtomicBoolean cleaned = new AtomicBoolean(false);
 
-    CountDownLatch countDownLatch;
-    public Runnable callback = () -> {
+    volatile CountDownLatch countDownLatch;
+    volatile Runnable callback = () -> {
         var serverAmountName = Bundle.getMessage(MessageKey.serverAmount);
         String externalTag = "ExternalServer";
         var externalCount = serverNodeMap.remove(externalTag);
@@ -67,7 +68,7 @@ public final class IonetBanner {
     };
 
     public static void render() {
-        if (trigger == null || trigger.get()) {
+        if (trigger.get()) {
             return;
         }
 
@@ -88,7 +89,7 @@ public final class IonetBanner {
 
 
     public void addTag(String tag) {
-        if (serverNodeMap == null) {
+        if (cleaned.get()) {
             return;
         }
 
@@ -102,9 +103,10 @@ public final class IonetBanner {
     }
 
     private void incErrorCount() {
-        if (errorCount != null) {
-            errorCount.getAndIncrement();
+        if (cleaned.get()) {
+            return;
         }
+        errorCount.getAndIncrement();
     }
 
     private final AtomicBoolean print = new AtomicBoolean();
@@ -189,11 +191,10 @@ public final class IonetBanner {
     }
 
     private void clean() {
+        cleaned.set(true);
         countDownLatch = null;
-        errorCount = null;
         callback = null;
-        trigger = null;
-        serverNodeMap = null;
+        serverNodeMap.clear();
         separatorLine = null;
     }
 
@@ -231,7 +232,7 @@ public final class IonetBanner {
     }
 
     private void extractedErrorCount() {
-        if (errorCount == null || errorCount.get() == 0) {
+        if (errorCount.get() == 0) {
             return;
         }
 
