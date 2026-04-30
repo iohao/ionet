@@ -25,6 +25,11 @@ import lombok.extern.slf4j.*;
 
 /**
  * Map-based logic-server load balancer indexed by tag, command merge, and server id.
+ * <p>
+ * The open-source runtime supports a single active logic-server owner for the same
+ * {@code cmdMerge} in one runtime environment. Registering another server for the same
+ * {@code cmdMerge} intentionally replaces the previous owner; this class does not keep
+ * fallback candidates or provide round-robin balancing for duplicate command ownership.
  *
  * @author 渔民小镇
  * @date 2025-09-01
