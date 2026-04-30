@@ -61,6 +61,14 @@ public final class DefaultConnectionManager implements ConnectionManager {
         this.publisher.addPublication(AeronConst.centerPublicationName, this.publicationCenter);
     }
 
+    DefaultConnectionManager(Publisher publisher) {
+        this.fragmentLimit = CoreGlobalConfig.fragmentLimit;
+        this.aeron = null;
+        this.subscription = null;
+        this.publicationCenter = null;
+        this.publisher = publisher;
+    }
+
     @Override
     public boolean containsNetId(int netId) {
         return publicationMap.containsKey(netId);
@@ -86,17 +94,36 @@ public final class DefaultConnectionManager implements ConnectionManager {
     @Override
     public void publishMessage(int serverId, Object message) {
         var connection = connectionMap.get(serverId);
+        if (connection == null) {
+            log.warn("Drop message because server connection is missing. serverId: {}, messageType: {}",
+                    serverId,
+                    messageType(message));
+            return;
+        }
+
         publishMessage(connection.getPubName(), message);
     }
 
     @Override
     public void publishMessage(String pubName, Object message) {
+        if (pubName == null) {
+            log.warn("Drop message because publication name is missing. messageType: {}", messageType(message));
+            return;
+        }
+
         publisher.publishMessage(pubName, message);
     }
 
     @Override
     public void publishMessageByNetId(int netId, Object message) {
         String pubName = netIdNameMap.get(netId);
+        if (pubName == null) {
+            log.warn("Drop message because net id publication is missing. netId: {}, messageType: {}",
+                    netId,
+                    messageType(message));
+            return;
+        }
+
         publishMessage(pubName, message);
     }
 
@@ -107,13 +134,19 @@ public final class DefaultConnectionManager implements ConnectionManager {
 
         int netId = connection.getNetId();
 
-        netIdNameMap.put(netId, String.valueOf(connection.getNetId()));
-        publicationMap.put(netId, connection.getPublication());
+        netIdNameMap.put(netId, connection.getPubName());
+        if (connection.getPublication() != null) {
+            publicationMap.put(netId, connection.getPublication());
+        }
     }
 
 
     @Override
     public int poll(FragmentHandler fragmentHandler) {
         return this.subscription.poll(fragmentHandler, fragmentLimit);
+    }
+
+    private String messageType(Object message) {
+        return message == null ? "null" : message.getClass().getSimpleName();
     }
 }
