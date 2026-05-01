@@ -95,7 +95,13 @@ public final class DefaultCmdRegion implements CmdRegion {
 
     @Override
     public int getAnyServerId() {
-        return RandomKit.randomEle(serverIds);
+        if (size == 0) {
+            return 0;
+        }
+
+        return size == 1
+                ? serverIds[0]
+                : serverIds[RandomKit.randomInt(size)];
     }
 
     @Override
