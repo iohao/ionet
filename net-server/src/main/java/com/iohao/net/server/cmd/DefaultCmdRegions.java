@@ -54,7 +54,12 @@ public final class DefaultCmdRegions implements CmdRegions {
 
     @Override
     public void unLoading(int serverId) {
-        this.getCmdRegionSet(serverId).forEach(cmdRegion -> cmdRegion.removeByServerId(serverId));
+        var cmdRegionSet = this.serverCmdRegionMap.get(serverId);
+        if (cmdRegionSet == null) {
+            return;
+        }
+
+        cmdRegionSet.forEach(cmdRegion -> cmdRegion.removeByServerId(serverId));
     }
 
     @Override

@@ -21,11 +21,12 @@ package com.iohao.net.server.cmd;
 import com.iohao.net.common.kit.*;
 import com.iohao.net.framework.core.kit.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import lombok.*;
 import lombok.experimental.*;
 
 /**
- * Default {@link CmdRegion} implementation backed by a compact int array.
+ * Default {@link CmdRegion} implementation backed by lock-free server-id snapshots.
  *
  * @author 渔民小镇
  * @date 2023-04-30
@@ -33,53 +34,66 @@ import lombok.experimental.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class DefaultCmdRegion implements CmdRegion {
     final int cmdMerge;
-    int[] serverIds;
-    int size = 0;
+    final AtomicReference<int[]> serverIdsRef = new AtomicReference<>(new int[0]);
 
     public DefaultCmdRegion(int cmdMerge) {
         this.cmdMerge = cmdMerge;
-        this.serverIds = new int[1];
     }
 
     @Override
     public void addServerId(int serverId) {
-        if (contains(serverId)) {
-            return;
-        }
+        while (true) {
+            int[] serverIds = this.serverIdsRef.get();
+            if (contains(serverIds, serverId)) {
+                return;
+            }
 
-        if (size == serverIds.length) {
-            serverIds = Arrays.copyOf(serverIds, serverIds.length * 2);
-        }
-
-        serverIds[size++] = serverId;
-    }
-
-    @Override
-    public void removeByServerId(int serverId) {
-        for (int i = 0; i < size; i++) {
-            if (serverIds[i] == serverId) {
-                serverIds[i] = serverIds[size - 1];
-                size--;
+            int[] newServerIds = Arrays.copyOf(serverIds, serverIds.length + 1);
+            newServerIds[serverIds.length] = serverId;
+            if (this.serverIdsRef.compareAndSet(serverIds, newServerIds)) {
                 return;
             }
         }
     }
 
-    private boolean contains(int serverId) {
-        for (int i = 0; i < size; i++) {
+    @Override
+    public void removeByServerId(int serverId) {
+        while (true) {
+            int[] serverIds = this.serverIdsRef.get();
+            int index = indexOf(serverIds, serverId);
+            if (index == -1) {
+                return;
+            }
+
+            int[] newServerIds = new int[serverIds.length - 1];
+            System.arraycopy(serverIds, 0, newServerIds, 0, index);
+            System.arraycopy(serverIds, index + 1, newServerIds, index, serverIds.length - index - 1);
+            if (this.serverIdsRef.compareAndSet(serverIds, newServerIds)) {
+                return;
+            }
+        }
+    }
+
+    private boolean contains(int[] serverIds, int serverId) {
+        return indexOf(serverIds, serverId) != -1;
+    }
+
+    private int indexOf(int[] serverIds, int serverId) {
+        for (int i = 0; i < serverIds.length; i++) {
             if (serverIds[i] == serverId) {
-                return true;
+                return i;
             }
         }
 
-        return false;
+        return -1;
     }
 
     @Override
     public int endpointLogicServerId(int[] logicServerIds) {
+        int[] serverIds = this.serverIdsRef.get();
         for (int logicServerId : logicServerIds) {
-            for (int i = 0; i < size; i++) {
-                if (serverIds[i] == logicServerId) {
+            for (int serverId : serverIds) {
+                if (serverId == logicServerId) {
                     return logicServerId;
                 }
             }
@@ -90,11 +104,13 @@ public final class DefaultCmdRegion implements CmdRegion {
 
     @Override
     public boolean hasServerId() {
-        return size > 0;
+        return this.serverIdsRef.get().length > 0;
     }
 
     @Override
     public int getAnyServerId() {
+        int[] serverIds = this.serverIdsRef.get();
+        int size = serverIds.length;
         if (size == 0) {
             return 0;
         }
@@ -106,9 +122,10 @@ public final class DefaultCmdRegion implements CmdRegion {
 
     @Override
     public String toString() {
+        int[] serverIds = this.serverIdsRef.get();
         return "CmdRegion {" +
                 CmdKit.toString(cmdMerge) +
-                " -- serverIds : " + Arrays.toString(Arrays.copyOf(serverIds, size)) +
+                " -- serverIds : " + Arrays.toString(serverIds) +
                 '}';
     }
 }

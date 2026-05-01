@@ -18,6 +18,8 @@
  */
 package com.iohao.net.server.cmd;
 
+import java.util.*;
+import java.util.concurrent.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,5 +71,69 @@ class DefaultCmdRegionTest {
             int serverId = region.getAnyServerId();
             assertTrue(serverId == 1001 || serverId == 3001);
         }
+    }
+
+    @Test
+    void concurrentUpdatesKeepSnapshotReadsStable() throws Exception {
+        var region = new DefaultCmdRegion(1);
+        int[] serverIds = {1001, 2001, 3001, 4001};
+        int[] endpointCandidates = {9999, 1001, 2001, 3001, 4001};
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        CountDownLatch start = new CountDownLatch(1);
+        List<Callable<Void>> tasks = new ArrayList<>();
+
+        tasks.add(() -> {
+            start.await();
+            for (int i = 0; i < 2048; i++) {
+                for (int serverId : serverIds) {
+                    region.addServerId(serverId);
+                }
+
+                for (int serverId : serverIds) {
+                    region.removeByServerId(serverId);
+                }
+            }
+
+            return null;
+        });
+
+        for (int i = 0; i < 3; i++) {
+            tasks.add(() -> {
+                start.await();
+                for (int j = 0; j < 4096; j++) {
+                    int serverId = region.getAnyServerId();
+                    assertTrue(serverId == 0 || contains(serverIds, serverId));
+
+                    int endpointServerId = region.endpointLogicServerId(endpointCandidates);
+                    assertTrue(endpointServerId == 0 || contains(serverIds, endpointServerId));
+
+                    region.hasServerId();
+                    region.toString();
+                }
+
+                return null;
+            });
+        }
+
+        var futures = tasks.stream().map(executor::submit).toList();
+        start.countDown();
+
+        try {
+            for (var future : futures) {
+                assertDoesNotThrow(() -> future.get(10, TimeUnit.SECONDS));
+            }
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    private static boolean contains(int[] values, int value) {
+        for (int current : values) {
+            if (current == value) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

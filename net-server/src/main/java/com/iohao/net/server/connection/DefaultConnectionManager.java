@@ -19,11 +19,12 @@
 package com.iohao.net.server.connection;
 
 import com.iohao.net.common.*;
+import com.iohao.net.common.kit.*;
 import com.iohao.net.framework.*;
 import io.aeron.*;
 import io.aeron.logbuffer.*;
+import java.util.*;
 import lombok.extern.slf4j.*;
-import org.agrona.collections.*;
 
 /**
  * Default Aeron-based {@link ConnectionManager} implementation for net-server peers.
@@ -35,9 +36,9 @@ import org.agrona.collections.*;
 @Slf4j
 public final class DefaultConnectionManager implements ConnectionManager {
     /** key: serverId */
-    final Int2ObjectHashMap<ConnectionItem> connectionMap = new Int2ObjectHashMap<>();
-    final Int2ObjectHashMap<Publication> publicationMap = new Int2ObjectHashMap<>();
-    final Int2ObjectHashMap<String> netIdNameMap = new Int2ObjectHashMap<>();
+    final Map<Integer, ConnectionItem> connectionMap = CollKit.ofConcurrentHashMap();
+    final Map<Integer, Publication> publicationMap = CollKit.ofConcurrentHashMap();
+    final Map<Integer, String> netIdNameMap = CollKit.ofConcurrentHashMap();
     final int fragmentLimit;
 
     final Aeron aeron;
