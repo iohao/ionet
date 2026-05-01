@@ -123,7 +123,11 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
     public ExternalResponse callExternal(ExternalRequestMessage message) {
         try {
             return callExternalFuture(message).get(futureTimeoutMillis, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error(e.getMessage(), e);
+            return externalResponseDataNotExist;
+        } catch (ExecutionException | TimeoutException e) {
             log.error(e.getMessage(), e);
             return externalResponseDataNotExist;
         }
@@ -131,19 +135,17 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
 
     @Override
     public CompletableFuture<ExternalResponse> callExternalFuture(ExternalRequestMessage message) {
+        int externalServerId = message.getExternalServerId();
+        var server = externalServerLoadBalanced.getServer(externalServerId);
+        if (server == null) {
+            return CompletableFuture.completedFuture(externalResponseDataNotExist);
+        }
+
         var futureId = this.futureManager.nextFutureId();
         message.setFutureId(futureId);
 
         CompletableFuture<ExternalResponse> future = this.futureManager.ofFuture(futureId);
-
-        int externalServerId = message.getExternalServerId();
-        var server = externalServerLoadBalanced.getServer(externalServerId);
-        if (server != null) {
-            publisher.publishMessage(server.pubName(), message);
-            return future;
-        }
-
-        future.complete(externalResponseDataNotExist);
+        publisher.publishMessage(server.pubName(), message);
         return future;
     }
 
@@ -168,7 +170,11 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
     public ResponseCollectExternal callCollectExternal(ExternalRequestMessage message) {
         try {
             return callCollectExternalFuture(message).get(futureTimeoutMillis, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error(e.getMessage(), e);
+            return responseCollectExternalEmpty;
+        } catch (ExecutionException | TimeoutException e) {
             log.error(e.getMessage(), e);
             return responseCollectExternalEmpty;
         }
@@ -183,7 +189,11 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
     public CommonResponse bindingLogicServer(BindingLogicServerMessage message) {
         try {
             return bindingLogicServerFuture(message).get(futureTimeoutMillis, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error(e.getMessage(), e);
+            return bindingLogicServerError;
+        } catch (ExecutionException | TimeoutException e) {
             log.error(e.getMessage(), e);
             return bindingLogicServerError;
         }
@@ -217,7 +227,15 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
         try {
             var future = callFuture(message);
             return future.get(futureTimeoutMillis, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("call timeout: {}", e.getMessage());
+
+            var response = new ResponseMessage();
+            response.setError(ActionErrorEnum.internalCommunicationError);
+            this.futureManager.remove(message.getFutureId());
+            return response;
+        } catch (ExecutionException | TimeoutException e) {
             log.warn("call timeout: {}", e.getMessage());
 
             var response = new ResponseMessage();
@@ -254,7 +272,13 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
     public ResponseCollect callCollect(RequestMessage message) {
         try {
             return callCollectFuture(message).get(futureTimeoutMillis, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error(e.getMessage(), e);
+            var response = new ResponseCollectMessage();
+            response.setError(ActionErrorEnum.internalCommunicationError);
+            return response;
+        } catch (ExecutionException | TimeoutException e) {
             log.error(e.getMessage(), e);
             var response = new ResponseCollectMessage();
             response.setError(ActionErrorEnum.internalCommunicationError);
