@@ -18,6 +18,7 @@
  */
 package com.iohao.net.framework.core;
 
+import com.iohao.net.framework.communication.*;
 import com.iohao.net.framework.core.flow.*;
 import com.iohao.net.framework.core.kit.*;
 import lombok.extern.slf4j.*;
@@ -37,8 +38,39 @@ final class DefaultFlowExecutor implements FlowExecutor {
             try {
                 FlowExecutorKit.execute(flowContext, barSkeleton);
             } catch (Throwable e) {
-                log.error(e.getMessage(), e);
+                this.handleFlowError(flowContext, barSkeleton, e);
             }
         });
+    }
+
+    private void handleFlowError(final FlowContext flowContext, final BarSkeleton barSkeleton, final Throwable e) {
+        rethrowIfFatal(e);
+
+        var exceptionProcess = barSkeleton.actionMethodExceptionProcess;
+        var msgException = exceptionProcess.processException(e);
+        flowContext.setErrorCode(msgException.getErrorCode());
+        flowContext.setErrorMessage(msgException.getMessage());
+
+        if (flowContext.getCommunicationType() == CommunicationType.INTERNAL_SEND) {
+            return;
+        }
+
+        try {
+            barSkeleton.actionAfter.execute(flowContext);
+        } catch (Throwable responseError) {
+            rethrowIfFatal(responseError);
+            log.error(responseError.getMessage(), responseError);
+        }
+    }
+
+    @SuppressWarnings("removal")
+    private static void rethrowIfFatal(final Throwable e) {
+        switch (e) {
+            case VirtualMachineError error -> throw error;
+            case ThreadDeath error -> throw error;
+            case LinkageError error -> throw error;
+            default -> {
+            }
+        }
     }
 }
