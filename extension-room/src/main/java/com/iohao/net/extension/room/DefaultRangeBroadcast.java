@@ -71,7 +71,7 @@ class DefaultRangeBroadcast implements RangeBroadcast {
     }
 
     public RangeBroadcast enableEmptyUserCheck() {
-        this.checkEmptyUser = false;
+        this.checkEmptyUser = true;
         return this;
     }
 
