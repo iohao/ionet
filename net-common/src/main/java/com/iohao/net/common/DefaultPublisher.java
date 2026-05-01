@@ -26,6 +26,7 @@ import io.aeron.*;
 import java.nio.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
 import lombok.extern.slf4j.*;
 import org.agrona.concurrent.*;
 
@@ -43,20 +44,21 @@ import org.agrona.concurrent.*;
 public final class DefaultPublisher implements Publisher {
     final Map<String, Publication> publicationMap = CollKit.ofConcurrentHashMap();
     final Map<String, Queue<Object>> messageQueueMap = CollKit.ofConcurrentHashMap();
+    final Map<String, AtomicLong> droppedMessageCountMap = CollKit.ofConcurrentHashMap();
     volatile boolean running = true;
     ExecutorService executorService;
 
     @Override
     public void addPublication(String name, Publication publication) {
         publicationMap.put(name, publication);
-        messageQueueMap.putIfAbsent(name, new LinkedBlockingQueue<>());
+        messageQueueMap.putIfAbsent(name, PublisherQueueKit.newMessageQueue());
     }
 
     @Override
     public void publishMessage(String name, Object message) {
         var queue = messageQueueMap.get(name);
         if (queue != null) {
-            queue.offer(message);
+            PublisherQueueKit.offer(name, message, queue, this.droppedMessageCountMap);
         }
     }
 

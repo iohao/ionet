@@ -52,6 +52,8 @@ public final class CoreGlobalConfig {
     public int fragmentLimit = 100;
     /** Buffer size in bytes for the Aeron publisher. */
     public int publisherBufferSize = 1024 * 64;
+    /** Maximum queued messages per Aeron publication; values less than or equal to 0 use an unbounded queue. */
+    public int publisherQueueCapacity = 65_536;
 
     /** Whether development mode is enabled, providing extra diagnostics. */
     public boolean devMode;
