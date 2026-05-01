@@ -63,12 +63,9 @@ public final class ParallelPublisher implements Publisher {
     }
 
     private void startPublicationThread(String name) {
-        threadMap.computeIfAbsent(name, key -> {
-            var thread = Thread.ofVirtual()
-                    .name("ParallelPublisher-" + key)
-                    .start(new PublicationRunnable(key));
-            return thread;
-        });
+        threadMap.computeIfAbsent(name, key -> Thread.ofVirtual()
+                .name("ParallelPublisher-" + key)
+                .start(new PublicationRunnable(key)));
     }
 
     @Override
@@ -104,6 +101,7 @@ public final class ParallelPublisher implements Publisher {
         private final String publicationName;
         private final UnsafeBuffer buffer = new UnsafeBuffer(ByteBuffer.allocateDirect(CoreGlobalConfig.publisherBufferSize));
         private final MessageHeaderEncoder headerEncoder = new MessageHeaderEncoder();
+        private final IdleStrategy idleStrategy = PublisherIdleStrategyKit.newIdleStrategy();
 
         PublicationRunnable(String publicationName) {
             this.publicationName = publicationName;
@@ -122,31 +120,20 @@ public final class ParallelPublisher implements Publisher {
                 while (running) {
                     Object message = queue.poll();
                     if (message == null) {
-                        TimeUnit.MILLISECONDS.sleep(1);
+                        this.idleStrategy.idle();
                         continue;
                     }
 
-                    MessageSbe<Object> encoder = SbeMessageManager.getMessageEncoder(message.getClass());
-                    if (encoder == null) {
-                        log.error("MessageSbe Error: {} not exist!", message.getClass().getSimpleName());
-                        continue;
-                    }
-
-                    encoder.encoder(message, headerEncoder, buffer);
-                    int limit = encoder.limit();
-                    long result = publication.offer(buffer, 0, limit);
-                    if (result <= 0) {
-                        PublicationOfferKit.offerAfterFailedResult(
-                                this.publicationName,
-                                message,
-                                result,
-                                () -> publication.offer(buffer, 0, limit),
-                                () -> running
-                        );
-                    }
+                    this.idleStrategy.reset();
+                    PublisherMessageKit.publish(
+                            this.publicationName,
+                            message,
+                            publication,
+                            headerEncoder,
+                            buffer,
+                            () -> running
+                    );
                 }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }

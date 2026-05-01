@@ -19,7 +19,6 @@
 package com.iohao.net.common;
 
 import io.aeron.*;
-import java.util.concurrent.*;
 import java.util.function.*;
 import lombok.extern.slf4j.*;
 
@@ -32,8 +31,6 @@ import lombok.extern.slf4j.*;
  */
 @Slf4j
 final class PublicationOfferKit {
-    private static final long RETRY_IDLE_MILLIS = 1;
-
     private PublicationOfferKit() {
     }
 
@@ -50,7 +47,7 @@ final class PublicationOfferKit {
                 result,
                 retryOffer,
                 running,
-                () -> TimeUnit.MILLISECONDS.sleep(RETRY_IDLE_MILLIS)
+                PublisherIdleStrategyKit.newIdleStrategy()::idle
         );
     }
 

@@ -55,6 +55,23 @@ class PublicationOfferKitTest {
     }
 
     @Test
+    void defaultRetryIdleStrategyCanRetryUntilSuccess() {
+        long[] retryResults = {Publication.ADMIN_ACTION, 1};
+        AtomicInteger offerCount = new AtomicInteger();
+
+        boolean result = PublicationOfferKit.offerAfterFailedResult(
+                "test",
+                "message",
+                Publication.BACK_PRESSURED,
+                () -> retryResults[offerCount.getAndIncrement()],
+                () -> true
+        );
+
+        assertTrue(result);
+        assertEquals(2, offerCount.get());
+    }
+
+    @Test
     void terminalResultsFailWithoutRetry() {
         assertTerminalFailure(Publication.NOT_CONNECTED);
         assertTerminalFailure(Publication.CLOSED);

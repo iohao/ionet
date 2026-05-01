@@ -54,6 +54,14 @@ public final class CoreGlobalConfig {
     public int publisherBufferSize = 1024 * 64;
     /** Maximum queued messages per Aeron publication; values less than or equal to 0 use an unbounded queue. */
     public int publisherQueueCapacity = 65_536;
+    /** Maximum spin iterations for publisher idle backoff. */
+    public int publisherIdleMaxSpins = 100;
+    /** Maximum yield iterations for publisher idle backoff. */
+    public int publisherIdleMaxYields = 100;
+    /** Minimum park duration in nanoseconds for publisher idle backoff. */
+    public long publisherIdleMinParkNanos = 1_000;
+    /** Maximum park duration in nanoseconds for publisher idle backoff. */
+    public long publisherIdleMaxParkNanos = 100_000;
 
     /** Whether development mode is enabled, providing extra diagnostics. */
     public boolean devMode;

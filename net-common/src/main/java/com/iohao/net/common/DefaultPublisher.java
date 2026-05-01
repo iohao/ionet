@@ -23,10 +23,12 @@ import com.iohao.net.common.kit.concurrent.*;
 import com.iohao.net.framework.*;
 import com.iohao.net.sbe.*;
 import io.aeron.*;
+
 import java.nio.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
+
 import lombok.extern.slf4j.*;
 import org.agrona.concurrent.*;
 
@@ -79,6 +81,7 @@ public final class DefaultPublisher implements Publisher {
     private class DefaultPublisherRunnable implements PublisherRunnable {
         private final UnsafeBuffer buffer = new UnsafeBuffer(ByteBuffer.allocateDirect(CoreGlobalConfig.publisherBufferSize));
         private final MessageHeaderEncoder headerEncoder = new MessageHeaderEncoder();
+        private final IdleStrategy idleStrategy = PublisherIdleStrategyKit.newIdleStrategy();
 
         @Override
         public void run() {
@@ -93,7 +96,7 @@ public final class DefaultPublisher implements Publisher {
             }
         }
 
-        private void extracted() throws Exception {
+        private void extracted() {
             boolean messagesPublished = false;
             for (String key : messageQueueMap.keySet()) {
                 var queue = messageQueueMap.get(key);
@@ -106,31 +109,13 @@ public final class DefaultPublisher implements Publisher {
                 Object message;
                 while ((message = queue.poll()) != null) {
                     messagesPublished = true;
-                    MessageSbe<Object> encoder = SbeMessageManager.getMessageEncoder(message.getClass());
-
-                    if (encoder == null) {
-                        log.error("MessageSbe Error: {} not exist!", message.getClass().getSimpleName());
-                        continue;
-                    }
-
-                    encoder.encoder(message, headerEncoder, buffer);
-                    int limit = encoder.limit();
-                    long result = publication.offer(buffer, 0, limit);
-                    if (result <= 0) {
-                        PublicationOfferKit.offerAfterFailedResult(
-                                key,
-                                message,
-                                result,
-                                () -> publication.offer(buffer, 0, limit),
-                                () -> running
-                        );
-                    }
+                    this.idleStrategy.reset();
+                    PublisherMessageKit.publish(key, message, publication, headerEncoder, buffer, () -> running);
                 }
             }
 
             if (!messagesPublished) {
-                // Back off briefly when all queues are empty to avoid a busy-spin loop.
-                TimeUnit.MILLISECONDS.sleep(1);
+                this.idleStrategy.idle();
             }
         }
     }
