@@ -32,6 +32,7 @@ import io.netty.handler.codec.*;
  * @date 2023-05-28
  */
 public class TcpMicroBootstrapFlow extends AbstractSocketMicroBootstrapFlow {
+    static final int lengthFieldLength = Integer.BYTES;
 
     @Override
     public void option(ServerBootstrap bootstrap) {
@@ -60,11 +61,11 @@ public class TcpMicroBootstrapFlow extends AbstractSocketMicroBootstrapFlow {
 
         // Frame length = length field value + offset + field length + adjustment.
         context.addLast(new LengthFieldBasedFrameDecoder(
-                ExternalGlobalConfig.maxFramePayloadLength,
+                ExternalGlobalConfig.maxFramePayloadLength + lengthFieldLength,
                 // Length field offset (starts at 0).
                 0,
                 // Length field size: 4 bytes because TcpExternalCodec writes an int length prefix.
-                4,
+                lengthFieldLength,
                 // No length adjustment is needed because the field stores the payload length directly.
                 0,
                 // Do not strip initial bytes; TcpExternalCodec expects to read the length prefix.
