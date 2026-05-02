@@ -106,11 +106,13 @@ public final class DefaultPublisher implements Publisher {
                     continue;
                 }
 
-                Object message;
-                while ((message = queue.poll()) != null) {
-                    messagesPublished = true;
+                boolean drained = PublisherDrainKit.drain(queue, CoreGlobalConfig.publisherDrainLimit, message -> {
                     this.idleStrategy.reset();
                     PublisherMessageKit.publish(key, message, publication, headerEncoder, buffer, () -> running);
+                });
+
+                if (drained) {
+                    messagesPublished = true;
                 }
             }
 

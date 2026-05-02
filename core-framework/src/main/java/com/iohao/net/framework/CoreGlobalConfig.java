@@ -54,6 +54,8 @@ public final class CoreGlobalConfig {
     public int publisherBufferSize = 1024 * 64;
     /** Maximum queued messages per Aeron publication; values less than or equal to 0 use an unbounded queue. */
     public int publisherQueueCapacity = 65_536;
+    /** Maximum messages drained per publication per publisher loop; values less than or equal to 0 drain all. */
+    public int publisherDrainLimit = 1024;
     /** Maximum spin iterations for publisher idle backoff. */
     public int publisherIdleMaxSpins = 100;
     /** Maximum yield iterations for publisher idle backoff. */
