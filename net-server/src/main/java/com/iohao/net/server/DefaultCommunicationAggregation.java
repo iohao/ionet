@@ -219,8 +219,9 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
             message.setSourceServerId(server.id());
         }
 
+        CompletableFuture<Response> future = this.futureManager.ofFuture(futureId);
         publishMessage(server.pubName(), message);
-        return this.futureManager.ofFuture(futureId);
+        return future;
     }
 
 

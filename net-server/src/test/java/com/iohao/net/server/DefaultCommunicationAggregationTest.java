@@ -29,6 +29,7 @@ import io.aeron.logbuffer.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
+import java.util.function.*;
 import org.junit.jupiter.api.*;
 
 import static com.iohao.net.server.CommunicationAggregationErrorConst.*;
@@ -44,16 +45,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultCommunicationAggregationTest {
     RecordingFutureManager futureManager;
     RecordingPublisher publisher;
+    RecordingConnectionManager connectionManager;
     DefaultCommunicationAggregation aggregation;
 
     @BeforeEach
     void setUp() {
         this.futureManager = new RecordingFutureManager();
         this.publisher = new RecordingPublisher();
+        this.connectionManager = new RecordingConnectionManager();
         this.aggregation = new DefaultCommunicationAggregation();
         this.aggregation.futureManager = this.futureManager;
         this.aggregation.publisher = this.publisher;
-        this.aggregation.connectionManager = new RecordingConnectionManager();
+        this.aggregation.connectionManager = this.connectionManager;
         this.aggregation.externalServerLoadBalanced = new TestExternalServerLoadBalanced(null);
     }
 
@@ -137,9 +140,36 @@ class DefaultCommunicationAggregationTest {
         assertFalse(this.futureManager.contains(message.getFutureId()));
     }
 
+    @Test
+    void callFutureRegistersFutureBeforePublishing() {
+        var server = newServer(1002, 2002, "logic-publication", ServerTypeEnum.LOGIC);
+        this.aggregation.findServer = new TestFindServer(server);
+        this.connectionManager.onPublish = message -> {
+            var response = new ResponseMessage();
+            response.setFutureId(((RequestMessage) message).getFutureId());
+            this.futureManager.complete(response);
+        };
+        var message = new RequestMessage();
+
+        var future = this.aggregation.callFuture(message);
+
+        assertTrue(future.isDone());
+        assertSame(ResponseMessage.class, future.join().getClass());
+        assertFalse(this.futureManager.contains(message.getFutureId()));
+
+        var publishedMessage = assertSingleConnectionPublishedMessage();
+        assertEquals(server.pubName(), publishedMessage.publicationName());
+        assertSame(message, publishedMessage.message());
+    }
+
     private PublishedMessage assertSinglePublishedMessage() {
         assertEquals(1, this.publisher.publishedMessages.size());
         return this.publisher.publishedMessages.getFirst();
+    }
+
+    private PublishedMessage assertSingleConnectionPublishedMessage() {
+        assertEquals(1, this.connectionManager.publishedMessages.size());
+        return this.connectionManager.publishedMessages.getFirst();
     }
 
     private static Server newServer(int serverId, int netId, String publicationName, ServerTypeEnum serverType) {
@@ -214,6 +244,9 @@ class DefaultCommunicationAggregationTest {
     }
 
     private static final class RecordingConnectionManager implements ConnectionManager {
+        final List<PublishedMessage> publishedMessages = new ArrayList<>();
+        Consumer<Object> onPublish;
+
         @Override
         public void awaitConnect() {
         }
@@ -246,6 +279,10 @@ class DefaultCommunicationAggregationTest {
 
         @Override
         public void publishMessage(String pubName, Object message) {
+            this.publishedMessages.add(new PublishedMessage(pubName, message));
+            if (this.onPublish != null) {
+                this.onPublish.accept(message);
+            }
         }
 
         @Override
