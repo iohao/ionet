@@ -126,9 +126,11 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error(e.getMessage(), e);
+            this.removeFuture(message.getFutureId());
             return externalResponseDataNotExist;
         } catch (ExecutionException | TimeoutException e) {
             log.error(e.getMessage(), e);
+            this.removeFuture(message.getFutureId());
             return externalResponseDataNotExist;
         }
     }
@@ -233,15 +235,21 @@ public class DefaultCommunicationAggregation implements CommunicationAggregation
 
             var response = new ResponseMessage();
             response.setError(ActionErrorEnum.internalCommunicationError);
-            this.futureManager.remove(message.getFutureId());
+            this.removeFuture(message.getFutureId());
             return response;
         } catch (ExecutionException | TimeoutException e) {
             log.warn("call timeout: {}", e.getMessage());
 
             var response = new ResponseMessage();
             response.setError(ActionErrorEnum.internalCommunicationError);
-            this.futureManager.remove(message.getFutureId());
+            this.removeFuture(message.getFutureId());
             return response;
+        }
+    }
+
+    private void removeFuture(long futureId) {
+        if (futureId != 0) {
+            this.futureManager.remove(futureId);
         }
     }
 

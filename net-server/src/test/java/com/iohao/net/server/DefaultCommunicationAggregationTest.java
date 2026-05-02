@@ -95,7 +95,7 @@ class DefaultCommunicationAggregationTest {
     }
 
     @Test
-    void callExternalRestoresInterruptFlag() {
+    void callExternalRestoresInterruptFlagAndRemovesPendingFuture() {
         var server = newServer(1001, 2001, "external-publication", ServerTypeEnum.EXTERNAL);
         this.aggregation.externalServerLoadBalanced = new TestExternalServerLoadBalanced(server);
         var message = new ExternalRequestMessage();
@@ -106,7 +106,21 @@ class DefaultCommunicationAggregationTest {
 
         assertSame(externalResponseDataNotExist, response);
         assertTrue(Thread.currentThread().isInterrupted());
-        assertTrue(this.futureManager.contains(message.getFutureId()));
+        assertFalse(this.futureManager.contains(message.getFutureId()));
+    }
+
+    @Test
+    void callExternalRemovesPendingFutureWhenFutureFails() {
+        var server = newServer(1001, 2001, "external-publication", ServerTypeEnum.EXTERNAL);
+        this.aggregation.externalServerLoadBalanced = new TestExternalServerLoadBalanced(server);
+        this.futureManager.completeExceptionallyOnCreate = true;
+        var message = new ExternalRequestMessage();
+        message.setExternalServerId(server.id());
+
+        var response = this.aggregation.callExternal(message);
+
+        assertSame(externalResponseDataNotExist, response);
+        assertFalse(this.futureManager.contains(message.getFutureId()));
     }
 
     @Test
@@ -146,6 +160,7 @@ class DefaultCommunicationAggregationTest {
         final Map<Long, CompletableFuture<?>> futures = new ConcurrentHashMap<>();
         final AtomicLong idGenerator = new AtomicLong(1);
         final AtomicInteger nextFutureIdCalls = new AtomicInteger();
+        boolean completeExceptionallyOnCreate;
 
         @Override
         public long nextFutureId() {
@@ -157,6 +172,9 @@ class DefaultCommunicationAggregationTest {
         public <T> CompletableFuture<T> ofFuture(long futureId) {
             var future = new CompletableFuture<T>();
             this.futures.put(futureId, future);
+            if (this.completeExceptionallyOnCreate) {
+                future.completeExceptionally(new TimeoutException());
+            }
             return future;
         }
 
