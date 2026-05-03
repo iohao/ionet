@@ -24,6 +24,19 @@ import org.agrona.collections.*;
 
 /**
  * Lightweight long-key map wrapper with {@link StampedLock}-based concurrency control.
+ * <p>
+ * This type exists for hot session lookup paths where primitive {@code long} keys are used for user ids and
+ * channel-scoped user ids. It keeps the Agrona {@link Long2ObjectHashMap} storage so lookups and updates avoid
+ * boxing keys into {@link Long}, which helps reduce allocation pressure compared with {@code ConcurrentHashMap<Long, V>}.
+ * </p>
+ * <p>
+ * {@link Long2ObjectHashMap} is not a concurrent collection, so every direct access to the backing map is protected by
+ * the {@link StampedLock}. Read methods use a real read lock rather than optimistic reads because optimistic reads can
+ * still touch the mutable backing arrays while a writer is changing them.
+ * </p>
+ * <p>
+ * The {@link #values()} method returns a snapshot copy, allowing callers to iterate without holding this map's lock.
+ * </p>
  *
  * @author 渔民小镇
  * @date 2025-09-13
@@ -36,18 +49,12 @@ final class Long2ObjectConcurrentHashMap<V> {
     private final Long2ObjectHashMap<V> map = new Long2ObjectHashMap<>();
 
     public V get(long key) {
-        long stamp = lock.tryOptimisticRead();
-        V value = map.get(key);
-
-        if (!lock.validate(stamp)) {
-            stamp = lock.readLock();
-            try {
-                value = map.get(key);
-            } finally {
-                lock.unlockRead(stamp);
-            }
+        long stamp = lock.readLock();
+        try {
+            return map.get(key);
+        } finally {
+            lock.unlockRead(stamp);
         }
-        return value;
     }
 
     public V put(long key, V value) {
@@ -78,33 +85,21 @@ final class Long2ObjectConcurrentHashMap<V> {
     }
 
     public boolean containsKey(long key) {
-        long stamp = lock.tryOptimisticRead();
-        boolean result = map.containsKey(key);
-
-        if (!lock.validate(stamp)) {
-            stamp = lock.readLock();
-            try {
-                result = map.containsKey(key);
-            } finally {
-                lock.unlockRead(stamp);
-            }
+        long stamp = lock.readLock();
+        try {
+            return map.containsKey(key);
+        } finally {
+            lock.unlockRead(stamp);
         }
-        return result;
     }
 
     public int size() {
-        long stamp = lock.tryOptimisticRead();
-        int size = map.size();
-
-        if (!lock.validate(stamp)) {
-            stamp = lock.readLock();
-            try {
-                size = map.size();
-            } finally {
-                lock.unlockRead(stamp);
-            }
+        long stamp = lock.readLock();
+        try {
+            return map.size();
+        } finally {
+            lock.unlockRead(stamp);
         }
-        return size;
     }
 
     public List<V> values() {

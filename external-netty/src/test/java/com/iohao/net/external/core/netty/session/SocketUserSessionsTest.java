@@ -20,6 +20,8 @@ package com.iohao.net.external.core.netty.session;
 
 import io.netty.channel.*;
 import io.netty.channel.embedded.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,6 +58,62 @@ public class SocketUserSessionsTest {
         userSessions.removeUserSession(userSession);
         assertUserSessionRemoved(userSessions, 1001);
         holder.channel().finishAndReleaseAll();
+    }
+
+    @Test
+    public void settingUserIdShouldAllowOnlyOneConcurrentIdentity() throws Exception {
+        var holder = newSession();
+        var userSessions = holder.userSessions();
+        var userSession = holder.userSession();
+        long userChannelId = userSession.getUserChannelId();
+
+        int taskCount = 32;
+        var ready = new CountDownLatch(taskCount);
+        var start = new CountDownLatch(1);
+        var done = new CountDownLatch(taskCount);
+        var successCount = new AtomicInteger();
+        var executorService = Executors.newFixedThreadPool(taskCount);
+
+        try {
+            for (int i = 0; i < taskCount; i++) {
+                long userId = 10_000 + i;
+                executorService.execute(() -> {
+                    ready.countDown();
+                    try {
+                        start.await();
+                        if (userSessions.settingUserId(userChannelId, userId)) {
+                            successCount.incrementAndGet();
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    } finally {
+                        done.countDown();
+                    }
+                });
+            }
+
+            assertTrue(ready.await(1, TimeUnit.SECONDS));
+            start.countDown();
+            assertTrue(done.await(3, TimeUnit.SECONDS));
+
+            assertEquals(1, successCount.get());
+            long winnerUserId = userSession.getUserId();
+            assertTrue(winnerUserId >= 10_000 && winnerUserId < 10_000 + taskCount);
+            assertSame(userSession, userSessions.getUserSession(winnerUserId));
+
+            for (int i = 0; i < taskCount; i++) {
+                long userId = 10_000 + i;
+                if (userId != winnerUserId) {
+                    assertNull(userSessions.getUserSession(userId));
+                }
+            }
+
+            userSessions.removeUserSession(userSession);
+            assertUserSessionRemoved(userSessions, winnerUserId);
+        } finally {
+            executorService.shutdownNow();
+            holder.channel().finishAndReleaseAll();
+        }
     }
 
     private static SessionHolder newSession() {

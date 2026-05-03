@@ -106,9 +106,11 @@ public class ExternalRequestMessageOnFragment implements OnFragment, NetServerSe
                     context.response().setError(ActionErrorEnum.systemOtherErrCode);
                     return;
                 }
+
                 on.process(context.payload(), context.payloadLength(), context);
             } catch (Throwable e) {
                 log.error(e.getMessage(), e);
+
                 if (e instanceof MessageException messageException) {
                     context.response().setError(messageException.getErrorInformation());
                 } else {

@@ -93,17 +93,26 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
             return false;
         }
 
-        if (userSession.isVerifyIdentity()) {
-            if (userSession.getUserId() == userId) {
-                this.userIdMap.put(userId, userSession);
-                return true;
+        // Serialize identity transitions for this channel only. This prevents concurrent bind/remove paths from
+        // leaving stale userId or userChannelId mappings while keeping regular session lookups lock-free here.
+        synchronized (userSession.lifecycleLock()) {
+            if (userSession.getState() == UserSessionState.DEAD) {
+                this.removeUserSessionMap(userSession);
+                return false;
             }
 
-            return false;
-        }
+            if (userSession.isVerifyIdentity()) {
+                if (userSession.getUserId() == userId) {
+                    this.userIdMap.put(userId, userSession);
+                    return true;
+                }
 
-        userSession.setUserId(userId);
-        this.userIdMap.put(userId, userSession);
+                return false;
+            }
+
+            userSession.setUserId(userId);
+            this.userIdMap.put(userId, userSession);
+        }
 
         // Fire online hook only after the session is fully identity-verified.
         this.userHookInto(userSession);
@@ -123,17 +132,23 @@ public final class SocketUserSessions extends AbstractUserSessions<ChannelHandle
     }
 
     private void internalRemoveUserSession(SocketUserSession userSession) {
-        if (userSession.getState() == UserSessionState.DEAD) {
+        boolean quitIdentity;
+        // Removal shares the same per-session monitor as binding so lifecycle transitions and map cleanup are atomic
+        // from this session manager's point of view. User hooks and channel close stay outside the monitor.
+        synchronized (userSession.lifecycleLock()) {
+            if (userSession.getState() == UserSessionState.DEAD) {
+                removeUserSessionMap(userSession);
+                return;
+            }
+
+            quitIdentity = userSession.isVerifyIdentity();
+            userSession.setState(UserSessionState.DEAD);
             removeUserSessionMap(userSession);
-            return;
         }
 
-        if (userSession.getState() == UserSessionState.ACTIVE && userSession.isVerifyIdentity()) {
-            userSession.setState(UserSessionState.DEAD);
+        if (quitIdentity) {
             this.userHookQuit(userSession);
         }
-
-        removeUserSessionMap(userSession);
 
         userSession.getChannel().close();
     }

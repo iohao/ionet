@@ -30,10 +30,15 @@ import java.util.*;
  * @date 2023-02-18
  */
 public final class SocketUserSession extends AbstractUserSession {
+    private final Object lifecycleLock = new Object();
 
     SocketUserSession(Channel channel, long userChannelId) {
         this.channel = channel;
         this.userChannelId = userChannelId;
+    }
+
+    Object lifecycleLock() {
+        return this.lifecycleLock;
     }
 
     @Override
