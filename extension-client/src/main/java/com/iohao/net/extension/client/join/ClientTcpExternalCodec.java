@@ -30,11 +30,13 @@ import java.util.*;
  * @date 2023-12-15
  */
 public class ClientTcpExternalCodec extends MessageToMessageCodec<ByteBuf, ExternalMessage> {
+    static final int LENGTH_FIELD_LENGTH = Integer.BYTES;
+
     @Override
     protected void encode(ChannelHandlerContext ctx, ExternalMessage message, List<Object> out) {
         var codec = DataCodecManager.getDataCodec();
         byte[] bytes = codec.encode(message);
-        ByteBuf buffer = ctx.alloc().buffer(bytes.length + 4);
+        ByteBuf buffer = ctx.alloc().buffer(bytes.length + LENGTH_FIELD_LENGTH);
         buffer.writeInt(bytes.length);
         buffer.writeBytes(bytes);
         out.add(buffer);

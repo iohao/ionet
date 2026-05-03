@@ -40,6 +40,8 @@ import lombok.extern.slf4j.*;
 class TcpClientStartup implements ClientConnect {
     static int PACKAGE_MAX_SIZE = 1024 * 1024;
 
+    static final int LENGTH_FIELD_LENGTH = Integer.BYTES;
+
     static final EventLoopGroup group = new NioEventLoopGroup();
 
     @Override
@@ -58,15 +60,7 @@ class TcpClientStartup implements ClientConnect {
                         ChannelPipeline pipeline = ch.pipeline();
 
                         // Frame length = length field value + offset + field length + adjustment.
-                        pipeline.addLast(new LengthFieldBasedFrameDecoder(PACKAGE_MAX_SIZE,
-                                // Length field offset (starts at 0).
-                                0,
-                                // Length field size (2 for short, 4 for int). This protocol uses 4.
-                                4,
-                                // Length adjustment: contentOffset - lengthFieldOffset - lengthFieldSize.
-                                0,
-                                // Initial bytes to strip: 0 (keep the length field for downstream codec).
-                                0));
+                        pipeline.addLast(newFrameDecoder());
 
                         // Codec
                         pipeline.addLast("codec", new ClientTcpExternalCodec());
@@ -98,5 +92,18 @@ class TcpClientStartup implements ClientConnect {
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    static LengthFieldBasedFrameDecoder newFrameDecoder() {
+        return new LengthFieldBasedFrameDecoder(
+                PACKAGE_MAX_SIZE + LENGTH_FIELD_LENGTH,
+                // Length field offset (starts at 0).
+                0,
+                // Length field size: 4 bytes because ClientTcpExternalCodec writes an int length prefix.
+                LENGTH_FIELD_LENGTH,
+                // Length adjustment: contentOffset - lengthFieldOffset - lengthFieldSize.
+                0,
+                // Do not strip initial bytes; ClientTcpExternalCodec expects to read the length prefix.
+                0);
     }
 }
