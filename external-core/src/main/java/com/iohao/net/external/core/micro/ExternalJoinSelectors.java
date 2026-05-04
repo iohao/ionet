@@ -60,7 +60,10 @@ public final class ExternalJoinSelectors {
      */
     public ExternalJoinSelector getExternalJoinSelector(ExternalJoinEnum joinEnum) {
         if (!map.containsKey(joinEnum)) {
-            ThrowKit.ofRuntimeException(joinEnum + " has no implementation class");
+            ThrowKit.ofRuntimeException(
+                    ("%s has no registered ExternalJoinSelector. Built-in external-netty transports are TCP and WebSocket; "
+                            + "register a custom selector for UDP or EXT_SOCKET.")
+                            .formatted(joinEnum));
         }
 
         return map.get(joinEnum);

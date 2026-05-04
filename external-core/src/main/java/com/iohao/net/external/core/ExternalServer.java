@@ -21,7 +21,7 @@ package com.iohao.net.external.core;
 import com.iohao.net.server.*;
 
 /**
- * External-facing transport server (WebSocket/TCP/UDP/custom) bootstrap contract.
+ * External-facing transport server (built-in WebSocket/TCP or custom transport) bootstrap contract.
  *
  * @author 渔民小镇
  * @date 2023-02-18

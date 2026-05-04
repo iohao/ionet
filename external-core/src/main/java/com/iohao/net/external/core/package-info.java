@@ -27,7 +27,7 @@
  * <pre>
  * 1. Maintain long connections with users (players)
  * 2. Help developers abstract away communication and connection details
- * 3. Supported connection methods: WebSocket, TCP, UDP
+ * 3. Built-in connection methods: WebSocket, TCP. Custom selectors can add other transports.
  * 4. Forward user (player) requests to the Gateway
  * 5. Dynamic scaling (adding or removing) of server instances
  * 6. Feature extensions, such as: route existence detection, route permissions, UserSession management, heartbeats,
@@ -48,17 +48,16 @@
  * <p>
  * Switching, Support, and Extension of Connection Methods
  * <pre>
- * The External Server already provides support for TCP, WebSocket, and UDP connection methods, and offers flexible ways
+ * The External Server already provides support for TCP and WebSocket connection methods, and offers flexible ways
  * to switch between them.
- * TCP, WebSocket, and UDP connection methods can be seamlessly integrated with the business code.
- * Developers can use a single set of business code, without any modification, to simultaneously support multiple communication protocols.
+ * TCP and WebSocket connection methods can be seamlessly integrated with the business code.
+ * Developers can use a single set of business code, without any modification, to support multiple communication protocols.
  *
- * If you want to switch to a different connection method, you only need to change the corresponding enumeration, which is very simple.
- * Furthermore, in addition to easily switching various connection methods, it can simultaneously support and allow multiple
- * connection methods to coexist within the same application.
+ * Built-in TCP and WebSocket transports can be switched by changing the corresponding enumeration.
+ * Multiple external servers can also coexist in one application to expose different transports.
  *
- * Connection methods are extensible, and extension is also simple. This means that if KCP support is added later,
- * switching the connection method of existing projects, such as TCP, WebSocket, or UDP, to KCP will also be simple.
+ * Connection methods are extensible. Custom transports such as UDP or KCP can be integrated by registering a matching
+ * ExternalJoinSelector and transport bootstrap.
  * </pre>
  *
  * @author 渔民小镇

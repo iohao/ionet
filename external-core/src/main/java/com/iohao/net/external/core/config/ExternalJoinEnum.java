@@ -32,7 +32,12 @@ public enum ExternalJoinEnum {
     TCP("TCP", 1),
     /** WebSocket */
     WEBSOCKET("WebSocket", 2),
-    /** UDP socket */
+    /**
+     * UDP socket.
+     *
+     * <p>The default {@code external-netty} module does not provide a UDP selector. Register a custom
+     * {@link com.iohao.net.external.core.micro.ExternalJoinSelector} before using this transport.
+     */
     UDP("UDP", 3),
     /** Custom external socket implementation. */
     EXT_SOCKET("ext socket", 4);

@@ -24,7 +24,7 @@ import com.iohao.net.external.core.config.*;
 /**
  * Transport-type strategy used to apply connection-specific bootstrap defaults.
  * <pre>
- * Connection types: tcp, websocket, udp, kcp
+ * Connection types: tcp, websocket, or custom transports such as udp and kcp
  *
  * The purpose of the Selector is to initialize the properties and codecs of the relevant implementation class based on the current connection type (implementation class):
  * 1. getCodecPipeline: Codec-related Pipeline

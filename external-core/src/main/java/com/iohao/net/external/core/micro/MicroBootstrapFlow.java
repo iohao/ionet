@@ -26,7 +26,7 @@ import com.iohao.net.external.core.*;
  * Developers can use this interface to orchestrate the server, with orchestration divided into two phases: build time and new connection time.
  *
  * You can also selectively override the process methods to customize the business logic for your own projects.
- * The framework provides implementations for TCP, WebSocket, and UDP.
+ * The default Netty integration provides implementations for TCP and WebSocket. Other transports need custom flows.
  * </pre>
  * <p>
  * The execution order of the interface methods is:
