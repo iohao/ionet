@@ -32,6 +32,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class DefaultPublisherTest {
 
+    @BeforeAll
+    static void beforeAll() {
+        PublisherTestKit.registerTestMessageEncoder();
+    }
+
     @Test
     void shutdownWithoutStartupClosesPublications() {
         var publisher = new DefaultPublisher();
@@ -55,5 +60,42 @@ class DefaultPublisherTest {
 
         assertTrue(publication.isClosed());
         assertEquals(1, publication.closeCount());
+    }
+
+    @Test
+    void startupPublishesQueuedMessageToPublication() throws InterruptedException {
+        var publisher = new DefaultPublisher();
+        var publication = RecordingPublication.create();
+        publisher.addPublication("logic", publication);
+
+        try {
+            publisher.startup();
+            publisher.publishMessage("logic", new PublisherTestKit.TestMessage(1));
+
+            PublisherTestKit.awaitUntil(() -> publication.offerCount() == 1);
+
+            assertEquals(8, publication.lastOfferLength());
+        } finally {
+            publisher.shutdown();
+        }
+    }
+
+    @Test
+    void startupRetriesBackPressuredOfferUntilSuccess() throws InterruptedException {
+        var publisher = new DefaultPublisher();
+        var publication = RecordingPublication.create()
+                .setOfferResults(Publication.BACK_PRESSURED, 1);
+        publisher.addPublication("logic", publication);
+
+        try {
+            publisher.startup();
+            publisher.publishMessage("logic", new PublisherTestKit.TestMessage(2));
+
+            PublisherTestKit.awaitUntil(() -> publication.offerCount() == 2);
+
+            assertEquals(8, publication.lastOfferLength());
+        } finally {
+            publisher.shutdown();
+        }
     }
 }

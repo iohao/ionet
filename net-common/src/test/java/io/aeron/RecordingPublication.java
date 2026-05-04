@@ -20,6 +20,8 @@ package io.aeron;
 
 import io.aeron.logbuffer.*;
 import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 import org.agrona.*;
 
@@ -34,6 +36,9 @@ public final class RecordingPublication extends Publication {
     private static final sun.misc.Unsafe UNSAFE = lookupUnsafe();
 
     private AtomicInteger closeCount;
+    private AtomicInteger offerCount;
+    private AtomicInteger lastOfferLength;
+    private Queue<Long> offerResults;
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     private RecordingPublication() {
@@ -45,14 +50,30 @@ public final class RecordingPublication extends Publication {
         try {
             var publication = (RecordingPublication) UNSAFE.allocateInstance(RecordingPublication.class);
             publication.closeCount = new AtomicInteger();
+            publication.offerCount = new AtomicInteger();
+            publication.lastOfferLength = new AtomicInteger();
+            publication.offerResults = new ConcurrentLinkedQueue<>();
             return publication;
         } catch (InstantiationException e) {
             throw new AssertionError(e);
         }
     }
 
+    public RecordingPublication setOfferResults(long... results) {
+        Arrays.stream(results).forEach(this.offerResults::offer);
+        return this;
+    }
+
     public int closeCount() {
         return this.closeCount.get();
+    }
+
+    public int offerCount() {
+        return this.offerCount.get();
+    }
+
+    public int lastOfferLength() {
+        return this.lastOfferLength.get();
     }
 
     @Override
@@ -68,7 +89,8 @@ public final class RecordingPublication extends Publication {
 
     @Override
     public long offer(DirectBuffer buffer, int offset, int length, ReservedValueSupplier reservedValueSupplier) {
-        return this.isClosed ? Publication.CLOSED : 1;
+        this.recordOffer(length);
+        return this.nextOfferResult();
     }
 
     @Override
@@ -80,17 +102,33 @@ public final class RecordingPublication extends Publication {
             int offsetTwo,
             int lengthTwo,
             ReservedValueSupplier reservedValueSupplier) {
-        return this.isClosed ? Publication.CLOSED : 1;
+        this.recordOffer(lengthOne + lengthTwo);
+        return this.nextOfferResult();
     }
 
     @Override
     public long offer(DirectBufferVector[] vectors, ReservedValueSupplier reservedValueSupplier) {
-        return this.isClosed ? Publication.CLOSED : 1;
+        this.recordOffer(0);
+        return this.nextOfferResult();
     }
 
     @Override
     public long tryClaim(int length, BufferClaim bufferClaim) {
         return this.isClosed ? Publication.CLOSED : 1;
+    }
+
+    private void recordOffer(int length) {
+        this.offerCount.incrementAndGet();
+        this.lastOfferLength.set(length);
+    }
+
+    private long nextOfferResult() {
+        if (this.isClosed) {
+            return Publication.CLOSED;
+        }
+
+        var result = this.offerResults.poll();
+        return result == null ? 1 : result;
     }
 
     private static sun.misc.Unsafe lookupUnsafe() {
