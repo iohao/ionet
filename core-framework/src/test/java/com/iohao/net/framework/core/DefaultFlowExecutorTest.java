@@ -103,6 +103,63 @@ class DefaultFlowExecutorTest {
     }
 
     @Test
+    void controllerFactoryFailureWritesUserErrorResponse() {
+        var communication = new RecordingCommunicationAggregation();
+        var skeleton = newSkeleton(
+                flowContext -> null,
+                new NoopInOut(),
+                DefaultActionAfter.me(),
+                _ -> {
+                    throw new IllegalStateException("factory failed");
+                }
+        );
+        skeleton.communicationAggregation = communication;
+        skeleton.server = newServer(skeleton);
+
+        skeleton.handle(newFlowContext(CommunicationType.USER_REQUEST, newUserRequest()));
+
+        assertEquals(1, communication.userResponses.size());
+        var response = communication.userResponses.getFirst();
+        assertEquals(ActionErrorEnum.systemOtherErrCode.getCode(), response.getErrorCode());
+        assertEquals(11, response.getMsgId());
+    }
+
+    @Test
+    void actionAfterFailureDoesNotEscapeExecutor() {
+        var communication = new RecordingCommunicationAggregation();
+        var skeleton = newSkeleton(
+                flowContext -> null,
+                new NoopInOut(),
+                new ThrowingActionAfter(),
+                _ -> new Object()
+        );
+        skeleton.communicationAggregation = communication;
+        skeleton.server = newServer(skeleton);
+
+        assertDoesNotThrow(() -> skeleton.handle(newFlowContext(CommunicationType.USER_REQUEST, newUserRequest())));
+        assertTrue(communication.userResponses.isEmpty());
+        assertTrue(communication.publishedByNetId.isEmpty());
+    }
+
+    @Test
+    void flowOutFailureRunsFallbackActionAfterWithErrorState() {
+        var actionAfter = new RecordingActionAfter();
+        var communication = new RecordingCommunicationAggregation();
+        var skeleton = newSkeleton(
+                flowContext -> null,
+                new ThrowingOut(new IllegalStateException("out failed")),
+                actionAfter,
+                _ -> new Object()
+        );
+        skeleton.communicationAggregation = communication;
+        skeleton.server = newServer(skeleton);
+
+        skeleton.handle(newFlowContext(CommunicationType.USER_REQUEST, newUserRequest()));
+
+        assertEquals(List.of(false, true), actionAfter.errorStates);
+    }
+
+    @Test
     void fatalErrorsAreRethrown() {
         var communication = new RecordingCommunicationAggregation();
         var error = new LinkageError("fatal");
@@ -127,12 +184,20 @@ class DefaultFlowExecutorTest {
     }
 
     private static BarSkeleton newSkeleton(ActionMethodInvoke actionMethodInvoke, ActionMethodInOut inOut) {
+        return newSkeleton(actionMethodInvoke, inOut, DefaultActionAfter.me(), _ -> new Object());
+    }
+
+    private static BarSkeleton newSkeleton(
+            ActionMethodInvoke actionMethodInvoke,
+            ActionMethodInOut inOut,
+            ActionAfter actionAfter,
+            ActionFactoryBean<Object> actionFactoryBean) {
         return BarSkeleton.internalBuilder()
                 .setRunners(new Runners())
-                .setActionAfter(DefaultActionAfter.me())
+                .setActionAfter(actionAfter)
                 .setFlowExecutor(new DefaultFlowExecutor())
                 .setInOuts(new ActionMethodInOut[]{inOut})
-                .setActionFactoryBean(_ -> new Object())
+                .setActionFactoryBean(actionFactoryBean)
                 .setActionMethodInvoke(actionMethodInvoke)
                 .setActionMethodExceptionProcess(DefaultActionMethodExceptionProcess.me())
                 .build();
@@ -212,6 +277,39 @@ class DefaultFlowExecutorTest {
 
         @Override
         public void fuckOut(FlowContext flowContext) {
+        }
+    }
+
+    private static final class ThrowingOut implements ActionMethodInOut {
+        private final Throwable throwable;
+
+        private ThrowingOut(Throwable throwable) {
+            this.throwable = throwable;
+        }
+
+        @Override
+        public void fuckIn(FlowContext flowContext) {
+        }
+
+        @Override
+        public void fuckOut(FlowContext flowContext) {
+            sneakyThrow(this.throwable);
+        }
+    }
+
+    private static final class ThrowingActionAfter implements ActionAfter {
+        @Override
+        public void execute(FlowContext flowContext) {
+            throw new IllegalStateException("action after failed");
+        }
+    }
+
+    private static final class RecordingActionAfter implements ActionAfter {
+        final List<Boolean> errorStates = new ArrayList<>();
+
+        @Override
+        public void execute(FlowContext flowContext) {
+            this.errorStates.add(flowContext.hasError());
         }
     }
 

@@ -47,6 +47,7 @@ public final class DefaultPublisher implements Publisher {
     final Map<String, Publication> publicationMap = CollKit.ofConcurrentHashMap();
     final Map<String, Queue<Object>> messageQueueMap = CollKit.ofConcurrentHashMap();
     final Map<String, AtomicLong> droppedMessageCountMap = CollKit.ofConcurrentHashMap();
+    final AtomicBoolean closed = new AtomicBoolean();
     volatile boolean running = true;
     ExecutorService executorService;
 
@@ -76,6 +77,14 @@ public final class DefaultPublisher implements Publisher {
         if (executorService != null) {
             executorService.shutdown();
         }
+
+        closePublications();
+    }
+
+    private void closePublications() {
+        if (this.closed.compareAndSet(false, true)) {
+            publicationMap.values().forEach(Publication::close);
+        }
     }
 
     private class DefaultPublisherRunnable implements PublisherRunnable {
@@ -92,7 +101,7 @@ public final class DefaultPublisher implements Publisher {
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             } finally {
-                publicationMap.values().forEach(Publication::close);
+                closePublications();
             }
         }
 

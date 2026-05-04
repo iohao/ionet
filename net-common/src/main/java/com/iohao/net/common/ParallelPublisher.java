@@ -50,6 +50,7 @@ public final class ParallelPublisher implements Publisher {
     final Map<String, Queue<Object>> messageQueueMap = CollKit.ofConcurrentHashMap();
     final Map<String, Thread> threadMap = CollKit.ofConcurrentHashMap();
     final Map<String, AtomicLong> droppedMessageCountMap = CollKit.ofConcurrentHashMap();
+    final AtomicBoolean closed = new AtomicBoolean();
     volatile boolean running = true;
 
     @Override
@@ -93,8 +94,15 @@ public final class ParallelPublisher implements Publisher {
                 Thread.currentThread().interrupt();
             }
         });
-        publicationMap.values().forEach(Publication::close);
+
+        closePublications();
         threadMap.clear();
+    }
+
+    private void closePublications() {
+        if (this.closed.compareAndSet(false, true)) {
+            publicationMap.values().forEach(Publication::close);
+        }
     }
 
     private class PublicationRunnable implements Runnable {
