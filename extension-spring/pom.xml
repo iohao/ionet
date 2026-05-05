@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>7.0.1</version>
+            <version>${spring-context.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

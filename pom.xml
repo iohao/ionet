@@ -46,29 +46,37 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- https://mvnrepository.com/artifact/io.aeron/aeron-all -->
-        <aeron.version>1.49.2</aeron.version>
+        <aeron.version>1.49.3</aeron.version>
         <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <netty.version>4.1.130.Final</netty.version>
+        <netty.version>4.1.132.Final</netty.version>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <slf4j-api.version>2.0.17</slf4j-api.version>
 
         <!--  https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter  -->
-        <junit.version>6.0.1</junit.version>
+        <junit.version>6.0.3</junit.version>
 
         <!-- https://mvnrepository.com/artifact/com.baidu/jprotobuf -->
         <jprotobuf.version>2.4.23</jprotobuf.version>
         <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
-        <protobuf-java.version>4.33.1</protobuf-java.version>
+        <protobuf-java.version>4.33.5</protobuf-java.version>
         <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
         <disruptor.version>4.0.0</disruptor.version>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <commons-io.version>2.21.0</commons-io.version>
+        <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
+        <java-websocket.version>1.5.7</java-websocket.version>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <spring-context.version>7.0.3</spring-context.version>
+        <!-- https://mvnrepository.com/artifact/com.ibeetl/beetl -->
+        <beetl.version>3.20.1.RELEASE</beetl.version>
 
 
         <!-- JSR-380 https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
         <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-        <logback.version>1.5.21</logback.version>
+        <logback.version>1.5.32</logback.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <lombok.version>1.18.42</lombok.version>
+        <lombok.version>1.18.44</lombok.version>
     </properties>
 
     <dependencies>
@@ -192,14 +200,14 @@
             <!-- 打包时跳过单元测试 https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>3.5.5</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.5</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
@@ -215,9 +223,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.1</version>
+                <version>3.15.0</version>
                 <configuration>
-                    <compilerVersion>${java.version}</compilerVersion>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <parameters>true</parameters>
@@ -365,7 +372,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.9.0</version>
+                        <version>0.10.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
