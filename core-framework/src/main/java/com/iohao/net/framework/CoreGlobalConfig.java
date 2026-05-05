@@ -56,6 +56,8 @@ public final class CoreGlobalConfig {
     public int publisherQueueCapacity = 65_536;
     /** Maximum messages drained per publication per publisher loop; values less than or equal to 0 drain all. */
     public int publisherDrainLimit = 1024;
+    /** Maximum retry attempts for retryable Aeron offer failures; 0 disables retry and values less than 0 retry indefinitely. */
+    public int publisherOfferRetryLimit = 2;
     /** Maximum spin iterations for publisher idle backoff. */
     public int publisherIdleMaxSpins = 100;
     /** Maximum yield iterations for publisher idle backoff. */

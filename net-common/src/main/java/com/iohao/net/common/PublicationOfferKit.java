@@ -18,7 +18,9 @@
  */
 package com.iohao.net.common;
 
+import com.iohao.net.framework.*;
 import io.aeron.*;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 import lombok.extern.slf4j.*;
 
@@ -31,6 +33,9 @@ import lombok.extern.slf4j.*;
  */
 @Slf4j
 final class PublicationOfferKit {
+    private static final long DROP_LOG_INTERVAL = 1024;
+    private static final AtomicLong droppedOfferCount = new AtomicLong();
+
     private PublicationOfferKit() {
     }
 
@@ -59,25 +64,55 @@ final class PublicationOfferKit {
             BooleanSupplier running,
             RetryIdle retryIdle
     ) {
-        while (running.getAsBoolean() && isRetryable(result)) {
+        int retryCount = 0;
+        int retryLimit = CoreGlobalConfig.publisherOfferRetryLimit;
+        while (running.getAsBoolean() && isRetryable(result) && canRetry(retryCount, retryLimit)) {
             if (!idle(publicationName, message, retryIdle)) {
                 return false;
             }
 
             result = retryOffer.offer();
+            retryCount++;
             if (result > 0) {
                 return true;
             }
         }
 
         if (result < 0) {
-            log.error("Aeron publication offer failed. publicationName: {}, messageType: {}, result: {}",
-                    publicationName,
-                    messageType(message),
-                    Publication.errorString(result));
+            logFailedOffer(publicationName, message, result, retryCount, retryLimit);
         }
 
         return false;
+    }
+
+    private static boolean canRetry(int retryCount, int retryLimit) {
+        return retryLimit < 0 || retryCount < retryLimit;
+    }
+
+    private static void logFailedOffer(String publicationName, Object message, long result, int retryCount, int retryLimit) {
+        if (isRetryable(result) && retryLimit >= 0 && retryCount >= retryLimit) {
+            logRetryLimitReached(publicationName, message, result, retryCount);
+            return;
+        }
+
+        log.error("Aeron publication offer failed. publicationName: {}, messageType: {}, result: {}",
+                publicationName,
+                messageType(message),
+                Publication.errorString(result));
+    }
+
+    private static void logRetryLimitReached(String publicationName, Object message, long result, int retryCount) {
+        var count = droppedOfferCount.incrementAndGet();
+
+        if (count == 1 || count % DROP_LOG_INTERVAL == 0) {
+            log.warn("Aeron publication offer retry limit reached, dropped message. publicationName: {}, "
+                            + "messageType: {}, result: {}, retryCount: {}, droppedCount: {}",
+                    publicationName,
+                    messageType(message),
+                    Publication.errorString(result),
+                    retryCount,
+                    count);
+        }
     }
 
     private static boolean idle(String publicationName, Object message, RetryIdle retryIdle) {

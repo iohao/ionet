@@ -18,6 +18,7 @@
  */
 package com.iohao.net.common;
 
+import com.iohao.net.framework.*;
 import io.aeron.*;
 import org.junit.jupiter.api.*;
 
@@ -31,10 +32,21 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 25.4
  */
 class DefaultPublisherTest {
+    private int originalPublisherOfferRetryLimit;
 
     @BeforeAll
     static void beforeAll() {
         PublisherTestKit.registerTestMessageEncoder();
+    }
+
+    @BeforeEach
+    void setUp() {
+        this.originalPublisherOfferRetryLimit = CoreGlobalConfig.publisherOfferRetryLimit;
+    }
+
+    @AfterEach
+    void tearDown() {
+        CoreGlobalConfig.publisherOfferRetryLimit = this.originalPublisherOfferRetryLimit;
     }
 
     @Test
@@ -92,6 +104,32 @@ class DefaultPublisherTest {
             publisher.publishMessage("logic", new PublisherTestKit.TestMessage(2));
 
             PublisherTestKit.awaitUntil(() -> publication.offerCount() == 2);
+
+            assertEquals(8, publication.lastOfferLength());
+        } finally {
+            publisher.shutdown();
+        }
+    }
+
+    @Test
+    void startupDropsMessageAfterRetryLimitAndKeepsProcessingLaterMessages() throws InterruptedException {
+        CoreGlobalConfig.publisherOfferRetryLimit = 2;
+
+        var publisher = new DefaultPublisher();
+        var publication = RecordingPublication.create()
+                .setOfferResults(
+                        Publication.BACK_PRESSURED,
+                        Publication.BACK_PRESSURED,
+                        Publication.BACK_PRESSURED,
+                        1);
+        publisher.addPublication("logic", publication);
+
+        try {
+            publisher.startup();
+            publisher.publishMessage("logic", new PublisherTestKit.TestMessage(5));
+            publisher.publishMessage("logic", new PublisherTestKit.TestMessage(6));
+
+            PublisherTestKit.awaitUntil(() -> publication.offerCount() == 4);
 
             assertEquals(8, publication.lastOfferLength());
         } finally {

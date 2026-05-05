@@ -18,6 +18,7 @@
  */
 package com.iohao.net.common;
 
+import com.iohao.net.framework.*;
 import io.aeron.*;
 import org.junit.jupiter.api.*;
 
@@ -33,6 +34,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 25.4
  */
 class PublicationOfferKitTest {
+    private int originalPublisherOfferRetryLimit;
+
+    @BeforeEach
+    void setUp() {
+        this.originalPublisherOfferRetryLimit = CoreGlobalConfig.publisherOfferRetryLimit;
+    }
+
+    @AfterEach
+    void tearDown() {
+        CoreGlobalConfig.publisherOfferRetryLimit = this.originalPublisherOfferRetryLimit;
+    }
 
     @Test
     void retryableResultsRetryUntilSuccess() {
@@ -69,6 +81,73 @@ class PublicationOfferKitTest {
 
         assertTrue(result);
         assertEquals(2, offerCount.get());
+    }
+
+    @Test
+    void retryableResultsStopAfterRetryLimit() {
+        CoreGlobalConfig.publisherOfferRetryLimit = 2;
+        AtomicInteger offerCount = new AtomicInteger();
+        AtomicInteger idleCount = new AtomicInteger();
+
+        boolean result = PublicationOfferKit.offerAfterFailedResult(
+                "test",
+                "message",
+                Publication.BACK_PRESSURED,
+                () -> {
+                    offerCount.incrementAndGet();
+                    return Publication.BACK_PRESSURED;
+                },
+                () -> true,
+                idleCount::incrementAndGet
+        );
+
+        assertFalse(result);
+        assertEquals(2, offerCount.get());
+        assertEquals(2, idleCount.get());
+    }
+
+    @Test
+    void zeroRetryLimitFailsWithoutRetry() {
+        CoreGlobalConfig.publisherOfferRetryLimit = 0;
+        AtomicInteger offerCount = new AtomicInteger();
+        AtomicInteger idleCount = new AtomicInteger();
+
+        boolean result = PublicationOfferKit.offerAfterFailedResult(
+                "test",
+                "message",
+                Publication.BACK_PRESSURED,
+                () -> {
+                    offerCount.incrementAndGet();
+                    return 1;
+                },
+                () -> true,
+                idleCount::incrementAndGet
+        );
+
+        assertFalse(result);
+        assertEquals(0, offerCount.get());
+        assertEquals(0, idleCount.get());
+    }
+
+    @Test
+    void negativeRetryLimitRetriesUntilSuccess() {
+        CoreGlobalConfig.publisherOfferRetryLimit = -1;
+        long[] retryResults = {Publication.BACK_PRESSURED, Publication.ADMIN_ACTION, 1};
+        AtomicInteger offerCount = new AtomicInteger();
+        AtomicInteger idleCount = new AtomicInteger();
+
+        boolean result = PublicationOfferKit.offerAfterFailedResult(
+                "test",
+                "message",
+                Publication.BACK_PRESSURED,
+                () -> retryResults[offerCount.getAndIncrement()],
+                () -> true,
+                idleCount::incrementAndGet
+        );
+
+        assertTrue(result);
+        assertEquals(3, offerCount.get());
+        assertEquals(3, idleCount.get());
     }
 
     @Test
