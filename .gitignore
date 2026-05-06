@@ -66,9 +66,12 @@ doc_temp.txt
 local/
 temp/
 
-local-knowledge/
+# codex
 .codex
-.claude
-CLAUDE.md
+.codexignore
 AGENTS.md
 AGENTS.compact.md
+
+# claude code
+.claude
+CLAUDE.md
