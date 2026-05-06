@@ -5,6 +5,10 @@ Documentation
 - https://iohao.github.io/ionet/en
 - https://iohao.github.io/ionet/en/docs/intro
 
+AI-assisted usage knowledge base:
+- https://iohao.github.io/ionet-ai/
+- Source: https://github.com/iohao/ionet-ai
+
 <p>
 <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java25"><img src="https://img.shields.io/badge/JDK-25-success.svg" alt="JDK 25"/></a>
 <a target="_blank" href="https://www.gnu.org/licenses/agpl-3.0.txt"><img src="https://img.shields.io/:license-AGPL3.0-blue.svg" alt="AGPL3.0"/></a>
