@@ -5,9 +5,20 @@ ionet is an open-source Java distributed network programming framework focused o
 ## Canonical URLs
 - Project site: https://iohao.github.io/ionet
 - Docs entry: https://iohao.github.io/ionet/docs/intro
+- English docs entry: https://iohao.github.io/ionet/en/docs/intro
 - GitHub repository: https://github.com/iohao/ionet
 - English README: https://github.com/iohao/ionet/blob/main/README.md
 - Chinese README: https://github.com/iohao/ionet/blob/main/README_CN.md
+
+## Current Release
+- Required JDK: 25
+- Maven groupId: com.iohao.net
+
+## AI-assisted Usage Knowledge Base
+- Knowledge base: https://iohao.github.io/ionet-ai/
+- English install docs: https://iohao.github.io/ionet/en/docs/ionet-ai/
+- Chinese install docs: https://iohao.github.io/ionet/docs/ionet-ai
+- Source: https://github.com/iohao/ionet-ai
 
 ## License
 - AGPL-3.0
@@ -25,10 +36,13 @@ A lightweight, lock-free, event-driven distributed networking framework using Ae
 
 ## Suggested Crawl Priority
 1. https://iohao.github.io/ionet/docs/intro
-2. https://iohao.github.io/ionet/docs/manual/communication_model
-3. https://iohao.github.io/ionet/docs/manual/integration_spring
-4. https://iohao.github.io/ionet/docs/examples/code_generate
-5. https://iohao.github.io/ionet/docs/extension_module/simulation_client
+2. https://iohao.github.io/ionet/en/docs/intro
+3. https://iohao.github.io/ionet/en/docs/ionet-ai/
+4. https://iohao.github.io/ionet/docs/ionet-ai
+5. https://iohao.github.io/ionet/docs/manual/communication_model
+6. https://iohao.github.io/ionet/docs/manual/integration_spring
+7. https://iohao.github.io/ionet/docs/examples/code_generate
+8. https://iohao.github.io/ionet/docs/extension_module/simulation_client
 
 ## Documentation Sitemap
 - https://iohao.github.io/ionet/sitemap.xml

@@ -60,6 +60,7 @@ ionet
 
 AI 使用辅助知识库：
 - https://iohao.github.io/ionet-ai/
+- 在线安装文档：https://iohao.github.io/ionet/docs/ionet-ai
 - 源码：https://github.com/iohao/ionet-ai
 
 你是否想要开发一个高性能、稳定、易用、自带负载均衡、避免类爆炸设计、可跨进程跨机器通信、有状态多进程的分布式的网络通信服务器呢？

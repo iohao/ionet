@@ -7,6 +7,7 @@ Documentation
 
 AI-assisted usage knowledge base:
 - https://iohao.github.io/ionet-ai/
+- Online installation docs: https://iohao.github.io/ionet/en/docs/ionet-ai/
 - Source: https://github.com/iohao/ionet-ai
 
 <p>
