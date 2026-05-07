@@ -67,7 +67,6 @@ local/
 temp/
 
 # codex
-.codex
 .codexignore
 AGENTS.md
 AGENTS.compact.md

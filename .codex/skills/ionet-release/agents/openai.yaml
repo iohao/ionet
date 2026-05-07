@@ -1,0 +1,6 @@
+interface:
+  display_name: "ionet Release"
+  short_description: "Publish ionet GitHub releases"
+  default_prompt: "Use $ionet-release to publish the current ionet version to GitHub Releases."
+policy:
+  allow_implicit_invocation: false
