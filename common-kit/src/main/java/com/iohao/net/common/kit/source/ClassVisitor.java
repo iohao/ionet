@@ -222,9 +222,14 @@ final class ClassVisitor extends TreeScanner<Void, Void> {
                 return Collections.emptyList();
             }
 
-            var list = new ArrayList<Object>(args.size());
+            var list = new ArrayList<>(args.size());
             for (var arg : args) {
-                list.add(arg.toString());
+                if (arg instanceof com.sun.source.tree.LiteralTree literalTree) {
+                    Object value = literalTree.getValue();
+                    list.add(value != null ? value : arg.toString());
+                } else {
+                    list.add(arg.toString());
+                }
             }
             return list;
         }

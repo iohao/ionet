@@ -21,10 +21,12 @@ package com.iohao.net.framework.core.doc;
 import com.iohao.net.common.kit.*;
 import com.iohao.net.common.kit.source.*;
 import com.iohao.net.framework.core.exception.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
+
 import lombok.experimental.*;
 import lombok.extern.slf4j.*;
 
@@ -41,8 +43,8 @@ public class DocumentAnalyseKit {
     /**
      * Analyse all action documents and produce a list of {@link ActionDocument} models.
      *
-     * @param document             the raw document containing action doc list
-     * @param typeMappingDocument  the type mapping configuration
+     * @param document            the raw document containing action doc list
+     * @param typeMappingDocument the type mapping configuration
      * @return list of analysed action documents (only those with methods)
      */
     public List<ActionDocument> analyseActionDocument(Document document, TypeMappingDocument typeMappingDocument) {
@@ -134,17 +136,16 @@ public class DocumentAnalyseKit {
             }
 
             String name = field.getName();
-
-            var errorCodeDocument = new ErrorCodeDocument();
-            errorCodeDocument.name = name;
-            errorCodeDocument.value = errorCode;
-
             String description = enumConstantArguments.getLast().toString();
             // strip surrounding quotes if present
             if (description.length() >= 2
                     && description.startsWith("\"") && description.endsWith("\"")) {
                 description = description.substring(1, description.length() - 1);
             }
+
+            var errorCodeDocument = new ErrorCodeDocument();
+            errorCodeDocument.name = name;
+            errorCodeDocument.value = errorCode;
             errorCodeDocument.description = description;
 
             return errorCodeDocument;
