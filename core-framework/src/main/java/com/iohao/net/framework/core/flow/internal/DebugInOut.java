@@ -192,7 +192,7 @@ public final class DebugInOut implements ActionMethodInOut {
         }
 
         var template = """
-                ┏━━ Error.({className}.java:{lineNumber}) ━━ [{returnInfo} {actionMethodName}({paramInfo})] ━━ {cmdInfo} ━━ [tag:{logicServerTag}, serverId:{logicServerId}] ━━━━
+                ┏━━ Error.({className}.java:{lineNumber}) ━━ {cmdInfo} ━━ [{returnInfo} {className}.{actionMethodName}({paramInfo})] ━━ [tag:{logicServerTag}, serverId:{logicServerId}] ━━━━
                 ┣ {userIdKey}: {userId}
                 ┣ {debugInOutParamName}: {paramData}
                 ┣ {debugInOutErrorCode}: {errorCode}
@@ -220,7 +220,7 @@ public final class DebugInOut implements ActionMethodInOut {
         }
 
         var template = """
-                ┏━━ Debug.({className}.java:{lineNumber}) ━━ [{returnInfo} {actionMethodName}({paramInfo})] ━━ {cmdInfo} ━━ [tag:{logicServerTag}, serverId:{logicServerId}] ━━━━
+                ┏━━ Debug.({className}.java:{lineNumber}) ━━ {cmdInfo} ━━ [{returnInfo} {className}.{actionMethodName}({paramInfo})] ━━ [tag:{logicServerTag}, serverId:{logicServerId}] ━━━━
                 ┣ {userIdKey}: {userId}
                 ┣ {debugInOutParamName}: {paramData}
                 ┣ {debugInOutReturnData}: {returnData}

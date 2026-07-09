@@ -20,6 +20,8 @@ package com.iohao.net.framework.core;
 
 import com.iohao.net.framework.i18n.*;
 import com.iohao.net.framework.protocol.wrapper.*;
+
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -49,6 +51,14 @@ public class DefaultCodeSuggest implements CodeSuggest {
     public void inspect(SuggestInformation suggest) {
         inspectParameter(suggest);
         inspectReturn(suggest);
+        inspectAccess(suggest);
+    }
+
+    private void inspectAccess(SuggestInformation suggest) {
+        var method = suggest.command.method;
+        if (!Modifier.isPrivate(method.getModifiers())) {
+            suggest.see(Bundle.getMessage(MessageKey.codeSuggestMethodAccess));
+        }
     }
 
     private void inspectReturn(SuggestInformation suggest) {
