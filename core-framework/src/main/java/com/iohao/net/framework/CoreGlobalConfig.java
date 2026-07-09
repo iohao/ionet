@@ -69,6 +69,8 @@ public final class CoreGlobalConfig {
 
     /** Whether development mode is enabled, providing extra diagnostics. */
     public boolean devMode;
+    /** Broadcast trace hook used to record diagnostic information when broadcast messages are sent. */
+    public BroadcastTrace broadcastTrace = new DefaultBroadcastTrace();
 
     /**
      * Set the network ID. Must be greater than 1000.
