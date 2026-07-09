@@ -21,6 +21,7 @@ package com.iohao.net.external.core.net.fragment;
 import com.iohao.net.common.*;
 import com.iohao.net.common.kit.*;
 import com.iohao.net.common.kit.concurrent.*;
+import com.iohao.net.common.kit.trace.TraceKit;
 import com.iohao.net.external.core.message.*;
 import com.iohao.net.external.core.net.external.*;
 import com.iohao.net.external.core.session.*;
@@ -74,6 +75,7 @@ public class ExternalRequestMessageOnFragment implements OnFragment, NetServerSe
         var responseMessage = new ExternalResponseMessage();
         responseMessage.setFutureId(decoder.futureId());
         responseMessage.setExternalServerId(decoder.externalServerId());
+
         var context = new OnExternalContext(userSessions, responseMessage, userId, verifyIdentity, payload, payloadLength);
         processOnExternal(context);
     }
@@ -96,9 +98,10 @@ public class ExternalRequestMessageOnFragment implements OnFragment, NetServerSe
     protected void processOnExternal(OnExternalContext context) {
         var templateId = decoder.templateId();
         var netId = decoder.netId();
+        var traceId = decoder.traceId();
 
         TaskKit.getNetVirtualExecutor().execute(() -> {
-            try {
+            try (var _ = TraceKit.putCloseable(traceId)) {
                 var onExternals = OnExternalManager.getOnExternals(templateId);
                 var on = onExternals[Math.abs(templateId)];
                 if (on == null) {

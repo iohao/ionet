@@ -18,6 +18,7 @@
  */
 package com.iohao.net.framework.core;
 
+import com.iohao.net.common.kit.trace.TraceKit;
 import com.iohao.net.framework.communication.*;
 import com.iohao.net.framework.core.flow.*;
 import com.iohao.net.framework.core.kit.*;
@@ -35,7 +36,7 @@ final class DefaultFlowExecutor implements FlowExecutor {
     @Override
     public void execute(final FlowContext flowContext, final BarSkeleton barSkeleton) {
         ScopedValue.where(FlowContextKeys.FLOW_CONTEXT, flowContext).run(() -> {
-            try {
+            try (var _ = TraceKit.putCloseable(flowContext.getTraceId())) {
                 FlowExecutorKit.execute(flowContext, barSkeleton);
             } catch (Throwable e) {
                 this.handleFlowError(flowContext, barSkeleton, e);

@@ -18,10 +18,13 @@
  */
 package com.iohao.net.framework.core.flow;
 
+import com.iohao.net.common.kit.StrKit;
 import com.iohao.net.common.kit.concurrent.executor.*;
+import com.iohao.net.common.kit.trace.TraceKit;
 import com.iohao.net.framework.communication.*;
 import com.iohao.net.framework.core.*;
 import com.iohao.net.framework.protocol.*;
+
 import java.util.concurrent.*;
 
 /**
@@ -154,7 +157,12 @@ public interface FlowCommon extends CommonDecorator {
      * @param command the task to execute
      */
     default void execute(Runnable command) {
-        this.getCurrentThreadExecutor().executeTry(command);
+        var traceId = this.getTraceId();
+        if (StrKit.isEmpty(traceId)) {
+            this.getCurrentThreadExecutor().executeTry(command);
+        } else {
+            this.getCurrentThreadExecutor().executeTry(TraceKit.decorator(traceId, command));
+        }
     }
 
     /**
@@ -163,7 +171,12 @@ public interface FlowCommon extends CommonDecorator {
      * @param command the task to execute
      */
     default void executeUser(Runnable command) {
-        this.getUserThreadExecutor().executeTry(command);
+        var traceId = this.getTraceId();
+        if (StrKit.isEmpty(traceId)) {
+            this.getUserThreadExecutor().executeTry(command);
+        } else {
+            this.getUserThreadExecutor().executeTry(TraceKit.decorator(traceId, command));
+        }
     }
 
     /**
@@ -172,7 +185,12 @@ public interface FlowCommon extends CommonDecorator {
      * @param command the task to execute
      */
     default void executeVirtual(Runnable command) {
-        this.getVirtualThreadExecutor().execute(command);
+        var traceId = this.getTraceId();
+        if (StrKit.isEmpty(traceId)) {
+            this.getVirtualThreadExecutor().executeTry(command);
+        } else {
+            this.getVirtualThreadExecutor().executeTry(TraceKit.decorator(traceId, command));
+        }
     }
 
     /**

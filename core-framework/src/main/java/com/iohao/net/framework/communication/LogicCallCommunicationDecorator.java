@@ -19,9 +19,11 @@
 package com.iohao.net.framework.communication;
 
 import com.iohao.net.common.kit.*;
+import com.iohao.net.common.kit.trace.TraceKit;
 import com.iohao.net.framework.core.*;
 import com.iohao.net.framework.core.codec.*;
 import com.iohao.net.framework.protocol.*;
+
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
@@ -209,7 +211,11 @@ public interface LogicCallCommunicationDecorator extends CommonDecorator, LogicC
 
     /** Async call using a pre-built request message with a custom executor. @see #callAsync(CmdInfo, byte[], Consumer) */
     default void callAsync(RequestMessage message, Consumer<Response> action, Executor executor) {
-        callFuture(message).thenAcceptAsync(action, executor);
+        if (StrKit.isEmpty(message.getTraceId())) {
+            callFuture(message).thenAcceptAsync(action, executor);
+        } else {
+            callFuture(message).thenAcceptAsync(TraceKit.decorator(message.getTraceId(), action), executor);
+        }
     }
 
     /**

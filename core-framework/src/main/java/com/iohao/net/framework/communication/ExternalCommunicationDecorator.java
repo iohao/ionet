@@ -18,7 +18,10 @@
  */
 package com.iohao.net.framework.communication;
 
+import com.iohao.net.common.kit.StrKit;
+import com.iohao.net.common.kit.trace.TraceKit;
 import com.iohao.net.framework.protocol.*;
+
 import java.util.concurrent.*;
 import java.util.function.*;
 
@@ -145,7 +148,11 @@ public interface ExternalCommunicationDecorator extends CommonDecorator {
      * @param executor the executor on which to run the callback
      */
     default void callExternalAsync(ExternalRequestMessage message, Consumer<ExternalResponse> action, Executor executor) {
-        callExternalFuture(message).thenAcceptAsync(action, executor);
+        if (StrKit.isEmpty(message.getTraceId())) {
+            callExternalFuture(message).thenAcceptAsync(action, executor);
+        } else {
+            callExternalFuture(message).thenAcceptAsync(TraceKit.decorator(message.getTraceId(), action), executor);
+        }
     }
 
     /**
@@ -260,7 +267,11 @@ public interface ExternalCommunicationDecorator extends CommonDecorator {
      * @param executor the executor on which to run the callback
      */
     default void callExternalCollectAsync(ExternalRequestMessage message, Consumer<ResponseCollectExternal> action, Executor executor) {
-        callExternalCollectFuture(message).thenAcceptAsync(action, executor);
+        if (StrKit.isEmpty(message.getTraceId())) {
+            callExternalCollectFuture(message).thenAcceptAsync(action, executor);
+        } else {
+            callExternalCollectFuture(message).thenAcceptAsync(TraceKit.decorator(message.getTraceId(), action), executor);
+        }
     }
 
     /**
