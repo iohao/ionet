@@ -44,6 +44,7 @@
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.test.skip>true</maven.test.skip>
 
         <!-- https://mvnrepository.com/artifact/io.aeron/aeron-all -->
         <aeron.version>1.51.1</aeron.version>
@@ -63,8 +64,6 @@
         <disruptor.version>4.0.0</disruptor.version>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <commons-io.version>2.22.0</commons-io.version>
-        <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
-        <java-websocket.version>1.6.0</java-websocket.version>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <spring-context.version>7.0.8</spring-context.version>
         <!-- https://mvnrepository.com/artifact/com.ibeetl/beetl -->
@@ -202,14 +201,14 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.5</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skip>${maven.test.skip}</skip>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.5.5</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skip>${maven.test.skip}</skip>
                 </configuration>
             </plugin>
 
@@ -228,7 +227,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <parameters>true</parameters>
-                    <skip>true</skip>
+                    <skip>${maven.test.skip}</skip>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>

@@ -23,7 +23,6 @@ import com.iohao.net.extension.client.*;
 import com.iohao.net.extension.client.user.*;
 import io.netty.bootstrap.*;
 import io.netty.channel.*;
-import io.netty.channel.nio.*;
 import io.netty.channel.socket.*;
 import io.netty.channel.socket.nio.*;
 import io.netty.handler.codec.*;
@@ -42,15 +41,13 @@ class TcpClientStartup implements ClientConnect {
 
     static final int LENGTH_FIELD_LENGTH = Integer.BYTES;
 
-    static final EventLoopGroup group = new NioEventLoopGroup();
-
     @Override
     public void connect(ClientConnectOption option) {
         ClientUser clientUser = option.getClientUser();
         ClientMessageHandler clientMessageHandler = new ClientMessageHandler(clientUser);
 
         var bootstrap = new Bootstrap();
-        bootstrap.group(group)
+        bootstrap.group(ClientConnects.eventLoopGroup())
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY, true)
                 .handler(new ChannelInitializer<SocketChannel>() {

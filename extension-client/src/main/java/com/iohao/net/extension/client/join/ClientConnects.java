@@ -19,16 +19,22 @@
 package com.iohao.net.extension.client.join;
 
 import com.iohao.net.external.core.config.*;
+import io.netty.channel.*;
+import io.netty.channel.nio.*;
 import java.util.*;
+import java.util.concurrent.*;
 import lombok.experimental.*;
 
 /**
+ * Registry and shared runtime resources for client connectors.
+ *
  * @author 渔民小镇
  * @date 2023-07-07
  */
 @UtilityClass
 public class ClientConnects {
     Map<ExternalJoinEnum, ClientConnect> clientConnectMap = new HashMap<>();
+    EventLoopGroup clientEventLoopGroup;
 
     static {
         clientConnectMap.put(ExternalJoinEnum.TCP, new TcpClientStartup());
@@ -41,5 +47,33 @@ public class ClientConnects {
 
     ClientConnect getClientConnect(ExternalJoinEnum joinEnum) {
         return clientConnectMap.get(joinEnum);
+    }
+
+    synchronized EventLoopGroup eventLoopGroup() {
+        if (clientEventLoopGroup == null || clientEventLoopGroup.isShuttingDown()) {
+            clientEventLoopGroup = new NioEventLoopGroup();
+        }
+
+        return clientEventLoopGroup;
+    }
+
+    /**
+     * Shuts down the event loop group shared by the built-in TCP and WebSocket connectors.
+     * Call this method after all client channels have been closed and no new connection is being started.
+     * A later connection creates a new event loop group automatically.
+     *
+     * @since 25.6
+     */
+    public void shutdownGracefully() {
+        EventLoopGroup group;
+
+        synchronized (ClientConnects.class) {
+            group = clientEventLoopGroup;
+            clientEventLoopGroup = null;
+        }
+
+        if (group != null) {
+            group.shutdownGracefully(0, 5, TimeUnit.SECONDS).syncUninterruptibly();
+        }
     }
 }
