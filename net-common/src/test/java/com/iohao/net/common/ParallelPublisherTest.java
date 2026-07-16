@@ -144,4 +144,23 @@ class ParallelPublisherTest {
             publisher.shutdown();
         }
     }
+
+    @Test
+    void startupDropsMessageOverPublicationLimitAndKeepsProcessingLaterMessages() throws InterruptedException {
+        var publisher = new ParallelPublisher();
+        var publication = RecordingPublication.create().setMaxMessageLength(8);
+        publisher.addPublication("logic", publication);
+
+        try {
+            publisher.publishMessage("logic", new PublisherTestKit.OversizedTestMessage(7));
+            publisher.publishMessage("logic", new PublisherTestKit.TestMessage(8));
+
+            PublisherTestKit.awaitUntil(() -> publication.offerCount() == 1);
+
+            assertEquals(8, publication.lastOfferLength());
+            assertFalse(publication.isClosed());
+        } finally {
+            publisher.shutdown();
+        }
+    }
 }

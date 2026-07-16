@@ -1,7 +1,7 @@
 /* Generated SBE (Simple Binary Encoding) message codec. */
 package com.iohao.net.sbe;
 
-import org.agrona.*;
+import org.agrona.MutableDirectBuffer;
 
 @SuppressWarnings("all")
 public final class PayloadDataEncoder
@@ -73,7 +73,7 @@ public final class PayloadDataEncoder
 
     public static long lengthMaxValue()
     {
-        return 61440L;
+        return 8384512L;
     }
 
     public PayloadDataEncoder length(final long value)

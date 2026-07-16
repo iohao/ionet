@@ -50,8 +50,31 @@ final class PublisherMessageKit {
             return false;
         }
 
-        encoder.encoder(message, headerEncoder, buffer);
+        try {
+            encoder.encoder(message, headerEncoder, buffer);
+        } catch (IndexOutOfBoundsException e) {
+            log.error(
+                    "Message [{}] encoding exceeded the publisher buffer capacity ({} bytes) and was dropped; "
+                            + "increase CoreGlobalConfig.publisherBufferSize to allow a larger payload.",
+                    message.getClass().getSimpleName(), buffer.capacity(), e);
+            return false;
+        } catch (IllegalStateException e) {
+            log.error(
+                    "Message [{}] encoding violated an SBE schema limit and was dropped.",
+                    message.getClass().getSimpleName(), e);
+            return false;
+        }
+
         int limit = encoder.limit();
+        int maxMessageLength = publication.maxMessageLength();
+        if (limit > maxMessageLength) {
+            log.error(
+                    "Message [{}] encoded length ({} bytes) exceeded publication [{}] maximum message length "
+                            + "({} bytes) and was dropped; reduce the payload or increase the Aeron term buffer length.",
+                    message.getClass().getSimpleName(), limit, publicationName, maxMessageLength);
+            return false;
+        }
+
         long result = publication.offer(buffer, 0, limit);
         if (result <= 0) {
             return PublicationOfferKit.offerAfterFailedResult(

@@ -75,4 +75,11 @@ AGENTS.compact.md
 .claude
 CLAUDE.md
 
+# qoder
+QODER.md
+
 .cbmignore
+.qoder/
+
+### VS Code ###
+.vscode/

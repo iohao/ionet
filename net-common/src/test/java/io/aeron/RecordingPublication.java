@@ -39,6 +39,7 @@ public final class RecordingPublication extends Publication {
     private AtomicInteger offerCount;
     private AtomicInteger lastOfferLength;
     private Queue<Long> offerResults;
+    private int maxMessageLength;
 
     @SuppressWarnings({"unused", "DataFlowIssue"})
     private RecordingPublication() {
@@ -53,6 +54,7 @@ public final class RecordingPublication extends Publication {
             publication.offerCount = new AtomicInteger();
             publication.lastOfferLength = new AtomicInteger();
             publication.offerResults = new ConcurrentLinkedQueue<>();
+            publication.maxMessageLength = Integer.MAX_VALUE;
             return publication;
         } catch (InstantiationException e) {
             throw new AssertionError(e);
@@ -61,6 +63,11 @@ public final class RecordingPublication extends Publication {
 
     public RecordingPublication setOfferResults(long... results) {
         Arrays.stream(results).forEach(this.offerResults::offer);
+        return this;
+    }
+
+    public RecordingPublication setMaxMessageLength(int maxMessageLength) {
+        this.maxMessageLength = maxMessageLength;
         return this;
     }
 
@@ -74,6 +81,11 @@ public final class RecordingPublication extends Publication {
 
     public int lastOfferLength() {
         return this.lastOfferLength.get();
+    }
+
+    @Override
+    public int maxMessageLength() {
+        return this.maxMessageLength;
     }
 
     @Override

@@ -1,7 +1,9 @@
 /* Generated SBE (Simple Binary Encoding) message codec. */
 package com.iohao.net.sbe;
 
-import org.agrona.*;
+import org.agrona.MutableDirectBuffer;
+import org.agrona.DirectBuffer;
+
 
 /**
  * ExternalResponseMessage
@@ -350,7 +352,7 @@ public final class ExternalResponseMessageEncoder
 
     public ExternalResponseMessageEncoder putPayload(final DirectBuffer src, final int srcOffset, final int length)
     {
-        if (length > 61440)
+        if (length > 8384512)
         {
             throw new IllegalStateException("length > maxValue for type: " + length);
         }
@@ -366,7 +368,7 @@ public final class ExternalResponseMessageEncoder
 
     public ExternalResponseMessageEncoder putPayload(final byte[] src, final int srcOffset, final int length)
     {
-        if (length > 61440)
+        if (length > 8384512)
         {
             throw new IllegalStateException("length > maxValue for type: " + length);
         }

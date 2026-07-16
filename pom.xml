@@ -46,27 +46,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- https://mvnrepository.com/artifact/io.aeron/aeron-all -->
-        <aeron.version>1.49.3</aeron.version>
+        <aeron.version>1.51.1</aeron.version>
         <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <netty.version>4.1.132.Final</netty.version>
+        <netty.version>4.1.136.Final</netty.version>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <slf4j-api.version>2.0.17</slf4j-api.version>
 
         <!--  https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter  -->
-        <junit.version>6.0.3</junit.version>
+        <junit.version>6.1.2</junit.version>
 
         <!-- https://mvnrepository.com/artifact/com.baidu/jprotobuf -->
         <jprotobuf.version>2.4.23</jprotobuf.version>
         <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
-        <protobuf-java.version>4.33.5</protobuf-java.version>
+        <protobuf-java.version>4.35.1</protobuf-java.version>
         <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
         <disruptor.version>4.0.0</disruptor.version>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-        <commons-io.version>2.21.0</commons-io.version>
+        <commons-io.version>2.22.0</commons-io.version>
         <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
-        <java-websocket.version>1.5.7</java-websocket.version>
+        <java-websocket.version>1.6.0</java-websocket.version>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
-        <spring-context.version>7.0.3</spring-context.version>
+        <spring-context.version>7.0.8</spring-context.version>
         <!-- https://mvnrepository.com/artifact/com.ibeetl/beetl -->
         <beetl.version>3.20.1.RELEASE</beetl.version>
 
@@ -74,9 +74,9 @@
         <!-- JSR-380 https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
         <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-        <logback.version>1.5.32</logback.version>
+        <logback.version>1.5.38</logback.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <lombok.version>1.18.44</lombok.version>
+        <lombok.version>1.18.46</lombok.version>
     </properties>
 
     <dependencies>

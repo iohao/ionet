@@ -40,6 +40,10 @@ final class PublisherTestKit {
         if (SbeMessageManager.getMessageEncoder(TestMessage.class) == null) {
             SbeMessageManager.register(TestMessage.class, new TestMessageSbe());
         }
+
+        if (SbeMessageManager.getMessageEncoder(OversizedTestMessage.class) == null) {
+            SbeMessageManager.register(OversizedTestMessage.class, new OversizedTestMessageSbe());
+        }
     }
 
     static void awaitUntil(BooleanSupplier condition) throws InterruptedException {
@@ -58,11 +62,32 @@ final class PublisherTestKit {
     record TestMessage(int value) {
     }
 
+    record OversizedTestMessage(int value) {
+    }
+
     static final class TestMessageSbe implements MessageSbe<TestMessage> {
         private static final int ENCODED_LENGTH = 8;
 
         @Override
         public void encoder(TestMessage message, MessageHeaderEncoder headerEncoder, MutableDirectBuffer buffer) {
+            buffer.putInt(0, message.value());
+        }
+
+        @Override
+        public int limit() {
+            return ENCODED_LENGTH;
+        }
+    }
+
+    static final class OversizedTestMessageSbe implements MessageSbe<OversizedTestMessage> {
+        private static final int ENCODED_LENGTH = 16;
+
+        @Override
+        public void encoder(
+                OversizedTestMessage message,
+                MessageHeaderEncoder headerEncoder,
+                MutableDirectBuffer buffer
+        ) {
             buffer.putInt(0, message.value());
         }
 

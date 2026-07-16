@@ -1,7 +1,7 @@
 /* Generated SBE (Simple Binary Encoding) message codec. */
 package com.iohao.net.sbe;
 
-import org.agrona.*;
+import org.agrona.DirectBuffer;
 
 @SuppressWarnings("all")
 public final class AttachmentDataBytesDecoder

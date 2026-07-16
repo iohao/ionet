@@ -1,7 +1,9 @@
 /* Generated SBE (Simple Binary Encoding) message codec. */
 package com.iohao.net.sbe;
 
-import org.agrona.*;
+import org.agrona.MutableDirectBuffer;
+import org.agrona.DirectBuffer;
+
 
 /**
  * BroadcastUserListMessage
@@ -314,7 +316,7 @@ public final class BroadcastUserListMessageEncoder
 
     public BroadcastUserListMessageEncoder putData(final DirectBuffer src, final int srcOffset, final int length)
     {
-        if (length > 61440)
+        if (length > 8384512)
         {
             throw new IllegalStateException("length > maxValue for type: " + length);
         }
@@ -330,7 +332,7 @@ public final class BroadcastUserListMessageEncoder
 
     public BroadcastUserListMessageEncoder putData(final byte[] src, final int srcOffset, final int length)
     {
-        if (length > 61440)
+        if (length > 8384512)
         {
             throw new IllegalStateException("length > maxValue for type: " + length);
         }
