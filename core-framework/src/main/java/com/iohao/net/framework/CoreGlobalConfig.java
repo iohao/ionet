@@ -53,9 +53,9 @@ public final class CoreGlobalConfig {
      * 1408 bytes for both network and IPC), and the receiver can only reassemble such multi-fragment
      * messages when this is enabled. Turn it on whenever a single message can exceed the MTU, i.e.
      * roughly when the payload can exceed ~1.4 KB; otherwise oversized messages will not be
-     * reassembled correctly. It is off by default because typical messages fit within one MTU.
+     * reassembled correctly. It is enabled by default so large messages are handled safely.
      */
-    public boolean enableFragmentAssembler;
+    public boolean enableFragmentAssembler = true;
     /** Maximum number of fragments to assemble per poll operation. */
     public int fragmentLimit = 100;
     /**
