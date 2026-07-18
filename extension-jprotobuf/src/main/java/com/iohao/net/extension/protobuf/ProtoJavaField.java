@@ -53,7 +53,6 @@ public class ProtoJavaField {
     private Map<String, String> createParam() {
         Map<String, String> messageMap = new HashMap<>(8);
 
-        messageMap.put("comment", this.comment);
         messageMap.put("repeated", "");
         messageMap.put("fieldProtoType", this.fieldProtoType);
         messageMap.put("order", String.valueOf(this.order));
@@ -73,24 +72,15 @@ public class ProtoJavaField {
     public String toProtoFieldLine() {
         Map<String, String> messageMap = this.createParam();
         String templateFiled = getTemplateFiled(this.protoJavaParent.clazz.isEnum());
-        return StrKit.format(templateFiled, messageMap);
+        // Render the comment separately so multi-line comment text is never treated as a placeholder.
+        return ProtoJava.toProtoComment(this.comment, "  ") + StrKit.format(templateFiled, messageMap);
     }
 
     private String getTemplateFiled(boolean fieldIsInEnum) {
-        StringBuilder templateFiled = new StringBuilder();
-
-        if (this.comment != null) {
-            templateFiled.append("""
-                      // {comment}
-                    """);
-        }
-
         if (fieldIsInEnum) {
-            templateFiled.append("  {repeated}{fieldName} = {order};");
-        } else {
-            templateFiled.append("  {repeated}{fieldProtoType} {fieldName} = {order};");
+            return "  {repeated}{fieldName} = {order};";
         }
 
-        return templateFiled.toString();
+        return "  {repeated}{fieldProtoType} {fieldName} = {order};";
     }
 }

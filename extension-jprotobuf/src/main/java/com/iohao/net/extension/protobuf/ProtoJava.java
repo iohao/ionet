@@ -65,17 +65,41 @@ public class ProtoJava {
         Map<String, String> messageMap = new HashMap<>();
         messageMap.put("className", this.className);
         messageMap.put("fieldsString", fieldsString);
-        messageMap.put("classComment", this.comment);
+        messageMap.put("classComment", toProtoComment(this.comment, ""));
         messageMap.put("classOrEnum", clazz.isEnum() ? "enum" : "message");
 
         String template = """
-                // {classComment}
-                {classOrEnum} {className} {
+                {classComment}{classOrEnum} {className} {
                 {fieldsString}
                 }
                 
                 """;
 
         return StrKit.format(template, messageMap);
+    }
+
+    /**
+     * Render a comment into one or more proto comment lines.
+     *
+     * <p>Each line of a multi-line comment is prefixed with the given {@code indent}
+     * and {@code "// "}, so multi-line Javadoc no longer produces lines that are
+     * missing the {@code //} prefix. Blank lines are dropped. Returns an empty string
+     * when {@code comment} is {@code null} or blank.
+     *
+     * @param comment the raw comment text, possibly spanning multiple lines
+     * @param indent  the indentation applied before each {@code //}
+     * @return proto comment lines terminated with a trailing newline, or an empty string
+     * @since 25.7
+     */
+    static String toProtoComment(String comment, String indent) {
+        if (comment == null || comment.isBlank()) {
+            return "";
+        }
+
+        return comment.lines()
+                .map(String::strip)
+                .filter(line -> !line.isEmpty())
+                .map(line -> "%s// %s".formatted(indent, line))
+                .collect(Collectors.joining("\n", "", "\n"));
     }
 }

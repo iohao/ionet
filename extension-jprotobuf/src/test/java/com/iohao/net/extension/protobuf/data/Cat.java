@@ -29,6 +29,7 @@ import java.util.Map;
 
 /**
  * MyCat
+ * hello cat
  *
  * @author 渔民小镇
  * @date 2022-01-25
@@ -40,7 +41,10 @@ import java.util.Map;
 public class Cat {
     /** id */
     int id;
-    /** cat name */
+    /**
+     * cat name
+     * the name 2
+     */
     String catName;
     /** the food */
     Food food;
