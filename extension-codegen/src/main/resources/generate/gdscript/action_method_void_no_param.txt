@@ -1,4 +1,4 @@
-## ${methodComment}[br]
+## ${mlComment(methodComment, "## ", "[br]")}[br]
 ##
 ## [br][b]@return[/b] [code]IoGame.RequestCommand void[/code]
 ## [br]

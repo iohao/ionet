@@ -9,13 +9,13 @@ using IoGame.Sdk;
 namespace ${namespace}
 {
   /// <summary>
-  /// ${ActionComment}
+  /// ${mlComment(ActionComment, "  /// ")}
   /// </summary>
   /// <remarks>Author: https://github.com/iohao/ionet</remarks>
   public static class ${ActionName}
   {
   <%for(o in actionMemberCmdDocumentList) {%>
-    ${publicActionCmdName} static readonly int ${o.memberName} = CmdKit.MappingRequest(${o.cmdMerge}, "${o.comment}");
+    ${publicActionCmdName} static readonly int ${o.memberName} = CmdKit.MappingRequest(${o.cmdMerge}, "${stringLiteral(o.comment, "double")}");
   <%}%>
 
   <%for(o in methodCodeList) {%>

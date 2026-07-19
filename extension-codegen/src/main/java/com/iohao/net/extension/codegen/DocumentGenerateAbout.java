@@ -56,6 +56,9 @@ class DocumentGenerateKit {
             gt.registerFunction("codeEscape", new ExampleCodeEscape());
             gt.registerFunction("originalCode", new ExampleOriginalCode());
             gt.registerFunction("snakeName", new SnakeName());
+            gt.registerFunction("mlComment", new MultiLineComment());
+            gt.registerFunction("oneLine", new OneLineComment());
+            gt.registerFunction("stringLiteral", new StringLiteral());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -119,6 +122,75 @@ class DocumentGenerateKit {
             }
 
             return toSnakeName(value.toString());
+        }
+    }
+
+    /**
+     * Render a possibly multi-line comment as a doc-comment block, keeping each source
+     * line on its own line so that the target language's doc-comment prefix (and optional
+     * suffix) is preserved on every continuation line.
+     * <pre>{@code
+     *     ${mlComment(methodComment, "     * ")}        // TS / JSDoc
+     *     ${mlComment(methodComment, "    /// ")}        // C# XML doc
+     *     ${mlComment(methodComment, "## ", "[br]")}     // GDScript
+     * }</pre>
+     */
+    class MultiLineComment implements org.beetl.core.Function {
+        @Override
+        public Object call(Object[] paras, Context ctx) {
+            if (paras.length == 0 || paras[0] == null) {
+                return "";
+            }
+
+            String text = paras[0].toString().strip();
+            if (text.isEmpty()) {
+                return "";
+            }
+
+            String linePrefix = paras.length > 1 && paras[1] != null ? paras[1].toString() : "";
+            String lineSuffix = paras.length > 2 && paras[2] != null ? paras[2].toString() : "";
+
+            String[] lines = text.split("\\R");
+            for (int i = 0; i < lines.length; i++) {
+                lines[i] = lines[i].stripTrailing();
+            }
+
+            String delimiter = "%s\n%s".formatted(lineSuffix, linePrefix);
+            return String.join(delimiter, lines);
+        }
+    }
+
+    /**
+     * Collapse a possibly multi-line comment into a single line by replacing line breaks
+     * with a single space. Useful for values embedded in string literals or single-line
+     * comment fragments where a raw line break would break the generated code.
+     */
+    class OneLineComment implements org.beetl.core.Function {
+        @Override
+        public Object call(Object[] paras, Context ctx) {
+            if (paras.length == 0 || paras[0] == null) {
+                return "";
+            }
+
+            return paras[0].toString().strip().replaceAll("\\s*\\R\\s*", " ");
+        }
+    }
+
+    /**
+     * Flatten comment text and escape it for a generated string literal.
+     */
+    class StringLiteral implements org.beetl.core.Function {
+        @Override
+        public Object call(Object[] paras, Context ctx) {
+            if (paras.length == 0 || paras[0] == null) {
+                return "";
+            }
+
+            String text = paras[0].toString().strip().replaceAll("\\s*\\R\\s*", " ");
+            String quote = paras.length > 1 && "single".equals(paras[1]) ? "'" : "\"";
+
+            return text.replace("\\", "\\\\")
+                    .replace(quote, "\\" + quote);
         }
     }
 }

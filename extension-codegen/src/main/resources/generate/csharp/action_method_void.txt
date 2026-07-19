@@ -1,10 +1,10 @@
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
-    /// <param name="${bizDataName}">${bizDataComment}</param>
+    /// <param name="${bizDataName}">${oneLine(bizDataComment)}</param>
     /// <returns>RequestCommand void</returns>
     /// <code>
-    /// // ${bizDataComment}
+    /// // ${oneLine(bizDataComment)}
     /// ${codeEscape(bizDataType)} ${bizDataName} = ...;
     /// ${actionSimpleName}.of${actionMethodName}(${bizDataName});
     /// </code>

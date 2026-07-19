@@ -1,10 +1,10 @@
 
     /**
-     * ${methodComment}
-     * @param ${bizDataName} ${bizDataComment}。
+     * ${mlComment(methodComment, "     * ")}
+     * @param ${bizDataName} ${oneLine(bizDataComment)}。
      * @returns RequestCommand void
      * @example
-     * // ${bizDataComment}
+     * // ${oneLine(bizDataComment)}
      * const ${bizDataName}: ${bizDataType} = ...;
      * ${actionSimpleName}.of${actionMethodName}(${bizDataName});
      */

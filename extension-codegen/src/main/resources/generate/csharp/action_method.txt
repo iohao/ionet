@@ -1,15 +1,15 @@
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
-    /// <param name="${bizDataName}">${bizDataComment}</param>
-    /// <param name="callback">${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${returnComment}</param>
+    /// <param name="${bizDataName}">${oneLine(bizDataComment)}</param>
+    /// <param name="callback">${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${oneLine(returnComment)}</param>
     /// <returns>RequestCommand</returns>
     /// <code>
-    /// // ${bizDataComment}
+    /// // ${oneLine(bizDataComment)}
     /// ${codeEscape(bizDataType)} ${bizDataName} = ...;
     /// ${actionSimpleName}.of${actionMethodName}(${bizDataName}, result => {
     ///     // your biz code.
-    ///     // ${returnComment}
+    ///     // ${oneLine(returnComment)}
     ///     ${exampleCode!}
     ///     result.Log(value);
     /// });
@@ -25,16 +25,16 @@
     }
 
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
-    /// <param name="${bizDataName}">${bizDataComment}</param>
-    /// <returns>ResponseResult，${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${returnComment}</returns>
+    /// <param name="${bizDataName}">${oneLine(bizDataComment)}</param>
+    /// <returns>ResponseResult，${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${oneLine(returnComment)}</returns>
     /// <code>
-    /// // ${bizDataComment}
+    /// // ${oneLine(bizDataComment)}
     /// ${codeEscape(bizDataType)} ${bizDataName} = ...;
     /// var result = await ${actionSimpleName}.ofAwait${actionMethodName}(${bizDataName});
     /// // your biz code.
-    /// // ${returnComment}
+    /// // ${oneLine(returnComment)}
     /// ${exampleCode!}
     /// result.Log(value);
     /// </code>

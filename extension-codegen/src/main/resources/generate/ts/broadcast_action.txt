@@ -9,21 +9,21 @@ import {CmdKit, ListenCommand, ResponseResult} from "iohao-sdk";
  */
 export class Listener {
 <%for(o in broadcastDocumentList) {%>
-    private static readonly ${o.cmdMethodName}_${o.cmd}_${o.subCmd}: number = CmdKit.mappingBroadcast(${o.cmdMerge},'${o.methodDescription!}');
+    private static readonly ${o.cmdMethodName}_${o.cmd}_${o.subCmd}: number = CmdKit.mappingBroadcast(${o.cmdMerge},'${stringLiteral(o.methodDescription, "single")}');
 <%}%>
 <%for(o in broadcastDocumentList) {%>
 
     /**
-     * ${o.methodDescription}
-     * @param callback ${o.dataDescription}, ${o.dataIsList?"list of "}{@link ${o.bizDataType}}
+     * ${mlComment(o.methodDescription, "     * ")}
+     * @param callback ${oneLine(o.dataDescription)}, ${o.dataIsList?"list of "}{@link ${o.bizDataType}}
      * @example
      * Listener.listen${o.methodName}(result => {
-     *     // ${o.dataDescription!"broadcast notification"}
+     *     // ${oneLine(o.dataDescription!"broadcast notification")}
      *     ${o.exampleCode!}
      * });
      */
     static listen${o.methodName}(callback: (result: ResponseResult) => void) {
-        // ${o.dataDescription!}
+        // ${oneLine(o.dataDescription)}
         ListenCommand.of(this.${o.cmdMethodName}_${o.cmd}_${o.subCmd}, callback);
     }
 <%}%>
@@ -46,4 +46,3 @@ export class Listener {
     <%}%>
     }
 }
-

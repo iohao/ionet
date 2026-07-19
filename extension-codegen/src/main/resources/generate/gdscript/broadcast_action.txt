@@ -9,24 +9,24 @@ extends RefCounted
 ${imports}
 
 <%for(o in broadcastDocumentList) {%>
-static var _${o.cmdMethodName}_${o.cmd}_${o.subCmd}: int = IoGame.CmdKit.mapping_broadcast(${o.cmdMerge}, "${o.methodDescription}")
+static var _${o.cmdMethodName}_${o.cmd}_${o.subCmd}: int = IoGame.CmdKit.mapping_broadcast(${o.cmdMerge}, "${stringLiteral(o.methodDescription, "double")}")
 <%}%>
 
 
 <%for(o in broadcastDocumentList) {%>
-## ${o.methodDescription}[br]
+## ${mlComment(o.methodDescription, "## ", "[br]")}[br]
 ##
-## [br][b]@param callback:[/b] ${o.dataDescription} (returnType: ${o.dataIsList?"list of"} [code]${o.bizDataType}[/code])
+## [br][b]@param callback:[/b] ${oneLine(o.dataDescription)} (returnType: ${o.dataIsList?"list of"} [code]${o.bizDataType}[/code])
 ## [br]
 ## [br][b]Example Code[/b]
 ## [codeblock]
 ## Listener.listen_${o.methodName}(func(result: IoGame.ResponseResult):
-##     # ${o.dataDescription!"broadcast notification"}
+##     # ${oneLine(o.dataDescription!"broadcast notification")}
 ##     ${o.exampleCode!}
 ## )
 ## [/codeblock]
 static func listen_${o.methodName}(callback: Callable) -> void:
-	# ${o.dataDescription!}
+	# ${oneLine(o.dataDescription)}
 	IoGame.ListenCommand.of(_${o.cmdMethodName}_${o.cmd}_${o.subCmd}, callback)
 
 

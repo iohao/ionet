@@ -1,12 +1,12 @@
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
-    /// <param name="callback">${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${returnComment}</param>
+    /// <param name="callback">${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${oneLine(returnComment)}</param>
     /// <returns>RequestCommand</returns>
     /// <code>
     /// ${actionSimpleName}.of${actionMethodName}(result => {
     ///     // your biz code.
-    ///     // ${returnComment}
+    ///     // ${oneLine(returnComment)}
     ///     ${exampleCode!}
     ///     result.Log(value);
     /// });
@@ -17,13 +17,13 @@
     }
 
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
-    /// <returns>ResponseResult，${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${returnComment}</returns>
+    /// <returns>ResponseResult，${returnDataIsList?"list of "}<see cref="${returnDataName}"/> ${oneLine(returnComment)}</returns>
     /// <code>
     /// var result = await ${actionSimpleName}.ofAwait${actionMethodName}();
     /// // your biz code.
-    /// // ${returnComment}
+    /// // ${oneLine(returnComment)}
     /// ${exampleCode!}
     /// result.Log(value);
     /// </code>

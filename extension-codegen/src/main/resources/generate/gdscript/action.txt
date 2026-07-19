@@ -1,7 +1,7 @@
 # ${generateTime}
 # ${iohaoHome}
 
-## ${ActionComment}[br]
+## ${mlComment(ActionComment, "## ", "[br]")}[br]
 ## https://github.com/iohao/ionet
 class_name ${ActionName}
 extends RefCounted
@@ -9,7 +9,7 @@ extends RefCounted
 ${imports}
 
 <%for(o in actionMemberCmdDocumentList) {%>
-static var _${o.memberName}: int = IoGame.CmdKit.mapping_request(${o.cmdMerge}, "${o.comment}")
+static var _${o.memberName}: int = IoGame.CmdKit.mapping_request(${o.cmdMerge}, "${stringLiteral(o.comment, "double")}")
 <%}%>
 
 <%for(o in methodCodeList) {%>

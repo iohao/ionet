@@ -1,13 +1,13 @@
 
     /**
-     * ${methodComment}
-     * @param callback ${returnComment} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
+     * ${mlComment(methodComment, "     * ")}
+     * @param callback ${oneLine(returnComment)} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
      * @returns {@link RequestCommand} request command
      * @example
      * ${actionSimpleName}.of${actionMethodName}(result => {
      *     // your biz code.
      *     result.log("hello ioGame!");
-     *     // ${returnComment}
+     *     // ${oneLine(returnComment)}
      *     ${exampleCode}
      *     result.log(value);
      * });
@@ -17,13 +17,13 @@
     }
 
     /**
-     * ${methodComment}
-     * @returns {@link ResponseResult} [${returnComment} : ${returnDataIsList?"list of "}{@link ${returnDataName}}]
+     * ${mlComment(methodComment, "     * ")}
+     * @returns {@link ResponseResult} [${oneLine(returnComment)} : ${returnDataIsList?"list of "}{@link ${returnDataName}}]
      * @example
      * const result = await ${actionSimpleName}.ofAwait${actionMethodName}();
      * // your biz code.
      * result.log("hello ioGame!");
-     * // ${returnComment}
+     * // ${oneLine(returnComment)}
      * ${exampleCode}
      * result.log(value);
      */

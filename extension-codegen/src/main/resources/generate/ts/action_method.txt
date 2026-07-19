@@ -1,15 +1,15 @@
 
     /**
-     * ${methodComment}
-     * @param ${bizDataName} ${bizDataComment}
-     * @param callback ${returnComment} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
+     * ${mlComment(methodComment, "     * ")}
+     * @param ${bizDataName} ${oneLine(bizDataComment)}
+     * @param callback ${oneLine(returnComment)} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
      * @returns {@link RequestCommand} request command
      * @example
-     * // ${bizDataComment}
+     * // ${oneLine(bizDataComment)}
      * const ${bizDataName}: ${bizDataType} = ...;
      * ${actionSimpleName}.of${actionMethodName}(${bizDataName}, result => {
      *     // your biz code.
-     *     // ${returnComment}
+     *     // ${oneLine(returnComment)}
      *     ${exampleCode}
      *     result.log(value);
      * });
@@ -33,15 +33,15 @@
     }
 
     /**
-     * ${methodComment}
-     * @param ${bizDataName} ${bizDataComment}
-     * @returns {@link ResponseResult} ${returnComment} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
+     * ${mlComment(methodComment, "     * ")}
+     * @param ${bizDataName} ${oneLine(bizDataComment)}
+     * @returns {@link ResponseResult} ${oneLine(returnComment)} (returnType: ${returnDataIsList?"list of "}{@link ${returnDataName}})
      * @example
-     * // ${bizDataComment}
+     * // ${oneLine(bizDataComment)}
      * const ${bizDataName}: ${bizDataType} = ...;
      * const result = await ${actionSimpleName}.ofAwait${actionMethodName}(${bizDataName});
      * // your biz code.
-     * // ${returnComment}
+     * // ${oneLine(returnComment)}
      * ${exampleCode}
      * result.log(value);
      */

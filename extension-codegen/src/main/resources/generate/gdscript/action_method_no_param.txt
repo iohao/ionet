@@ -1,12 +1,12 @@
-## ${methodComment}[br]
+## ${mlComment(methodComment, "## ", "[br]")}[br]
 ##
-## [br][b]@param callback:[/b] ${returnComment} (returnType: [code]${returnDataIsList?"list of "} ${returnDataName}[/code])
+## [br][b]@param callback:[/b] ${oneLine(returnComment)} (returnType: [code]${returnDataIsList?"list of "} ${returnDataName}[/code])
 ## [br][b]@return[/b] [code]IoGame.RequestCommand[/code]
 ## [br]
 ## [br][b]Example Code[/b]
 ## [codeblock]
 ## ${actionSimpleName}.of_${actionMethodName}(func(result: IoGame.ResponseResult):
-##     # ${returnComment}
+##     # ${oneLine(returnComment)}
 ##     ${exampleCode}
 ## })
 ## [/codeblock]
@@ -14,7 +14,7 @@ static func of_${actionMethodName}(callback: Callable) -> IoGame.RequestCommand:
 	return IoGame.RequestCommand.of_empty(_${memberCmdName}).on_callback(callback).execute()
 
 
-## ${methodComment}[br]
+## ${mlComment(methodComment, "## ", "[br]")}[br]
 ##
 ## [br][b]@return[/b] [code]IoGame.ResponseResult[/code]
 ## [br]
@@ -23,7 +23,7 @@ static func of_${actionMethodName}(callback: Callable) -> IoGame.RequestCommand:
 ## var result := await ${actionSimpleName}.of_await_${actionMethodName}()
 ##
 ## if result.success():
-##     # ${returnComment}
+##     # ${oneLine(returnComment)}
 ##     ${exampleCode}
 ## else:
 ##     var error_code := result.get_response_status()

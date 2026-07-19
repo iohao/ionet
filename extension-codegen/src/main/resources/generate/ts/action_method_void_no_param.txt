@@ -1,6 +1,6 @@
 
     /**
-     * ${methodComment}
+     * ${mlComment(methodComment, "     * ")}
      * @returns RequestCommand void
      * @example
      * ${actionSimpleName}.of${actionMethodName}();

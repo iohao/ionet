@@ -11,17 +11,17 @@ namespace ${namespace}
   public static class Listener
   {
   <%for(o in broadcastDocumentList) {%>
-    private static readonly int ${o.cmdMethodName}_${o.cmd}_${o.subCmd} = CmdKit.MappingBroadcast(${o.cmdMerge},"${o.methodDescription!}");
+    private static readonly int ${o.cmdMethodName}_${o.cmd}_${o.subCmd} = CmdKit.MappingBroadcast(${o.cmdMerge},"${stringLiteral(o.methodDescription, "double")}");
   <%}%>
   <%for(o in broadcastDocumentList) {%>
 
     /// <summary>
-    /// ${o.methodDescription}
+    /// ${mlComment(o.methodDescription, "    /// ")}
     /// </summary>
-    /// <param name="callback">${o.dataIsList?"list of "}<see cref="${o.bizDataType}"/> ${o.dataDescription}</param>
+    /// <param name="callback">${o.dataIsList?"list of "}<see cref="${o.bizDataType}"/> ${oneLine(o.dataDescription)}</param>
     /// <code>
     /// Listener.listen${o.methodName}(result => {
-    ///     // ${o.dataDescription!"broadcast notification"}
+    ///     // ${oneLine(o.dataDescription!"broadcast notification")}
     ///     ${o.exampleCode!}
     /// });
     /// </code>

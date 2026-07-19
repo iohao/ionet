@@ -1,5 +1,5 @@
     /// <summary>
-    /// ${methodComment}
+    /// ${mlComment(methodComment, "    /// ")}
     /// </summary>
     /// <returns>RequestCommand void</returns>
     /// <code>
