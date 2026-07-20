@@ -13,7 +13,9 @@ and release title.
 Use this skill only when the user explicitly selects it or invokes `$ionet-release`. Do not trigger it merely because a
 prompt mentions publishing, release notes, changelogs, or GitHub Releases.
 
-Run it only from the ionet repository. Release notes are written in English and follow the existing `25.5` release style.
+Run it only from the ionet repository. Release notes are written in English and follow the existing `25.5` release
+style, with enough implementation detail to make the release useful without opening every commit. The generator uses
+commit subjects, commit body bullets, and all Maven POM changes in the release range.
 
 ## Workflow
 
@@ -39,7 +41,9 @@ python3 .codex/skills/ionet-release/scripts/ionet_release.py
 4. Release note generation:
    - Finds the previous numeric version tag before the current version.
    - Uses commits from `<previous-tag>..<current-version>` to produce a short overview and grouped version content.
-   - Reads changed Maven `pom.xml` files to list dependency and plugin upgrades.
+   - Includes useful bullet points from commit bodies, including behavior changes, compatibility notes, and tests.
+   - Reads all Maven `pom.xml` files at both range endpoints to list dependency and plugin upgrades, including upgrades
+     driven by a root POM property when a module POM itself was not changed.
    - Adds `Dependency upgrades:` before the final changelog link.
    - Adds `**Full Changelog**: https://github.com/iohao/ionet/compare/<previous>...<current>`.
 

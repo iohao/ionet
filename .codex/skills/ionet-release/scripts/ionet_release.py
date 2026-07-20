@@ -78,6 +78,12 @@ class Upgrade:
     new: str
 
 
+@dataclass(frozen=True)
+class Commit:
+    subject: str
+    body: str
+
+
 def run(args: list[str], *, cwd: Path, check: bool = True) -> str:
     try:
         result = subprocess.run(args, cwd=cwd, check=False, text=True, capture_output=True)
@@ -211,8 +217,11 @@ def git_show(root: Path, ref: str, path: str) -> str:
 
 
 def pom_paths(root: Path, previous: str, current_ref: str) -> list[str]:
-    paths = git(["diff", "--name-only", previous, current_ref, "--", "pom.xml", "*/pom.xml"], cwd=root)
-    return [line for line in paths.splitlines() if line.endswith("pom.xml")]
+    paths: set[str] = set()
+    for ref in (previous, current_ref):
+        output = git(["ls-tree", "-r", "--name-only", ref], cwd=root)
+        paths.update(line for line in output.splitlines() if line == "pom.xml" or line.endswith("/pom.xml"))
+    return sorted(paths)
 
 
 def parse_pom(content: str, root_properties: dict[str, str]) -> dict[tuple[str, str, str], PomArtifact]:
@@ -313,24 +322,35 @@ def friendly_name(artifact_id: str) -> str:
     return " ".join(part.upper() if part in {"api", "io"} else part.capitalize() for part in clean.split("-"))
 
 
-def commits_between(root: Path, previous: str, current_ref: str) -> list[str]:
-    output = git(["log", "--reverse", "--format=%s", f"{previous}..{current_ref}"], cwd=root)
-    return [line.strip() for line in output.splitlines() if line.strip()]
+def commits_between(root: Path, previous: str, current_ref: str) -> list[Commit]:
+    output = git(["log", "--reverse", "--format=%s%x1f%b%x1e", f"{previous}..{current_ref}"], cwd=root)
+    commits: list[Commit] = []
+    for record in output.split("\x1e"):
+        record = record.strip()
+        if not record:
+            continue
+        subject, separator, body = record.partition("\x1f")
+        commits.append(Commit(subject.strip(), body.strip() if separator else ""))
+    return commits
 
 
-def classify_commit(subject: str) -> str:
-    lowered = subject.lower()
-    if any(word in lowered for word in ("publisher", "aeron offer", "publication", "backpressure", "queue")):
-        return "publisher"
-    if any(word in lowered for word in ("communication", "routing", "cmdregion", "connection", "future", "server id")):
-        return "routing"
-    if any(word in lowered for word in ("docs", "doc", "source", "protobuf", "build", "dependency", "javadoc", "readme")):
-        return "docs"
-    if any(word in lowered for word in ("external", "session", "tcp", "websocket", "udp", "client", "micro")):
-        return "external"
-    if any(word in lowered for word in ("flow", "action", "broadcast", "core-framework", "bar", "skeleton")):
-        return "core"
-    return "other"
+def classify_commit(commit: Commit) -> str:
+    def category(text: str) -> str | None:
+        if any(word in text for word in ("publisher", "aeron offer", "publication", "backpressure", "queue")):
+            return "publisher"
+        if any(word in text for word in ("external", "session", "tcp", "websocket", "udp", "client", "micro")):
+            return "external"
+        if any(word in text for word in ("communication", "routing", "cmdregion", "connection", "future", "server id")):
+            return "routing"
+        if any(
+            word in text for word in ("docs", "doc", "source", "protobuf", "build", "dependency", "javadoc", "readme")
+        ):
+            return "docs"
+        if any(word in text for word in ("flow", "action", "broadcast", "core-framework", "bar", "skeleton")):
+            return "core"
+        return None
+
+    return category(commit.subject.lower()) or category(commit.body.lower()) or "other"
 
 
 def clean_subject(subject: str) -> str:
@@ -386,29 +406,51 @@ def clean_subject(subject: str) -> str:
     return subject + "."
 
 
-def grouped_commit_notes(commits: list[str]) -> dict[str, list[str]]:
+def commit_notes(commit: Commit) -> list[str]:
+    notes: list[str] = []
+    summary = clean_subject(commit.subject)
+    if summary:
+        notes.append(summary)
+
+    for line in commit.body.splitlines():
+        line = line.strip()
+        if not line or line.lower() in {"changes:", "notes:"}:
+            continue
+        if line.startswith(("-", "*")):
+            line = line[1:].strip()
+        note = clean_subject(line)
+        if note:
+            notes.append(note)
+
+    return notes
+
+
+def grouped_commit_notes(commits: list[Commit]) -> dict[str, list[str]]:
     groups: dict[str, list[str]] = {key: [] for key in GROUP_TITLES}
     seen: set[str] = set()
 
-    for subject in commits:
-        note = clean_subject(subject)
-        if not note or note == "." or note in seen:
-            continue
-        seen.add(note)
-        groups[classify_commit(subject)].append(note)
+    for commit in commits:
+        group = classify_commit(commit)
+        for note in commit_notes(commit):
+            if not note or note == "." or note in seen:
+                continue
+            seen.add(note)
+            groups[group].append(note)
 
     return {key: values for key, values in groups.items() if values}
 
 
 def overview(version: str, groups: dict[str, list[str]]) -> str:
-    preferred = [GROUP_TITLES[key].lower() for key in ("publisher", "routing", "external", "core", "docs") if key in groups]
+    preferred = [
+        GROUP_TITLES[key].lower() for key in ("publisher", "routing", "external", "core", "docs") if key in groups
+    ]
     if not preferred:
         preferred = ["framework reliability", "documentation", "dependency updates"]
     focus = ", ".join(preferred[:3])
     return f"Ionet {version} focuses on {focus}."
 
 
-def render_notes(version: str, previous: str, commits: list[str], upgrades: list[Upgrade]) -> str:
+def render_notes(version: str, previous: str, commits: list[Commit], upgrades: list[Upgrade]) -> str:
     groups = grouped_commit_notes(commits)
     lines: list[str] = [overview(version, groups), ""]
 
