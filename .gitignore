@@ -1,85 +1,71 @@
-### other dir ###
+### Build output ###
+target/
 classes/
-.temp/
-logs/
-log/
-lib/
-system/
+bin/
+*.class
 
+# Never ignore project source, even if a parent folder matches a rule above
 !**/src/main/**
 !**/src/test/**
 
-*.class
+### Logs & runtime ###
+logs/
+log/
+*.log
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
-### Package Files ###
+### Local / temp / libs ###
+lib/
+system/
+.temp/
+temp/
+local/
+
+### Package files ###
 *.jar
 *.war
 *.ear
 *.zip
 
-### maven ###
-target/
-!.mvn/wrapper/maven-wrapper.jar
+### Maven ###
 .mvn
 mvnw
 mvnw.cmd
-### intellj file type ###
-bin/
+!.mvn/wrapper/maven-wrapper.jar
+
+### IDE - IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
 
-### STS ###
+### IDE - Eclipse / STS ###
 .apt_generated
 .factorypath
-.settings
+.settings/
 .springBeans
 .sts4-cache
-
-### eclipse file type ###
-.settings/
 .classpath
 .project
 
-### ---- Mac OS X ###
+### OS - macOS ###
 .DS_Store
 Icon?
 
-### ---- Windows ###
-
-### Windows image file caches ###
+### OS - Windows ###
 Thumbs.db
-
-### Folder integration file ###
 Desktop.ini
 
-### ---- Javadoc ###
+### Javadoc / misc ###
 docs.tar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-/target/
-
 doc_temp.txt
 
-local/
-temp/
-
-# codex
+### Codex ###
 .codexignore
 AGENTS.md
 AGENTS.compact.md
 
-# claude code
+### Claude Code ###
 .claude
 CLAUDE.md
-
-# qoder
-QODER.md
-
-.cbmignore
-.qoder/
-
-### VS Code ###
-.vscode/

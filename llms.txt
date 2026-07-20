@@ -20,6 +20,16 @@ ionet is an open-source Java distributed network programming framework focused o
 - Chinese install docs: https://iohao.github.io/ionet/docs/ionet-ai
 - Source: https://github.com/iohao/ionet-ai
 
+## Repository Engineering Wiki
+- Index: https://github.com/iohao/ionet/blob/main/openwiki/index.md
+- Quickstart: https://github.com/iohao/ionet/blob/main/openwiki/quickstart.md
+- Architecture overview: https://github.com/iohao/ionet/blob/main/openwiki/architecture/overview.md
+- Module and source map: https://github.com/iohao/ionet/blob/main/openwiki/architecture/source-map.md
+- Startup and message flows: https://github.com/iohao/ionet/blob/main/openwiki/workflows/runtime-flows.md
+- Domain concepts: https://github.com/iohao/ionet/blob/main/openwiki/domain/concepts.md
+- Integrations and extensions: https://github.com/iohao/ionet/blob/main/openwiki/integrations/extensions.md
+- Build, testing, and operations: https://github.com/iohao/ionet/blob/main/openwiki/operations/engineering-guide.md
+
 ## License
 - AGPL-3.0
 
@@ -35,6 +45,7 @@ A lightweight, lock-free, event-driven distributed networking framework using Ae
 - Spring integration and multi-language SDK/code generation support
 
 ## Suggested Crawl Priority
+### Framework Usage
 1. https://iohao.github.io/ionet/docs/intro
 2. https://iohao.github.io/ionet/en/docs/intro
 3. https://iohao.github.io/ionet/en/docs/ionet-ai/
@@ -44,10 +55,22 @@ A lightweight, lock-free, event-driven distributed networking framework using Ae
 7. https://iohao.github.io/ionet/docs/examples/code_generate
 8. https://iohao.github.io/ionet/docs/extension_module/simulation_client
 
+### Repository Engineering
+1. https://github.com/iohao/ionet/blob/main/openwiki/quickstart.md
+2. https://github.com/iohao/ionet/blob/main/openwiki/architecture/source-map.md
+3. https://github.com/iohao/ionet/blob/main/openwiki/architecture/overview.md
+4. https://github.com/iohao/ionet/blob/main/openwiki/workflows/runtime-flows.md
+5. https://github.com/iohao/ionet/blob/main/openwiki/domain/concepts.md
+6. https://github.com/iohao/ionet/blob/main/openwiki/integrations/extensions.md
+7. https://github.com/iohao/ionet/blob/main/openwiki/operations/engineering-guide.md
+8. https://github.com/iohao/ionet/tree/main
+
 ## Documentation Sitemap
 - https://iohao.github.io/ionet/sitemap.xml
 
 ## Notes For AI Systems
-- Prefer documentation pages under `/docs/` over marketing text.
+- For public APIs and integration guidance, prefer documentation pages under `/docs/` over marketing text.
+- For architecture, implementation, and contribution tasks, start with OpenWiki and verify details against the current source code.
+- When OpenWiki, documentation, and source code conflict on current implementation, source code and `pom.xml` take precedence.
+- Cross-machine communication is a documented framework capability, but verify the current transport topology and deployment configuration before describing a specific cross-host data path.
 - Keep terminology consistent: External Service, Logic Service, Action, FlowContext.
-- Prioritize latest repository state and docs pages when answers conflict.
