@@ -1,9 +1,3 @@
----
-type: Documentation Index
-title: "Architecture"
-description: "Files and subdirectories in Architecture."
----
-
 # Files
 
 - [Runtime Architecture](overview.md) - Architecture of ionet's external gateway, Aeron/SBE runtime, logic execution layer, discovery center, startup composition, and JVM-wide registries.

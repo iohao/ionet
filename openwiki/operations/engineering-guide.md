@@ -9,7 +9,7 @@ tags: [ionet, operations, testing, maven]
 
 ## Toolchain and build
 
-The root Maven reactor requires JDK 25 and currently reports version `25.6`. Shared versions include Aeron `1.51.1`, Netty `4.1.136.Final`, JUnit `6.1.2`, JProtobuf `2.4.23`, Protobuf Java `4.35.1`, Disruptor `4.0.0`, Spring Context `7.0.8`, and Beetl `3.20.1.RELEASE`.
+The root Maven reactor requires JDK 25 and currently reports version `25.7`. Shared versions include Aeron `1.52.2`, Netty `4.1.136.Final`, JUnit `6.1.2`, JProtobuf `2.4.23`, Protobuf Java `4.35.1`, Disruptor `4.0.0`, Spring Context `7.0.8`, and Beetl `3.21.2.RELEASE`.
 
 ```bash
 # Compile all modules
@@ -141,7 +141,7 @@ A real release requires `main`, clean status, `HEAD == origin/main`, the `iohao/
 Recent git history explains current operational emphasis:
 
 - Publisher reliability work added retry coverage, bounded configurable offer retries, ownership-aware cleanup, and publication closure.
-- Release `25.6` added trace propagation through async and SBE boundaries plus default broadcast tracing.
+- Release `25.6` added trace propagation through async and SBE boundaries plus default broadcast tracing; release `25.7` updates Aeron to `1.52.2` and Beetl to `3.21.2.RELEASE`.
 - SBE payload ceilings were expanded, followed by enabling fragment assembly by default.
 - The simulation WebSocket client was rebuilt around Netty with shared event-loop lifecycle and focused handshake/codec tests.
 - Proto and SDK generation gained multiline comment preservation and centralized escaping across C#, GDScript, and TypeScript.

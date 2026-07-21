@@ -11,7 +11,7 @@ tags: [ionet, java, networking, quickstart]
 
 ionet is an AGPL-3.0 Java framework for low-latency distributed network services. Client connections enter through a Netty-based External Service, requests are routed over Aeron/SBE to Logic Services, and business methods are exposed through `@ActionController` and `@ActionMethod`. The framework supports combined single-process development and separated service deployment without requiring business actions to depend on Netty.
 
-The repository is a Maven reactor at version `25.6` with 15 modules. It requires JDK 25. The root `pom.xml` is the authority for module membership, dependency versions, and build behavior; `README.md` and `README_CN.md` describe public capabilities and link to the user documentation.
+The repository is a Maven reactor at version `25.7` with 15 modules. It requires JDK 25. The root `pom.xml` is the authority for module membership, dependency versions, and build behavior; `IonetVersion` mirrors the release version for runtime reporting. `README.md` and `README_CN.md` describe public capabilities and link to the user documentation.
 
 ## Start here
 
